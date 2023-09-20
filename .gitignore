@@ -16,6 +16,9 @@ web-build/
 *.key
 *.mobileprovision
 
+# logs
+*.log
+
 # Metro
 .metro-health-check*
 
@@ -29,7 +32,52 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
+.env.local
 .env*.local
 
 # typescript
 *.tsbuildinfo
+
+# Build-Ausgaben
+android/app/build/
+ios/build/
+
+# Editor-Verzeichnisse
+.idea/
+.vscode/
+
+# Xcode
+build/
+DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+# Android/IntelliJ
+.gradle
+.idea/workspace.xml
+.idea/libraries
+
+# Editor-Verzeichnisse
+.idea/
+.vscode/
+
+# Backup files
+*~
+
+# EAS
+.eas/
+
+# Build artefacts
+*.apk
+*.aab
