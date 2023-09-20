@@ -27,6 +27,10 @@ git clone https://github.com/PrennerProducts/TensionTerminator.git
 cd TensionTerminator
 ```
 
+```bash
+npm install
+```
+
 ## Git Flow initalization
 
 install the Git Flow Tool:
@@ -51,35 +55,25 @@ npx expo prebuild
 
 [Expo Prebuild Dokumentation](https://docs.expo.dev/workflow/prebuild/)
 
-## Build Native Projects
-
-**Android:**
-
-```bash
-npx expo run:android
-```
-
-**iOS:**
-
-```bash
-npx expo run:ios
-```
-
 ## EAS Setup
 
 Install EAS CLI:
 
 ```bash
 npm install -g eas-cli
+
+or
+
+sudo npm install -g eas-cli
 ```
 
-Login to EAS:
+Login to EAS for cloud (only if you want to build on the expo cloud, no login required for --loval) :
 
 ```bash
 eas login
 ```
 
-Configure the Project:
+Configure the Project (all Plattforms):
 
 ```bash
 eas build:configure
@@ -111,7 +105,7 @@ npx expo start
 
 ## The informations below are just for further information
 
-## Run a build
+## Build
 
 - For Android:
 
@@ -131,7 +125,7 @@ eas build --platform ios
 eas build --platform all
 ```
 
-## Run build locally
+## Build locally
 
 [Local Builds Dokumentation](https://docs.expo.dev/build-reference/local-builds/)
 
@@ -145,4 +139,18 @@ eas build --platform android --local
 
 ```bash
 eas build --platform ios --local
+```
+
+## Run Native Projects
+
+**Android:**
+
+```bash
+npx expo run:android
+```
+
+**iOS:**
+
+```bash
+npx expo run:ios
 ```
