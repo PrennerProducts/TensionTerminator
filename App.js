@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 
 export default function App() {
-  const [hasPermission, setHasPermission] = React.useState();
-  const [faceData, setFaceData] = React.useState([]);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [faceData, setFaceData] = useState([]);
+  const [yaw, setYaw] = useState(0);
+  const [roll, setRoll] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
@@ -18,39 +20,34 @@ export default function App() {
     return <Text>No access to camera</Text>;
   }
 
-  function getFaceDataView() {
-    if (faceData.length === 0) {
-      return (
-        <View style={styles.faces}>
-          <Text style={styles.faceDesc}>No faces :(</Text>
-        </View>
-      );
-    } else {
-      return faceData.map((face, index) => {
-        const eyesShut =
-          face.rightEyeOpenProbability < 0.4 &&
-          face.leftEyeOpenProbability < 0.4;
-        const winking =
-          !eyesShut &&
-          (face.rightEyeOpenProbability < 0.4 ||
-            face.leftEyeOpenProbability < 0.4);
-        const smiling = face.smilingProbability > 0.7;
-        return (
-          <View style={styles.faces} key={index}>
-            <Text style={styles.faceDesc}>
-              Eyes Shut: {eyesShut.toString()}
-            </Text>
-            <Text style={styles.faceDesc}>Winking: {winking.toString()}</Text>
-            <Text style={styles.faceDesc}>Smiling: {smiling.toString()}</Text>
-          </View>
-        );
-      });
-    }
+  function calculateFaceBox(face) {
+    // Calculate face box position and dimensions.
+    const { bounds } = face;
+    const left = bounds.origin.x;
+    const top = bounds.origin.y;
+    const width = bounds.size.width;
+    const height = bounds.size.height;
+
+    return {
+      left,
+      top,
+      width,
+      height,
+    };
   }
 
   const handleFacesDetected = ({ faces }) => {
+    // Process face data and update yaw and roll angles here
+    if (faces.length > 0) {
+      const face = faces[0]; // Assuming there's only one detected face
+      const faceBox = calculateFaceBox(face);
+
+      // Update yaw and roll angles.
+      setYaw(face.yawAngle.toFixed(2));
+      setRoll(face.rollAngle.toFixed(2));
+    }
+
     setFaceData(faces);
-    console.log(faces);
   };
 
   return (
@@ -59,14 +56,39 @@ export default function App() {
       style={styles.camera}
       onFacesDetected={handleFacesDetected}
       faceDetectorSettings={{
-        mode: FaceDetector.FaceDetectorMode.fast,
+        mode: FaceDetector.FaceDetectorMode.accurate,
         detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
         runClassifications: FaceDetector.FaceDetectorClassifications.none,
         minDetectionInterval: 100,
         tracking: true,
       }}
     >
-      {getFaceDataView()}
+      {faceData.map((face, index) => {
+        const faceBox = calculateFaceBox(face);
+
+        return (
+          <React.Fragment key={index}>
+            {/* Draw a transparent face box */}
+            <View
+              style={{
+                position: 'absolute',
+                left: faceBox.left,
+                top: faceBox.top,
+                width: faceBox.width,
+                height: faceBox.height,
+                borderColor: 'green',
+                borderWidth: 2,
+                borderRadius: 10,
+                opacity: 0.7,
+              }}
+            ></View>
+            {/* Display yaw and roll angles */}
+            <Text style={styles.faceDesc}>
+              Yaw: {yaw}°, Roll: {roll}°
+            </Text>
+          </React.Fragment>
+        );
+      })}
     </Camera>
   );
 }
@@ -77,14 +99,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  faces: {
-    backgroundColor: '#ffffff',
-    alignSelf: 'stretch',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 16,
-  },
   faceDesc: {
     fontSize: 20,
+    color: 'white',
+    position: 'absolute',
+    bottom: 16,
+    left: 16,
   },
 });
