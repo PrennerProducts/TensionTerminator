@@ -8,6 +8,7 @@ export default function App() {
   const [faceData, setFaceData] = useState([]);
   const [yaw, setYaw] = useState(0);
   const [roll, setRoll] = useState(0);
+  const [Neigung, setNeigung] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -41,10 +42,18 @@ export default function App() {
     if (faces.length > 0) {
       const face = faces[0]; // Assuming there's only one detected face
       const faceBox = calculateFaceBox(face);
+      let n=0;
 
       // Update yaw and roll angles.
       setYaw(face.yawAngle.toFixed(2));
       setRoll(face.rollAngle.toFixed(2));
+      n=face.yawAngle.toFixed(2);
+        if(n>80){
+            n=(n-360)*-1;
+            n=n.toFixed(2);
+
+        }
+      setNeigung(n);
     }
 
     setFaceData(faces);
@@ -84,7 +93,7 @@ export default function App() {
             ></View>
             {/* Display yaw and roll angles */}
             <Text style={styles.faceDesc}>
-              Yaw: {yaw}°, Roll: {roll}°
+              Yaw: {yaw}°, Roll: {roll}°, Neigung: {Neigung}°
             </Text>
           </React.Fragment>
         );
