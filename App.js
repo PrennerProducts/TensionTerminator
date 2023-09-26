@@ -8,6 +8,9 @@ export default function App() {
   const [faceData, setFaceData] = useState([]);
   const [yaw, setYaw] = useState(0);
   const [roll, setRoll] = useState(0);
+  const [Neigung, setNeigung] = useState(0);
+  const [maxYaw, setMaxYaw] = useState(0);
+  const [maxRoll, setMaxRoll] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -41,10 +44,19 @@ export default function App() {
     if (faces.length > 0) {
       const face = faces[0]; // Assuming there's only one detected face
       const faceBox = calculateFaceBox(face);
+      let n = 0;
 
       // Update yaw and roll angles.
       setYaw(face.yawAngle.toFixed(2));
       setRoll(face.rollAngle.toFixed(2));
+      setMaxYaw((prev) => Math.max(prev, Math.abs(face.yawAngle)));
+      setMaxRoll((prev) => Math.max(prev, Math.abs(face.rollAngle)));
+      n = face.yawAngle.toFixed(2);
+      if (n > 80) {
+        n = (n - 360) * -1;
+        n = n.toFixed(2);
+      }
+      setNeigung(n);
     }
 
     setFaceData(faces);
@@ -57,7 +69,7 @@ export default function App() {
       onFacesDetected={handleFacesDetected}
       faceDetectorSettings={{
         mode: FaceDetector.FaceDetectorMode.accurate,
-        detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
+        detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
         runClassifications: FaceDetector.FaceDetectorClassifications.none,
         minDetectionInterval: 100,
         tracking: true,
@@ -84,7 +96,10 @@ export default function App() {
             ></View>
             {/* Display yaw and roll angles */}
             <Text style={styles.faceDesc}>
-              Yaw: {yaw}°, Roll: {roll}°
+              Yaw: {yaw}°, Roll: {roll}°, Neigung: {Neigung}°
+            </Text>
+            <Text style={styles.maxValues}>
+              Max Yaw: {maxYaw.toFixed(2)}°, Max Roll: {maxRoll.toFixed(2)}°
             </Text>
           </React.Fragment>
         );
@@ -105,5 +120,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 16,
     left: 16,
+  },
+  maxValues: {
+    fontSize: 20,
+    color: 'white',
+    position: 'absolute',
+    bottom: 32,
+    right: 16,
   },
 });
