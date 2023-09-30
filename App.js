@@ -5,10 +5,9 @@ import * as FaceDetector from 'expo-face-detector';
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
-  const [faceData, setFaceData] = useState([]);
+  const [landmarkData, setLandmarkData] = useState([]);
   const [yaw, setYaw] = useState(0);
   const [roll, setRoll] = useState(0);
-  const [Neigung, setNeigung] = useState(0);
   const [ScreenText, setScreenText] = useState("");
   const [maxYawR, setMaxYawR] = useState(0);
   const [maxYawL, setMaxYawL] = useState(0);
@@ -28,47 +27,70 @@ export default function App() {
   }
 
   const handleFacesDetected = ({ faces }) => {
-    if (faces.length === 0) return;
+    if (faces.length === 0) {
+      console.log ("No Face Detected!");
+      return;
+    }
+    else if (faces.length > 1) {
+      console.log ("Faces Detected: " + faces.length);
+      return;
+    }
     else if (faces.length > 0) {
       const face = faces[0];
-      let n = 0;
-      setYaw(face.yawAngle.toFixed(2));
-      setRoll(face.rollAngle.toFixed(2));
 
+      setYaw(face.yawAngle.toFixed(0));
+      setRoll(face.rollAngle.toFixed(2));
       setMaxRoll((prev) => Math.max(prev, Math.abs(face.rollAngle)));
-      n = face.yawAngle.toFixed(2);
-      if (n > 80) {
-        n = (n - 360) * -1;
-        n = n.toFixed(2);
+
+      if (yaw > 15 && yaw < 180) {
+        setScreenText("-> " + yaw + "°");
+        setMaxYawR((prev) => Math.max(prev, yaw));
       }
-      setNeigung(n);
-      let rotoDegree = 0;
-      rotoDegree = face.yawAngle.toFixed(0);
-      if (rotoDegree > 15 && rotoDegree < 180) {
-        setScreenText("-> " + rotoDegree + "°");
-        if (rotoDegree > maxYawR) setMaxYawR(rotoDegree);
-      }
-      else if (rotoDegree < 345 && rotoDegree > 180) {
-        setScreenText("<- " + (360-rotoDegree) + "°");
-        if ((360-rotoDegree) > maxYawL) setMaxYawL(360-rotoDegree);
+      else if (yaw < 345 && yaw > 180) {
+        let yawL = 360-yaw;
+        setScreenText("<- " + yawL + "°");
+        setMaxYawL((prev) => Math.max(prev, yawL));
       }
       else setScreenText("");
-      //console.log(ScreenText);
 
-      // Calculate line coordinates between left eye and right eye
-      if (face.LEFT_EYE && face.RIGHT_EYE) {
+      if (face.LEFT_EYE && 
+        face.RIGHT_EYE && 
+        face.NOSE_BASE &&
+        face.BOTTOM_MOUTH &&
+        face.LEFT_MOUTH &&
+        face.RIGHT_MOUTH &&
+        face.LEFT_EAR &&
+        face.RIGHT_EAR
+        ) {
         const leftEye = face.RIGHT_EYE;
         const rightEye = face.LEFT_EYE;
+        const bottomMouth = face.BOTTOM_MOUTH;
         const lineCoordinates = {
           startX: leftEye.x,
           startY: leftEye.y,
           endX: rightEye.x,
           endY: rightEye.y,
+          eyeCenterX: (leftEye.x + rightEye.x) / 2,
+          eyeCenterY: (leftEye.y + rightEye.y) / 2,
+          bottomX: bottomMouth.x,
+          bottomY: bottomMouth.y
         };
         setLineCoordinates(lineCoordinates);
+
+        const landmarkData = {
+        leftEye: face.LEFT_EYE,
+        rightEye: face.RIGHT_EYE,
+        noseBase: face.NOSE_BASE,
+        bottomMouth: face.BOTTOM_MOUTH,
+        leftMouth: face.LEFT_MOUTH,
+        rightMouth: face.RIGHT_MOUTH,
+        leftEar: face.LEFT_EAR,
+        rightEar: face.RIGHT_EAR
+        };
+        setLandmarkData(landmarkData);
+
+        
       }
-    } else {
-      setLineCoordinates(null); // Reset line coordinates
     }
   };
 
@@ -81,7 +103,6 @@ export default function App() {
     setMaxYawR(0); // Reset max yaw to 0
     setMaxYawL(0); // Reset max yaw to 0
     setMaxRoll(0); // Reset max roll to 0
-    setFaceData([]); // Clear face data
     setLineCoordinates(null); // Reset line coordinates
   };
 
@@ -96,12 +117,26 @@ export default function App() {
             mode: FaceDetector.FaceDetectorMode.fast,
             detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
             runClassifications: FaceDetector.FaceDetectorClassifications.none,
-            minDetectionInterval: 0,
+            minDetectionInterval: 100,
             tracking: true,
           }}
         >
-          {/* Draw the line when lineCoordinates is available */}
+          {/* Draw the lines when lineCoordinates is available */}
           {lineCoordinates && (
+  <>
+            {/* White Line */}
+            <View
+              style={{
+                position: 'absolute',
+                left: lineCoordinates.eyeCenterX,
+                top: lineCoordinates.eyeCenterY-500,
+                width: 1,
+                height: 1000,
+                backgroundColor: 'white',
+              }}
+            ></View>
+
+            {/* Red Line */}
             <View
               style={{
                 position: 'absolute',
@@ -111,7 +146,7 @@ export default function App() {
                   Math.pow(lineCoordinates.endX - lineCoordinates.startX, 2) +
                     Math.pow(lineCoordinates.endY - lineCoordinates.startY, 2)
                 ),
-                height: 2,
+                height: 3,
                 backgroundColor: 'red',
                 transform: [
                   {
@@ -123,8 +158,55 @@ export default function App() {
                 ],
                 transformOrigin: '0% 0%',
               }}
-            ></View>            
-          )}
+            ></View>
+
+            {/* Green Line */}
+            <View
+              style={{
+                position: 'absolute',
+                left: lineCoordinates.eyeCenterX,
+                top: lineCoordinates.eyeCenterY,
+                width: 3, // Set the width of the line
+                height: Math.sqrt(
+                  Math.pow(
+                    lineCoordinates.bottomX - lineCoordinates.eyeCenterX,
+                    2
+                  ) +
+                    Math.pow(
+                      lineCoordinates.bottomY - lineCoordinates.eyeCenterY,
+                      2
+                    )
+                ),
+                backgroundColor: 'green',
+                transform: [
+                  {
+                    rotate: `${Math.atan2(
+                      lineCoordinates.eyeCenterX - lineCoordinates.bottomX,
+                      lineCoordinates.bottomY - lineCoordinates.eyeCenterY
+                    )}rad`,
+                  },
+                ],
+                transformOrigin: '0% 0%',
+              }}
+            ></View>
+
+            {/* Dots for Landmarks */}
+            {Object.keys(landmarkData).map((landmarkName, index) => (
+              <View
+                key={index}
+                style={{
+                  position: 'absolute',
+                  left: landmarkData[landmarkName].x,
+                  top: landmarkData[landmarkName].y,
+                  width: 4,
+                  height: 4,
+                  backgroundColor: 'blue',
+                  borderRadius: 2,
+                }}
+              ></View>
+            ))}
+          </>
+        )}
         </Camera>
       ) : (
         <View style={styles.startScreen}>
