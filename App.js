@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
+import * as FileSystem from 'expo-file-system';
+import EvaluationResult from './EvaluationResult';
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -12,8 +14,12 @@ export default function App() {
   const [maxYawR, setMaxYawR] = useState(0);
   const [maxYawL, setMaxYawL] = useState(0);
   const [maxRoll, setMaxRoll] = useState(0);
-  const [evaluationStarted, setEvaluationStarted] = useState(false);
   const [lineCoordinates, setLineCoordinates] = useState(null); // Store line coordinates
+  const [capturedImageURI, setCapturedImageURI] = useState(null);
+  const cameraRef = useRef(null);
+  const [evaluationStarted, setEvaluationStarted] = useState(false);
+  const [showEvaluationResult, setShowEvaluationResult] = useState(false);
+  const [capturedPhotoUri, setCapturedPhotoUri] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -26,9 +32,45 @@ export default function App() {
     return <Text>No access to camera</Text>;
   }
 
+  const takePicture = async (imageName) => {
+    if (cameraRef.current) {
+      const options = { quality: 1, base64: true };
+      const photo = await cameraRef.current.takePictureAsync(options);
+ 
+      await FileSystem.moveAsync({
+        from: photo.uri,
+        to: `${FileSystem.documentDirectory}${imageName}`,
+      });
+  
+      console.log("Picture taken: " + imageName);
+    }
+  };
+
+  // Run this effect whenever 'yaw' changes. Capture a picture when maxYawR or maxYawL gets a new value
+  useEffect(() => {
+    if (yaw > 15 && yaw < 180) {
+      setScreenText("-> " + yaw + "°");
+      setMaxYawR((prev) => {
+        if (yaw > prev) {
+          takePicture("MaxYawR.jpg");
+        }
+        return Math.max(prev, yaw);
+      });
+    } else if (yaw < 345 && yaw > 180) {
+      let yawL = 360 - yaw;
+      setScreenText("<- " + yawL + "°");
+      setMaxYawL((prev) => {
+        if (yawL > prev) {
+          takePicture("MaxYawL.jpg");
+        }
+        return Math.max(prev, yawL);
+      });
+    } else setScreenText("");
+  }, [yaw]); 
+
   const handleFacesDetected = ({ faces }) => {
     if (faces.length === 0) {
-      console.log ("No Face Detected!");
+      setScreenText("No Face Detected");
       return;
     }
     else if (faces.length > 1) {
@@ -41,17 +83,6 @@ export default function App() {
       setYaw(face.yawAngle.toFixed(0));
       setRoll(face.rollAngle.toFixed(2));
       setMaxRoll((prev) => Math.max(prev, Math.abs(face.rollAngle)));
-
-      if (yaw > 15 && yaw < 180) {
-        setScreenText("-> " + yaw + "°");
-        setMaxYawR((prev) => Math.max(prev, yaw));
-      }
-      else if (yaw < 345 && yaw > 180) {
-        let yawL = 360-yaw;
-        setScreenText("<- " + yawL + "°");
-        setMaxYawL((prev) => Math.max(prev, yawL));
-      }
-      else setScreenText("");
 
       if (face.LEFT_EYE && 
         face.RIGHT_EYE && 
@@ -88,8 +119,6 @@ export default function App() {
         rightEar: face.RIGHT_EAR
         };
         setLandmarkData(landmarkData);
-
-        
       }
     }
   };
@@ -98,18 +127,39 @@ export default function App() {
     setEvaluationStarted(true);
   };
 
-  const exitEvaluation = () => {
+  const exitEvaluation = async () => {
     setEvaluationStarted(false);
-    setMaxYawR(0); // Reset max yaw to 0
-    setMaxYawL(0); // Reset max yaw to 0
-    setMaxRoll(0); // Reset max roll to 0
-    setLineCoordinates(null); // Reset line coordinates
+    setMaxYawR(0);
+    setMaxYawL(0);
+    setMaxRoll(0);
+    setLineCoordinates(null);
+  
+    if (cameraRef.current) {
+      const options = { quality: 1, base64: false };
+      const photo = await cameraRef.current.takePictureAsync(options);
+      setCapturedPhotoUri(photo.uri);
+      setShowEvaluationResult(true);
+    }
   };
+
+  const handleOk = () => {
+  setShowEvaluationResult(false);
+  setCapturedPhotoUri(null);
+};
+
+const handleRepeat = () => {
+  setShowEvaluationResult(false);
+  setCapturedPhotoUri(null);
+  startEvaluation();
+};
 
   return (
     <View style={styles.container}>
       {evaluationStarted ? (
         <Camera
+        ref={(ref) => {
+          cameraRef.current = ref;
+        }}
           type={Camera.Constants.Type.front}
           style={styles.camera}
           onFacesDetected={handleFacesDetected}
@@ -257,7 +307,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 20,
     right: 20,
-    backgroundColor: 'red',
+    backgroundColor: 'blue',
     padding: 10,
     borderRadius: 5,
   },
@@ -276,6 +326,6 @@ const styles = StyleSheet.create({
   },
   maxValues: {
     fontSize: 20,
-    color: 'white',
+    color: 'yellow',
   },
 });
