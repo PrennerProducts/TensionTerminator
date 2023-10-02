@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import * as FileSystem from 'expo-file-system';
-import EvaluationResult from './EvaluationResult';
+import EvaluationResult from './evaluationComponents/EvaluationResult';
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -15,7 +15,6 @@ export default function App() {
   const [maxYawL, setMaxYawL] = useState(0);
   const [maxRoll, setMaxRoll] = useState(0);
   const [lineCoordinates, setLineCoordinates] = useState(null); // Store line coordinates
-  const [capturedImageURI, setCapturedImageURI] = useState(null);
   const cameraRef = useRef(null);
   const [evaluationStarted, setEvaluationStarted] = useState(false);
   const [showEvaluationResult, setShowEvaluationResult] = useState(false);
