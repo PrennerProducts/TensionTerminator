@@ -30,6 +30,16 @@ cd TensionTerminator
 npm install
 ```
 
+## Kitten installieren
+
+```bash
+npm i @ui-kitten/components @eva-design/eva react-native-svg
+```
+
+```bash
+expo install react-native-svg@9.13.6
+```
+
 ## Git Flow initalization
 
 install the Git Flow Tool:
