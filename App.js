@@ -8,7 +8,7 @@ export default function App() {
   const [landmarkData, setLandmarkData] = useState([]);
   const [yaw, setYaw] = useState(0);
   const [roll, setRoll] = useState(0);
-  const [ScreenText, setScreenText] = useState("");
+  const [ScreenText, setScreenText] = useState('');
   const [maxYawR, setMaxYawR] = useState(0);
   const [maxYawL, setMaxYawL] = useState(0);
   const [maxRoll, setMaxRoll] = useState(0);
@@ -28,14 +28,12 @@ export default function App() {
 
   const handleFacesDetected = ({ faces }) => {
     if (faces.length === 0) {
-      console.log ("No Face Detected!");
+      console.log('No Face Detected!');
       return;
-    }
-    else if (faces.length > 1) {
-      console.log ("Faces Detected: " + faces.length);
+    } else if (faces.length > 1) {
+      console.log('Faces Detected: ' + faces.length);
       return;
-    }
-    else if (faces.length > 0) {
+    } else if (faces.length > 0) {
       const face = faces[0];
 
       setYaw(face.yawAngle.toFixed(0));
@@ -43,25 +41,24 @@ export default function App() {
       setMaxRoll((prev) => Math.max(prev, Math.abs(face.rollAngle)));
 
       if (yaw > 15 && yaw < 180) {
-        setScreenText("-> " + yaw + "°");
+        setScreenText('-> ' + yaw + '°');
         setMaxYawR((prev) => Math.max(prev, yaw));
-      }
-      else if (yaw < 345 && yaw > 180) {
-        let yawL = 360-yaw;
-        setScreenText("<- " + yawL + "°");
+      } else if (yaw < 345 && yaw > 180) {
+        let yawL = 360 - yaw;
+        setScreenText('<- ' + yawL + '°');
         setMaxYawL((prev) => Math.max(prev, yawL));
-      }
-      else setScreenText("");
+      } else setScreenText('');
 
-      if (face.LEFT_EYE && 
-        face.RIGHT_EYE && 
+      if (
+        face.LEFT_EYE &&
+        face.RIGHT_EYE &&
         face.NOSE_BASE &&
         face.BOTTOM_MOUTH &&
         face.LEFT_MOUTH &&
         face.RIGHT_MOUTH &&
         face.LEFT_EAR &&
         face.RIGHT_EAR
-        ) {
+      ) {
         const leftEye = face.RIGHT_EYE;
         const rightEye = face.LEFT_EYE;
         const bottomMouth = face.BOTTOM_MOUTH;
@@ -73,23 +70,21 @@ export default function App() {
           eyeCenterX: (leftEye.x + rightEye.x) / 2,
           eyeCenterY: (leftEye.y + rightEye.y) / 2,
           bottomX: bottomMouth.x,
-          bottomY: bottomMouth.y
+          bottomY: bottomMouth.y,
         };
         setLineCoordinates(lineCoordinates);
 
         const landmarkData = {
-        leftEye: face.LEFT_EYE,
-        rightEye: face.RIGHT_EYE,
-        noseBase: face.NOSE_BASE,
-        bottomMouth: face.BOTTOM_MOUTH,
-        leftMouth: face.LEFT_MOUTH,
-        rightMouth: face.RIGHT_MOUTH,
-        leftEar: face.LEFT_EAR,
-        rightEar: face.RIGHT_EAR
+          leftEye: face.LEFT_EYE,
+          rightEye: face.RIGHT_EYE,
+          noseBase: face.NOSE_BASE,
+          bottomMouth: face.BOTTOM_MOUTH,
+          leftMouth: face.LEFT_MOUTH,
+          rightMouth: face.RIGHT_MOUTH,
+          leftEar: face.LEFT_EAR,
+          rightEar: face.RIGHT_EAR,
         };
         setLandmarkData(landmarkData);
-
-        
       }
     }
   };
@@ -123,90 +118,90 @@ export default function App() {
         >
           {/* Draw the lines when lineCoordinates is available */}
           {lineCoordinates && (
-  <>
-            {/* White Line */}
-            <View
-              style={{
-                position: 'absolute',
-                left: lineCoordinates.eyeCenterX,
-                top: lineCoordinates.eyeCenterY-500,
-                width: 1,
-                height: 1000,
-                backgroundColor: 'white',
-              }}
-            ></View>
-
-            {/* Red Line */}
-            <View
-              style={{
-                position: 'absolute',
-                left: lineCoordinates.startX,
-                top: lineCoordinates.startY,
-                width: Math.sqrt(
-                  Math.pow(lineCoordinates.endX - lineCoordinates.startX, 2) +
-                    Math.pow(lineCoordinates.endY - lineCoordinates.startY, 2)
-                ),
-                height: 3,
-                backgroundColor: 'red',
-                transform: [
-                  {
-                    rotate: `${Math.atan2(
-                      lineCoordinates.endY - lineCoordinates.startY,
-                      lineCoordinates.endX - lineCoordinates.startX
-                    )}rad`,
-                  },
-                ],
-                transformOrigin: '0% 0%',
-              }}
-            ></View>
-
-            {/* Green Line */}
-            <View
-              style={{
-                position: 'absolute',
-                left: lineCoordinates.eyeCenterX,
-                top: lineCoordinates.eyeCenterY,
-                width: 3, // Set the width of the line
-                height: Math.sqrt(
-                  Math.pow(
-                    lineCoordinates.bottomX - lineCoordinates.eyeCenterX,
-                    2
-                  ) +
-                    Math.pow(
-                      lineCoordinates.bottomY - lineCoordinates.eyeCenterY,
-                      2
-                    )
-                ),
-                backgroundColor: 'green',
-                transform: [
-                  {
-                    rotate: `${Math.atan2(
-                      lineCoordinates.eyeCenterX - lineCoordinates.bottomX,
-                      lineCoordinates.bottomY - lineCoordinates.eyeCenterY
-                    )}rad`,
-                  },
-                ],
-                transformOrigin: '0% 0%',
-              }}
-            ></View>
-
-            {/* Dots for Landmarks */}
-            {Object.keys(landmarkData).map((landmarkName, index) => (
+            <>
+              {/* White Line */}
               <View
-                key={index}
                 style={{
                   position: 'absolute',
-                  left: landmarkData[landmarkName].x,
-                  top: landmarkData[landmarkName].y,
-                  width: 4,
-                  height: 4,
-                  backgroundColor: 'blue',
-                  borderRadius: 2,
+                  left: lineCoordinates.eyeCenterX,
+                  top: lineCoordinates.eyeCenterY - 500,
+                  width: 1,
+                  height: 1000,
+                  backgroundColor: 'white',
                 }}
               ></View>
-            ))}
-          </>
-        )}
+
+              {/* Red Line */}
+              <View
+                style={{
+                  position: 'absolute',
+                  left: lineCoordinates.startX,
+                  top: lineCoordinates.startY,
+                  width: Math.sqrt(
+                    Math.pow(lineCoordinates.endX - lineCoordinates.startX, 2) +
+                      Math.pow(lineCoordinates.endY - lineCoordinates.startY, 2)
+                  ),
+                  height: 3,
+                  backgroundColor: 'red',
+                  transform: [
+                    {
+                      rotate: `${Math.atan2(
+                        lineCoordinates.endY - lineCoordinates.startY,
+                        lineCoordinates.endX - lineCoordinates.startX
+                      )}rad`,
+                    },
+                  ],
+                  transformOrigin: '0% 0%',
+                }}
+              ></View>
+
+              {/* Green Line */}
+              <View
+                style={{
+                  position: 'absolute',
+                  left: lineCoordinates.eyeCenterX,
+                  top: lineCoordinates.eyeCenterY,
+                  width: 3, // Set the width of the line
+                  height: Math.sqrt(
+                    Math.pow(
+                      lineCoordinates.bottomX - lineCoordinates.eyeCenterX,
+                      2
+                    ) +
+                      Math.pow(
+                        lineCoordinates.bottomY - lineCoordinates.eyeCenterY,
+                        2
+                      )
+                  ),
+                  backgroundColor: 'green',
+                  transform: [
+                    {
+                      rotate: `${Math.atan2(
+                        lineCoordinates.eyeCenterX - lineCoordinates.bottomX,
+                        lineCoordinates.bottomY - lineCoordinates.eyeCenterY
+                      )}rad`,
+                    },
+                  ],
+                  transformOrigin: '0% 0%',
+                }}
+              ></View>
+
+              {/* Dots for Landmarks */}
+              {Object.keys(landmarkData).map((landmarkName, index) => (
+                <View
+                  key={index}
+                  style={{
+                    position: 'absolute',
+                    left: landmarkData[landmarkName].x,
+                    top: landmarkData[landmarkName].y,
+                    width: 4,
+                    height: 4,
+                    backgroundColor: 'blue',
+                    borderRadius: 2,
+                  }}
+                ></View>
+              ))}
+            </>
+          )}
         </Camera>
       ) : (
         <View style={styles.startScreen}>
@@ -222,9 +217,7 @@ export default function App() {
       )}
       {evaluationStarted && (
         <View style={styles.textContainer}>
-          <Text style={styles.faceDesc}>
-            {ScreenText}
-          </Text>
+          <Text style={styles.faceDesc}>{ScreenText}</Text>
           <Text style={styles.maxValues}>
             Max Right: {maxYawR.toFixed(2)}°, Max Left: {maxYawL.toFixed(2)}°
           </Text>
