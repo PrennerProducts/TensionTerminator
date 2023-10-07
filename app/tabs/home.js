@@ -4,9 +4,18 @@ import { Link } from 'expo-router';
 
 const homePage = () => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'grey',
+      }}
+    >
       <Text>home</Text>
-      <Link href="/">Log out</Link>
+      <Link href="/" style={{ textAlign: 'right', fontSize: 24, margin: 20 }}>
+        Log out
+      </Link>
     </View>
   );
 };
