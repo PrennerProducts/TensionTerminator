@@ -19,6 +19,7 @@ const EvaluationPage = () => {
   const [evaluationStarted, setEvaluationStarted] = useState(false);
   const [showEvaluationResult, setShowEvaluationResult] = useState(false);
   const [capturedPhotoUri, setCapturedPhotoUri] = useState(null);
+  const mutex = useRef(false);
 
   useEffect(() => {
     (async () => {
@@ -32,6 +33,12 @@ const EvaluationPage = () => {
   }
 
   const takePicture = async (imageName) => {
+    if (mutex.current) {
+      console.log('Mutex is locked');
+      return;
+    }
+    mutex.current = true;
+    console.log('Attempting to take picture for: ' + imageName);
     if (cameraRef.current) {
       const options = { quality: 1, base64: true };
       const photo = await cameraRef.current.takePictureAsync(options);
@@ -42,29 +49,38 @@ const EvaluationPage = () => {
       });
 
       console.log('Picture taken: ' + imageName);
+      mutex.current = false;
+      console.log('Mutex is unlocked');
     }
   };
 
   // Run this effect whenever 'yaw' changes. Capture a picture when maxYawR or maxYawL gets a new value
   useEffect(() => {
     if (yaw > 15 && yaw < 180) {
+      console.log(`Current YawR: ${yaw}, Max YawR: ${maxYawR}`);
       setScreenText('-> ' + yaw + '°');
       setMaxYawR((prev) => {
         if (yaw > prev) {
+          console.log('Taking picture for MaxYawR');
           takePicture('MaxYawR.jpg');
         }
         return Math.max(prev, yaw);
       });
     } else if (yaw < 345 && yaw > 180) {
       let yawL = 360 - yaw;
+      console.log(`Current YawL: ${yawL}, Max YawL: ${maxYawL}`);
       setScreenText('<- ' + yawL + '°');
       setMaxYawL((prev) => {
         if (yawL > prev) {
+          console.log('Taking picture for MaxYawL');
           takePicture('MaxYawL.jpg');
         }
         return Math.max(prev, yawL);
       });
-    } else setScreenText('');
+    } else {
+      console.log('Yaw out of range.');
+      setScreenText('');
+    }
   }, [yaw]);
 
   const handleFacesDetected = ({ faces }) => {
