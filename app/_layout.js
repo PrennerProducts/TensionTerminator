@@ -8,7 +8,7 @@ import {
   Slot,
 } from 'expo-router';
 
-const StackLayout = () => {
+export default function Layout() {
   const router = useRouter();
   return (
     <Stack
@@ -66,6 +66,4 @@ const StackLayout = () => {
       <Stack.Screen name="tabs" options={{ headerShown: false }} />
     </Stack>
   );
-};
-
-export default StackLayout;
+}

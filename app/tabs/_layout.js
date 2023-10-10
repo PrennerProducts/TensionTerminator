@@ -14,13 +14,15 @@ export default () => {
           ),
         }}
       />
+
       <Tabs.Screen
-        name="evaluation"
+        name="EvaluationScreen"
         options={{
           tabBarLabel: 'Evaluation',
           headerTitle: 'Evaluation Screen',
+
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="user" color={color} size={size} />
+            <FontAwesome5 name="camera" color={color} size={size} />
           ),
         }}
       />
