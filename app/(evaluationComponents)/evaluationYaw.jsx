@@ -10,7 +10,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import * as FileSystem from 'expo-file-system';
-import 'expo-router/entry';
 import { Link, useRouter } from 'expo-router';
 
 const evaluationYaw = () => {
@@ -28,6 +27,7 @@ const evaluationYaw = () => {
   const mutex = useRef(false);
   const [isYawStable, setIsYawStable] = useState(true);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
+  const [capturedPhotoUri, setCapturedPhotoUri] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -158,7 +158,7 @@ const evaluationYaw = () => {
 
   const startRollEvaluation = () => {
     //  HIER DANN WEITER ZU ROLL derweeil HOME
-    router.push('tabs');
+    router.replace('evaluationRoll');
   };
 
   const exitEvaluation = async () => {
@@ -169,7 +169,6 @@ const evaluationYaw = () => {
       const options = { quality: 1, base64: false };
       const photo = await cameraRef.current.takePictureAsync(options);
       setCapturedPhotoUri(photo.uri);
-      setShowEvaluationResult(true);
     }
   };
 
