@@ -44,32 +44,8 @@ export default function Layout() {
           ),
         }}
       />
-      <Stack.Screen
-        name="modal"
-        options={{
-          presentation: 'modal',
-          headerRight: () => (
-            <Button
-              title="close Modal"
-              onPress={() => {
-                router.back();
-              }}
-            />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="evaluationRoll"
-        options={{
-          headerTitle: 'RocknRoll',
-          headerShown: true,
-        }}
-      />
+
       <Stack.Screen name="tabs" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="evaluationComponents"
-        options={{ headerShown: true }}
-      />
     </Stack>
   );
 }

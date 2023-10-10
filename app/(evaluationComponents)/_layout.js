@@ -22,24 +22,7 @@ const EvaluationLayout = () => {
           fontWeight: 'bold',
         },
       }}
-    >
-      <Stack.Screen
-        name="evaluationYaw"
-        options={{
-          headerTitle: 'Yaw',
-          headerShown: false,
-          headerTitleAlign: 'center',
-        }}
-      />
-      {/* <Stack.Screen
-        name="evaluationRoll"
-        options={{
-          headerTitle: 'Roll',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      /> */}
-    </Stack>
+    ></Stack>
   );
 };
 
