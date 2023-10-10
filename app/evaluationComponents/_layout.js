@@ -25,6 +25,7 @@ const EvaluationLayout = () => {
     >
       {/* // Stackscreens können so umbenannt werden oder ausgeblendet mit
       //headerShown */}
+
       <Stack.Screen
         name="evaluationYaw"
         options={{
@@ -32,14 +33,17 @@ const EvaluationLayout = () => {
           headerShown: false,
           headerTitleAlign: 'center',
         }}
-      />
-      {/* <Stack.Screen
+
+      />*/}
+        {<Stack.Screen
+
         name="evaluationRoll"
         options={{
           headerTitle: 'Roll',
           headerShown: true,
           headerTitleAlign: 'center',
         }}
+
       /> */}
     </Stack>
   );
