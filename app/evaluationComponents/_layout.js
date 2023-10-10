@@ -33,17 +33,14 @@ const EvaluationLayout = () => {
           headerShown: false,
           headerTitleAlign: 'center',
         }}
-
-      />*/}
-        {<Stack.Screen
-
+      />
+      {/* <Stack.Screen
         name="evaluationRoll"
         options={{
           headerTitle: 'Roll',
           headerShown: true,
           headerTitleAlign: 'center',
         }}
-
       /> */}
     </Stack>
   );
