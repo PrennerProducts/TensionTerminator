@@ -1,25 +1,33 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Button,
+  Image,
+} from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import * as FileSystem from 'expo-file-system';
-import EvaluationResult from '../evaluationComponents/EvaluationResult';
+import 'expo-router/entry';
+import { Link, useRouter } from 'expo-router';
 
-const EvaluationPage = () => {
+const evaluationYaw = () => {
+  const router = useRouter();
+
   const [hasPermission, setHasPermission] = useState(null);
   const [landmarkData, setLandmarkData] = useState([]);
   const [yaw, setYaw] = useState(0);
-  const [roll, setRoll] = useState(0);
   const [ScreenText, setScreenText] = useState('');
   const [maxYawR, setMaxYawR] = useState(0);
   const [maxYawL, setMaxYawL] = useState(0);
-  const [maxRoll, setMaxRoll] = useState(0);
   const [lineCoordinates, setLineCoordinates] = useState(null); // Store line coordinates
   const cameraRef = useRef(null);
-  const [evaluationStarted, setEvaluationStarted] = useState(false);
-  const [showEvaluationResult, setShowEvaluationResult] = useState(false);
-  const [capturedPhotoUri, setCapturedPhotoUri] = useState(null);
+  const [evaluationStarted, setEvaluationStarted] = useState(true);
   const mutex = useRef(false);
+  const [isYawStable, setIsYawStable] = useState(true);
+  const [cacheBuster, setCacheBuster] = useState(Date.now());
 
   useEffect(() => {
     (async () => {
@@ -56,6 +64,13 @@ const EvaluationPage = () => {
 
   // Run this effect whenever 'yaw' changes. Capture a picture when maxYawR or maxYawL gets a new value
   useEffect(() => {
+    if (!isYawStable) {
+      console.log('Warte auf das Erreichen der Endposition...');
+      return;
+    }
+
+    let stableTimer;
+
     if (yaw > 15 && yaw < 180) {
       console.log(`Current YawR: ${yaw}, Max YawR: ${maxYawR}`);
       setScreenText('-> ' + yaw + '°');
@@ -94,8 +109,6 @@ const EvaluationPage = () => {
       const face = faces[0];
 
       setYaw(face.yawAngle.toFixed(0));
-      setRoll(face.rollAngle.toFixed(2));
-      setMaxRoll((prev) => Math.max(prev, Math.abs(face.rollAngle)));
 
       if (
         face.LEFT_EYE &&
@@ -137,15 +150,19 @@ const EvaluationPage = () => {
     }
   };
 
-  const startEvaluation = () => {
+  const startEvaluation = async () => {
+    setCacheBuster(Date.now());
+    clearYawValues();
     setEvaluationStarted(true);
+  };
+
+  const startRollEvaluation = () => {
+    //  HIER DANN WEITER ZU ROLL derweeil HOME
+    router.push('tabs');
   };
 
   const exitEvaluation = async () => {
     setEvaluationStarted(false);
-    setMaxYawR(0);
-    setMaxYawL(0);
-    setMaxRoll(0);
     setLineCoordinates(null);
 
     if (cameraRef.current) {
@@ -156,15 +173,9 @@ const EvaluationPage = () => {
     }
   };
 
-  const handleOk = () => {
-    setShowEvaluationResult(false);
-    setCapturedPhotoUri(null);
-  };
-
-  const handleRepeat = () => {
-    setShowEvaluationResult(false);
-    setCapturedPhotoUri(null);
-    startEvaluation();
+  const clearYawValues = () => {
+    setMaxYawR(0);
+    setMaxYawL(0);
   };
 
   return (
@@ -274,8 +285,29 @@ const EvaluationPage = () => {
         </Camera>
       ) : (
         <View style={styles.startScreen}>
+          <Image
+            source={{
+              uri: `${FileSystem.documentDirectory}MaxYawR.jpg?${cacheBuster}`,
+            }}
+            style={{ width: 100, height: 100 }}
+          />
+          <Text>Max Yaw Right: {maxYawR.toFixed(2)}°</Text>
+          <Image
+            source={{
+              uri: `${FileSystem.documentDirectory}MaxYawL.jpg?${cacheBuster}`,
+            }}
+            style={{ width: 100, height: 100 }}
+          />
+          <Text>Max Yaw Left: {maxYawL.toFixed(2)}°</Text>
           <TouchableOpacity onPress={startEvaluation}>
-            <Text style={styles.startButton}>Start evaluation</Text>
+            <Text style={styles.startButton}>
+              Evaluation erneut durchführen
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={startRollEvaluation}>
+            <Text style={styles.startButton}>
+              Weiter zur nächsten Evualationsübung
+            </Text>
           </TouchableOpacity>
         </View>
       )}
@@ -299,7 +331,7 @@ const EvaluationPage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: 'grey',
   },
   startScreen: {
     flex: 1,
@@ -311,6 +343,7 @@ const styles = StyleSheet.create({
     color: 'white',
     padding: 10,
     backgroundColor: 'blue',
+    margin: 20,
   },
   camera: {
     flex: 1,
@@ -342,4 +375,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EvaluationPage;
+export default evaluationYaw;

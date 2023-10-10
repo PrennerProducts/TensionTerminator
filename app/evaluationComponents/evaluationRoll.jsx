@@ -1,4 +1,3 @@
-
 import {
     StyleSheet,
     Text,
@@ -375,4 +374,4 @@ const styles = StyleSheet.create({
         color: 'yellow',
     },
 });
-export default evaluationRoll;
+
