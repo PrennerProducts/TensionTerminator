@@ -22,10 +22,6 @@ const LoginPage = () => {
         onPress={handlePress}
       />
 
-      <Pressable onPress={handlePress}>
-        <Text style={{ fontSize: 24, margin: 54 }}>Home</Text>
-      </Pressable>
-
       <Link href={'/register'} asChild>
         <Pressable>
           <Text>Create Account</Text>

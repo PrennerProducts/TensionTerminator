@@ -13,20 +13,20 @@ import * as FileSystem from 'expo-file-system';
 import 'expo-router/entry';
 import { Link, useRouter } from 'expo-router';
 
-const evaluationYaw = () => {
+const evaluationRoll = () => {
   const router = useRouter();
 
   const [hasPermission, setHasPermission] = useState(null);
   const [landmarkData, setLandmarkData] = useState([]);
-  const [yaw, setYaw] = useState(0);
+  const [roll, setRoll] = useState(0);
   const [ScreenText, setScreenText] = useState('');
-  const [maxYawR, setMaxYawR] = useState(0);
-  const [maxYawL, setMaxYawL] = useState(0);
+  const [maxRollR, setMaxRollR] = useState(0);
+  const [maxRollL, setMaxRollL] = useState(0);
   const [lineCoordinates, setLineCoordinates] = useState(null); // Store line coordinates
   const cameraRef = useRef(null);
   const [evaluationStarted, setEvaluationStarted] = useState(true);
   const mutex = useRef(false);
-  const [isYawStable, setIsYawStable] = useState(true);
+  const [isRollStable, setIsRollStable] = useState(true);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
 
   useEffect(() => {
@@ -62,41 +62,42 @@ const evaluationYaw = () => {
     }
   };
 
-  // Run this effect whenever 'yaw' changes. Capture a picture when maxYawR or maxYawL gets a new value
+  // Run this effect whenever 'Roll' changes. Capture a picture when maxRollR or maxRollL gets a new value
   useEffect(() => {
-    if (!isYawStable) {
+    if (!isRollStable) {
       console.log('Warte auf das Erreichen der Endposition...');
       return;
     }
 
     let stableTimer;
 
-    if (yaw > 15 && yaw < 180) {
-      console.log(`Current YawR: ${yaw}, Max YawR: ${maxYawR}`);
-      setScreenText('-> ' + yaw + '°');
-      setMaxYawR((prev) => {
-        if (yaw > prev) {
-          console.log('Taking picture for MaxYawR');
-          takePicture('MaxYawR.jpg');
+    if (roll >= 0 && roll < 80) {
+      console.log(`Current RollR: ${roll}, Max RollR: ${maxRollR}`);
+      setScreenText('-> ' + roll + '°');
+      setMaxRollR((prev) => {
+        if (roll > prev) {
+          console.log('Taking picture for MaxRollR');
+          takePicture('MaxRollR.jpg');
         }
-        return Math.max(prev, yaw);
-      });
-    } else if (yaw < 345 && yaw > 180) {
-      let yawL = 360 - yaw;
-      console.log(`Current YawL: ${yawL}, Max YawL: ${maxYawL}`);
-      setScreenText('<- ' + yawL + '°');
-      setMaxYawL((prev) => {
-        if (yawL > prev) {
-          console.log('Taking picture for MaxYawL');
-          takePicture('MaxYawL.jpg');
-        }
-        return Math.max(prev, yawL);
+        return Math.max(prev, roll);
       });
     } else {
-      console.log('Yaw out of range.');
-      setScreenText('');
-    }
-  }, [yaw]);
+      //if (roll < 360 && roll > 80) {
+      let rollL = 360 - roll;
+      console.log(`Current RollL: ${rollL}, Max RollL: ${maxRollL}`);
+      setScreenText('<- ' + rollL + '°');
+      setMaxRollL((prev) => {
+        if (rollL > prev) {
+          console.log('Taking picture for MaxRollL');
+          takePicture('MaxRollL.jpg');
+        }
+        return Math.max(prev, rollL);
+      });
+    } /*else {
+            console.log(roll, 'Roll out of range.');
+            setScreenText('');
+        }*/
+  }, [roll]);
 
   const handleFacesDetected = ({ faces }) => {
     if (faces.length === 0) {
@@ -108,7 +109,7 @@ const evaluationYaw = () => {
     } else if (faces.length > 0) {
       const face = faces[0];
 
-      setYaw(face.yawAngle.toFixed(0));
+      setRoll(face.rollAngle.toFixed(0));
 
       if (
         face.LEFT_EYE &&
@@ -152,13 +153,14 @@ const evaluationYaw = () => {
 
   const startEvaluation = async () => {
     setCacheBuster(Date.now());
-    clearYawValues();
+    clearRollValues();
     setEvaluationStarted(true);
   };
 
   const startRollEvaluation = () => {
     //  HIER DANN WEITER ZU ROLL derweeil HOME
-    router.push('tabs');
+    //router.push('tabs');
+    router.replace('evaluationRoll');
   };
 
   const exitEvaluation = async () => {
@@ -173,9 +175,9 @@ const evaluationYaw = () => {
     }
   };
 
-  const clearYawValues = () => {
-    setMaxYawR(0);
-    setMaxYawL(0);
+  const clearRollValues = () => {
+    setMaxRollR(0);
+    setMaxRollL(0);
   };
 
   return (
@@ -287,18 +289,18 @@ const evaluationYaw = () => {
         <View style={styles.startScreen}>
           <Image
             source={{
-              uri: `${FileSystem.documentDirectory}MaxYawR.jpg?${cacheBuster}`,
+              uri: `${FileSystem.documentDirectory}MaxRollR.jpg?${cacheBuster}`,
             }}
             style={{ width: 100, height: 100 }}
           />
-          <Text>Max Yaw Right: {maxYawR.toFixed(2)}°</Text>
+          <Text>Max Roll Right: {maxRollR.toFixed(2)}°</Text>
           <Image
             source={{
-              uri: `${FileSystem.documentDirectory}MaxYawL.jpg?${cacheBuster}`,
+              uri: `${FileSystem.documentDirectory}MaxRollL.jpg?${cacheBuster}`,
             }}
             style={{ width: 100, height: 100 }}
           />
-          <Text>Max Yaw Left: {maxYawL.toFixed(2)}°</Text>
+          <Text>Max Roll Left: {maxRollL.toFixed(2)}°</Text>
           <TouchableOpacity onPress={startEvaluation}>
             <Text style={styles.startButton}>
               Evaluation erneut durchführen
@@ -320,14 +322,13 @@ const evaluationYaw = () => {
         <View style={styles.textContainer}>
           <Text style={styles.faceDesc}>{ScreenText}</Text>
           <Text style={styles.maxValues}>
-            Max Right: {maxYawR.toFixed(2)}°, Max Left: {maxYawL.toFixed(2)}°
+            Max Right: {maxRollR.toFixed(2)}°, Max Left: {maxRollL.toFixed(2)}°
           </Text>
         </View>
       )}
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -374,5 +375,3 @@ const styles = StyleSheet.create({
     color: 'yellow',
   },
 });
-
-export default evaluationYaw;
