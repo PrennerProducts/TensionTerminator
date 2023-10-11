@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 const SchmerzRegionScreen = () => {
     const silhouetteImage = require('../../assets/Mensch.png');
     const windowHeight = Dimensions.get('window').height;
-    const opacityHeight = windowHeight * 0.17; // Hier können Sie den Prozentsatz anpassen
+
 
 
     return (
