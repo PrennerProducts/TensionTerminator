@@ -28,6 +28,9 @@ const evaluationYaw = () => {
   const [isYawStable, setIsYawStable] = useState(true);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
   const [capturedPhotoUri, setCapturedPhotoUri] = useState(null);
+  const [instruction, setInstruction] = useState('');
+  const [counterR, setCounterR] = useState(0);
+  const [counterL, setCounterL] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -63,15 +66,16 @@ const evaluationYaw = () => {
   };
 
   // Run this effect whenever 'yaw' changes. Capture a picture when maxYawR or maxYawL gets a new value
+  // Effekt für 'yaw'-Änderungen
   useEffect(() => {
     if (!isYawStable) {
       console.log('Warte auf das Erreichen der Endposition...');
       return;
     }
 
-    let stableTimer;
-
     if (yaw > 15 && yaw < 180) {
+      setCounterR(1);
+      setInstruction('Bitte Kopf nach rechts drehen -->');
       console.log(`Current YawR: ${yaw}, Max YawR: ${maxYawR}`);
       setScreenText('-> ' + yaw + '°');
       setMaxYawR((prev) => {
@@ -82,6 +86,8 @@ const evaluationYaw = () => {
         return Math.max(prev, yaw);
       });
     } else if (yaw < 345 && yaw > 180) {
+      setCounterL(1);
+      setInstruction('Bitte Kopf nach links drehen <--');
       let yawL = 360 - yaw;
       console.log(`Current YawL: ${yawL}, Max YawL: ${maxYawL}`);
       setScreenText('<- ' + yawL + '°');
@@ -93,10 +99,39 @@ const evaluationYaw = () => {
         return Math.max(prev, yawL);
       });
     } else {
+      updateInstructionBasedOnCounters();
       console.log('Yaw out of range.');
       setScreenText('');
     }
   }, [yaw]);
+
+  // Der useEffect für counterR und counterL
+  useEffect(() => {
+    updateInstructionBasedOnCounters();
+  }, [counterR, counterL]);
+
+  const updateInstructionBasedOnCounters = () => {
+    if (counterR === 0 && counterL === 0) {
+      setInstruction('Kopf nach rechts oder links drehen <-->');
+    } else if (counterR === 1 && counterL === 0) {
+      setInstruction('Bitte Kopf nach links drehen <--');
+    } else if (counterR === 0 && counterL === 1) {
+      setInstruction('Bitte Kopf nach rechts drehen -->');
+    } else if (counterR === 1 && counterL === 1) {
+      if (isYawNeutral()) {
+        setInstruction('Super! Evaluierung 1 abgeschlossen :D');
+        setTimeout(() => {
+          console.log('auto exit Evaluation1 Yaw');
+          exitEvaluation();
+        }, 2000);
+      }
+    }
+  };
+
+  const isYawNeutral = () => {
+    // Definieren Sie Ihre Logik hier, um festzustellen, ob der Yaw-Winkel "neutral" ist.
+    return yaw < 5 || yaw > 355; // Beispiel
+  };
 
   const handleFacesDetected = ({ faces }) => {
     if (faces.length === 0) {
@@ -164,6 +199,8 @@ const evaluationYaw = () => {
   const exitEvaluation = async () => {
     setEvaluationStarted(false);
     setLineCoordinates(null);
+    setCounterR(0);
+    setCounterL(0);
 
     if (cameraRef.current) {
       const options = { quality: 1, base64: false };
@@ -195,6 +232,9 @@ const evaluationYaw = () => {
             tracking: true,
           }}
         >
+          {/* CameraText Overlay */}
+          <Text style={styles.instructionText}>{instruction}</Text>
+
           {/* Draw the lines when lineCoordinates is available */}
           {lineCoordinates && (
             <>
@@ -371,6 +411,14 @@ const styles = StyleSheet.create({
   maxValues: {
     fontSize: 20,
     color: 'yellow',
+  },
+  instructionText: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: 'black',
+    position: 'absolute',
+    top: 100,
+    left: 20,
   },
 });
 
