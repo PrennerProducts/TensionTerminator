@@ -121,7 +121,7 @@ const evaluationYaw = () => {
       if (isYawNeutral()) {
         setInstruction('Super! Evaluierung 1 abgeschlossen :D');
         setTimeout(() => {
-          console.log('auto exit Evaluation1');
+          console.log('auto exit Evaluation1 Yaw');
           exitEvaluation();
         }, 2000);
       }
@@ -232,6 +232,7 @@ const evaluationYaw = () => {
             tracking: true,
           }}
         >
+          {/* CameraText Overlay */}
           <Text style={styles.instructionText}>{instruction}</Text>
 
           {/* Draw the lines when lineCoordinates is available */}
