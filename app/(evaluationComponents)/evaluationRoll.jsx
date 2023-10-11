@@ -27,6 +27,10 @@ const evaluationRoll = () => {
   const mutex = useRef(false);
   const [isRollStable, setIsRollStable] = useState(true);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
+  const [capturedPhotoUri, setCapturedPhotoUri] = useState(null);
+  const [instruction, setInstruction] = useState('');
+  const [counterR, setCounterR] = useState(0);
+  const [counterL, setCounterL] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -68,9 +72,10 @@ const evaluationRoll = () => {
       return;
     }
 
-    let stableTimer;
-
-    if (roll >= 0 && roll < 80) {
+    if (roll >= 7 && roll < 80) {
+      setCounterR(1);
+      console.log('CounterR: ' + counterR);
+      setInstruction('Bitte Kopf zur rechten Schulter schwenken -->');
       console.log(`Current RollR: ${roll}, Max RollR: ${maxRollR}`);
       setScreenText('-> ' + roll + '°');
       setMaxRollR((prev) => {
@@ -80,8 +85,10 @@ const evaluationRoll = () => {
         }
         return Math.max(prev, roll);
       });
-    } else {
-      //if (roll < 360 && roll > 80) {
+    } else if (roll <= 353 && roll > 280) {
+      console.log('CounterL: ' + counterL);
+      setCounterL(1);
+      setInstruction('Bitte Kopf zur linken Schulter schwenken <--');
       let rollL = 360 - roll;
       console.log(`Current RollL: ${rollL}, Max RollL: ${maxRollL}`);
       setScreenText('<- ' + rollL + '°');
@@ -92,11 +99,46 @@ const evaluationRoll = () => {
         }
         return Math.max(prev, rollL);
       });
-    } /*else {
-            console.log(roll, 'Roll out of range.');
-            setScreenText('');
-        }*/
+    } else {
+      console.log(
+        'CounterR: ' + counterR + ', CounterL: ' + counterL + ', EXIT NOW!'
+      );
+
+      updateInstructionBasedOnCounters();
+      console.log(roll, 'Roll out of range.');
+      setScreenText('');
+    }
   }, [roll]);
+
+  // Der useEffect für counterR und counterL
+  useEffect(() => {
+    updateInstructionBasedOnCounters();
+  }, [counterR, counterL]);
+
+  const updateInstructionBasedOnCounters = () => {
+    if (counterR === 0 && counterL === 0) {
+      setInstruction('Kopf nach rechts oder links neigen <-->');
+    } else if (counterR === 1 && counterL === 0) {
+      setInstruction('Bitte Kopf nach links neigen <--');
+    } else if (counterR === 0 && counterL === 1) {
+      setInstruction('Bitte Kopf nach rechts neigen -->');
+    } else if (counterR === 1 && counterL === 1) {
+      console.log('Both counters are 1');
+      if (isRollNeutral()) {
+        setInstruction('Super! Evaluierung für Roll abgeschlossen :D');
+        setTimeout(() => {
+          console.log('auto exit Evaluation2 Roll');
+          exitEvaluation(); // Oder eine separate Funktion, um die Roll-Evaluierung zu beenden.
+        }, 2000);
+      }
+    }
+  };
+
+  const isRollNeutral = () => {
+    // Definieren Sie Ihre Logik hier, um festzustellen, ob der Roll-Winkel "neutral" ist.
+    return roll <= 5 || roll >= 365;
+    console.log('Alles NEUTRAL');
+  };
 
   const handleFacesDetected = ({ faces }) => {
     if (faces.length === 0) {
@@ -165,6 +207,8 @@ const evaluationRoll = () => {
   const exitEvaluation = async () => {
     setEvaluationStarted(false);
     setLineCoordinates(null);
+    setCounterR(0);
+    setCounterL(0);
 
     if (cameraRef.current) {
       const options = { quality: 1, base64: false };
@@ -197,6 +241,9 @@ const evaluationRoll = () => {
             tracking: true,
           }}
         >
+          {/* CameraText Overlay */}
+          <Text style={styles.instructionText}>{instruction}</Text>
+
           {/* Draw the lines when lineCoordinates is available */}
           {lineCoordinates && (
             <>
@@ -372,6 +419,14 @@ const styles = StyleSheet.create({
   maxValues: {
     fontSize: 20,
     color: 'yellow',
+  },
+  instructionText: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: 'black',
+    position: 'absolute',
+    top: 100,
+    left: 20,
   },
 });
 
