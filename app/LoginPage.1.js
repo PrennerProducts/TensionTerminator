@@ -3,8 +3,6 @@ import React from 'react';
 import { Link } from 'expo-router';
 
 export const LoginPage = () => {
-  const router = router();
-
   const handleLogin = () => {};
 
   return (
