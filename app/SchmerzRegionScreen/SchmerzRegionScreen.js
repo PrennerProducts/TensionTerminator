@@ -28,7 +28,7 @@ const SchmerzRegionScreen = () => {
                         console.log('Schulter-Nacken ausgewählt.');
                     }}
                 >
-                    <Text style={{paddingTop:40, fontSize: 17,color: 'darkblue'}}>Schulter-Nacken</Text>
+                    <Text style={{paddingRight:15,paddingTop:40, fontSize: 17,color: 'darkblue'}}>Schulter-Nacken</Text>
                 </TouchableOpacity>
 
                 {/* Mittlerer-Rücken */}
@@ -44,7 +44,7 @@ const SchmerzRegionScreen = () => {
                         console.log('Mittlerer-Rücken ausgewählt.');
                     }}
                 >
-                    <Text style={{ fontSize: 17,color: 'darkblue'}}>Mittlerer-Rücken</Text>
+                    <Text style={{paddingRight:15, fontSize: 17,color: 'darkblue'}}>Mittlerer-Rücken</Text>
                 </TouchableOpacity>
 
                 {/* Unterer-Rücken */}
@@ -60,7 +60,7 @@ const SchmerzRegionScreen = () => {
                         console.log('Unterer-Rücken ausgewählt.');
                     }}
                 >
-                    <Text style={{paddingBottom:20, fontSize: 17,color: 'darkblue'}}>Unterer-Rücken</Text>
+                    <Text style={{paddingRight:15,paddingBottom:20, fontSize: 17,color: 'darkblue'}}>Unterer-Rücken</Text>
                 </TouchableOpacity>
 
                 {/* Becken-Gesäß */}
@@ -76,7 +76,7 @@ const SchmerzRegionScreen = () => {
                         console.log('Becken-Gesäß ausgewählt.');
                     }}
                 >
-                    <Text style={{ paddingBottom: 30, fontSize: 17,color: 'darkblue'}}>Becken-Gesäß</Text>
+                    <Text style={{paddingRight:15, paddingBottom: 30, fontSize: 17,color: 'darkblue'}}>Becken-Gesäß</Text>
                 </TouchableOpacity>
             </View>
         </View>
