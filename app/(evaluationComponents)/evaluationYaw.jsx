@@ -66,6 +66,7 @@ const evaluationYaw = () => {
   };
 
   // Run this effect whenever 'yaw' changes. Capture a picture when maxYawR or maxYawL gets a new value
+  // Effekt für 'yaw'-Änderungen
   useEffect(() => {
     if (!isYawStable) {
       console.log('Warte auf das Erreichen der Endposition...');
@@ -98,28 +99,38 @@ const evaluationYaw = () => {
         return Math.max(prev, yawL);
       });
     } else {
-      if (counterR === 0 && counterL === 0) {
-        setInstruction('Kopf nach rechts oder links drehen <-->');
-        setInstruction('test');
-        setInstruction('Hallo');
-      } else if (counterR === 1 && counterL === 0) {
-        setInstruction('Bitte Kopf nach links drehen <--');
-      } else if (counterR === 0 && counterL === 1) {
-        setInstruction('Bitte Kopf nach rechts drehen -->');
-      } else if (counterR === 1 && counterL === 1) {
-        setInstruction('Super! Evaluierung 1 abgeschlossen :D');
-        handleEvaluationFinished();
-      }
+      updateInstructionBasedOnCounters();
       console.log('Yaw out of range.');
       setScreenText('');
     }
   }, [yaw]);
 
-  const handleEvaluationFinished = () => {
-    setTimeout(() => {
-      console.log('auto exit Evaluation1');
-      exitEvaluation();
-    }, 2000);
+  // Der useEffect für counterR und counterL
+  useEffect(() => {
+    updateInstructionBasedOnCounters();
+  }, [counterR, counterL]);
+
+  const updateInstructionBasedOnCounters = () => {
+    if (counterR === 0 && counterL === 0) {
+      setInstruction('Kopf nach rechts oder links drehen <-->');
+    } else if (counterR === 1 && counterL === 0) {
+      setInstruction('Bitte Kopf nach links drehen <--');
+    } else if (counterR === 0 && counterL === 1) {
+      setInstruction('Bitte Kopf nach rechts drehen -->');
+    } else if (counterR === 1 && counterL === 1) {
+      if (isYawNeutral()) {
+        setInstruction('Super! Evaluierung 1 abgeschlossen :D');
+        setTimeout(() => {
+          console.log('auto exit Evaluation1');
+          exitEvaluation();
+        }, 2000);
+      }
+    }
+  };
+
+  const isYawNeutral = () => {
+    // Definieren Sie Ihre Logik hier, um festzustellen, ob der Yaw-Winkel "neutral" ist.
+    return yaw < 5 || yaw > 355; // Beispiel
   };
 
   const handleFacesDetected = ({ faces }) => {
