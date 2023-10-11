@@ -8,10 +8,13 @@ const SchmerzRegionScreen = () => {
 
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 ,backgroundColor: 'white'}}>
+            <View style={{alignItems: 'center',justifyContent: 'center',}}>
+                <Text style={{ padding: 10, fontSize: 18,}}>Wählen Sie Ihre Schmerz-Region</Text>
+            </View>
             <Image source={silhouetteImage} style={{ flex: 1, width: '100%', height: '100%', resizeMode: 'cover' }} />
 
-            <View style={{ top: windowHeight* 0.22, position: 'absolute', flexDirection: 'column',  width: '100%' }}>
+            <View style={{ top: windowHeight* 0.25, position: 'absolute', flexDirection: 'column',  width: '100%' }}>
                 {/* Schulter-Nacken */}
                 <TouchableOpacity
                     style={{
@@ -22,7 +25,7 @@ const SchmerzRegionScreen = () => {
 
                     }}
                     onPress={() => {
-                        console.log('Schulter-Nacken wurde berührt.');
+                        console.log('Schulter-Nacken ausgewählt.');
                     }}
                 >
                     <Text>Schulter-Nacken</Text>
@@ -34,11 +37,11 @@ const SchmerzRegionScreen = () => {
                         backgroundColor: 'rgba(0, 0, 168, 0.2)',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        height: windowHeight * 0.136,
+                        height: windowHeight * 0.13,
 
                     }}
                     onPress={() => {
-                        console.log('Mittlerer-Rücken wurde berührt.');
+                        console.log('Mittlerer-Rücken ausgewählt.');
                     }}
                 >
                     <Text>Mittlerer-Rücken</Text>
@@ -50,11 +53,11 @@ const SchmerzRegionScreen = () => {
                         backgroundColor: 'rgba(0, 0, 168, 0.2)',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        height: windowHeight * 0.15,
+                        height: windowHeight * 0.142,
 
                     }}
                     onPress={() => {
-                        console.log('Unterer-Rücken wurde berührt.');
+                        console.log('Unterer-Rücken ausgewählt.');
                     }}
                 >
                     <Text>Unterer-Rücken</Text>
@@ -66,17 +69,19 @@ const SchmerzRegionScreen = () => {
                         backgroundColor: 'rgba(0, 0, 168, 0.2)',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        height: windowHeight * 0.165,
+                        height: windowHeight * 0.15,
 
                     }}
                     onPress={() => {
-                        console.log('Becken-Gesäß wurde berührt.');
+                        console.log('Becken-Gesäß ausgewählt.');
                     }}
                 >
                     <Text>Becken-Gesäß</Text>
                 </TouchableOpacity>
             </View>
         </View>
+
+
     );
 };
 
