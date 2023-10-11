@@ -1,73 +1,75 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 
 const SchmerzRegionScreen = () => {
-    // Hier können Sie die Quelle für Ihre Silhouette-Datei ersetzen
     const silhouetteImage = require('../../assets/Mensch.png');
+    const windowHeight = Dimensions.get('window').height;
+    const opacityHeight = windowHeight * 0.17; // Hier können Sie den Prozentsatz anpassen
+
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>SchmerzRegionScreen</Text>
-            <Image source={silhouetteImage} style={{ width: 200, height: 400 }} />
+        <View style={{ flex: 1 }}>
+            <Image source={silhouetteImage} style={{ flex: 1, width: '100%', height: '100%', resizeMode: 'cover' }} />
 
-
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ top: windowHeight* 0.22, position: 'absolute', flexDirection: 'column',  width: '100%' }}>
+                {/* Schulter-Nacken */}
                 <TouchableOpacity
                     style={{
-                        width: 100,
-                        height: 100,
-                        backgroundColor: 'blue',
-                        margin: 10,
+                        backgroundColor: 'rgba(0, 0, 168, 0.2)',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: windowHeight * 0.205
+
                     }}
                     onPress={() => {
-                        // Aktion, die bei Berührung von Schulter-Nacken-Rechteck ausgeführt werden soll
                         console.log('Schulter-Nacken wurde berührt.');
                     }}
                 >
                     <Text>Schulter-Nacken</Text>
                 </TouchableOpacity>
 
+                {/* Mittlerer-Rücken */}
                 <TouchableOpacity
                     style={{
-                        width: 100,
-                        height: 100,
-                        backgroundColor: 'green',
-                        margin: 10,
+                        backgroundColor: 'rgba(0, 0, 168, 0.2)',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: windowHeight * 0.136,
+
                     }}
                     onPress={() => {
-                        // Aktion, die bei Berührung von Mittlerer-Rücken-Rechteck ausgeführt werden soll
                         console.log('Mittlerer-Rücken wurde berührt.');
                     }}
                 >
                     <Text>Mittlerer-Rücken</Text>
                 </TouchableOpacity>
-            </View>
 
-            <View style={{ flexDirection: 'row' }}>
+                {/* Unterer-Rücken */}
                 <TouchableOpacity
                     style={{
-                        width: 100,
-                        height: 100,
-                        backgroundColor: 'red',
-                        margin: 10,
+                        backgroundColor: 'rgba(0, 0, 168, 0.2)',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: windowHeight * 0.15,
+
                     }}
                     onPress={() => {
-                        // Aktion, die bei Berührung von Unterer-Rücken-Rechteck ausgeführt werden soll
                         console.log('Unterer-Rücken wurde berührt.');
                     }}
                 >
                     <Text>Unterer-Rücken</Text>
                 </TouchableOpacity>
 
+                {/* Becken-Gesäß */}
                 <TouchableOpacity
                     style={{
-                        width: 100,
-                        height: 100,
-                        backgroundColor: 'purple',
-                        margin: 10,
+                        backgroundColor: 'rgba(0, 0, 168, 0.2)',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: windowHeight * 0.165,
+
                     }}
                     onPress={() => {
-                        // Aktion, die bei Berührung von Becken-Gesäß-Rechteck ausgeführt werden soll
                         console.log('Becken-Gesäß wurde berührt.');
                     }}
                 >
