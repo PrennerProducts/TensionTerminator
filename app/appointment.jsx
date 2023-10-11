@@ -10,6 +10,8 @@ const Appointment = () => {
         <View>
             <Text>Termin planen</Text>
 
+            {/* Kalender einfügen */}
+
             <Link href={'/where'} asChild>
                 <Pressable>
                     <Text>Bestätigen</Text>
