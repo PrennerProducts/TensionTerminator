@@ -10,7 +10,7 @@ const ExplanationVideo = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Training</Text>
-
+            <View style={styles.bottom}>
             <Link href={'/training'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Training starten</Text>
@@ -22,7 +22,7 @@ const ExplanationVideo = () => {
                     <Text style={styles.buttonText}>Erklärung lesen</Text>
                 </Pressable>
             </Link>
-
+            </View>
         </View>
     );
 }

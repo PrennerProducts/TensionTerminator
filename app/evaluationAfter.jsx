@@ -10,7 +10,7 @@ const EvaluationAfter = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Evaluierungsübung NACHHER</Text>
-
+            <View style={styles.bottom}>
             <Link href={'/tabs/EvaluationScreen'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Starten</Text>
@@ -22,9 +22,7 @@ const EvaluationAfter = () => {
                     <Text style={styles.buttonText}>Weiter</Text>
                 </Pressable>
             </Link>
-
-
-
+            </View>
         </View>
     );
 }

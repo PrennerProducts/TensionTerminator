@@ -8,7 +8,7 @@ const criteriaScreen = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Ausschlusskriterien</Text>
-
+            <View style={styles.bottom}>
             <Link href={'/where'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Bestätigen</Text>
@@ -19,7 +19,7 @@ const criteriaScreen = () => {
                     <Text style={styles.buttonText}>Überspringen</Text>
                 </Pressable>
             </Link>
-
+            </View>
         </View>
     );
 }

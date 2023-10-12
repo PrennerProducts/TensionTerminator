@@ -10,13 +10,13 @@ const TrainingScreen = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Training</Text>
-
+            <View style={styles.bottom}>
             <Link href={'/evaluationAfter'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Training beenden</Text>
                 </Pressable>
             </Link>
-
+            </View>
         </View>
     );
 }

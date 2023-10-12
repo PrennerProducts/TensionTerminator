@@ -10,6 +10,7 @@ const LoginPage = () => {
   const handlePress = () => {
     router.replace('tabs');
   };
+
   return (
     <View style={styles.container}>
           <Link href={'/QRScan'} asChild>

@@ -10,7 +10,7 @@ const Gratulation = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Gratulation!</Text>
-
+            <View style={styles.bottom}>
             <Link href={'/appointment'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Termin planen</Text>
@@ -22,7 +22,7 @@ const Gratulation = () => {
                     <Text style={styles.buttonText}>Neues Training starten</Text>
                 </Pressable>
             </Link>
-
+            </View>
         </View>
     );
 }

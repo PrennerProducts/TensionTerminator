@@ -10,7 +10,7 @@ const howPain = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Wie tut es weh?</Text>
-
+            <View style={styles.bottom}>
             <Link href={'/intensityBefore'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Druckschmerzen</Text>
@@ -22,7 +22,7 @@ const howPain = () => {
                     <Text style={styles.buttonText}>Ziehender Schmerz</Text>
                 </Pressable>
             </Link>
-
+            </View>
         </View>
     );
 }

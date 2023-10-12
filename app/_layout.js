@@ -2,6 +2,9 @@ import { View, Text, Button } from 'react-native';
 import React from 'react';
 import { useRouter } from 'expo-router';
 import { Stack } from 'expo-router/stack';
+import QRScan from "./QRScan";
+
+
 
 export default function Layout() {
   const router = useRouter();
@@ -44,6 +47,7 @@ export default function Layout() {
           ),
         }}
       />
+
       <Stack.Screen
         name="appointment"
         options={{

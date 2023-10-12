@@ -4,12 +4,15 @@ import React from 'react';
 import {Link, useRouter} from 'expo-router';
 import styles from '../components/styleSheet';
 
-const QRcodeScreen = () => {
+
+const QRcodeScreen = ({}) => {
     const router = useRouter();
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>QR-Code Scannen</Text>
+
+            <View style={styles.bottom}>
 
             <Link href={'/tabs/barcode'} asChild>
                 <Pressable style={styles.button}>
@@ -22,7 +25,7 @@ const QRcodeScreen = () => {
                     <Text style={styles.buttonText}>Überspringen</Text>
                 </Pressable>
             </Link>
-
+            </View>
         </View>
     );
 }

@@ -10,7 +10,7 @@ const ResultEvaluation = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Ergebnisanzeige Evaluation</Text>
-
+            <View style={styles.bottom}>
             <Link href={'/dataTransfer'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Daten übermitteln</Text>
@@ -22,7 +22,7 @@ const ResultEvaluation = () => {
                     <Text style={styles.buttonText}>Weiter</Text>
                 </Pressable>
             </Link>
-
+            </View>
         </View>
     );
 }

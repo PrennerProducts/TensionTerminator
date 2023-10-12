@@ -10,13 +10,13 @@ const DataTransfer = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Daten übermitteln</Text>
-
+            <View style={styles.bottom}>
             <Link href={'/gratulation'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Bestätigen</Text>
                 </Pressable>
             </Link>
-
+            </View>
         </View>
     );
 }
