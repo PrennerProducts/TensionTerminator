@@ -23,13 +23,17 @@ const Appointment = () => {
   };
 
   async function schedulePushNotification() {
+    // const trigger = new Date(Date.now() + 60 * 60 * 1000);
+    // trigger.setMinutes(0);
+    // trigger.setSeconds(0);
+
     await Notifications.scheduleNotificationAsync({
       content: {
         title: "Trainingserinnerung",
         body: "Hey, es ist zeit für dein Training!",
         data: { data: "TrainingsType" },
       },
-      trigger: { seconds: 3 },
+      trigger: { seconds: 3, channelId: "Trainings" },
     });
   }
 
