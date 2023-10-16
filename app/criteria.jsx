@@ -17,7 +17,7 @@ const criteriaScreen = () => {
 
   //Function to load our FirstTime Data. This allows the user to skip this Screen
   const loadData = async () => {
-    const firstTime = (await getData("firstTime")) ? false : true;
+    const firstTime = await getData("firstTime");
     console.log("firstTime: ", firstTime);
     setFirstTime(firstTime);
   };
@@ -40,7 +40,7 @@ const criteriaScreen = () => {
   };
 
   const skipCriteria =
-    firstTime === true ? (
+    firstTime === false ? (
       <View style={styles.buttonBottom}>
         <Link href={"/where"} asChild>
           <Pressable style={styles.button} onPress={skip}>
@@ -50,13 +50,16 @@ const criteriaScreen = () => {
       </View>
     ) : null;
 
-  const myCheckBox = (
-    <CheckBox
-      disabled={false}
-      value={true}
-      style={styles.checkbox}
-      color="red"
-    />
+  const myCheckBox2 = (props) => (
+    <View style={styles.section}>
+      <CheckBox
+        disabled={false}
+        value={true}
+        style={styles.checkbox}
+        color="red"
+      />
+      <Text style={styles.paragraph}>{props}</Text>
+    </View>
   );
 
   return (
@@ -67,20 +70,12 @@ const criteriaScreen = () => {
         erfüllen:
       </Text>
 
-      <View style={styles.section}>
-        {myCheckBox}
-        <Text style={styles.paragraph}>
-          Ich hatte einen Bandscheibenvorfall....
-        </Text>
-      </View>
-      <View style={styles.section}>
-        {myCheckBox}
-        <Text style={styles.paragraph}>Ich habe....</Text>
-      </View>
-      <View style={styles.section}>
-        {myCheckBox}
-        <Text style={styles.paragraph}>Ich habe nicht ganz knorke.</Text>
-      </View>
+      {myCheckBox2((text = "Ich hatte einen Bandscheibenvorfall."))}
+      {myCheckBox2((text = "Ich hatte eine Operation an der Schulter."))}
+      {myCheckBox2((text = "Ich habe..."))}
+      {myCheckBox2((text = "Ich hatte/habe...."))}
+      {myCheckBox2((text = "Ich bin knorke."))}
+
       <View>
         <View>
           <Link href={"/where"} asChild>
