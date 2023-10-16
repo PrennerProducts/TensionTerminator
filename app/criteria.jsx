@@ -36,7 +36,8 @@ const criteriaScreen = () => {
   };
 
   const skip = async () => {
-    removeData("firstTime");
+    // for testing purpose --> clean up firstTime Data
+    //removeData("firstTime");
   };
 
   const skipCriteria =
