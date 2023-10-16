@@ -1,28 +1,32 @@
-import 'expo-router/entry';
-import { View, Text, Pressable, Button } from 'react-native';
-import React from 'react';
-import {Link, useRouter} from 'expo-router';
+import "expo-router/entry";
+import { View, Text, Pressable, Button } from "react-native";
+import React from "react";
+import { Link, useRouter } from "expo-router";
 
 const LoginPage = () => {
   const router = useRouter();
 
   const handlePress = () => {
-    router.replace('tabs');
+    router.replace("tabs");
   };
   return (
-    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ justifyContent: "center", alignItems: "center" }}>
       <Text style={{ top: 0 }}>
         -------------- TENSION TERMINATOR ------------------
       </Text>
 
-          <Link href={'/QRScan'} asChild>
-              <Pressable>
-                  <Text>App Starten</Text>
-              </Pressable>
-          </Link>
-
-        {/*Verschiedene Varianten um ans Ziel zu kommen*/}
-        {/*
+      <Link href={"/QRScan"} asChild>
+        <Pressable>
+          <Text>App Starten</Text>
+        </Pressable>
+      </Link>
+      <Link href={"/appointment"} asChild>
+        <Pressable>
+          <Text>Termin planen</Text>
+        </Pressable>
+      </Link>
+      {/*Verschiedene Varianten um ans Ziel zu kommen*/}
+      {/*
         <Button title="App Starten" onPress= {() => router.push('QRscan')}>
         </Button>
 
@@ -38,7 +42,6 @@ const LoginPage = () => {
         </Link>
 
 */}
-
     </View>
   );
 };
