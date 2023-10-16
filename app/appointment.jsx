@@ -16,10 +16,10 @@ const Appointment = () => {
   const router = useRouter();
 
   setAppointment = async () => {
-    //we need to save the trainingstype and the dateTime.
-    console.log("Appointment set");
+    //we need to save the trainingstype and the dateTime. Probably we can jump to it?
     //DemoAppointment in 3 seconds
     await schedulePushNotification();
+    console.log("Appointment set");
   };
 
   async function schedulePushNotification() {
@@ -27,7 +27,7 @@ const Appointment = () => {
       content: {
         title: "Trainingserinnerung",
         body: "Hey, es ist zeit für dein Training!",
-        data: { data: "goes here" },
+        data: { data: "TrainingsType" },
       },
       trigger: { seconds: 3 },
     });
