@@ -50,6 +50,15 @@ const criteriaScreen = () => {
       </View>
     ) : null;
 
+  const myCheckBox = (
+    <CheckBox
+      disabled={false}
+      value={true}
+      style={styles.checkbox}
+      color="red"
+    />
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Ausschlusskriterien</Text>
@@ -59,22 +68,18 @@ const criteriaScreen = () => {
       </Text>
 
       <View style={styles.section}>
-        <CheckBox
-          disabled={false}
-          value={toggleCheckBox}
-          onValueChange={(newValue) => setToggleCheckBox(newValue)}
-          style={styles.checkbox}
-        />
-        <Text style={styles.paragraph}>Ich bin....</Text>
+        {myCheckBox}
+        <Text style={styles.paragraph}>
+          Ich hatte einen Bandscheibenvorfall....
+        </Text>
       </View>
       <View style={styles.section}>
-        <CheckBox
-          disabled={false}
-          value={toggleCheckBox}
-          onValueChange={(newValue) => setToggleCheckBox(newValue)}
-          style={styles.checkbox}
-        />
+        {myCheckBox}
         <Text style={styles.paragraph}>Ich habe....</Text>
+      </View>
+      <View style={styles.section}>
+        {myCheckBox}
+        <Text style={styles.paragraph}>Ich habe nicht ganz knorke.</Text>
       </View>
       <View>
         <View>
@@ -125,6 +130,7 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     margin: 8,
+    color: "#111111",
   },
 });
 
