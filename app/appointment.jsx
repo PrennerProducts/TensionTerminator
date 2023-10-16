@@ -2,13 +2,36 @@ import "expo-router/entry";
 import { View, Text, Pressable, Button, StyleSheet } from "react-native";
 import React from "react";
 import { Link, useRouter } from "expo-router";
+import * as Notifications from "expo-notifications";
 
 const Appointment = () => {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+
   const router = useRouter();
 
-  setAppointment = () => {
+  setAppointment = async () => {
+    //we need to save the trainingstype and the dateTime.
     console.log("Appointment set");
+    //DemoAppointment in 3 seconds
+    await schedulePushNotification();
   };
+
+  async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Trainingserinnerung",
+        body: "Hey, es ist zeit für dein Training!",
+        data: { data: "goes here" },
+      },
+      trigger: { seconds: 3 },
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -36,8 +59,8 @@ const Appointment = () => {
         <Text style={styles.text2}>Uhrzeit: </Text>
         <Text style={styles.text2}>10:00</Text>
       </View>
-      <Link href={"/where"} asChild>
-        <Pressable style={styles.button} onPress={setAppointment()}>
+      <Link href={"/"} asChild>
+        <Pressable style={styles.button} onPress={setAppointment}>
           <Text style={styles.buttonFont}>Bestätigen</Text>
         </Pressable>
       </Link>
