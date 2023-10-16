@@ -53,7 +53,7 @@ const Appointment = () => {
         Übung macht den Meister und bringt nachweißlich Verbesserung.
       </Text>
       <Text style={styles.text}>
-        Sollen wir dich an eine neue Traininssession erinnern?
+        Sollen wir dich an ein weiteres Training erinnern?
       </Text>
       <View style={styles.section}>
         <Text style={styles.text2}>Datum: </Text>
