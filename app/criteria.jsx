@@ -6,6 +6,7 @@ import { getData, removeData, saveData } from "./services/storage";
 import CheckBox from "expo-checkbox";
 
 import { useIsFocused } from "@react-navigation/native";
+import { ScrollView } from "react-native-gesture-handler";
 
 const criteriaScreen = () => {
   const navigation = useNavigation();
@@ -57,7 +58,7 @@ const criteriaScreen = () => {
         disabled={false}
         value={true}
         style={styles.checkbox}
-        color="red"
+        color="green"
       />
       <Text style={styles.paragraph}>{props}</Text>
     </View>
@@ -65,18 +66,32 @@ const criteriaScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Ausschlusskriterien</Text>
+      {/* <Text style={styles.header}>Ausschlusskriterien</Text> */}
       <Text style={styles.text}>
         Bitte bestätigen Sie, dass Sie keine der folgenden Ausschlusskriterien
         erfüllen:
       </Text>
-
-      {myCheckBox2((text = "Ich hatte einen Bandscheibenvorfall."))}
-      {myCheckBox2((text = "Ich hatte eine Operation an der Schulter."))}
-      {myCheckBox2((text = "Ich habe..."))}
-      {myCheckBox2((text = "Ich hatte/habe...."))}
-      {myCheckBox2((text = "Ich bin knorke."))}
-
+      <ScrollView style={{ padding: 5 }}>
+        <Text style={styles.text}>Ich habe keine</Text>
+        {myCheckBox2((text = "frischen Verletzungen"))}
+        {myCheckBox2((text = "Knochenbrücke"))}
+        {myCheckBox2((text = "Wunden bzw. starke Hautreizungen"))}
+        {myCheckBox2((text = "Haut Tumor oder Metastasierungen"))}
+        <Text style={styles.text}>
+          im Nacken-, Schulter/Arm oder Rückenbereich.
+        </Text>
+        <Text style={styles.text}>Es liegt keine</Text>
+        {myCheckBox2((text = "Schwangerschaft ab dem 6. Monat"))}
+        {myCheckBox2(
+          (text =
+            "Neurologische Erkrankung welche auf mechanische Einwirkung reagieren (z.B. Epilepsie, Schwindel)")
+        )}
+        {myCheckBox2(
+          (text =
+            "Sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht")
+        )}
+        <Text style={styles.text}>vor.</Text>
+      </ScrollView>
       <View>
         <View>
           <Link href={"/where"} asChild>
@@ -127,6 +142,11 @@ const styles = StyleSheet.create({
   checkbox: {
     margin: 8,
     color: "#111111",
+  },
+  paragraph: {
+    margin: 8,
+    width: "85%",
+    fontWeight: "bold",
   },
 });
 
