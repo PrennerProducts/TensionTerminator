@@ -4,6 +4,8 @@ import React from 'react';
 import {Link, useRouter} from 'expo-router';
 import styles from '../components/styleSheet';
 
+// index ist die startseite
+
 const LoginPage = () => {
   const router = useRouter();
 
@@ -13,6 +15,7 @@ const LoginPage = () => {
 
   return (
     <View style={styles.container}>
+        <View style={styles.bottom}>
           <Link href={'/QRScan'} asChild>
               <Pressable style={styles.button}>
                   <Text style={styles.buttonText}>App Starten</Text>
@@ -36,7 +39,7 @@ const LoginPage = () => {
         </Link>
 
 */}
-
+        </View>
     </View>
   );
 };

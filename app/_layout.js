@@ -6,7 +6,7 @@ import QRScan from "./QRScan";
 
 
 
-export default function Layout() {
+function Layout() {
   const router = useRouter();
   return (
     <Stack
@@ -23,11 +23,14 @@ export default function Layout() {
       }}
     >
       {/* // Stackscreens können so umbenannt werden oder ausgeblendet mit
-      //headerShown */}
+      //headerShown
+
+      // index ist die startseite*/}
+
       <Stack.Screen
         name="index"
         options={{
-          headerTitle: 'Login',
+          headerTitle: 'Tension Terminator',
           headerShown: true,
           headerTitleAlign: 'center',
         }}
@@ -173,3 +176,5 @@ export default function Layout() {
     </Stack>
   );
 }
+
+export default Layout;
