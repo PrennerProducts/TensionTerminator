@@ -9,48 +9,49 @@ import { useIsFocused } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 
 const criteriaScreen = () => {
-  const navigation = useNavigation();
-  const [firstTime, setFirstTime] = React.useState(true);
-  const isFocused = useIsFocused();
+  //Uncomment this to use
+  // const navigation = useNavigation();
+  // const [firstTime, setFirstTime] = React.useState(true);
+  // const isFocused = useIsFocused();
 
-  //CheckBoxes
-  const [toggleCheckBox, setToggleCheckBox] = React.useState(false);
+  // //CheckBoxes
+  // const [toggleCheckBox, setToggleCheckBox] = React.useState(false);
 
-  //Function to load our FirstTime Data. This allows the user to skip this Screen
-  const loadData = async () => {
-    const firstTime = await getData("firstTime");
-    console.log("firstTime: ", firstTime);
-    setFirstTime(firstTime);
-  };
+  // //Function to load our FirstTime Data. This allows the user to skip this Screen
+  // const loadData = async () => {
+  //   const firstTime = await getData("firstTime");
+  //   console.log("firstTime: ", firstTime);
+  //   setFirstTime(firstTime);
+  // };
 
-  //Use of useEffect to get our FocusHandler and to reload Data on Change of Navigation and Focus
-  React.useEffect(() => {
-    const focusHandler = navigation.addListener("focus", () => {
-      loadData();
-    });
-    return focusHandler;
-  }, [navigation, isFocused]);
+  // //Use of useEffect to get our FocusHandler and to reload Data on Change of Navigation and Focus
+  // React.useEffect(() => {
+  //   const focusHandler = navigation.addListener("focus", () => {
+  //     loadData();
+  //   });
+  //   return focusHandler;
+  // }, [navigation, isFocused]);
 
   const changeFirstTime = async () => {
-    await saveData("firstTime", false);
-    setFirstTime(false);
+    // await saveData("firstTime", false);
+    // setFirstTime(false);
   };
 
-  const skip = async () => {
-    // for testing purpose --> clean up firstTime Data
-    // removeData("firstTime");
-  };
+  // const skip = async () => {
+  //   // for testing purpose --> clean up firstTime Data
+  //   // removeData("firstTime");
+  // };
 
-  const skipCriteria =
-    firstTime === false ? (
-      <View style={styles.buttonBottom}>
-        <Link href={"/where"} asChild>
-          <Pressable style={styles.button} onPress={skip}>
-            <Text style={styles.buttonFont}>Überspringen</Text>
-          </Pressable>
-        </Link>
-      </View>
-    ) : null;
+  // const skipCriteria =
+  //   firstTime === false ? (
+  //     <View style={styles.buttonBottom}>
+  //       <Link href={"/where"} asChild>
+  //         <Pressable style={styles.button} onPress={skip}>
+  //           <Text style={styles.buttonFont}>Überspringen</Text>
+  //         </Pressable>
+  //       </Link>
+  //     </View>
+  //   ) : null;
 
   const myCheckBox2 = (props) => (
     <View style={styles.section}>
@@ -91,17 +92,17 @@ const criteriaScreen = () => {
             "Sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht")
         )}
         <Text style={styles.text}>vor.</Text>
-      </ScrollView>
-      <View>
         <View>
-          <Link href={"/where"} asChild>
-            <Pressable onPress={changeFirstTime} style={styles.button}>
-              <Text style={styles.buttonFont}>Bestätigen</Text>
-            </Pressable>
-          </Link>
+          <View>
+            <Link href={"/where"} asChild>
+              <Pressable onPress={changeFirstTime} style={styles.button}>
+                <Text style={styles.buttonFont}>Bestätigen</Text>
+              </Pressable>
+            </Link>
+          </View>
+          {/* <View>{skipCriteria}</View> */}
         </View>
-        <View>{skipCriteria}</View>
-      </View>
+      </ScrollView>
     </View>
   );
 };
