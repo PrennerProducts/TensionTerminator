@@ -2,10 +2,9 @@ import 'expo-router/entry';
 import {View, Text, Pressable, Button} from 'react-native';
 import React from 'react';
 import {Link, useRouter} from 'expo-router';
-import styles from "../components/styleSheet";
+import styles from "../../components/styleSheet";
 
-const WherePain = () => {
-    const router = useRouter();
+export default function WhereScreen({navigation}) {
 
     return (
         <View style={styles.container}>
@@ -13,33 +12,22 @@ const WherePain = () => {
 
             <View style={styles.bottom}>
 
-                <Link href={'/how'} asChild>
-                    <Pressable style={styles.button}>
+                    <Pressable style={styles.button}  onPress={() => navigation.navigate("how")}>
                         <Text style={styles.buttonText}>Schulter/Nacken</Text>
                     </Pressable>
-                </Link>
 
-
-                <Link href={'/how'} asChild>
-                    <Pressable style={styles.button}>
+                    <Pressable style={styles.button}  onPress={() => navigation.navigate("how")}>
                         <Text style={styles.buttonText}>Mittlerer Rücken</Text>
                     </Pressable>
-                </Link>
 
-                <Link href={'/how'} asChild>
-                    <Pressable style={styles.button}>
+                    <Pressable style={styles.button}  onPress={() => navigation.navigate("how")}>
                         <Text style={styles.buttonText}>Unterer Rücken</Text>
                     </Pressable>
-                </Link>
 
-                <Link href={'/how'} asChild>
-                    <Pressable style={styles.button}>
+                    <Pressable style={styles.button}  onPress={() => navigation.navigate("how")}>
                         <Text style={styles.buttonText}>Becken/Gesaess</Text>
                     </Pressable>
-                </Link>
             </View>
         </View>
     );
 }
-
-export default WherePain;

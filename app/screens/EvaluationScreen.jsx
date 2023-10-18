@@ -13,8 +13,7 @@ import { WebView } from 'react-native-webview';
 import Modal from 'react-native-modal';
 import { Link, useRouter } from 'expo-router';
 
-const EvaluationScreen = () => {
-  const router = useRouter();
+export default function EvaluationScreen() {
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [evaluationStarted, setEvaluationStarted] = useState(false);
@@ -23,9 +22,9 @@ const EvaluationScreen = () => {
     setModalVisible(!isModalVisible);
   };
 
-  const handleEvaluierung = () => {
+  const handleEvaluierung = (navigation) => {
     setEvaluationStarted(true);
-    router.replace('evaluationYaw');
+    navigation.navigate('evaluationYaw');
   };
 
   return (
@@ -126,5 +125,3 @@ const styles = StyleSheet.create({
     color: 'yellow',
   },
 });
-
-export default EvaluationScreen;

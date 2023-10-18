@@ -1,28 +1,21 @@
 import {View, Text, Pressable} from "react-native";
 import React from 'react';
-import { Link } from 'expo-router';
-import styles from "../components/styleSheet";
+import styles from "../../components/styleSheet";
 
-const criteriaScreen = () => {
+export default function CriteriaScreen ({navigation}) {
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Ausschlusskriterien</Text>
             <View style={styles.bottom}>
-            <Link href={'/where'} asChild>
-                <Pressable style={styles.button}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate("where")}>
                     <Text style={styles.buttonText}>Bestätigen</Text>
                 </Pressable>
-            </Link>
-            <Link href={'/where'} asChild>
-                <Pressable style={styles.button}>
+
+                <Pressable style={styles.button} onPress={() => navigation.navigate("where")}>
                     <Text style={styles.buttonText}>Überspringen</Text>
                 </Pressable>
-            </Link>
             </View>
         </View>
     );
 }
-
-
-export default criteriaScreen;

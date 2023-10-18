@@ -12,20 +12,19 @@ import * as FaceDetector from 'expo-face-detector';
 import * as FileSystem from 'expo-file-system';
 import { Link, useRouter } from 'expo-router';
 
-const evaluationRoll = () => {
-  const router = useRouter();
+export default function EvaluationYaw() {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [landmarkData, setLandmarkData] = useState([]);
-  const [roll, setRoll] = useState(0);
+  const [yaw, setYaw] = useState(0);
   const [ScreenText, setScreenText] = useState('');
-  const [maxRollR, setMaxRollR] = useState(0);
-  const [maxRollL, setMaxRollL] = useState(0);
+  const [maxYawR, setMaxYawR] = useState(0);
+  const [maxYawL, setMaxYawL] = useState(0);
   const [lineCoordinates, setLineCoordinates] = useState(null); // Store line coordinates
   const cameraRef = useRef(null);
   const [evaluationStarted, setEvaluationStarted] = useState(true);
   const mutex = useRef(false);
-  const [isRollStable, setIsRollStable] = useState(true);
+  const [isYawStable, setIsYawStable] = useState(true);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
   const [capturedPhotoUri, setCapturedPhotoUri] = useState(null);
   const [instruction, setInstruction] = useState('');
@@ -65,50 +64,45 @@ const evaluationRoll = () => {
     }
   };
 
-  // Run this effect whenever 'Roll' changes. Capture a picture when maxRollR or maxRollL gets a new value
+  // Run this effect whenever 'yaw' changes. Capture a picture when maxYawR or maxYawL gets a new value
+  // Effekt für 'yaw'-Änderungen
   useEffect(() => {
-    if (!isRollStable) {
+    if (!isYawStable) {
       console.log('Warte auf das Erreichen der Endposition...');
       return;
     }
 
-    if (roll >= 7 && roll < 80) {
+    if (yaw > 15 && yaw < 180) {
       setCounterR(1);
-      console.log('CounterR: ' + counterR);
-      setInstruction('Bitte Kopf zur rechten Schulter schwenken -->');
-      console.log(`Current RollR: ${roll}, Max RollR: ${maxRollR}`);
-      setScreenText('-> ' + roll + '°');
-      setMaxRollR((prev) => {
-        if (roll > prev) {
-          console.log('Taking picture for MaxRollR');
-          takePicture('MaxRollR.jpg');
+      setInstruction('Bitte Kopf nach rechts drehen -->');
+      console.log(`Current YawR: ${yaw}, Max YawR: ${maxYawR}`);
+      setScreenText('-> ' + yaw + '°');
+      setMaxYawR((prev) => {
+        if (yaw > prev) {
+          console.log('Taking picture for MaxYawR');
+          takePicture('MaxYawR.jpg');
         }
-        return Math.max(prev, roll);
+        return Math.max(prev, yaw);
       });
-    } else if (roll <= 353 && roll > 280) {
-      console.log('CounterL: ' + counterL);
+    } else if (yaw < 345 && yaw > 180) {
       setCounterL(1);
-      setInstruction('Bitte Kopf zur linken Schulter schwenken <--');
-      let rollL = 360 - roll;
-      console.log(`Current RollL: ${rollL}, Max RollL: ${maxRollL}`);
-      setScreenText('<- ' + rollL + '°');
-      setMaxRollL((prev) => {
-        if (rollL > prev) {
-          console.log('Taking picture for MaxRollL');
-          takePicture('MaxRollL.jpg');
+      setInstruction('Bitte Kopf nach links drehen <--');
+      let yawL = 360 - yaw;
+      console.log(`Current YawL: ${yawL}, Max YawL: ${maxYawL}`);
+      setScreenText('<- ' + yawL + '°');
+      setMaxYawL((prev) => {
+        if (yawL > prev) {
+          console.log('Taking picture for MaxYawL');
+          takePicture('MaxYawL.jpg');
         }
-        return Math.max(prev, rollL);
+        return Math.max(prev, yawL);
       });
     } else {
-      console.log(
-        'CounterR: ' + counterR + ', CounterL: ' + counterL + ', EXIT NOW!'
-      );
-
       updateInstructionBasedOnCounters();
-      console.log(roll, 'Roll out of range.');
+      console.log('Yaw out of range.');
       setScreenText('');
     }
-  }, [roll]);
+  }, [yaw]);
 
   // Der useEffect für counterR und counterL
   useEffect(() => {
@@ -117,27 +111,25 @@ const evaluationRoll = () => {
 
   const updateInstructionBasedOnCounters = () => {
     if (counterR === 0 && counterL === 0) {
-      setInstruction('Kopf nach rechts oder links neigen <-->');
+      setInstruction('Kopf nach rechts oder links drehen <-->');
     } else if (counterR === 1 && counterL === 0) {
-      setInstruction('Bitte Kopf nach links neigen <--');
+      setInstruction('Bitte Kopf nach links drehen <--');
     } else if (counterR === 0 && counterL === 1) {
-      setInstruction('Bitte Kopf nach rechts neigen -->');
+      setInstruction('Bitte Kopf nach rechts drehen -->');
     } else if (counterR === 1 && counterL === 1) {
-      console.log('Both counters are 1');
-      if (isRollNeutral()) {
-        setInstruction('Super! Evaluierung für Roll abgeschlossen :D');
+      if (isYawNeutral()) {
+        setInstruction('Super! Evaluierung 1 abgeschlossen :D');
         setTimeout(() => {
-          console.log('auto exit Evaluation2 Roll');
-          exitEvaluation(); // Oder eine separate Funktion, um die Roll-Evaluierung zu beenden.
+          console.log('auto exit Evaluation1 Yaw');
+          exitEvaluation();
         }, 2000);
       }
     }
   };
 
-  const isRollNeutral = () => {
-    // Definieren Sie Ihre Logik hier, um festzustellen, ob der Roll-Winkel "neutral" ist.
-    return roll <= 5 || roll >= 365;
-    console.log('Alles NEUTRAL');
+  const isYawNeutral = () => {
+    // Definieren Sie Ihre Logik hier, um festzustellen, ob der Yaw-Winkel "neutral" ist.
+    return yaw < 5 || yaw > 355; // Beispiel
   };
 
   const handleFacesDetected = ({ faces }) => {
@@ -150,7 +142,7 @@ const evaluationRoll = () => {
     } else if (faces.length > 0) {
       const face = faces[0];
 
-      setRoll(face.rollAngle.toFixed(0));
+      setYaw(face.yawAngle.toFixed(0));
 
       if (
         face.LEFT_EYE &&
@@ -194,13 +186,12 @@ const evaluationRoll = () => {
 
   const startEvaluation = async () => {
     setCacheBuster(Date.now());
-    clearRollValues();
+    clearYawValues();
     setEvaluationStarted(true);
   };
 
   const startRollEvaluation = () => {
     //  HIER DANN WEITER ZU ROLL derweeil HOME
-    //router.push('tabs');
     router.replace('evaluationRoll');
   };
 
@@ -214,13 +205,12 @@ const evaluationRoll = () => {
       const options = { quality: 1, base64: false };
       const photo = await cameraRef.current.takePictureAsync(options);
       setCapturedPhotoUri(photo.uri);
-      setShowEvaluationResult(true);
     }
   };
 
-  const clearRollValues = () => {
-    setMaxRollR(0);
-    setMaxRollL(0);
+  const clearYawValues = () => {
+    setMaxYawR(0);
+    setMaxYawL(0);
   };
 
   return (
@@ -335,18 +325,18 @@ const evaluationRoll = () => {
         <View style={styles.startScreen}>
           <Image
             source={{
-              uri: `${FileSystem.documentDirectory}MaxRollR.jpg?${cacheBuster}`,
+              uri: `${FileSystem.documentDirectory}MaxYawR.jpg?${cacheBuster}`,
             }}
             style={{ width: 100, height: 100 }}
           />
-          <Text>Max Roll Right: {maxRollR.toFixed(2)}°</Text>
+          <Text>Max Yaw Right: {maxYawR.toFixed(2)}°</Text>
           <Image
             source={{
-              uri: `${FileSystem.documentDirectory}MaxRollL.jpg?${cacheBuster}`,
+              uri: `${FileSystem.documentDirectory}MaxYawL.jpg?${cacheBuster}`,
             }}
             style={{ width: 100, height: 100 }}
           />
-          <Text>Max Roll Left: {maxRollL.toFixed(2)}°</Text>
+          <Text>Max Yaw Left: {maxYawL.toFixed(2)}°</Text>
           <TouchableOpacity onPress={startEvaluation}>
             <Text style={styles.startButton}>
               Evaluation erneut durchführen
@@ -368,13 +358,14 @@ const evaluationRoll = () => {
         <View style={styles.textContainer}>
           <Text style={styles.faceDesc}>{ScreenText}</Text>
           <Text style={styles.maxValues}>
-            Max Right: {maxRollR.toFixed(2)}°, Max Left: {maxRollL.toFixed(2)}°
+            Max Right: {maxYawR.toFixed(2)}°, Max Left: {maxYawL.toFixed(2)}°
           </Text>
         </View>
       )}
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -430,4 +421,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default evaluationRoll;

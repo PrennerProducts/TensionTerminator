@@ -2,23 +2,18 @@ import 'expo-router/entry';
 import { View, Text, Pressable, Button } from 'react-native';
 import React from 'react';
 import {Link, useRouter} from 'expo-router';
-import styles from "../components/styleSheet";
+import styles from "../../components/styleSheet";
 
-const intensityBefore = () => {
-    const router = useRouter();
+export default function IntensityBeforeScreen() {
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Wie stark tut es weh? VORHER</Text>
             <View style={styles.bottom}>
-            <Link href={'/evaluationBefore'} asChild>
-                <Pressable style={styles.button}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate("evaluationBefore")}>
                     <Text style={styles.buttonText}>Weiter</Text>
                 </Pressable>
-            </Link>
             </View>
         </View>
     );
 }
-
-export default intensityBefore;

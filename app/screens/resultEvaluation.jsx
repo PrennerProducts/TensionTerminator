@@ -2,29 +2,21 @@ import 'expo-router/entry';
 import { View, Text, Pressable, Button } from 'react-native';
 import React from 'react';
 import {Link, useRouter} from 'expo-router';
-import styles from "../components/styleSheet";
+import styles from "../../components/styleSheet";
 
-const ResultEvaluation = () => {
-    const router = useRouter();
-
+export default function ResultScreen ({navigation}) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Ergebnisanzeige Evaluation</Text>
             <View style={styles.bottom}>
-            <Link href={'/dataTransfer'} asChild>
-                <Pressable style={styles.button}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate("dataTransfer")}>
                     <Text style={styles.buttonText}>Daten übermitteln</Text>
                 </Pressable>
-            </Link>
 
-            <Link href={'/gratulation'} asChild>
-                <Pressable style={styles.button}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate("gratulation")}>
                     <Text style={styles.buttonText}>Weiter</Text>
                 </Pressable>
-            </Link>
             </View>
         </View>
     );
 }
-
-export default ResultEvaluation;
