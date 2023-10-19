@@ -8,8 +8,8 @@ const intensityBefore = () => {
     const router = useRouter();
 
     return (
-        <View>
-            <Text>Wie stark tut es weh? VORHER</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Wie stark tut es weh? VORHER</Text>
             <View style={styles.bottom}>
             <Link href={'/evaluationBefore'} asChild>
                 <Pressable style={styles.button}>

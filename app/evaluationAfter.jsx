@@ -8,8 +8,8 @@ const EvaluationAfter = () => {
     const router = useRouter();
 
     return (
-        <View>
-            <Text>Evaluierungsübung NACHHER</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Evaluierungsübung NACHHER</Text>
             <View style={styles.bottom}>
             <Link href={'/tabs/EvaluationScreen'} asChild>
                 <Pressable style={styles.button}>

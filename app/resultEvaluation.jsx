@@ -8,8 +8,8 @@ const ResultEvaluation = () => {
     const router = useRouter();
 
     return (
-        <View>
-            <Text>Ergebnisanzeige Evaluation</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Ergebnisanzeige Evaluation</Text>
             <View style={styles.bottom}>
             <Link href={'/dataTransfer'} asChild>
                 <Pressable style={styles.button}>

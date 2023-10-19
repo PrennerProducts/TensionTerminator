@@ -8,8 +8,8 @@ const Gratulation = () => {
     const router = useRouter();
 
     return (
-        <View>
-            <Text>Gratulation!</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Gratulation!</Text>
             <View style={styles.bottom}>
             <Link href={'/appointment'} asChild>
                 <Pressable style={styles.button}>

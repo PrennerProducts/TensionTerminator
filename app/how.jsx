@@ -8,8 +8,8 @@ const howPain = () => {
     const router = useRouter();
 
     return (
-        <View>
-            <Text>Wie tut es weh?</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Wie tut es weh?</Text>
 
             <Link href={'/intensityBefore'} asChild>
                 <Pressable style={styles.button}>

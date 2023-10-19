@@ -8,8 +8,8 @@ const EvaluationBefore = () => {
     const router = useRouter();
 
     return (
-        <View>
-            <Text>Evaluierungsübung VORHER</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Evaluierungsübung VORHER</Text>
             <View style={styles.bottom}>
             <Link href={'/tabs/EvaluationScreen'} asChild>
                 <Pressable style={styles.button}>

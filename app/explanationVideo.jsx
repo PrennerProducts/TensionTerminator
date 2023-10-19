@@ -8,8 +8,8 @@ const ExplanationVideo = () => {
     const router = useRouter();
 
     return (
-        <View>
-            <Text>Training</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Training</Text>
             <View style={styles.bottom}>
             <Link href={'/training'} asChild>
                 <Pressable style={styles.button}>

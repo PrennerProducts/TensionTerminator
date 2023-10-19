@@ -8,8 +8,8 @@ const DataTransfer = () => {
     const router = useRouter();
 
     return (
-        <View>
-            <Text>Daten übermitteln</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Daten übermitteln</Text>
             <View style={styles.bottom}>
             <Link href={'/gratulation'} asChild>
                 <Pressable style={styles.button}>
