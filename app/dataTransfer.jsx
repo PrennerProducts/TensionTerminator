@@ -2,6 +2,7 @@ import 'expo-router/entry';
 import { View, Text, Pressable, Button } from 'react-native';
 import React from 'react';
 import {Link, useRouter} from 'expo-router';
+import styles from "./components/StyleSheet";
 
 const DataTransfer = () => {
     const router = useRouter();
@@ -9,13 +10,13 @@ const DataTransfer = () => {
     return (
         <View>
             <Text>Daten übermitteln</Text>
-
+            <View style={styles.bottom}>
             <Link href={'/gratulation'} asChild>
-                <Pressable>
-                    <Text>Bestätigen</Text>
+                <Pressable style={styles.button}>
+                    <Text style={styles.buttonText}>Bestätigen</Text>
                 </Pressable>
             </Link>
-
+            </View>
         </View>
     );
 }

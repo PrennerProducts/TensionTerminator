@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "expo-router";
 import { getData, removeData, saveData } from "./services/storage";
 import CheckBox from "expo-checkbox";
-
+import styles from './components/StyleSheet';
 import { useIsFocused } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -92,63 +92,17 @@ const criteriaScreen = () => {
             "Sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht")
         )}
         <Text style={styles.text}>vor.</Text>
-        <View>
-          <View>
-            <Link href={"/where"} asChild>
+          <View style={styles.bottom}>
+              <Link href={"/where"} asChild>
               <Pressable onPress={changeFirstTime} style={styles.button}>
-                <Text style={styles.buttonFont}>Bestätigen</Text>
+                <Text style={styles.buttonText}>Bestätigen</Text>
               </Pressable>
             </Link>
           </View>
           {/* <View>{skipCriteria}</View> */}
-        </View>
       </ScrollView>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 20,
-    color: "#10069F",
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: "#10069F",
-    borderRadius: 10,
-    padding: 10,
-    marginVertical: 20,
-  },
-  buttonFont: {
-    color: "white",
-  },
-  buttonBottom: {
-    marginTop: -30,
-  },
-  text: {
-    fontSize: 16,
-    marginVertical: 20,
-  },
-  section: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  checkbox: {
-    margin: 8,
-    color: "#111111",
-  },
-  paragraph: {
-    margin: 8,
-    width: "85%",
-    fontWeight: "bold",
-  },
-});
 
 export default criteriaScreen;
