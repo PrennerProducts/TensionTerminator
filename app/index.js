@@ -76,6 +76,10 @@ const LoginPage = () => {
           constSetMyUserName(user.getUserName())
         )}
       ></Button>
+      <Button
+      title = "DELETE DATA"
+      onPress={async () => 
+        resetAllData()}></Button>
       {/*Verschiedene Varianten um ans Ziel zu kommen*/}
       {/*
         <Button title="App Starten" onPress= {() => router.push('QRscan')}>

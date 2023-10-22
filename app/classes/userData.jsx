@@ -11,7 +11,7 @@ class UserData {
       } catch (e) {}
 
       if (userName === undefined || userName === null) {
-        userName = "MySuperGamerTag";
+        userName = "Default";
       }
       if (reseted === undefined || reseted === null) {
         reseted = false;
