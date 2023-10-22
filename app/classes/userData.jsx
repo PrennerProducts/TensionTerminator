@@ -3,14 +3,17 @@ import { saveUserData, getUserData } from "../services/storage.jsx";
 class UserData {
   constructor(userName, reseted) {
     getUserData().then((data) => {
-      let myObj = JSON.parse(data);
-      userName = myObj.userName;
-      reseted = myObj.reseted;
+      let myObj = null;
+      try {
+        myObj = JSON.parse(data);
+        userName = myObj.userName;
+        reseted = myObj.reseted;
+      } catch (e) {}
 
-      if (userName === undefined) {
+      if (userName === undefined || userName === null) {
         userName = "MySuperGamerTag";
       }
-      if (reseted === undefined) {
+      if (reseted === undefined || reseted === null) {
         reseted = false;
       }
       this.userName = userName;
