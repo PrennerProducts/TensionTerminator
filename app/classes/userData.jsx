@@ -39,8 +39,8 @@ class UserData {
   }
 
   async save() {
-    console.log("UserDataClass Saving userData: " + this.toString());
-    await saveUserData(this.toString());
+    console.log("UserDataClass Saving userData: " + this.toJson());
+    await saveUserData(this.toJson());
   }
 
   async load() {
