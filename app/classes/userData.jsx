@@ -44,10 +44,9 @@ class UserData {
   }
 
   async load() {
-    console.log("UserDataClass Loading userData");
     let myObj = await getUserData();
-    this.userName = myObj.userName;
-    this.reseted = myObj.reseted;
+    console.log("UserDataClass Loading userData: " + JSON.parse(myObj));
+    return new UserData(JSON.parse(myObj).userName, JSON.parse(myObj).reseted);
   }
 }
 

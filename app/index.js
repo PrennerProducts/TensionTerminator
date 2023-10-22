@@ -1,5 +1,13 @@
 import "expo-router/entry";
-import { View, Text, Pressable, Button } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  Button,
+  TextInput,
+  StyleSheet,
+} from "react-native";
+
 import React, { useEffect } from "react";
 import { Link, useRouter } from "expo-router";
 import {
@@ -13,22 +21,27 @@ import UserData from "./classes/userData";
 const user = new UserData("Mr. Anderson", false);
 
 const LoginPage = () => {
-  const [myUserName, setMyUserName] = React.useState("");
+  const [constMyUserName, constSetMyUserName] = React.useState("");
   const router = useRouter();
 
   useEffect(() => {
-    setMyUserName(user.getUserName());
+    constSetMyUserName(user.getUserName());
   }, []);
 
   const handlePress = () => {
     router.replace("tabs");
   };
+
+  onChangeText = (text) => {
+    constSetMyUserName(text);
+  };
+
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
       <Text style={{ top: 0 }}>
         -------------- TENSION TERMINATOR ------------------
       </Text>
-      <Text>Hello {myUserName}</Text>
+      <Text>Hello {constMyUserName}</Text>
       <Link href={"/QRScan"} asChild>
         <Pressable>
           <Text>App Starten</Text>
@@ -36,12 +49,17 @@ const LoginPage = () => {
       </Link>
       {/* <Text>myUserData: {this.state.myUserData.userName}</Text> */}
 
+      <TextInput
+        onChangeText={onChangeText}
+        style={styles.input}
+        value={constMyUserName}
+      />
+
       <Button
         title="Set Name"
         onPress={() => (
           console.log(user.toString()),
-          user.setUserName("MySecondSuperGamerTag"),
-          user.setReseted(true),
+          user.setUserName(constMyUserName),
           console.log(user.toString()),
           user.save()
         )}
@@ -49,13 +67,13 @@ const LoginPage = () => {
 
       <Button
         title="Load it"
-        onPress={() => (
+        onPress={async () => (
           console.log(user.toString()),
           console.log("Begin Load"),
           user.load(),
           console.log("Finished Load"),
           console.log(user.toString()),
-          setMyUserName(user.getUserName())
+          constSetMyUserName(user.getUserName())
         )}
       ></Button>
       {/*Verschiedene Varianten um ans Ziel zu kommen*/}
@@ -78,5 +96,14 @@ const LoginPage = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+});
 
 export default LoginPage;
