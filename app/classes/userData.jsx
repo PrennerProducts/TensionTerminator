@@ -1,26 +1,32 @@
+import { saveUserData, getUserData } from "../services/storage.jsx";
+
 class UserData {
   constructor(userName, reseted) {
-    (this.userName = userName), (this.reseted = reseted);
+    this.userName = userName;
+    this.reseted = reseted;
   }
 
+  // Getters
   getUserName() {
     return this.userName;
+  }
+
+  // Setters
+  setUserName(userName) {
+    this.userName = userName;
   }
 
   getReseted() {
     return this.reseted;
   }
 
-  setUserName(userName) {
-    this.userName = userName;
-  }
-
   setReseted(reseted) {
     this.reseted = reseted;
   }
 
+  // Other methods
   toString() {
-    return "User: " + this.userName + " Reseted: " + this.reseted;
+    return `User: ${this.userName}, reseted: ${this.reseted}`;
   }
 
   toJson() {
@@ -28,8 +34,20 @@ class UserData {
   }
 
   static fromJson(json) {
-    var obj = JSON.parse(json);
+    const obj = JSON.parse(json);
     return new UserData(obj.userName, obj.reseted);
+  }
+
+  async save() {
+    console.log("UserDataClass Saving userData: " + this.toString());
+    await saveUserData(this.toString());
+  }
+
+  async load() {
+    console.log("UserDataClass Loading userData");
+    let myObj = await getUserData();
+    this.userName = myObj.userName;
+    this.reseted = myObj.reseted;
   }
 }
 

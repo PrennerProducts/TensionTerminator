@@ -10,16 +10,15 @@ import {
 } from "./services/storage";
 import UserData from "./classes/userData";
 
-const loadUserData = async () => {
-  await getUserData();
-};
+const user = new UserData("Mr. Anderson", false);
 
 const LoginPage = () => {
-  const [myUserData, setMyUserData] = React.useState(new UserData());
-
-  useEffect(() => {}, []);
-
+  const [myUserName, setMyUserName] = React.useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    setMyUserName(user.getUserName());
+  }, []);
 
   const handlePress = () => {
     router.replace("tabs");
@@ -29,37 +28,36 @@ const LoginPage = () => {
       <Text style={{ top: 0 }}>
         -------------- TENSION TERMINATOR ------------------
       </Text>
-
+      <Text>Hello {myUserName}</Text>
       <Link href={"/QRScan"} asChild>
         <Pressable>
           <Text>App Starten</Text>
         </Pressable>
       </Link>
-      <Text>myUserData: {myUserData.userName}</Text>
-      <Button title="Init" onPress={() => initUserData()}></Button>
-      <Button
-        title="Load"
-        onPress={() => setMyUserData(getUserData())}
-      ></Button>
+      {/* <Text>myUserData: {this.state.myUserData.userName}</Text> */}
+
       <Button
         title="Set Name"
         onPress={() => (
-          console.log(JSON.stringify(myUserData)),
-          (myUserData.userName = "Hans"),
-          console.log(JSON.stringify(myUserData))
-          // setUserData(myUserData)
+          console.log(user.toString()),
+          user.setUserName("MySecondSuperGamerTag"),
+          user.setReseted(true),
+          console.log(user.toString()),
+          user.save()
         )}
       ></Button>
-      <Button
-        title="Show UserData"
-        onPress={() => console.log(JSON.stringify(myUserData))}
-      ></Button>
-      <Button
-        title="Write Data to Storage"
-        onPress={() => setUserData(myUserData)}
-      ></Button>
-      <Button title="RESET ALL" onPress={() => resetAllData()}></Button>
 
+      <Button
+        title="Load it"
+        onPress={() => (
+          console.log(user.toString()),
+          console.log("Begin Load"),
+          user.load(),
+          console.log("Finished Load"),
+          console.log(user.toString()),
+          setMyUserName(user.getUserName())
+        )}
+      ></Button>
       {/*Verschiedene Varianten um ans Ziel zu kommen*/}
       {/*
         <Button title="App Starten" onPress= {() => router.push('QRscan')}>

@@ -5,25 +5,23 @@
 //
 //
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import UserData from "../classes/userData";
 
-export const setUserData = async (Data) => {
+export const saveUserData = async (userData) => {
   try {
-    await AsyncStorage.setItem("@user", JSON.stringify(Data));
+    await AsyncStorage.setItem("@user", userData);
   } catch (e) {
     console.log(e);
   }
-  console.log("UserData set.");
+  console.log("StorageProvider UserData set.");
 };
 
 export const getUserData = async () => {
   try {
     const Data = await AsyncStorage.getItem("@user");
-    console.log("getUserData: " + Data);
-    return new UserData(JSON.parse(Data).userName, JSON.parse(Data).reseted);
+    console.log("StorageProvider getUserData: " + Data);
+    return Data;
   } catch (e) {
-    console.log("getUserData: " + e);
-    initUserData();
+    console.log("StorageProvider getUserData: " + e);
   }
   // try {
   //   const Data = await AsyncStorage.getItem('@user')
@@ -36,19 +34,19 @@ export const getUserData = async () => {
   // console.log("Userdata loaded! ")
 };
 
-export const initUserData = async () => {
-  try {
-    await AsyncStorage.removeItem("@user");
-    console.log("InitUserData");
-    await AsyncStorage.setItem(
-      "@user",
-      JSON.stringify(new UserData("MySuperGamerTag", false))
-    );
-  } catch (e) {
-    console.log(e);
-  }
-  console.log("UserData set.");
-};
+// export const initUserData = async () => {
+//   try {
+//     await AsyncStorage.removeItem("@user");
+//     console.log("InitUserData");
+//     await AsyncStorage.setItem(
+//       "@user",
+//       JSON.stringify(new UserData("MySuperGamerTag", false))
+//     );
+//   } catch (e) {
+//     console.log(e);
+//   }
+//   console.log("UserData set.");
+// };
 
 export const resetAllData = async () => {
   try {
