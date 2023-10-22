@@ -18,7 +18,7 @@ import {
 } from "./services/storage";
 import UserData from "./classes/userData";
 
-const user = new UserData("Mr. Anderson", false);
+const user = new UserData();
 
 const LoginPage = () => {
   const [constMyUserName, constSetMyUserName] = React.useState("");
