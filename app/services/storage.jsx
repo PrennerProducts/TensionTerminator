@@ -1,7 +1,7 @@
 // import * as SecureStore from "expo-secure-store";
 // import "react-native-get-random-values";
 // import { v4 as uuidv4 } from "uuid";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //DemoStorageFuctions. Probably to change
 
@@ -71,16 +71,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 //AsyncStorage SavingFunctions
 // BoolValues will be saved as String. This is a workaround
 export const saveData = async (key, value) => {
-  if (typeof value === "boolean") {
-    console.log("Boolean value detected", value.toString());
+  if (typeof value === 'boolean') {
+    console.log('Boolean value detected', value.toString());
     value = value.toString();
   }
 
   try {
     await AsyncStorage.setItem(key, value);
-    console.log("Daten " + key + " erfolgreich gespeichert!");
+    console.log('Daten ' + key + ' erfolgreich gespeichert!');
   } catch (error) {
-    console.log("Fehler beim Speichern der Daten: ", error);
+    console.log('Fehler beim Speichern der Daten: ', error);
   }
 };
 
@@ -88,19 +88,19 @@ export const getData = async (key) => {
   try {
     let value = await AsyncStorage.getItem(key);
     if (value !== null) {
-      console.log("Daten gefunden: ", key);
-      if (value === "true") {
+      console.log('Daten gefunden: ', key);
+      if (value === 'true') {
         value = true;
-      } else if (value === "false") {
+      } else if (value === 'false') {
         value = false;
       }
       return value;
     } else {
-      console.log("Daten nicht gefunden", key);
+      console.log('Daten nicht gefunden', key);
       return null;
     }
   } catch (error) {
-    console.log("Fehler beim Abrufen der Daten: ", error);
+    console.log('Fehler beim Abrufen der Daten: ', error);
     return null;
   }
 };
@@ -109,9 +109,9 @@ export const getData = async (key) => {
 export const removeData = async (key) => {
   try {
     await AsyncStorage.removeItem(key);
-    console.log("Daten erfolgreich gelöscht!");
+    console.log('Daten erfolgreich gelöscht!');
   } catch (error) {
-    console.log("Fehler beim Löschen der Daten: ", error);
+    console.log('Fehler beim Löschen der Daten: ', error);
   }
 };
 
@@ -120,8 +120,35 @@ export const clearAllData = async () => {
   try {
     await AsyncStorage.clear();
     await cleanUpSecureStore();
-    console.log("Alle Daten erfolgreich gelöscht!");
+    console.log('Alle Daten erfolgreich gelöscht!');
   } catch (error) {
-    console.log("Fehler beim Löschen aller Daten: ", error);
+    console.log('Fehler beim Löschen aller Daten: ', error);
+  }
+};
+
+export const setProfileName = async (name) => {
+  try {
+    console.log('setProfileName() aufgerufen');
+    await AsyncStorage.setItem('profileName', name);
+    console.log('Profilname erfolgreich gespeichert!');
+  } catch (error) {
+    console.log('Fehler beim Speichern des Profilnamens: ', error);
+  }
+};
+
+export const getProfileName = async () => {
+  try {
+    console.log('getProfileName() aufgerufen');
+    const name = await AsyncStorage.getItem('profileName');
+    if (name !== null) {
+      console.log('Profilname gefunden: ', name);
+      return name;
+    } else {
+      console.log('Profilname nicht gefunden');
+      return null;
+    }
+  } catch (error) {
+    console.log('Fehler beim Abrufen des Profilnamens: ', error);
+    return null;
   }
 };

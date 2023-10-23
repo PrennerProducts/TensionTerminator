@@ -1,10 +1,17 @@
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { useRouter } from 'expo-router';
 import { Stack } from 'expo-router/stack';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function Layout() {
   const router = useRouter();
+
+  const goToProfile = () => {
+    // Funktion zum Navigieren zu den Profileinstellungen
+    router.push('profile/profileScreen');
+  };
+
   return (
     <Stack
       screenOptions={{
@@ -24,9 +31,19 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-          headerTitle: 'Login',
+          headerTitle: 'Startseite',
           headerShown: true,
           headerTitleAlign: 'center',
+          headerRight: () => (
+            <TouchableOpacity onPress={goToProfile}>
+              {/* <Icon name="person-circle" size={30} color="#fff" /> */}
+              {/* Alternativ ein Bild nutzen: */}
+              <Image
+                source={require('../assets/images/avatar.png')}
+                style={{ width: 40, height: 40, borderRadius: 50 }}
+              />
+            </TouchableOpacity>
+          ),
         }}
       />
       <Stack.Screen
@@ -160,6 +177,14 @@ export default function Layout() {
         name="QRScan"
         options={{
           headerTitle: 'QR-Code scannen',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="profile/profileScreen"
+        options={{
+          headerTitle: 'Mein Profil',
           headerShown: true,
           headerTitleAlign: 'center',
         }}

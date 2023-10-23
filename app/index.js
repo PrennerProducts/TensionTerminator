@@ -1,24 +1,24 @@
-import "expo-router/entry";
-import { View, Text, Pressable, Button } from "react-native";
-import React from "react";
-import { Link, useRouter } from "expo-router";
+import 'expo-router/entry';
+import { View, Text, Pressable, Button } from 'react-native';
+import React from 'react';
+import { Link, useRouter } from 'expo-router';
 import styles from './components/StyleSheet';
 
 const LoginPage = () => {
   const router = useRouter();
 
   const handlePress = () => {
-    router.replace("tabs");
+    router.replace('tabs');
   };
   return (
-        <View style={styles.container}>
-            <View style={styles.bottom}>
-                <Link href={'/QRScan'} asChild>
-                    <Pressable style={styles.button}>
-                        <Text style={styles.buttonText}>App Starten</Text>
-                    </Pressable>
-                </Link>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.bottom}>
+        <Link href={'/QRScan'} asChild>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>App Starten</Text>
+          </Pressable>
+        </Link>
+      </View>
 
       {/*Verschiedene Varianten um ans Ziel zu kommen*/}
       {/*
