@@ -1,5 +1,12 @@
 import 'expo-router/entry';
-import { View, Text, Pressable, Button } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  Button,
+  ImageBackground,
+  Image,
+} from 'react-native';
 import React from 'react';
 import { Link, useRouter } from 'expo-router';
 import styles from './components/StyleSheet';
@@ -14,8 +21,18 @@ const LoginPage = () => {
 
   return (
     <View style={styles.container}>
+      <Image
+        source={require('../assets/logo.png')}
+        style={{
+          position: 'absolute',
+          width: '90%',
+          resizeMode: 'contain',
+          top: 20,
+        }}
+      />
+
       <View style={styles.bottom}>
-        <Link href={'/QRScan'} asChild>
+        <Link href={'tabs/trainingStart'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>App Starten</Text>
           </Pressable>
