@@ -155,6 +155,16 @@ export default function Layout() {
           headerTitle: 'Ergebnisanzeige Evaluierung',
           headerShown: true,
           headerTitleAlign: 'center',
+          headerRight: () => (
+            <TouchableOpacity onPress={goToProfile}>
+              {/* <Icon name="person-circle" size={30} color="#fff" /> */}
+              {/* Alternativ ein Bild nutzen: */}
+              <Image
+                source={require('../assets/images/avatar.png')}
+                style={{ width: 40, height: 40, borderRadius: 50 }}
+              />
+            </TouchableOpacity>
+          ),
         }}
       />
       <Stack.Screen
@@ -163,6 +173,16 @@ export default function Layout() {
           headerTitle: 'Training',
           headerShown: true,
           headerTitleAlign: 'center',
+          headerRight: () => (
+            <TouchableOpacity onPress={goToProfile}>
+              {/* <Icon name="person-circle" size={30} color="#fff" /> */}
+              {/* Alternativ ein Bild nutzen: */}
+              <Image
+                source={require('../assets/images/avatar.png')}
+                style={{ width: 40, height: 40, borderRadius: 50 }}
+              />
+            </TouchableOpacity>
+          ),
         }}
       />
       <Stack.Screen
@@ -177,14 +197,6 @@ export default function Layout() {
         name="QRScan"
         options={{
           headerTitle: 'QR-Code scannen',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="profile/profileScreen"
-        options={{
-          headerTitle: 'Mein Profil',
           headerShown: true,
           headerTitleAlign: 'center',
         }}

@@ -13,7 +13,7 @@ const LoginPage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.bottom}>
-        <Link href={'/QRScan'} asChild>
+        <Link href={'tabs/home'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>App Starten</Text>
           </Pressable>
