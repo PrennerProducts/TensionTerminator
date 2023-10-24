@@ -3,7 +3,7 @@ import { Link, useRouter } from 'expo-router';
 import styles from '../components/StyleSheet';
 import { View, Text, Pressable, Button } from 'react-native';
 
-const homePage = () => {
+const trainingStart = () => {
   const router = useRouter();
 
   return (
@@ -29,7 +29,6 @@ const homePage = () => {
         </Link>
       </View>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>home</Text>
         <Link href="/" style={{ textAlign: 'right', fontSize: 24, margin: 20 }}>
           Go to StartSeite
         </Link>
@@ -38,4 +37,4 @@ const homePage = () => {
   );
 };
 
-export default homePage;
+export default trainingStart;

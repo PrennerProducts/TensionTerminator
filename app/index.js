@@ -13,7 +13,7 @@ const LoginPage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.bottom}>
-        <Link href={'tabs/home'} asChild>
+        <Link href={'tabs/trainingStart'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>App Starten</Text>
           </Pressable>

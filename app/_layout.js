@@ -40,7 +40,7 @@ export default function Layout() {
               {/* Alternativ ein Bild nutzen: */}
               <Image
                 source={require('../assets/images/avatar.png')}
-                style={{ width: 40, height: 40, borderRadius: 50 }}
+                style={{ width: 40, height: 40, borderRadius: 50, margin: 15 }}
               />
             </TouchableOpacity>
           ),
@@ -161,7 +161,7 @@ export default function Layout() {
               {/* Alternativ ein Bild nutzen: */}
               <Image
                 source={require('../assets/images/avatar.png')}
-                style={{ width: 40, height: 40, borderRadius: 50 }}
+                style={{ width: 40, height: 40, borderRadius: 50, margin: 15 }}
               />
             </TouchableOpacity>
           ),
@@ -179,7 +179,7 @@ export default function Layout() {
               {/* Alternativ ein Bild nutzen: */}
               <Image
                 source={require('../assets/images/avatar.png')}
-                style={{ width: 40, height: 40, borderRadius: 50 }}
+                style={{ width: 40, height: 40, borderRadius: 50, margin: 15 }}
               />
             </TouchableOpacity>
           ),
