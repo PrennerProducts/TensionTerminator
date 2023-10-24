@@ -1,9 +1,10 @@
+import 'expo-router/entry';
+import { View, Text, Pressable, Button } from 'react-native';
 import React from 'react';
 import { Link, useRouter } from 'expo-router';
-import styles from '../components/StyleSheet';
-import { View, Text, Pressable, Button } from 'react-native';
+import styles from './StyleSheet';
 
-const trainingStart = () => {
+const ExplanationVideo = () => {
   const router = useRouter();
 
   return (
@@ -16,25 +17,14 @@ const trainingStart = () => {
           </Pressable>
         </Link>
 
-        <Link href={'/explanationVideo'} asChild>
-          <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>Erklärvideo anschauen</Text>
-          </Pressable>
-        </Link>
-
         <Link href={'/explanationText'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Erklärung lesen</Text>
           </Pressable>
         </Link>
       </View>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Link href="/" style={{ textAlign: 'right', fontSize: 24, margin: 20 }}>
-          Go to StartSeite
-        </Link>
-      </View>
     </View>
   );
 };
 
-export default trainingStart;
+export default ExplanationVideo;

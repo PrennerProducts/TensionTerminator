@@ -1,8 +1,9 @@
 import { View, Text, Button, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
-import { useRouter } from 'expo-router';
+import { useRouter, Tabs } from 'expo-router';
 import { Stack } from 'expo-router/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function Layout() {
   const router = useRouter();
@@ -13,12 +14,10 @@ export default function Layout() {
   };
 
   return (
-    <Stack
+    <Tabs
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#10069f',
-          alignItems: 'center',
-          justifyContent: 'center',
+          backgroundColor: '#10069F',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -26,14 +25,16 @@ export default function Layout() {
         },
       }}
     >
-      {/* // Stackscreens können so umbenannt werden oder ausgeblendet mit
-      //headerShown */}
-      <Stack.Screen
+      <Tabs.Screen
         name="index"
         options={{
-          headerTitle: 'Startseite',
+          tabBarLabel: 'Home',
+          headerTitle: 'Home Screen',
           headerShown: true,
           headerTitleAlign: 'center',
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="home" color={color} size={size} />
+          ),
           headerRight: () => (
             <TouchableOpacity onPress={goToProfile}>
               {/* <Icon name="person-circle" size={30} color="#fff" /> */}
@@ -41,13 +42,15 @@ export default function Layout() {
               <Image
                 source={require('../assets/images/avatar.png')}
                 style={{ width: 40, height: 40, borderRadius: 50, margin: 15 }}
+                style={{ width: 40, height: 40, borderRadius: 50, margin: 15 }}
               />
             </TouchableOpacity>
           ),
         }}
       />
-      <Stack.Screen
-        name="register"
+
+      <Tabs.Screen
+        name="EvaluationScreen"
         options={{
           headerTitle: 'Create account',
           headerShown: true,

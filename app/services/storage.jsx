@@ -1,154 +1,61 @@
-// import * as SecureStore from "expo-secure-store";
-// import "react-native-get-random-values";
-// import { v4 as uuidv4 } from "uuid";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// Diese Klasse wird benutzt um Daten zu speichern.
+// Funktionen:
+//  get
+//  set
+//
+//
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-//DemoStorageFuctions. Probably to change
+export const saveUserData = async (userData) => {
+  try {
+    await AsyncStorage.setItem("@user", userData);
+  } catch (e) {
+    console.log(e);
+  }
+  console.log("StorageProvider UserData set.");
+};
 
-//Generate an UniqueID- Should be unique enough for our purposes
-// export const myDeviceID = async () => {
-//   let uuid = uuidv4();
-//   console.log("MyDeviceIDUUID: ", uuid);
-//   let fetchUUID = await SecureStore.getItemAsync("secure_deviceid");
-//   //if user has already signed up prior
-//   if (fetchUUID !== null) {
-//     if (fetchUUID.includes("\\")) {
-//       await SecureStore.deleteItemAsync("secure_deviceid");
-//     }
-//     uuid = fetchUUID;
-//   } else {
-//     await SecureStore.setItemAsync("secure_deviceid", uuid);
-//   }
+export const getUserData = async () => {
+  try {
+    const Data = await AsyncStorage.getItem("@user");
+    console.log("StorageProvider getUserData: " + Data);
+    return Data;
+  } catch (e) {
+    console.log("StorageProvider getUserData: " + e);
+  }
+  // try {
+  //   const Data = await AsyncStorage.getItem('@user')
+  //   console.log("What")
+  //   return Data != null ? JSON.parse(Data) : null
+  // } catch(e) {
 
-//   return uuid;
-// };
+  //   console.log(e)
+  // }
+  // console.log("Userdata loaded! ")
+};
 
-// Save Data to ExpoSecureStore
-// export const saveToSecureStore = async (key, value) => {
-//   if (typeof value === "boolean") {
-//     console.log("Boolean value detected", value.toString());
-//     value = value.toString();
-//   }
-
+// export const initUserData = async () => {
 //   try {
-//     await SecureStore.setItemAsync(key, value);
-//     console.log("SecureData " + key + " erfolgreich gespeichert!");
-//   } catch (error) {
-//     console.log("Fehler beim Speichern der SecureData: ", error);
+//     await AsyncStorage.removeItem("@user");
+//     console.log("InitUserData");
+//     await AsyncStorage.setItem(
+//       "@user",
+//       JSON.stringify(new UserData("MySuperGamerTag", false))
+//     );
+//   } catch (e) {
+//     console.log(e);
 //   }
+//   console.log("UserData set.");
 // };
 
-//GetData from ExpoSecureStore
-// export const getFromSecureStore = async (key) => {
-//   let result = await SecureStore.getItemAsync(key);
-//   console.log("getFromSecureStore: " + key + " " + result);
-//   console.log("getFromSecureStore: " + typeof result);
-//   if (result != null) {
-//     if (result === "true") {
-//       console.log("got true");
-//       return true;
-//     } else if (result === "false") {
-//       console.log("got false");
-//       return false;
-//     } else {
-//       console.log("got something else");
-//       return result;
-//     }
-//   } else {
-//     return null;
-//   }
-// };
-
-//CleanUp SecureStore -> we need to add every key because SecureStore has no DeleteAllkeys() function
-// export const cleanUpSecureStore = async () => {
-//   const keys = ["key"];
-//   keys.forEach(async (key) => {
-//     console.log("Deleting: ", key);
-//     await SecureStore.deleteItemAsync(key);
-//   });
-// };
-
-//AsyncStorage SavingFunctions
-// BoolValues will be saved as String. This is a workaround
-export const saveData = async (key, value) => {
-  if (typeof value === 'boolean') {
-    console.log('Boolean value detected', value.toString());
-    value = value.toString();
-  }
-
+export const resetAllData = async () => {
   try {
-    await AsyncStorage.setItem(key, value);
-    console.log('Daten ' + key + ' erfolgreich gespeichert!');
-  } catch (error) {
-    console.log('Fehler beim Speichern der Daten: ', error);
-  }
-};
-
-export const getData = async (key) => {
-  try {
-    let value = await AsyncStorage.getItem(key);
-    if (value !== null) {
-      console.log('Daten gefunden: ', key);
-      if (value === 'true') {
-        value = true;
-      } else if (value === 'false') {
-        value = false;
-      }
-      return value;
-    } else {
-      console.log('Daten nicht gefunden', key);
-      return null;
-    }
-  } catch (error) {
-    console.log('Fehler beim Abrufen der Daten: ', error);
-    return null;
-  }
-};
-
-//AsyncStorage Remove Functions for a single key
-export const removeData = async (key) => {
-  try {
-    await AsyncStorage.removeItem(key);
-    console.log('Daten erfolgreich gelöscht!');
-  } catch (error) {
-    console.log('Fehler beim Löschen der Daten: ', error);
-  }
-};
-
-//AsyncStorage Remove Functions for multiple keys
-export const clearAllData = async () => {
-  try {
+    await AsyncStorage.removeItem("@user");
     await AsyncStorage.clear();
-    await cleanUpSecureStore();
-    console.log('Alle Daten erfolgreich gelöscht!');
-  } catch (error) {
-    console.log('Fehler beim Löschen aller Daten: ', error);
+    console.log("resetAllData");
+  } catch (e) {
+    console.log(e);
   }
-};
+  console.log("All Data reseted.");
 
-export const setProfileName = async (name) => {
-  try {
-    console.log('setProfileName() aufgerufen');
-    await AsyncStorage.setItem('profileName', name);
-    console.log('Profilname erfolgreich gespeichert!');
-  } catch (error) {
-    console.log('Fehler beim Speichern des Profilnamens: ', error);
-  }
-};
-
-export const getProfileName = async () => {
-  try {
-    console.log('getProfileName() aufgerufen');
-    const name = await AsyncStorage.getItem('profileName');
-    if (name !== null) {
-      console.log('Profilname gefunden: ', name);
-      return name;
-    } else {
-      console.log('Profilname nicht gefunden');
-      return null;
-    }
-  } catch (error) {
-    console.log('Fehler beim Abrufen des Profilnamens: ', error);
-    return null;
-  }
 };
