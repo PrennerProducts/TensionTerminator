@@ -2,9 +2,15 @@ import { View, Text, Button, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { useRouter } from 'expo-router';
 import { Stack } from 'expo-router/stack';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function Layout() {
+import QRScan from "./QRScan";
+
+
+
+
+function Layout() {
   const router = useRouter();
 
   const goToProfile = () => {
@@ -27,11 +33,16 @@ export default function Layout() {
       }}
     >
       {/* // Stackscreens können so umbenannt werden oder ausgeblendet mit
-      //headerShown */}
+      //headerShown
+
+      // index ist die startseite*/}
+
       <Stack.Screen
         name="index"
         options={{
-          headerTitle: 'Startseite',
+
+          headerTitle: 'Tension Terminator',
+
           headerShown: true,
           headerTitleAlign: 'center',
           headerRight: () => (
@@ -61,6 +72,7 @@ export default function Layout() {
           ),
         }}
       />
+
       <Stack.Screen
         name="appointment"
         options={{
@@ -190,7 +202,9 @@ export default function Layout() {
         }}
       />
 
-      <Stack.Screen name="tabs" options={{ headerShown: false }} />
+        <Stack.Screen name="tabs" options={{ headerShown: false }} />
     </Stack>
   );
 }
+
+export default Layout;

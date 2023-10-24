@@ -4,12 +4,14 @@ import React from 'react';
 import { Link, useRouter } from 'expo-router';
 import styles from './components/StyleSheet';
 
+
 const LoginPage = () => {
   const router = useRouter();
 
   const handlePress = () => {
     router.replace('tabs');
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.bottom}>
@@ -22,6 +24,7 @@ const LoginPage = () => {
 
       {/*Verschiedene Varianten um ans Ziel zu kommen*/}
       {/*
+
         <Button title="App Starten" onPress= {() => router.push('QRscan')}>
         </Button>
 
@@ -43,6 +46,7 @@ const LoginPage = () => {
       </Link>
 
 */}
+
     </View>
   );
 };
