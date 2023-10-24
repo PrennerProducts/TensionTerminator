@@ -30,6 +30,15 @@ export default () => {
         headerTitleStyle: {
           fontWeight: 'bold',
         },
+        tabBarActiveTintColor: '#1fff',
+        tabBarInactiveTintColor: '#fff',
+        tabBarStyle: {
+          backgroundColor: '#10069f', // Hintergrundfarbe der Tab-Leiste
+          height: 55, // Höhe der Tab-Leiste
+        },
+        tabBarLabelStyle: {
+          fontSize: 14, // Schriftgröße der Tab-Labels
+        },
       }}
     >
       <Tabs.Screen

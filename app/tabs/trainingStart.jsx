@@ -29,6 +29,9 @@ const TrainingStart = () => {
           </Pressable>
         </Link>
       </View>
+      <Link href="/" style={{ textAlign: 'right', fontSize: 24, margin: 20 }}>
+        Go to Startseite
+      </Link>
     </View>
   );
 };
