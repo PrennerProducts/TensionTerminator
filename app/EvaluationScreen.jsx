@@ -47,11 +47,11 @@ const EvaluationScreen = () => {
         }}
       >
         <Image
-          source={require('../../assets/images/roll.png')}
+          source={require('../assets/images/roll.png')}
           style={{ width: 100, height: 100 }}
         />
         <Image
-          source={require('../../assets/images/rotation.png')}
+          source={require('../assets/images/rotation.png')}
           style={{ width: 100, height: 100 }}
         />
       </View>

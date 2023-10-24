@@ -57,4 +57,5 @@ export const resetAllData = async () => {
     console.log(e);
   }
   console.log("All Data reseted.");
+
 };

@@ -1,17 +1,23 @@
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
-import { useRouter } from 'expo-router';
+import { useRouter, Tabs } from 'expo-router';
 import { Stack } from 'expo-router/stack';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function Layout() {
   const router = useRouter();
+
+  const goToProfile = () => {
+    // Funktion zum Navigieren zu den Profileinstellungen
+    router.push('profile/profileScreen');
+  };
+
   return (
-    <Stack
+    <Tabs
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#10069f',
-          alignItems: 'center',
-          justifyContent: 'center',
+          backgroundColor: '#10069F',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -19,153 +25,236 @@ export default function Layout() {
         },
       }}
     >
-      {/* // Stackscreens können so umbenannt werden oder ausgeblendet mit
-      //headerShown */}
-      <Stack.Screen
+      <Tabs.Screen
         name="index"
         options={{
-          headerTitle: 'Login',
+          tabBarLabel: 'Home',
+          headerTitle: 'Home Screen',
           headerShown: true,
           headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="register"
-        options={{
-          headerTitle: 'Create account',
-          headerShown: true,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="home" color={color} size={size} />
+          ),
           headerRight: () => (
-            <Button
-              title="open Modal"
-              onPress={() => {
-                router.push('modal');
-              }}
-            />
+            <TouchableOpacity onPress={goToProfile}>
+              {/* <Icon name="person-circle" size={30} color="#fff" /> */}
+              {/* Alternativ ein Bild nutzen: */}
+              <Image
+                source={require('../assets/images/avatar.png')}
+                style={{ width: 40, height: 40, borderRadius: 50, margin: 15 }}
+              />
+            </TouchableOpacity>
           ),
         }}
       />
-      <Stack.Screen
-        name="appointment"
+
+      <Tabs.Screen
+        name="EvaluationScreen"
         options={{
-          headerTitle: 'Termin planen',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="criteria"
-        options={{
-          headerTitle: 'Ausschlusskriterien',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="dataTransfer"
-        options={{
-          headerTitle: 'Daten übermitteln',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="evaluationAfter"
-        options={{
-          headerTitle: 'Evaluierungsübung NACHHER',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="evaluationBefore"
-        options={{
-          headerTitle: 'Evaluierungsübung VORHER',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="explanationText"
-        options={{
-          headerTitle: 'Erklärung lesen',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="explanationVideo"
-        options={{
-          headerTitle: 'Erklärvideo',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="gratulation"
-        options={{
-          headerTitle: 'Gratulation',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="how"
-        options={{
-          headerTitle: 'Wie tut es weh?',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="intensityBefore"
-        options={{
-          headerTitle: 'Wie stark tut es weh? VORHER',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="intensityAfter"
-        options={{
-          headerTitle: 'Wie stark tut es weh? NACHHER',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="resultEvaluation"
-        options={{
-          headerTitle: 'Ergebnisanzeige Evaluierung',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="training"
-        options={{
-          headerTitle: 'Training',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="where"
-        options={{
-          headerTitle: 'Wo tut es weh?',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="QRScan"
-        options={{
-          headerTitle: 'QR-Code scannen',
-          headerShown: true,
-          headerTitleAlign: 'center',
+          tabBarLabel: 'Evaluation',
+          headerTitle: 'Evaluation Screen',
+
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="camera" color={color} size={size} />
+          ),
         }}
       />
 
-      <Stack.Screen name="tabs" options={{ headerShown: false }} />
-    </Stack>
+      <Tabs.Screen
+        name="barcode"
+        options={{
+          tabBarLabel: 'Scan QR Code',
+          headerTitle: 'Scan Barcode',
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="qrcode" color={color} size={size} />
+          ),
+        }}
+      />
+      {/* ------------------------------------------------------------------------------------- */}
+      {/* HIDE EVERITING IN TABS FOR NOW */}
+      {/* ------------------------------------------------------------------------------------- */}
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="[...unmatched]"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="QRScan"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="training"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="trainingStart"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+
+      {/* ------------------------------------------------------------------------------------- */}
+      {/* HIDE FOLDER components */}
+      {/* ------------------------------------------------------------------------------------- */}
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="components/appointment"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="components/criteria"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="components/explanationText"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="components/explanationVideo"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="components/gratulation"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="components/how"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="components/intensityAfter"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="components/intensityBefore"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="components/StyleSheet"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="components/where"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      {/* ------------------------------------------------------------------------------------- */}
+      {/* HIDE FOLDER evaluationComponents */}
+      {/* ------------------------------------------------------------------------------------- */}
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="evaluationComponents/evaluationAfter"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="evaluationComponents/evaluationBefore"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="evaluationComponents/evaluationRoll"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="evaluationComponents/evaluationYaw"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="evaluationComponents/resultEvaluation"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      {/* ------------------------------------------------------------------------------------- */}
+      {/* HIDE FOLDER profile */}
+      {/* ------------------------------------------------------------------------------------- */}
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="profile/profileScreen"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      {/* ------------------------------------------------------------------------------------- */}
+      {/* HIDE FOLDER services*/}
+      {/* ------------------------------------------------------------------------------------- */}
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="services/dataTransfer"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+    </Tabs>
   );
 }
