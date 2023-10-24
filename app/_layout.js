@@ -10,14 +10,16 @@ export default function Layout() {
 
   const goToProfile = () => {
     // Funktion zum Navigieren zu den Profileinstellungen
-    router.push('profile/profileScreen');
+    router.push('tabs/profileScreen');
   };
 
   return (
-    <Tabs
+    <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#10069F',
+          backgroundColor: '#10069f',
+          alignItems: 'center',
+          justifyContent: 'center',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -25,142 +27,18 @@ export default function Layout() {
         },
       }}
     >
-      <Tabs.Screen
+      {/* ------------------------------------------------------------------------------------- */}
+      {/*  root App FOLDER  */}
+      {/* ------------------------------------------------------------------------------------- */}
+
+      <Stack.Screen
         name="index"
         options={{
-          tabBarLabel: 'Home',
-          headerTitle: 'Home Screen',
-          headerShown: true,
-          headerTitleAlign: 'center',
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="home" color={color} size={size} />
-          ),
-          headerRight: () => (
-            <TouchableOpacity onPress={goToProfile}>
-              {/* <Icon name="person-circle" size={30} color="#fff" /> */}
-              {/* Alternativ ein Bild nutzen: */}
-              <Image
-                source={require('../assets/images/avatar.png')}
-                style={{ width: 40, height: 40, borderRadius: 50, margin: 15 }}
-                style={{ width: 40, height: 40, borderRadius: 50, margin: 15 }}
-              />
-            </TouchableOpacity>
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="EvaluationScreen"
-        options={{
-          headerTitle: 'Create account',
-          headerShown: true,
-          headerRight: () => (
-            <Button
-              title="open Modal"
-              onPress={() => {
-                router.push('modal');
-              }}
-            />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="appointment"
-        options={{
-          headerTitle: 'Termin planen',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="criteria"
-        options={{
-          headerTitle: 'Ausschlusskriterien',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="dataTransfer"
-        options={{
-          headerTitle: 'Daten übermitteln',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="evaluationAfter"
-        options={{
-          headerTitle: 'Evaluierungsübung NACHHER',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="evaluationBefore"
-        options={{
-          headerTitle: 'Evaluierungsübung VORHER',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="explanationText"
-        options={{
-          headerTitle: 'Erklärung lesen',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="explanationVideo"
-        options={{
-          headerTitle: 'Erklärvideo',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="gratulation"
-        options={{
-          headerTitle: 'Gratulation',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="how"
-        options={{
-          headerTitle: 'Wie tut es weh?',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="intensityBefore"
-        options={{
-          headerTitle: 'Wie stark tut es weh? VORHER',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="intensityAfter"
-        options={{
-          headerTitle: 'Wie stark tut es weh? NACHHER',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
-      />
-      <Stack.Screen
-        name="resultEvaluation"
-        options={{
-          headerTitle: 'Ergebnisanzeige Evaluierung',
+          headerTitle: 'Startseite',
           headerShown: true,
           headerTitleAlign: 'center',
           headerRight: () => (
             <TouchableOpacity onPress={goToProfile}>
-              {/* <Icon name="person-circle" size={30} color="#fff" /> */}
               {/* Alternativ ein Bild nutzen: */}
               <Image
                 source={require('../assets/images/avatar.png')}
@@ -168,6 +46,14 @@ export default function Layout() {
               />
             </TouchableOpacity>
           ),
+        }}
+      />
+      <Stack.Screen
+        name="QRScan"
+        options={{
+          headerTitle: 'QR-Code scannen',
+          headerShown: true,
+          headerTitleAlign: 'center',
         }}
       />
       <Stack.Screen
@@ -188,18 +74,145 @@ export default function Layout() {
           ),
         }}
       />
+
+      {/* ------------------------------------------------------------------------------------- */}
+      {/*  FOLDER components */}
+      {/* ------------------------------------------------------------------------------------- */}
       <Stack.Screen
-        name="where"
+        name="components/appointment"
+        options={{
+          headerTitle: 'appointment',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="components/criteria"
+        options={{
+          headerTitle: 'Ausschlusskriterien',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="components/explanationText"
+        options={{
+          headerTitle: 'Erklärung lesen',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="components/explanationVideo"
+        options={{
+          headerTitle: 'Erklärvideo',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="components/gratulation"
+        options={{
+          headerTitle: 'Gratulation',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="components/how"
+        options={{
+          headerTitle: 'Wie tut es weh?',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="components/intensityAfter"
+        options={{
+          headerTitle: 'Wie stark tut es weh? NACHHER',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="components/intensityBefore"
+        options={{
+          headerTitle: 'Wie stark tut es weh? VORHER',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="components/where"
         options={{
           headerTitle: 'Wo tut es weh?',
           headerShown: true,
           headerTitleAlign: 'center',
         }}
       />
+
+      {/* ------------------------------------------------------------------------------------- */}
+      {/*  FOLDER evaluationComponents */}
+      {/* ------------------------------------------------------------------------------------- */}
       <Stack.Screen
-        name="QRScan"
+        name="evaluationComponents/evaluationAfter"
         options={{
-          headerTitle: 'QR-Code scannen',
+          headerTitle: 'Evaluierungsübung NACHHER',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="evaluationComponents/evaluationBefore"
+        options={{
+          headerTitle: 'Evaluierungsübung VORHER',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="evaluationComponents/evaluationRoll"
+        options={{
+          headerTitle: 'Evaluierungsübung Roll',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="evaluationComponents/evaluationYaw"
+        options={{
+          headerTitle: 'Evaluierungsübung YAW',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="evaluationComponents/resultEvaluation"
+        options={{
+          headerTitle: 'Ergebnisanzeige Evaluierung',
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerRight: () => (
+            <TouchableOpacity onPress={goToProfile}>
+              {/* <Icon name="person-circle" size={30} color="#fff" /> */}
+              {/* Alternativ ein Bild nutzen: */}
+              <Image
+                source={require('../assets/images/avatar.png')}
+                style={{ width: 40, height: 40, borderRadius: 50, margin: 15 }}
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+
+      {/* ------------------------------------------------------------------------------------- */}
+      {/*  FOLDER services */}
+      {/* ------------------------------------------------------------------------------------- */}
+
+      <Stack.Screen
+        name="services/dataTransfer"
+        options={{
+          headerTitle: 'Daten übermitteln',
           headerShown: true,
           headerTitleAlign: 'center',
         }}

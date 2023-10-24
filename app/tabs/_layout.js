@@ -12,9 +12,11 @@ import { Link, useRouter, Tabs } from 'expo-router';
 import styles from '../components/StyleSheet';
 
 export default () => {
+  const router = useRouter();
+
   const goToProfile = () => {
     // Funktion zum Navigieren zu den Profileinstellungen
-    router.push('profile/profileScreen');
+    router.push('tabs/profileScreen');
   };
 
   return (
@@ -51,7 +53,6 @@ export default () => {
           ),
         }}
       />
-
       <Tabs.Screen
         name="EvaluationScreen"
         options={{
@@ -74,7 +75,6 @@ export default () => {
           ),
         }}
       />
-
       <Tabs.Screen
         name="profileScreen"
         options={{
