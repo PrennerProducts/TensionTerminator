@@ -2,7 +2,8 @@ import 'expo-router/entry';
 import { View, Text, Pressable, Button } from 'react-native';
 import React from 'react';
 import {Link, useRouter} from 'expo-router';
-import styles from "../components/styleSheet";
+import styles from "./components/StyleSheet";
+
 
 const Gratulation = () => {
     const router = useRouter();

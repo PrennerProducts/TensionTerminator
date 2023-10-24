@@ -1,10 +1,9 @@
 import 'expo-router/entry';
 import { View, Text, Pressable, Button } from 'react-native';
 import React from 'react';
-import {Link, useRouter} from 'expo-router';
-import styles from '../components/styleSheet';
+import { Link, useRouter } from 'expo-router';
+import styles from './components/StyleSheet';
 
-// index ist die startseite
 
 const LoginPage = () => {
   const router = useRouter();
@@ -15,15 +14,17 @@ const LoginPage = () => {
 
   return (
     <View style={styles.container}>
-        <View style={styles.bottom}>
-          <Link href={'/QRScan'} asChild>
-              <Pressable style={styles.button}>
-                  <Text style={styles.buttonText}>App Starten</Text>
-              </Pressable>
-          </Link>
+      <View style={styles.bottom}>
+        <Link href={'/QRScan'} asChild>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>App Starten</Text>
+          </Pressable>
+        </Link>
+      </View>
 
-        {/*Verschiedene Varianten um ans Ziel zu kommen*/}
-        {/*
+      {/*Verschiedene Varianten um ans Ziel zu kommen*/}
+      {/*
+
         <Button title="App Starten" onPress= {() => router.push('QRscan')}>
         </Button>
 
@@ -38,8 +39,14 @@ const LoginPage = () => {
             </Pressable>
         </Link>
 
+              <Link href={"/criteria"} asChild>
+        <Pressable>
+          <Text>Kriterien</Text>
+        </Pressable>
+      </Link>
+
 */}
-        </View>
+
     </View>
   );
 };
