@@ -29,7 +29,7 @@ export default function Layout() {
         name="index"
         options={{
           tabBarLabel: 'Home',
-          headerTitle: 'Home Screen',
+          headerTitle: 'Tension Terminator',
           headerShown: true,
           headerTitleAlign: 'center',
           tabBarIcon: ({ color, size }) => (

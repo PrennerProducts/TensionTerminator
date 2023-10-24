@@ -11,13 +11,13 @@ const EvaluationBefore = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Evaluierungsübung VORHER</Text>
       <View style={styles.bottom}>
-        <Link href={'/tabs/EvaluationScreen'} asChild>
+        <Link href={'../EvaluationScreen'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Weiter</Text>
           </Pressable>
         </Link>
 
-        <Link href={'/trainingStart'} asChild>
+        <Link href={'../trainingStart'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Überspringen</Text>
           </Pressable>

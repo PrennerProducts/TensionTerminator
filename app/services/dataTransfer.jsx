@@ -11,7 +11,7 @@ const DataTransfer = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Daten übermitteln</Text>
       <View style={styles.bottom}>
-        <Link href={'/gratulation'} asChild>
+        <Link href={'../components/gratulation'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Bestätigen</Text>
           </Pressable>

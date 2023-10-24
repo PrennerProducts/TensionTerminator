@@ -17,7 +17,7 @@ const QRcodeScreen = () => {
                 </Pressable>
             </Link>
 
-            <Link href={'/criteria'} asChild>
+            <Link href={'./components/criteria'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Überspringen</Text>
                 </Pressable>

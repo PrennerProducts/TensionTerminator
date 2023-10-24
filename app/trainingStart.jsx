@@ -11,19 +11,19 @@ const TrainingStart = () => {
         <View style={styles.container}>
             <Text style={styles.title}>Training</Text>
             <View style={styles.bottom}>
-            <Link href={'/training'} asChild>
+            <Link href={'./training'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Training starten</Text>
                 </Pressable>
             </Link>
 
-            <Link href={'/explanationVideo'} asChild>
+            <Link href={'./components/explanationVideo'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Erklärvideo anschauen</Text>
                 </Pressable>
             </Link>
 
-            <Link href={'/explanationText'} asChild>
+            <Link href={'./components/explanationText'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Erklärung lesen</Text>
                 </Pressable>

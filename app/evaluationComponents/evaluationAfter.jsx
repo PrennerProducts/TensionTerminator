@@ -11,13 +11,13 @@ const EvaluationAfter = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Evaluierungsübung NACHHER</Text>
       <View style={styles.bottom}>
-        <Link href={'/tabs/EvaluationScreen'} asChild>
+        <Link href={'../EvaluationScreen'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Starten</Text>
           </Pressable>
         </Link>
 
-        <Link href={'/intensityAfter'} asChild>
+        <Link href={'../components/intensityAfter'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Weiter</Text>
           </Pressable>

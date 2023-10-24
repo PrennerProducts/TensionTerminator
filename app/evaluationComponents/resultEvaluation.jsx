@@ -11,13 +11,13 @@ const ResultEvaluation = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Ergebnisanzeige Evaluation</Text>
       <View style={styles.bottom}>
-        <Link href={'/dataTransfer'} asChild>
+        <Link href={'../services/dataTransfer'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Daten übermitteln</Text>
           </Pressable>
         </Link>
 
-        <Link href={'/gratulation'} asChild>
+        <Link href={'../components/gratulation'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Weiter</Text>
           </Pressable>

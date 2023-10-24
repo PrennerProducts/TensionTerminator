@@ -11,13 +11,13 @@ const ExplanationVideo = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Training</Text>
       <View style={styles.bottom}>
-        <Link href={'/training'} asChild>
+        <Link href={'../training'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Training starten</Text>
           </Pressable>
         </Link>
 
-        <Link href={'/explanationText'} asChild>
+        <Link href={'./explanationText'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Erklärung lesen</Text>
           </Pressable>
