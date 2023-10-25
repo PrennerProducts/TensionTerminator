@@ -93,7 +93,7 @@ const criteriaScreen = () => {
         )}
         <Text style={styles.text}>vor.</Text>
         <View style={styles.bottom}>
-          <Link href={'/where'} asChild>
+          <Link href={'./where'} asChild>
             <Pressable onPress={changeFirstTime} style={styles.button}>
               <Text style={styles.buttonText}>Bestätigen</Text>
             </Pressable>

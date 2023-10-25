@@ -11,13 +11,13 @@ const Gratulation = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Gratulation!</Text>
       <View style={styles.bottom}>
-        <Link href={'/appointment'} asChild>
+        <Link href={'./appointment'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Termin planen</Text>
           </Pressable>
         </Link>
 
-        <Link href={'/where'} asChild>
+        <Link href={'./where'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Neues Training starten</Text>
           </Pressable>

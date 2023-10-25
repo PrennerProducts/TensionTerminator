@@ -17,7 +17,7 @@ const EvaluationAfter = () => {
           </Pressable>
         </Link>
 
-        <Link href={'/intensityAfter'} asChild>
+        <Link href={'../components/intensityAfter'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Weiter</Text>
           </Pressable>

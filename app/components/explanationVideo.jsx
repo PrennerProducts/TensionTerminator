@@ -17,7 +17,7 @@ const ExplanationVideo = () => {
           </Pressable>
         </Link>
 
-        <Link href={'/explanationText'} asChild>
+        <Link href={'./explanationText'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Erklärung lesen</Text>
           </Pressable>
