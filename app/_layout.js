@@ -2,6 +2,7 @@ import { View, Text, Button, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { useRouter, Tabs } from 'expo-router';
 import { Stack } from 'expo-router/stack';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -34,7 +35,9 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-          headerTitle: 'Startseite',
+
+          headerTitle: 'Tension Terminator',
+
           headerShown: true,
           headerTitleAlign: 'center',
           headerRight: () => (
@@ -218,7 +221,9 @@ export default function Layout() {
         }}
       />
 
-      <Stack.Screen name="tabs" options={{ headerShown: false }} />
+        <Stack.Screen name="tabs" options={{ headerShown: false }} />
     </Stack>
   );
 }
+
+export default Layout;

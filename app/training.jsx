@@ -4,6 +4,7 @@ import React from 'react';
 import {Link, useRouter} from 'expo-router';
 import styles from "./components/StyleSheet";
 
+
 const TrainingScreen = () => {
     const router = useRouter();
 

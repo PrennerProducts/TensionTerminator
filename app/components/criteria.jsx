@@ -1,3 +1,15 @@
+<<<<<<< HEAD:app/criteria.jsx
+
+import { View, Text, Pressable, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Link } from "expo-router";
+import { getData, removeData, saveData } from "./services/storage";
+import CheckBox from "expo-checkbox";
+import styles from './components/StyleSheet';
+import { useIsFocused } from "@react-navigation/native";
+import { ScrollView } from "react-native-gesture-handler";
+=======
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
@@ -7,12 +19,15 @@ import CheckBox from 'expo-checkbox';
 import styles from './StyleSheet';
 import { useIsFocused } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
+>>>>>>> develop:app/components/criteria.jsx
+
 
 const criteriaScreen = () => {
   //Uncomment this to use
   // const navigation = useNavigation();
   // const [firstTime, setFirstTime] = React.useState(true);
   // const isFocused = useIsFocused();
+
 
   // //CheckBoxes
   // const [toggleCheckBox, setToggleCheckBox] = React.useState(false);
@@ -41,6 +56,7 @@ const criteriaScreen = () => {
   //   // for testing purpose --> clean up firstTime Data
   //   // removeData("firstTime");
   // };
+
 
   // const skipCriteria =
   //   firstTime === false ? (
