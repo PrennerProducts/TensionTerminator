@@ -15,13 +15,13 @@ const QRcodeScreen = ({}) => {
 
             <View style={styles.bottom}>
 
-            <Link href={'/tabs/barcode'} asChild>
+            <Link href={'./tabs/barcode'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Barcode Scannen</Text>
                 </Pressable>
             </Link>
 
-            <Link href={'/criteria'} asChild>
+            <Link href={'./components/criteria'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Überspringen</Text>
                 </Pressable>

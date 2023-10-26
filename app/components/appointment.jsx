@@ -11,7 +11,7 @@ const Appointment = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Termin planen</Text>
       <View style={styles.bottom}>
-        <Link href={'/where'} asChild>
+        <Link href={'./where'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Bestätigen</Text>
           </Pressable>
