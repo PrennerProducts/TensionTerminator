@@ -10,42 +10,72 @@ import React, { useEffect, useState } from 'react';
 import { getProfileName, setProfileName } from '../services/storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as ImagePicker from 'expo-image-picker';
+import UserData from '../classes/userData';
 
 const profileScreen = () => {
-  const [name, setName] = useState('SpongeBob42');
-  const [newName, setNewName] = useState('');
+  const [constMyUserName, constSetMyUserName] = React.useState('');
+  const [userData, setUserData] = React.useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [newName, setNewName] = useState('');
   const [image, setImage] = useState(null);
 
+  const user = new UserData();
+
+  console.log('MyUserDate: ' + userData);
+  // useEffect(() => {
+  //   const fetchProfileName = async () => {
+  //     try {
+  //       const fetchedName = await getProfileName();
+  //       if (fetchedName !== null) {
+  //         setName(fetchedName);
+  //       } else {
+  //         console.log(
+  //           'Name nicht gefunden, jetz setzen wir einen Defaultnamen (SpongeBob42)'
+  //         );
+  //         setName(name);
+  //       }
+  //     } catch (error) {
+  //       console.log('Fehler beim Abrufen des Namens:', error);
+  //     }
+  //   };
+
+  //   fetchProfileName();
+  // }, []);
+
   useEffect(() => {
-    const fetchProfileName = async () => {
-      try {
-        const fetchedName = await getProfileName();
-        if (fetchedName !== null) {
-          setName(fetchedName);
-        } else {
-          console.log(
-            'Name nicht gefunden, jetz setzen wir einen Defaultnamen (SpongeBob42)'
-          );
-          setName(name);
-        }
-      } catch (error) {
-        console.log('Fehler beim Abrufen des Namens:', error);
-      }
+    const loadData = async () => {
+      // Hier laden Sie userData aus dem Speicher und setzen es.
+      const loadedData = await user.load(); // Annahme, dass `user.load()` die gespeicherten Daten lädt
+      setUserData(loadedData);
     };
 
-    fetchProfileName();
+    loadData();
   }, []);
 
   const handleNameChange = async () => {
     try {
-      await setProfileName(newName);
-      setName(newName);
+      user.setUserName(newName);
+      await user.save();
+      setUserData({ ...userData, userName: newName });
       setIsEditing(false);
     } catch (error) {
       console.log('Fehler beim Ändern des Namens:', error);
     }
   };
+
+  useEffect(() => {
+    const initializeUserData = async () => {
+      try {
+        await user.load();
+        setUserData(user);
+        constSetMyUserName(user.getUserName()); // Setzen Sie den initialen Zustand des Benutzernamens
+      } catch (error) {
+        console.log('Fehler beim Initialisieren der UserData:', error);
+      }
+    };
+
+    initializeUserData();
+  }, []);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -56,10 +86,12 @@ const profileScreen = () => {
     });
 
     if (!result.cancelled) {
-      setImage(result.uri);
-      // Speichern Sie das Bild-URI irgendwo, z.B. in AsyncStorage oder in einer Datenbank
+      userData.setPicture(result.uri);
+      await userData.save();
+      setUserData({ ...userData }); // Erneutes Rendern der Komponente erzwingen
     }
   };
+  console.log('MyUserDate: ' + userData);
 
   return (
     <View style={{ padding: 20 }}>
@@ -81,11 +113,11 @@ const profileScreen = () => {
           }}
           onPress={pickImage}
         >
-          <Icon name="pencil" size={30} />
+          <Icon name="pencil" size={20} />
         </TouchableOpacity>
       </View>
 
-      {/* Profilname */}
+      {/* Profilname
       <View
         style={{
           flexDirection: 'column',
@@ -106,6 +138,40 @@ const profileScreen = () => {
             <TouchableOpacity
               style={{ marginLeft: 5 }}
               onPress={() => setIsEditing(!isEditing)}
+            >
+              <Icon name="pencil" size={30} />
+            </TouchableOpacity>
+          </Text>
+        )}
+      </View> */}
+      {/* Profilname */}
+      <View
+        style={{
+          flexDirection: 'column',
+          alignItems: 'center',
+          marginBottom: 20,
+        }}
+      >
+        {isEditing ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <TextInput
+              value={newName}
+              placeholder="Neuen Namen eingeben"
+              onChangeText={(text) => setNewName(text)}
+            />
+            <TouchableOpacity onPress={handleNameChange}>
+              <Text>OK</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <Text style={{ fontSize: 24 }}>
+            Username: {userData ? userData.getUserName() : 'Lädt...'}
+            <TouchableOpacity
+              style={{ marginLeft: 5 }}
+              onPress={() => {
+                setNewName(userData.getUserName());
+                setIsEditing(true);
+              }}
             >
               <Icon name="pencil" size={30} />
             </TouchableOpacity>

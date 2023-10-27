@@ -2,10 +2,9 @@
 //* it saves only user specific data
 //* use save() method to save the object from storage
 //* use load() method to load the object to storage
-//* if u need a new property than add it into the constructor, write getter and setter and correct fromJSON(), toString() and load() methods  
+//* if u need a new property than add it into the constructor, write getter and setter and correct fromJSON(), toString() and load() methods
 
-
-import { saveUserData, getUserData } from "../services/storage.jsx";
+import { saveUserData, getUserData } from '../services/storage.jsx';
 
 class UserData {
   constructor(userName, reseted, picture, level, points) {
@@ -21,7 +20,7 @@ class UserData {
       } catch (e) {}
 
       if (userName === undefined || userName === null) {
-        userName = "Default";
+        userName = 'Default';
       }
       if (reseted === undefined || reseted === null) {
         reseted = false;
@@ -65,6 +64,15 @@ class UserData {
     return this.picture;
   }
 
+  getUser() {
+    return {
+      userName: this.getUserName(),
+      level: this.getLevel(),
+      picture: this.getPicture(),
+      points: this.getPoints(),
+    };
+  }
+
   setPicture(picture) {
     this.picture = picture;
   }
@@ -96,18 +104,30 @@ class UserData {
 
   static fromJson(json) {
     const obj = JSON.parse(json);
-    return new UserData(obj.userName, obj.reseted, obj.picture, obj.level, obj.points);
+    return new UserData(
+      obj.userName,
+      obj.reseted,
+      obj.picture,
+      obj.level,
+      obj.points
+    );
   }
 
   async save() {
-    console.log("UserDataClass Saving userData: " + this.toJson());
+    console.log('UserDataClass Saving userData: ' + this.toJson());
     await saveUserData(this.toJson());
   }
 
   async load() {
     let myObj = await getUserData();
-    console.log("UserDataClass Loading userData: " + JSON.parse(myObj));
-    return new UserData(JSON.parse(myObj).userName, JSON.parse(myObj).reseted, JSON.parse(myObj).picture, JSON.parse(myObj).level, JSON.parse(myObj).points);
+    console.log('UserDataClass Loading userData: ' + JSON.parse(myObj));
+    return new UserData(
+      JSON.parse(myObj).userName,
+      JSON.parse(myObj).reseted,
+      JSON.parse(myObj).picture,
+      JSON.parse(myObj).level,
+      JSON.parse(myObj).points
+    );
   }
 }
 
