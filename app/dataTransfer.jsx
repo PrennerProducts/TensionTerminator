@@ -6,24 +6,16 @@ import {Link, useRouter} from 'expo-router';
 import styles from "./components/StyleSheet";
 
 
-const QRcodeScreen = ({}) => {
+const DataTransfer = () => {
     const router = useRouter();
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>QR-Code Scannen</Text>
-
+            <Text style={styles.title}>Daten übermitteln</Text>
             <View style={styles.bottom}>
-
-            <Link href={'./tabs/barcode'} asChild>
+            <Link href={'/gratulation'} asChild>
                 <Pressable style={styles.button}>
-                    <Text style={styles.buttonText}>Barcode Scannen</Text>
-                </Pressable>
-            </Link>
-
-            <Link href={'./components/criteria'} asChild>
-                <Pressable style={styles.button}>
-                    <Text style={styles.buttonText}>Überspringen</Text>
+                    <Text style={styles.buttonText}>Bestätigen</Text>
                 </Pressable>
             </Link>
             </View>
@@ -31,4 +23,4 @@ const QRcodeScreen = ({}) => {
     );
 }
 
-export default QRcodeScreen;
+export default DataTransfer;

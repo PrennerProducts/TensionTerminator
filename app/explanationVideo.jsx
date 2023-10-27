@@ -2,28 +2,25 @@ import 'expo-router/entry';
 import { View, Text, Pressable, Button } from 'react-native';
 import React from 'react';
 import {Link, useRouter} from 'expo-router';
-
 import styles from "./components/StyleSheet";
 
 
-const QRcodeScreen = ({}) => {
+const ExplanationVideo = () => {
     const router = useRouter();
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>QR-Code Scannen</Text>
-
+            <Text style={styles.title}>Training</Text>
             <View style={styles.bottom}>
-
-            <Link href={'./tabs/barcode'} asChild>
+            <Link href={'/training'} asChild>
                 <Pressable style={styles.button}>
-                    <Text style={styles.buttonText}>Barcode Scannen</Text>
+                    <Text style={styles.buttonText}>Training starten</Text>
                 </Pressable>
             </Link>
 
-            <Link href={'./components/criteria'} asChild>
+            <Link href={'/explanationText'} asChild>
                 <Pressable style={styles.button}>
-                    <Text style={styles.buttonText}>Überspringen</Text>
+                    <Text style={styles.buttonText}>Erklärung lesen</Text>
                 </Pressable>
             </Link>
             </View>
@@ -31,4 +28,4 @@ const QRcodeScreen = ({}) => {
     );
 }
 
-export default QRcodeScreen;
+export default ExplanationVideo;
