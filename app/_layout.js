@@ -35,7 +35,6 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-
           headerTitle: 'Tension Terminator',
 
           headerShown: true,
@@ -221,9 +220,7 @@ export default function Layout() {
         }}
       />
 
-        <Stack.Screen name="tabs" options={{ headerShown: false }} />
+      <Stack.Screen name="tabs" options={{ headerShown: false }} />
     </Stack>
   );
 }
-
-export default Layout;
