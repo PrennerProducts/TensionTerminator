@@ -25,7 +25,7 @@ const EvaluationScreen = () => {
 
   const handleEvaluierung = () => {
     setEvaluationStarted(true);
-    router.replace('evaluationYR');
+    router.push({pathname: 'evaluationComponents/evaluationYR', params: {exercise: 0 }});
   };
 
   return (
