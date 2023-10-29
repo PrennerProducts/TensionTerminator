@@ -59,3 +59,22 @@ export const resetAllData = async () => {
   console.log("All Data reseted.");
 
 };
+
+export const getTrainingData = async (key) => {
+  try {
+    const Data = await AsyncStorage.getItem(key);
+    console.log("StorageProvider getTrainingData: " + Data);
+    return Data;
+  } catch (e) {
+    console.log("StorageProvider getTrainingData: " + e);
+  }
+}
+
+export const saveTrainingData = async (key, userData) => {
+  try {
+    await AsyncStorage.setItem(key, userData);
+  } catch (e) {
+    console.log(e);
+  }
+  console.log("StorageProvider TrainingData set.");
+};
