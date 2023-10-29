@@ -1,3 +1,5 @@
+//todo: connect trainingdata with the id
+
 import { saveUserData, getUserData } from "../services/storage.jsx";
 import uuid from 'react-native-uuid';
 
