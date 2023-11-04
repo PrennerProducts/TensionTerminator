@@ -10,6 +10,8 @@ const ResultEvaluation = () => {
   const router = useRouter();
   //const { exercise, maxL, maxR } = useLocalSearchParams();
   const cacheBuster = Date.now();
+  const originScreen = evaluationData.originScreen;
+  const nextScreen = evaluationData.nextScreen;
   const exercise = evaluationData.exercise;
   const maxYL = evaluationData.maxYL;
   const maxYR = evaluationData.maxYR;
@@ -26,7 +28,8 @@ const ResultEvaluation = () => {
   };
 
   const exitEvaluation = async () => {
-    console.log("Go back");
+    if (nextScreen === '') router.replace({pathname: nextScreen});
+    else router.replace({pathname: originScreen});
   };
 
   if (exercise === 0){
@@ -48,11 +51,12 @@ const ResultEvaluation = () => {
                 />
                 <Text style={stylesER.imageTextR}>Max R {maxYR}°</Text>
           <View style={styles.bottom}>
+            <Text style={styles.text}>Summe Drehung: {maxYR+maxYL}°</Text>
             <TouchableOpacity onPress={restartEvaluation} style={styles.button}>
-              <Text style={styles.buttonText}>Wiederholen</Text>
+              <Text style={styles.buttonText}>Bewegung 1 wiederholen</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={nextEvaluation} style={styles.button}>
-              <Text style={styles.buttonText}>Weiter</Text>
+              <Text style={styles.buttonText}>Weiter zu Bewegung 2</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -77,11 +81,12 @@ const ResultEvaluation = () => {
                 />
                 <Text style={stylesER.imageTextR}>Max R {maxRR}°</Text>
           <View style={styles.bottom}>
+            <Text style={styles.text}>Summe Neigung: {maxRR+maxRL}°</Text>
             <TouchableOpacity onPress={restartEvaluation} style={styles.button}>
-              <Text style={styles.buttonText}>Wiederholen</Text>
+              <Text style={styles.buttonText}>Bewegung 2 wiederholen</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={exitEvaluation} style={styles.button}>
-              <Text style={styles.buttonText}>Weiter</Text>
+              <Text style={styles.buttonText}>Fortfahren</Text>
             </TouchableOpacity>
           </View>
         </View>

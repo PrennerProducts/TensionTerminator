@@ -19,11 +19,16 @@ const evaluationYR = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [landmarkData, setLandmarkData] = useState([]);
   const [ScreenText, setScreenText] = useState('');
+  const [MaxValuesRText, setMaxValuesRText] = useState('');
+  const [MaxValuesLText, setMaxValuesLText] = useState('');
 
   const exercise = evaluationData.exercise; // 0: Yaw, 1: Roll
 
   const [yaw, setYaw] = useState(0);
   const [isYawStable, setIsYawStable] = useState(true);
+
+  const minYaw = 15;
+  const minRoll = 7;
 
   const [roll, setRoll] = useState(0);
   const [isRollStable, setIsRollStable] = useState(true);
@@ -41,6 +46,7 @@ const evaluationYR = () => {
   const [counterR, setCounterR] = useState(0);
   const [counterL, setCounterL] = useState(0);
 
+  // Foto Logik
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -53,13 +59,20 @@ const evaluationYR = () => {
   }
 
   const takePicture = async (imageName) => {
-    if (mutex.current) {return;}
+    //if (mutex.current) {return;}
     mutex.current = true;
-    if (cameraRef.current) {
-      const options = { quality: 0.2, base64: true };
-      const photo = await cameraRef.current.takePictureAsync(options);
-      await FileSystem.moveAsync({from: photo.uri, to: `${FileSystem.documentDirectory}${imageName}`,});
-      console.log('Picture taken: ' + imageName);
+    try {
+      if (cameraRef.current) {
+        const options = { quality: 0.2, base64: true };
+        const photo = await cameraRef.current.takePictureAsync(options);
+        await FileSystem.moveAsync({from: photo.uri, to: `${FileSystem.documentDirectory}${imageName}`,});
+        console.log('Picture taken: ' + imageName);
+      } else {
+        throw new Error('Camera reference not found.');
+      }
+    } catch (error) {
+      console.error('Error taking picture:', error);
+    } finally {
       mutex.current = false;
     }
   };
@@ -69,23 +82,29 @@ const evaluationYR = () => {
     if (!evaluationActive) return;
     if (exercise === 0){
       if (!isYawStable) {return;}
-      if (yaw > 15 && yaw < 180) {
+      if (yaw > minYaw && yaw < 180) {
         setCounterR(1);
         updateInstructionBasedOnCounters();
         console.log(`Current YawR: ${yaw}, Max YawR: ${maxR}`);
         setScreenText('-> ' + yaw + '°');
         setMaxR((prev) => {
-          if (yaw > prev) {takePicture('MaxYR.jpg');}
+          if (yaw > prev) {
+            takePicture('MaxYR.jpg'); 
+            setMaxValuesRText('Rechts: ' + maxR + '° ')
+          }
           return Math.max(prev, yaw);
         });
-      } else if (yaw < 345 && yaw > 180) {
+      } else if (yaw < (360-minYaw) && yaw > 180) {
         setCounterL(1);
         updateInstructionBasedOnCounters();
         let yawL = 360 - yaw;
         console.log(`Current YawL: ${yawL}, Max YawL: ${maxL}`);
         setScreenText('<- ' + yawL + '°');
         setMaxL((prev) => {
-          if (yawL > prev) {takePicture('MaxYL.jpg');}
+          if (yawL > prev) {
+            takePicture('MaxYL.jpg'); 
+            setMaxValuesRText('Links: ' + maxL + '° ')
+          }
           return Math.max(prev, yawL);
         });
       } else {
@@ -102,7 +121,7 @@ const evaluationYR = () => {
         updateInstructionBasedOnCounters();
         return;
       }
-      if (roll >= 7 && roll < 80) {
+      if (roll > minRoll && roll < 80) {
         setCounterR(1);
         updateInstructionBasedOnCounters();
         console.log(`Current RollR: ${roll}, Max RollR: ${maxR}`);
@@ -110,10 +129,11 @@ const evaluationYR = () => {
         setMaxR((prev) => {
           if (roll > prev) {
             takePicture('MaxRR.jpg');
+            setMaxValuesRText('Rechts: ' + maxR + '° ')
           }
           return Math.max(prev, roll);
         });
-      } else if (roll <= 353 && roll > 280) {
+      } else if (roll < (360-minRoll) && roll > 280) {
         setCounterL(1);
         updateInstructionBasedOnCounters();
         let rollL = 360 - roll;
@@ -122,6 +142,7 @@ const evaluationYR = () => {
         setMaxL((prev) => {
           if (rollL > prev) {
             takePicture('MaxRL.jpg');
+            setMaxValuesRText('Links: ' + maxL + '° ')
           }
           return Math.max(prev, rollL);
         });
@@ -133,6 +154,7 @@ const evaluationYR = () => {
     }
   }, [roll]);
 
+  // Instruktionen am Bildschirm
   const updateInstructionBasedOnCounters = () => {
     if (!evaluationActive) return;
     if (counterR === 0 && counterL === 0) {
@@ -152,7 +174,7 @@ const evaluationYR = () => {
     else if (counterR === 1 && counterL === 1) {
       if (exercise === 0 && !isYawNeutral()) return;
       else if (exercise === 1 && !isRollNeutral()) return;
-      setInstruction('Super! Evaluierung ' + (exercise+1) + 'abgeschlossen :D');
+      setInstruction('Super! Bewegung ' + (exercise+1) + ' abgeschlossen.');
       setTimeout(() => {
         exitEvaluation();
       }, 2000);
@@ -162,12 +184,13 @@ const evaluationYR = () => {
   const isYawNeutral = () => {return yaw < 5 || yaw > 355;};
   const isRollNeutral = () => {return roll <= 5 || roll >= 365;};
 
+  // Face Detector Logik
   const handleFacesDetected = ({ faces }) => {
     if (faces.length === 0) {
-      setScreenText('No Face Detected');
+      setScreenText('Keine Erkennung');
       return;
     } else if (faces.length > 1) {
-      console.log('Faces Detected: ' + faces.length);
+      console.log('Personen im Bild: ' + faces.length);
       return;
     } else if (faces.length > 0) {
       const face = faces[0];
@@ -203,6 +226,7 @@ const evaluationYR = () => {
     }
   };
   
+  // Funktion Exit Button
   const exitEvaluation = async () => {
       console.log('auto exit Evaluation ' + exercise);
       setEvaluationStarted(false);
@@ -220,9 +244,10 @@ const evaluationYR = () => {
         console.log("Invalid exercise: " + exercise);
       }
       await resetValues();
-      router.push({pathname: 'evaluationComponents/resultEvaluation', params: {exercise: exercise, maxL: maxL, maxR: maxR }});
+      router.replace({pathname: 'evaluationComponents/resultEvaluation', params: {exercise: exercise, maxL: maxL, maxR: maxR }});
   };
 
+  // Funktion Reset Button
   const resetValues = async () => {
       console.log("Resetting values...");
       setCounterR(0);
@@ -233,6 +258,8 @@ const evaluationYR = () => {
       setMaxL(0);
       setScreenText('');
       setInstruction('');
+      setMaxValuesLText('');
+      setMaxValuesRText('');
       setCacheBuster(Date.now());
       setLineCoordinates(null);
       const landmarkData = {
@@ -246,8 +273,10 @@ const evaluationYR = () => {
     if (!evaluationActive) {
       setTimeout(() => {
         setEvaluationActive(true);
-        setEvaluationStarted(true);
-      }, 1000);
+        setTimeout(() => {
+          setEvaluationStarted(true);
+        }, 200);
+      }, 100);
     }
   }, [evaluationActive]);
 
@@ -262,7 +291,7 @@ const evaluationYR = () => {
           style={styles.camera}
           onFacesDetected={handleFacesDetected}
           faceDetectorSettings={{
-            mode: FaceDetector.FaceDetectorMode.fast,
+            mode: FaceDetector.FaceDetectorMode.accurate,
             detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
             runClassifications: FaceDetector.FaceDetectorClassifications.none,
             minDetectionInterval: 100,
@@ -330,35 +359,17 @@ const evaluationYR = () => {
         </Camera>
       ) : (
         <View style={styles.startScreen}>
-          {/* <Image
-            source={{
-              uri: `${FileSystem.documentDirectory}MaxR.jpg?${cacheBuster}`,
-            }}
-            style={{ width: 100, height: 100 }}
-          />
-          <Text>Max Right: {maxR.toFixed(2)}°</Text>
-          <Image
-            source={{
-              uri: `${FileSystem.documentDirectory}MaxL.jpg?${cacheBuster}`,
-            }}
-            style={{ width: 100, height: 100 }}
-          />
-          <Text>Max Left: {maxL.toFixed(2)}°</Text>
-          <TouchableOpacity onPress={restartEvaluation}>
-            <Text style={styles.startButton}>
-              Evaluation erneut durchführen
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={startNextEvaluation}>
-            <Text style={styles.startButton}>
-              Weiter zur nächsten Evualationsübung
-            </Text>
-          </TouchableOpacity> */}
+          {/**/}
         </View>
       )}
       {evaluationStarted && (
         <TouchableOpacity onPress={exitEvaluation} style={styles.exitButton}>
           <Text style={styles.exitButtonText}>Exit</Text>
+        </TouchableOpacity>
+      )}
+      {evaluationStarted && (
+        <TouchableOpacity onPress={resetValues} style={styles.resetButton}>
+          <Text style={styles.exitButtonText}>Reset</Text>
         </TouchableOpacity>
       )}
       {evaluationStarted && (
@@ -393,11 +404,19 @@ const styles = StyleSheet.create({
   camera: {
     flex: 1,
   },
+  resetButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+  },
   exitButton: {
     position: 'absolute',
     top: 20,
     right: 20,
-    backgroundColor: 'blue',
+    backgroundColor: 'red',
     padding: 10,
     borderRadius: 5,
   },
