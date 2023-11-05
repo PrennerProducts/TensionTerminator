@@ -7,39 +7,31 @@
 import { saveUserData, getUserData } from '../services/storage.jsx';
 
 class UserData {
-  constructor(userName, reseted, picture, level, points) {
-    getUserData().then((data) => {
-      let myObj = null;
-      try {
-        myObj = JSON.parse(data);
-        userName = myObj.userName;
-        reseted = myObj.reseted;
-        picture = myObj.picture;
-        level = myObj.level;
-        points = myObj.points;
-      } catch (e) {}
+  constructor() {
+    this.userName = 'Default';
+    this.reseted = false;
+    this.pictureList = null;
+    this.level = 0;
+    this.points = 0;
+  }
 
-      if (userName === undefined || userName === null) {
-        userName = 'Default';
-      }
-      if (reseted === undefined || reseted === null) {
-        reseted = false;
-      }
-      if (picture === undefined || picture === null) {
-        picture = false;
-      }
-      if (level === undefined || level === null) {
-        level = 0;
-      }
-      if (points === undefined || points === null) {
-        points = 0;
-      }
-      this.userName = userName;
-      this.reseted = reseted;
-      this.picture = picture;
-      this.level = level;
-      this.points = points;
-    });
+  // intitialize muss nach dem erzeugen der instanz ausgeführt werden:
+  //const userData = new UserData();
+  //await userData.initialize();
+
+  async initialize() {
+    const data = await getUserData();
+    let myObj = null;
+    try {
+      myObj = JSON.parse(data);
+      this.userName = myObj.userName ?? 'Default';
+      this.reseted = myObj.reseted ?? false;
+      this.pictureList = myObj.pictureList ?? null;
+      this.level = myObj.level ?? 0;
+      this.points = myObj.points ?? 0;
+    } catch (e) {
+      console.error('Error parsing user data:', e);
+    }
   }
 
   // Getters
@@ -60,21 +52,16 @@ class UserData {
     this.reseted = reseted;
   }
 
-  getPicture() {
-    return this.picture;
+  getpictureList() {
+    return this.pictureList;
   }
 
-  getUser() {
-    return {
-      userName: this.getUserName(),
-      level: this.getLevel(),
-      picture: this.getPicture(),
-      points: this.getPoints(),
-    };
+  getAvailableAvatars() {
+    return this.availableAvatars;
   }
 
-  setPicture(picture) {
-    this.picture = picture;
+  setpictureList(pictureList) {
+    this.pictureList = pictureList;
   }
 
   setLevel(level) {
@@ -95,7 +82,7 @@ class UserData {
 
   // Other methods
   toString() {
-    return `User: ${this.userName}, reseted: ${this.reseted}, picture: ${this.picture}, level: ${this.level}, points: ${this.points}`;
+    return `User: ${this.userName}, reseted: ${this.reseted}, pictureList: ${this.pictureList}, level: ${this.level}, points: ${this.points}`;
   }
 
   toJson() {
@@ -107,7 +94,7 @@ class UserData {
     return new UserData(
       obj.userName,
       obj.reseted,
-      obj.picture,
+      obj.pictureList,
       obj.level,
       obj.points
     );
@@ -119,15 +106,28 @@ class UserData {
   }
 
   async load() {
-    let myObj = await getUserData();
-    console.log('UserDataClass Loading userData: ' + JSON.parse(myObj));
-    return new UserData(
-      JSON.parse(myObj).userName,
-      JSON.parse(myObj).reseted,
-      JSON.parse(myObj).picture,
-      JSON.parse(myObj).level,
-      JSON.parse(myObj).points
-    );
+    let data = await getUserData();
+
+    if (!data) {
+      console.error('Received null or undefined data from getUserData');
+      return new UserData();
+    }
+
+    try {
+      let myObj = JSON.parse(data);
+      console.log('UserDataClass Loading userData: ', myObj);
+      return new UserData(
+        myObj.userName,
+        myObj.reseted,
+        myObj.pictureList,
+        myObj.availableAvatars,
+        myObj.level,
+        myObj.points
+      );
+    } catch (e) {
+      console.error('Error parsing user data:', e);
+      return new UserData(); // Bei einem Fehler gib ein Standard-UserData-Objekt zurück
+    }
   }
 }
 
