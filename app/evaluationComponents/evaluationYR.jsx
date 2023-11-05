@@ -29,6 +29,7 @@ const evaluationYR = () => {
 
   const minYaw = 15;
   const minRoll = 7;
+  const maxCounter = 2;
 
   const [roll, setRoll] = useState(0);
   const [isRollStable, setIsRollStable] = useState(true);
@@ -40,41 +41,53 @@ const evaluationYR = () => {
   const cameraRef = useRef(null);
   const [evaluationStarted, setEvaluationStarted] = useState(false);
   const [evaluationActive, setEvaluationActive] = useState(false);
+  const [evaluationSuccess, setEvaluationSuccess] = useState(false);
   const mutex = useRef(false);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
   const [instruction, setInstruction] = useState('');
   const [counterR, setCounterR] = useState(0);
   const [counterL, setCounterL] = useState(0);
 
-  // Foto Logik
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
   }, []);
-
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
 
-  const takePicture = async (imageName) => {
-    //if (mutex.current) {return;}
-    mutex.current = true;
-    try {
-      if (cameraRef.current) {
-        const options = { quality: 0.2, base64: true };
+  // Foto Logik
+  const takePicture = async () => {
+    const capturePromise = new Promise(async (resolve, reject) => {
+      if (mutex.current) {return;}
+      mutex.current = true;
+      console.log('mutex ' + mutex.current);
+      try {
+        const options = { quality: 0.2, base64: false, skipProcessing: true };
         const photo = await cameraRef.current.takePictureAsync(options);
-        await FileSystem.moveAsync({from: photo.uri, to: `${FileSystem.documentDirectory}${imageName}`,});
-        console.log('Picture taken: ' + imageName);
-      } else {
-        throw new Error('Camera reference not found.');
+        resolve(photo);
+      } catch (error) {
+        console.error('Error taking picture:', error);
+        reject(error);
       }
-    } catch (error) {
-      console.error('Error taking picture:', error);
-    } finally {
-      mutex.current = false;
-    }
+    });
+    const timeout = 0;
+    setTimeout(async () => {
+      try {
+        const capturedImage = await capturePromise;
+        await FileSystem.moveAsync({
+          from: capturedImage.uri,
+          to: `${FileSystem.documentDirectory}${evaluationData.imageName}`,
+        });
+        console.log('Image captured and stored: ' + evaluationData.imageName);
+        mutex.current = false;
+        console.log('mutex ' + mutex.current);
+      } catch (error) {
+        console.error('Error capturing and storing image:', error);
+      }
+    }, timeout);
   };
 
   // Effekt für Yaw-Änderungen
@@ -82,33 +95,38 @@ const evaluationYR = () => {
     if (!evaluationActive) return;
     if (exercise === 0){
       if (!isYawStable) {return;}
+      console.log(yaw);
       if (yaw > minYaw && yaw < 180) {
         setCounterR(1);
-        updateInstructionBasedOnCounters();
+        updateLogicBasedOnCounters();
         console.log(`Current YawR: ${yaw}, Max YawR: ${maxR}`);
         setScreenText('-> ' + yaw + '°');
         setMaxR((prev) => {
           if (yaw > prev) {
-            takePicture('MaxYR.jpg'); 
+            console.log('New MaxYR reached');
+            evaluationData.imageName = 'MaxYR.jpg';
+            takePicture(); 
             setMaxValuesRText('Rechts: ' + maxR + '° ')
           }
           return Math.max(prev, yaw);
         });
       } else if (yaw < (360-minYaw) && yaw > 180) {
         setCounterL(1);
-        updateInstructionBasedOnCounters();
+        updateLogicBasedOnCounters();
         let yawL = 360 - yaw;
         console.log(`Current YawL: ${yawL}, Max YawL: ${maxL}`);
         setScreenText('<- ' + yawL + '°');
         setMaxL((prev) => {
           if (yawL > prev) {
-            takePicture('MaxYL.jpg'); 
+            console.log('New MaxYL reached');
+            evaluationData.imageName = 'MaxYL.jpg';
+            takePicture(); 
             setMaxValuesRText('Links: ' + maxL + '° ')
           }
           return Math.max(prev, yawL);
         });
       } else {
-        updateInstructionBasedOnCounters();
+        updateLogicBasedOnCounters();
         setScreenText('');
       }
     }
@@ -118,67 +136,63 @@ const evaluationYR = () => {
   useEffect(() => {
     if (exercise === 1){
       if (!isRollStable) {
-        updateInstructionBasedOnCounters();
+        updateLogicBasedOnCounters();
         return;
       }
       if (roll > minRoll && roll < 80) {
-        setCounterR(1);
-        updateInstructionBasedOnCounters();
+        setCounterR(counterR + 1);
+        updateLogicBasedOnCounters();
         console.log(`Current RollR: ${roll}, Max RollR: ${maxR}`);
         setScreenText('-> ' + roll + '°');
         setMaxR((prev) => {
           if (roll > prev) {
-            takePicture('MaxRR.jpg');
+            console.log('New MaxRR reached');
+            evaluationData.imageName = 'MaxRR.jpg';
+            takePicture(); 
             setMaxValuesRText('Rechts: ' + maxR + '° ')
           }
           return Math.max(prev, roll);
         });
       } else if (roll < (360-minRoll) && roll > 280) {
-        setCounterL(1);
-        updateInstructionBasedOnCounters();
+        setCounterL(counterL + 1);
+        updateLogicBasedOnCounters();
         let rollL = 360 - roll;
         console.log(`Current RollL: ${rollL}, Max RollL: ${maxL}`);
         setScreenText('<- ' + rollL + '°');
         setMaxL((prev) => {
           if (rollL > prev) {
-            takePicture('MaxRL.jpg');
+            console.log('New MaxRL reached');
+            evaluationData.imageName = 'MaxRL.jpg';
+            takePicture(); 
             setMaxValuesRText('Links: ' + maxL + '° ')
           }
           return Math.max(prev, rollL);
         });
       } else {
-        updateInstructionBasedOnCounters();
-        console.log(roll, 'Roll out of range.');
+        updateLogicBasedOnCounters();
         setScreenText('');
       }
     }
   }, [roll]);
 
-  // Instruktionen am Bildschirm
-  const updateInstructionBasedOnCounters = () => {
+  // 
+  const updateLogicBasedOnCounters = () => {
     if (!evaluationActive) return;
     if (counterR === 0 && counterL === 0) {
       if (exercise === 0) setInstruction('Kopf nach rechts oder links drehen <-->');
       else setInstruction('Kopf nach rechts oder links neigen <-->');
     } 
-    else if (counterR === 1 && counterL === 0) {
-      setInstruction('');
-      // if (exercise === 0) setInstruction('Bitte Kopf nach links drehen <--');
-      // else setInstruction('Bitte Kopf nach links neigen <--');
-    } 
-    else if (counterR === 0 && counterL === 1) {
-      setInstruction('');
-      // if (exercise === 0) setInstruction('Bitte Kopf nach rechts drehen -->');
-      // else setInstruction('Bitte Kopf nach rechts neigen <--');
-    } 
-    else if (counterR === 1 && counterL === 1) {
+    else if (counterR >= 1 && counterL >= 1) {
       if (exercise === 0 && !isYawNeutral()) return;
       else if (exercise === 1 && !isRollNeutral()) return;
       setInstruction('Super! Bewegung ' + (exercise+1) + ' abgeschlossen.');
-      setTimeout(() => {
-        exitEvaluation();
-      }, 2000);
-    }
+      setEvaluationSuccess(true);
+      if (counterR >= maxCounter && counterL >= maxCounter) {
+        setTimeout(() => {
+          if (evaluationStarted) exitEvaluation();
+        }, 1000);
+      }
+    } 
   };
 
   const isYawNeutral = () => {return yaw < 5 || yaw > 355;};
@@ -228,23 +242,28 @@ const evaluationYR = () => {
   
   // Funktion Exit Button
   const exitEvaluation = async () => {
-      console.log('auto exit Evaluation ' + exercise);
-      setEvaluationStarted(false);
-      setEvaluationActive(false);
-      setLineCoordinates(null);
-      if (exercise === 0){
-        evaluationData.maxYL = maxL;
-        evaluationData.maxYR = maxR;
-      }
-      else if (exercise === 1){
-        evaluationData.maxRL = maxL;
-        evaluationData.maxRR = maxR;
-      }
-      else{
-        console.log("Invalid exercise: " + exercise);
-      }
-      await resetValues();
-      router.replace({pathname: 'evaluationComponents/resultEvaluation', params: {exercise: exercise, maxL: maxL, maxR: maxR }});
+    console.log('auto exit Evaluation ' + exercise);
+    setEvaluationStarted(false);
+    setEvaluationActive(false);
+    setLineCoordinates(null);
+    if (exercise === 0){
+    evaluationData.maxYL = maxL;
+    evaluationData.maxYR = maxR;
+    }
+    else if (exercise === 1){
+    evaluationData.maxRL = maxL;
+    evaluationData.maxRR = maxR;
+    }
+    else{
+    console.log("Invalid exercise: " + exercise);
+    }
+    //await resetValues();
+    router.replace({pathname: 'evaluationComponents/resultEvaluation'});
+  };
+
+  const cancelEvaluation = async () => {
+    await resetValues();
+    router.replace({pathname: evaluationData.originScreen});
   };
 
   // Funktion Reset Button
@@ -276,7 +295,7 @@ const evaluationYR = () => {
         setTimeout(() => {
           setEvaluationStarted(true);
         }, 200);
-      }, 100);
+      }, 200);
     }
   }, [evaluationActive]);
 
@@ -363,13 +382,13 @@ const evaluationYR = () => {
         </View>
       )}
       {evaluationStarted && (
-        <TouchableOpacity onPress={exitEvaluation} style={styles.exitButton}>
-          <Text style={styles.exitButtonText}>Exit</Text>
+        <TouchableOpacity onPress={cancelEvaluation} style={styles.exitButton}>
+          <Text style={styles.exitButtonText}>Abbruch</Text>
         </TouchableOpacity>
       )}
       {evaluationStarted && (
         <TouchableOpacity onPress={resetValues} style={styles.resetButton}>
-          <Text style={styles.exitButtonText}>Reset</Text>
+          <Text style={styles.exitButtonText}>Zurücksetzen</Text>
         </TouchableOpacity>
       )}
       {evaluationStarted && (
@@ -379,6 +398,11 @@ const evaluationYR = () => {
             Links: {maxL.toFixed(2)}°, Rechts: {maxR.toFixed(2)}°
           </Text>
         </View>
+      )}
+      {evaluationSuccess && (
+        <TouchableOpacity onPress={exitEvaluation} style={styles.continueButton}>
+          <Text style={styles.continueButtonText}>Weiter</Text>
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -423,6 +447,18 @@ const styles = StyleSheet.create({
   exitButtonText: {
     fontSize: 16,
     color: 'white',
+  },
+  continueButton: {
+    position: 'absolute',
+    bottom: 50,
+    right: 20,
+    backgroundColor: 'yellow',
+    padding: 10,
+    borderRadius: 5,
+  },
+  continueButtonText: {
+    fontSize: 16,
+    color: 'black',
   },
   textContainer: {
     position: 'absolute',

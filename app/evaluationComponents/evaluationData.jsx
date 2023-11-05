@@ -1,6 +1,7 @@
 export const evaluationData = {
     originScreen: '',
     nextScreen: '',
+    imageName: '',
     exercise: 0,
     maxYL: 0,
     maxYR: 0,
