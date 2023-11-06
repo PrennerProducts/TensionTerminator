@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Button,
   Image,
+  Alert
 } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { Camera } from 'expo-camera';
@@ -42,6 +43,7 @@ const evaluationYR = () => {
   const [evaluationStarted, setEvaluationStarted] = useState(false);
   const [evaluationActive, setEvaluationActive] = useState(false);
   const [evaluationSuccess, setEvaluationSuccess] = useState(false);
+  const [exitMessage, setExitMessage] = useState('');
   const mutex = useRef(false);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
   const [instruction, setInstruction] = useState('');
@@ -94,11 +96,10 @@ const evaluationYR = () => {
   useEffect(() => {
     if (!evaluationActive) return;
     if (exercise === 0){
+      updateLogicBasedOnCounters();
       if (!isYawStable) {return;}
-      console.log(yaw);
       if (yaw > minYaw && yaw < 180) {
         setCounterR(1);
-        updateLogicBasedOnCounters();
         console.log(`Current YawR: ${yaw}, Max YawR: ${maxR}`);
         setScreenText('-> ' + yaw + '°');
         setMaxR((prev) => {
@@ -112,7 +113,6 @@ const evaluationYR = () => {
         });
       } else if (yaw < (360-minYaw) && yaw > 180) {
         setCounterL(1);
-        updateLogicBasedOnCounters();
         let yawL = 360 - yaw;
         console.log(`Current YawL: ${yawL}, Max YawL: ${maxL}`);
         setScreenText('<- ' + yawL + '°');
@@ -121,7 +121,7 @@ const evaluationYR = () => {
             console.log('New MaxYL reached');
             evaluationData.imageName = 'MaxYL.jpg';
             takePicture(); 
-            setMaxValuesRText('Links: ' + maxL + '° ')
+            setMaxValuesLText('Links: ' + maxL + '° ')
           }
           return Math.max(prev, yawL);
         });
@@ -134,14 +134,12 @@ const evaluationYR = () => {
 
   // Effekt für Roll-Änderungen
   useEffect(() => {
+    if (!evaluationActive) return;
     if (exercise === 1){
-      if (!isRollStable) {
-        updateLogicBasedOnCounters();
-        return;
-      }
+      updateLogicBasedOnCounters();
+      if (!isRollStable) {return;}
       if (roll > minRoll && roll < 80) {
         setCounterR(counterR + 1);
-        updateLogicBasedOnCounters();
         console.log(`Current RollR: ${roll}, Max RollR: ${maxR}`);
         setScreenText('-> ' + roll + '°');
         setMaxR((prev) => {
@@ -155,7 +153,6 @@ const evaluationYR = () => {
         });
       } else if (roll < (360-minRoll) && roll > 280) {
         setCounterL(counterL + 1);
-        updateLogicBasedOnCounters();
         let rollL = 360 - roll;
         console.log(`Current RollL: ${rollL}, Max RollL: ${maxL}`);
         setScreenText('<- ' + rollL + '°');
@@ -164,7 +161,7 @@ const evaluationYR = () => {
             console.log('New MaxRL reached');
             evaluationData.imageName = 'MaxRL.jpg';
             takePicture(); 
-            setMaxValuesRText('Links: ' + maxL + '° ')
+            setMaxValuesLText('Links: ' + maxL + '° ')
           }
           return Math.max(prev, rollL);
         });
@@ -189,7 +186,7 @@ const evaluationYR = () => {
       setEvaluationSuccess(true);
       if (counterR >= maxCounter && counterL >= maxCounter) {
         setTimeout(() => {
-          if (evaluationStarted) exitEvaluation();
+          if (evaluationStarted) autoExitEvaluation();
         }, 1000);
       }
     } 
@@ -240,8 +237,8 @@ const evaluationYR = () => {
     }
   };
   
-  // Funktion Exit Button
-  const exitEvaluation = async () => {
+  // Funktion Auto Exit
+  const autoExitEvaluation = async () => {
     console.log('auto exit Evaluation ' + exercise);
     setEvaluationStarted(false);
     setEvaluationActive(false);
@@ -258,12 +255,47 @@ const evaluationYR = () => {
     console.log("Invalid exercise: " + exercise);
     }
     //await resetValues();
-    router.replace({pathname: 'evaluationComponents/resultEvaluation'});
+    router.replace({pathname: 'evaluationComponents/evaluationControl'});
+  };
+
+  const exitEvaluation = async () => {
+    // if (exercise === 0) setExitMessage('Weiter zu Bewegung 2');
+    // else setExitMessage('Evaluierung abschliessen');
+    // return Alert.alert(
+    //   "Sind Sie sicher?",
+    //   "Evaluierung wird beendet...",
+    //   [
+    //     {
+    //       text: "Ja",
+    //       onPress: () => {
+            autoExitEvaluation();
+    //       },
+    //     },
+    //     {
+    //       text: "Nein",
+    //     },
+    //   ]
+    // );
   };
 
   const cancelEvaluation = async () => {
-    await resetValues();
-    router.replace({pathname: evaluationData.originScreen});
+    return Alert.alert(
+      "Sind Sie sicher?",
+      "Ihre Ergebnisse werden verworfen...",
+      [
+        {
+          text: "Ja",
+          onPress: () => {
+            const originScreen = evaluationData.originScreen;
+            evaluationData.resetValues();
+            router.replace({pathname: originScreen});
+          },
+        },
+        {
+          text: "Nein",
+        },
+      ]
+    );
   };
 
   // Funktion Reset Button
@@ -395,7 +427,7 @@ const evaluationYR = () => {
         <View style={styles.textContainer}>
           <Text style={styles.faceDesc}>{ScreenText}</Text>
           <Text style={styles.maxValues}>
-            Links: {maxL.toFixed(2)}°, Rechts: {maxR.toFixed(2)}°
+            {MaxValuesLText} {MaxValuesRText}
           </Text>
         </View>
       )}

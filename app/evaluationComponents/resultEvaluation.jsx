@@ -1,133 +1,103 @@
-import { View, Text, Pressable, Image, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ToastAndroid, Alert } from 'react-native';
 import React from 'react';
-import { Link, useRouter, useLocalSearchParams } from 'expo-router';
+import { useRouter} from 'expo-router';
 import styles from '../components/StyleSheet';
 import * as FileSystem from 'expo-file-system';
-import {StyleSheet} from "react-native";
 import { evaluationData } from './evaluationData';
+import { useState} from 'react';
 
 const ResultEvaluation = () => {
   const router = useRouter();
-  //const { exercise, maxL, maxR } = useLocalSearchParams();
-  const cacheBuster = Date.now();
+
+  const currentDate = new Date();
+  const day = currentDate.getDate();
+  const month = currentDate.getMonth() + 1;
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}/${month}/${year}`;
+
   const originScreen = evaluationData.originScreen;
-  const nextScreen = evaluationData.nextScreen;
-  const exercise = evaluationData.exercise;
   const maxYL = evaluationData.maxYL;
   const maxYR = evaluationData.maxYR;
   const maxRL = evaluationData.maxRL;
   const maxRR = evaluationData.maxRR;
+  const [transmitted, SetTransmitted] = useState(false);
 
-  const restartEvaluation = async () => {
-    router.replace({pathname: 'evaluationComponents/evaluationYR'});
+  const saveData = async () => {
+    //save evaluation data to json...
+    console.log('Data saved');
   };
 
-  const nextEvaluation = async () => {
-    evaluationData.exercise = 1;
-    router.replace({pathname: 'evaluationComponents/evaluationYR'});
+  const transmitData = async () => {
+    //// send evaluation data to server...
+    // const jsonData = ...
+    // const parsedData = JSON.parse(jsonData);
+    // const serializedData = JSON.stringify(parsedData);
+    // const serverUrl = 'https://example.com/xyz';
+    // fetch(serverUrl, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: serializedData,
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log('Data sent and response received:', data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error sending data:', error);
+    //   });
+    console.log('Data trasmitted');
+    ToastAndroid.show('Daten wurden übertragen. Danke!', ToastAndroid.SHORT);
+    SetTransmitted(true);
+  };
+
+  const goToGratulation = async () => {
+    saveData();
+    evaluationData.resetValues();
+    router.replace({pathname: 'components/gratulation'});
   };
 
   const exitEvaluation = async () => {
-    if (nextScreen === '') router.replace({pathname: nextScreen});
-    else router.replace({pathname: originScreen});
+    return Alert.alert(
+      "Sind Sie sicher?",
+      "Ihre Ergebnisse werden verworfen...",
+      [
+        {
+          text: "Ja",
+          onPress: () => {
+            evaluationData.resetValues();
+            router.replace({pathname: originScreen});
+          },
+        },
+        {
+          text: "Nein",
+        },
+      ]
+    );
   };
 
-  if (exercise === 0){
-      return (
-        <View style={styles.container}>
-          <Text style={styles.title}>Bewegung {(exercise+1)}</Text>
-          <Image
-                source={{
-                  uri: `${FileSystem.documentDirectory}MaxYL.jpg?${cacheBuster}`,
-                }}
-                style={stylesER.imageL}
-                />
-                <Text style={stylesER.imageTextL}>Max L {maxYL}°</Text>
-          <Image
-                source={{
-                  uri: `${FileSystem.documentDirectory}MaxYR.jpg?${cacheBuster}`,
-                }}
-                style={stylesER.imageR}
-                />
-                <Text style={stylesER.imageTextR}>Max R {maxYR}°</Text>
-          <View style={styles.bottom}>
-            <Text style={styles.text}>Summe Drehung: {maxYR+maxYL}°</Text>
-            <TouchableOpacity onPress={restartEvaluation} style={styles.button}>
-              <Text style={styles.buttonText}>Bewegung 1 wiederholen</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={nextEvaluation} style={styles.button}>
-              <Text style={styles.buttonText}>Weiter zu Bewegung 2</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      );
-    }
-    else if (exercise === 1){
-      return (
-        <View style={styles.container}>
-          <Text style={styles.title}>Bewegung {(exercise+1)}</Text>
-          <Image
-                source={{
-                  uri: `${FileSystem.documentDirectory}MaxRL.jpg?${cacheBuster}`,
-                }}
-                style={stylesER.imageL}
-                />
-                <Text style={stylesER.imageTextL}>Max L {maxRL}°</Text>
-          <Image
-                source={{
-                  uri: `${FileSystem.documentDirectory}MaxRR.jpg?${cacheBuster}`,
-                }}
-                style={stylesER.imageR}
-                />
-                <Text style={stylesER.imageTextR}>Max R {maxRR}°</Text>
-          <View style={styles.bottom}>
-            <Text style={styles.text}>Summe Neigung: {maxRR+maxRL}°</Text>
-            <TouchableOpacity onPress={restartEvaluation} style={styles.button}>
-              <Text style={styles.buttonText}>Bewegung 2 wiederholen</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={exitEvaluation} style={styles.button}>
-              <Text style={styles.buttonText}>Fortfahren</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      );
-    }
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Beurteilung Ihrer Beweglichkeit - Aktueller Status {formattedDate}</Text>
+      <Text style={styles.paragraph}>Rotation:{'\n'}Links {maxYL}°, Rechts: {maxYR}°, Summe: {maxYR+maxYL}°</Text>
+      <Text style={styles.paragraph}>Seitenneigung:{'\n'}Links: {maxRL}°, Rechts: {maxRR}°, Summe: {maxRR+maxRL}°</Text>
+      <View style={styles.bottom}>
+        {!transmitted && (
+          <TouchableOpacity onPress={transmitData} style={styles.button}>
+            <Text style={styles.buttonText}>Daten übertragen?</Text>
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity onPress={goToGratulation} style={styles.button}>
+          <Text style={styles.buttonText}>Speichern und Fortfahren</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={exitEvaluation} style={styles.button}>
+          <Text style={styles.buttonText}>Beenden ohne Speichern</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 };
-
-
-const stylesER = StyleSheet.create({
-  container:{
-    backgroundColor: 'black'
-  },
-  imageL: {
-    position: 'absolute',
-    top: 100,
-    left: 20,
-    width: 150,
-    height: 150,
-  },
-  imageR: {
-    position: 'absolute',
-    top: 100,
-    right: 20,
-    width: 150,
-    height: 150,
-  },
-  imageTextL: {
-    position: 'absolute',
-    top: 100,
-    left: 30,
-    color: 'white',
-    fontSize: 16,
-  },
-  imageTextR: {
-    position: 'absolute',
-    top: 100,
-    right: 30,
-    color: 'white',
-    fontSize: 16,
-  },
-});
 
 export default ResultEvaluation;
 
