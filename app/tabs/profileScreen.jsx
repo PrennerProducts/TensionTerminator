@@ -9,8 +9,6 @@ import {
 import React, { useEffect, useState } from 'react';
 import { getProfileName, setProfileName } from '../services/storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import * as ImagePicker from 'expo-image-picker';
-
 import UserData from '../classes/userData';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -23,12 +21,17 @@ const profileScreen = () => {
   const [image, setImage] = useState(null);
   const [imageList, setImageList] = useState([]);
   const [currentImage, setCurrentImage] = useState();
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
+  const [selectedAvatar, setSelectedAvatar] = useState(0);
+
+  //dropdown picker
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
 
   useEffect(() => {
     const initializeUser = async () => {
       await user.initialize();
       setUserName(user.getUserName());
+      setImageList(user.getpictureList());
     };
 
     initializeUser();
@@ -45,42 +48,63 @@ const profileScreen = () => {
     }
   };
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-      // Speichern Sie das Bild-URI irgendwo, z.B. in AsyncStorage oder in einer Datenbank
-    }
+  const pickImage = (selectedIndex) => {
+    console.log('Ausgewählter Avatar-Index:', selectedIndex);
+    setSelectedAvatar(selectedIndex);
   };
+
+  const avatars = [
+    require('../../assets/images/avatar.png'),
+    require('../../assets/images/avatar1.jpg'),
+  ];
 
   return (
     <View style={{ padding: 20 }}>
       {/* Avatar Bild */}
       <View
-        style={{ alignItems: 'center', marginBottom: 20, position: 'relative' }}
+        style={{
+          alignItems: 'center',
+          marginBottom: 20,
+          position: 'relative',
+          zIndex: 1,
+          elevation: 1,
+          width: '100%',
+        }}
       >
         <Image
           source={
-            image ? { uri: image } : require('../../assets/images/avatar.png')
+            typeof selectedAvatar === 'number'
+              ? avatars[selectedAvatar]
+              : require('../../assets/images/avatar.png')
           }
           style={{ width: 100, height: 100, borderRadius: 50 }}
         />
-        <TouchableOpacity
-          style={{
-            position: 'absolute',
-            left: '60%',
-            bottom: 0,
+        <DropDownPicker
+          open={open}
+          setOpen={setOpen}
+          value={value}
+          setValue={setValue}
+          // setItems={setItems}
+          items={[
+            { label: 'Avatar 1', value: 0 },
+            { label: 'Avatar 2', value: 1 },
+          ]}
+          defaultValue={'Hallo'}
+          containerStyle={{ height: 150, width: 150 }}
+          // onChangeItem={(item) => pickImage(item.value)}
+          onChangeValue={(value) => {
+            pickImage(value);
+            console.log(value);
           }}
-          onPress={pickImage}
-        >
-          <Icon name="pencil" size={30} />
-        </TouchableOpacity>
+        />
+        {/* <DropDownPicker
+          open={open}
+          value={value}
+          items={items}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setItems}
+        /> */}
       </View>
 
       {/* Profilname */}

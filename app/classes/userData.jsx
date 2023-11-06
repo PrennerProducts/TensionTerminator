@@ -26,7 +26,7 @@ class UserData {
       myObj = JSON.parse(data);
       this.userName = myObj.userName ?? 'Default';
       this.reseted = myObj.reseted ?? false;
-      this.pictureList = myObj.pictureList ?? null;
+      this.pictureList = myObj.pictureList ?? [null];
       this.level = myObj.level ?? 0;
       this.points = myObj.points ?? 0;
     } catch (e) {
