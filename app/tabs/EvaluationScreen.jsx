@@ -12,6 +12,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { WebView } from 'react-native-webview';
 import Modal from 'react-native-modal';
 import { Link, useRouter } from 'expo-router';
+import { evaluationData } from '../evaluationComponents/evaluationData';
 
 const EvaluationScreen = () => {
   const router = useRouter();
@@ -25,7 +26,8 @@ const EvaluationScreen = () => {
 
   const handleEvaluierung = () => {
     setEvaluationStarted(true);
-    router.replace('../evaluationComponents/evaluationYaw');
+    evaluationData.printValues();
+    router.replace('../evaluationComponents/evaluationYR');
   };
 
   return (
