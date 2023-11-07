@@ -20,8 +20,6 @@ const evaluationYR = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [landmarkData, setLandmarkData] = useState([]);
   const [ScreenText, setScreenText] = useState('');
-  const [MaxValuesRText, setMaxValuesRText] = useState('');
-  const [MaxValuesLText, setMaxValuesLText] = useState('');
 
   const exercise = evaluationData.exercise; // 0: Yaw, 1: Roll
 
@@ -106,7 +104,6 @@ const evaluationYR = () => {
             console.log('New MaxYR reached');
             evaluationData.imageName = 'MaxYR.jpg';
             takePicture(); 
-            setMaxValuesRText('Rechts: ' + maxR + '° ')
           }
           return Math.max(prev, yaw);
         });
@@ -120,7 +117,6 @@ const evaluationYR = () => {
             console.log('New MaxYL reached');
             evaluationData.imageName = 'MaxYL.jpg';
             takePicture(); 
-            setMaxValuesLText('Links: ' + maxL + '° ')
           }
           return Math.max(prev, yawL);
         });
@@ -146,7 +142,6 @@ const evaluationYR = () => {
             console.log('New MaxRR reached');
             evaluationData.imageName = 'MaxRR.jpg';
             takePicture(); 
-            setMaxValuesRText('Rechts: ' + maxR + '° ')
           }
           return Math.max(prev, roll);
         });
@@ -160,7 +155,6 @@ const evaluationYR = () => {
             console.log('New MaxRL reached');
             evaluationData.imageName = 'MaxRL.jpg';
             takePicture(); 
-            setMaxValuesLText('Links: ' + maxL + '° ')
           }
           return Math.max(prev, rollL);
         });
@@ -244,24 +238,12 @@ const evaluationYR = () => {
     setEvaluationActive(false);
     setLineCoordinates(null);
     if (exercise === 0){
-      if (evaluationData.beforeAfterTraining === 0){
-        evaluationData.maxYL = maxL;
-        evaluationData.maxYR = maxR;
-      }
-      else {
-        evaluationData.maxYLAfter = maxL;
-        evaluationData.maxYRAfter = maxR;
-      }
+      evaluationData.maxYL = maxL;
+      evaluationData.maxYR = maxR;
     }
     else if (exercise === 1){
-      if (evaluationData.beforeAfterTraining === 0){
-        evaluationData.maxRL = maxL;
-        evaluationData.maxRR = maxR;
-      }
-      else {
-        evaluationData.maxRLAfter = maxL;
-        evaluationData.maxRRAfter = maxR;
-      }
+      evaluationData.maxRL = maxL;
+      evaluationData.maxRR = maxR;
     }
     else{
     console.log("Invalid exercise: " + exercise);
@@ -418,7 +400,7 @@ const evaluationYR = () => {
         <View style={styles.textContainer}>
           <Text style={styles.faceDesc}>{ScreenText}</Text>
           <Text style={styles.maxValues}>
-            {MaxValuesLText} {MaxValuesRText}
+            Max L: {maxL}; Max R: {maxR}
           </Text>
         </View>
       )}

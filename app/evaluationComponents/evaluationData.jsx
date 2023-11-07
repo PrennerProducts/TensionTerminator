@@ -8,6 +8,10 @@ export const evaluationData = {
     maxYR: 0,
     maxRL: 0,
     maxRR: 0,
+    maxYLBefore: 0,
+    maxYRBefore: 0,
+    maxRLBefore: 0,
+    maxRRBefore: 0,
     maxYLAfter: 0,
     maxYRAfter: 0,
     maxRLAfter: 0,
@@ -21,9 +25,32 @@ export const evaluationData = {
         this.maxYR = 0;
         this.maxRL = 0;
         this.maxRR = 0;
+        this.maxYLBefore = 0;
+        this.maxYRBefore = 0;
+        this.maxRLBefore = 0;
+        this.maxRRBefore = 0;
         this.maxYLAfter = 0;
         this.maxYRAfter = 0;
         this.maxRLAfter = 0;
         this.maxRRAfter = 0;
+    },
+    printValues: function() {
+        console.log(
+            this.originScreen, 
+            this.imageName, 
+            this.exercise, 
+            this.isTraining, 
+            this.maxYL, 
+            this.maxYR, 
+            this.maxRL, 
+            this.maxRR,
+            this.maxYLBefore,
+            this.maxYRBefore,
+            this.maxRLBefore,
+            this.maxRRBefore,
+            this.maxYLAfter,
+            this.maxYRAfter,
+            this.maxRLAfter,
+            this.maxRRAfter)
     }
 }

@@ -1,10 +1,11 @@
-import { View, Text, Image, TouchableOpacity, ToastAndroid, Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ToastAndroid, Alert } from 'react-native';
 import React from 'react';
 import { useRouter} from 'expo-router';
 import styles from '../components/StyleSheet';
 import * as FileSystem from 'expo-file-system';
 import { evaluationData } from './evaluationData';
 import { useState} from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const ResultEvaluation = () => {
   const router = useRouter();
@@ -15,11 +16,17 @@ const ResultEvaluation = () => {
   const year = currentDate.getFullYear();
   const formattedDate = `${day}/${month}/${year}`;
 
+  evaluationData.printValues();
+  
   const originScreen = evaluationData.originScreen;
-  const maxYL = evaluationData.maxYL;
-  const maxYR = evaluationData.maxYR;
-  const maxRL = evaluationData.maxRL;
-  const maxRR = evaluationData.maxRR;
+  const maxYLBefore = evaluationData.maxYLBefore;
+  const maxYRBefore = evaluationData.maxYRBefore;
+  const maxRLBefore = evaluationData.maxRLBefore;
+  const maxRRBefore = evaluationData.maxRRBefore;
+  const maxYLAfter = evaluationData.maxYLAfter;
+  const maxYRAfter = evaluationData.maxYRAfter;
+  const maxRLAfter = evaluationData.maxRLAfter;
+  const maxRRAfter = evaluationData.maxRRAfter;
   const [transmitted, SetTransmitted] = useState(false);
 
   const saveData = async () => {
@@ -78,32 +85,78 @@ const ResultEvaluation = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Beurteilung Ihrer Beweglichkeit - Aktueller Status {formattedDate}</Text>
-      <Text style={styles.header}>VOR DEM TRAINING</Text>
-      <Text style={styles.paragraph}>Rotation:{'\n'}Links {maxYL}°, Rechts: {maxYR}°, Summe: {maxYR+maxYL}°</Text>
-      <Text style={styles.paragraph}>Seitenneigung:{'\n'}Links: {maxRL}°, Rechts: {maxRR}°, Summe: {maxRR+maxRL}°</Text>
+    <View style={stylesRE.container}>
+      <View style={stylesRE.top}>
+      <Text style={stylesRE.header}>Beurteilung Ihrer Beweglichkeit - Aktueller Status {formattedDate}</Text>
+      <ScrollView style={{ padding: 5 }}>
+      <Text style={stylesRE.header}>Vor dem Training</Text>
+      <Text style={styles.paragraph}>Rotation:{'\n'}Links {maxYLBefore}°, Rechts: {maxYRBefore}°, Summe: {maxYRBefore+maxYLBefore}°</Text>
+      <Text style={styles.paragraph}>Seitenneigung:{'\n'}Links: {maxRLBefore}°, Rechts: {maxRRBefore}°, Summe: {maxRRBefore+maxRLBefore}°</Text>
       <Text style={styles.paragraph}>Schmerzintensität: ...</Text>
-      <Text style={styles.header}>NACH DEM TRAINING</Text>
-      <Text style={styles.paragraph}>Rotation:{'\n'}Links {maxYL}°, Rechts: {maxYR}°, Summe: {maxYR+maxYL}°</Text>
-      <Text style={styles.paragraph}>Seitenneigung:{'\n'}Links: {maxRL}°, Rechts: {maxRR}°, Summe: {maxRR+maxRL}°</Text>
+      <Text style={stylesRE.header}>Nach dem Training</Text>
+      <Text style={styles.paragraph}>Rotation:{'\n'}Links {maxYLAfter}°, Rechts: {maxYRAfter}°, Summe: {maxYRAfter+maxYLAfter}°</Text>
+      <Text style={styles.paragraph}>Seitenneigung:{'\n'}Links: {maxRLAfter}°, Rechts: {maxRRAfter}°, Summe: {maxRRAfter+maxRLAfter}°</Text>
       <Text style={styles.paragraph}>Schmerzintensität: ...</Text>
-      <View style={styles.bottom}>
+      </ScrollView>
+      </View>
+      <View style={stylesRE.bottom}>
         {!transmitted && (
-          <TouchableOpacity onPress={transmitData} style={styles.button}>
-            <Text style={styles.buttonText}>Daten übertragen?</Text>
+          <TouchableOpacity onPress={transmitData} style={stylesRE.button}>
+            <Text style={stylesRE.buttonText}>Daten übertragen?</Text>
           </TouchableOpacity>
         )}
-        <TouchableOpacity onPress={goToGratulation} style={styles.button}>
-          <Text style={styles.buttonText}>Speichern und Fortfahren</Text>
+        <TouchableOpacity onPress={goToGratulation} style={stylesRE.button}>
+          <Text style={stylesRE.buttonText}>Speichern und Fortfahren</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={exitEvaluation} style={styles.button}>
-          <Text style={styles.buttonText}>Beenden ohne Speichern</Text>
+        <TouchableOpacity onPress={exitEvaluation} style={stylesRE.button}>
+          <Text style={stylesRE.buttonText}>Beenden ohne Speichern</Text>
         </TouchableOpacity>
       </View>
+      
     </View>
   );
 };
 
+
+const stylesRE = StyleSheet.create({
+  container: {
+      flex: 1,
+      alignItems: "center",
+      backgroundColor: '#ffffff',
+  },
+  top: {
+    flex: 2,
+    justifyContent: 'flex-start',
+    top: "2%",
+    backgroundColor: '#ffffff',
+  },
+  bottom: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      bottom: "5%",
+  },
+  header: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 10,
+    color: "#10069F",
+  },
+  button: {
+      display: "flex",
+      height: 42,
+      width: 300,
+      backgroundColor: "#0650b0",
+      borderRadius: 20,
+      marginTop: "3%",
+      justifyContent: "center",
+  },
+  buttonText: {
+      fontSize: 25,
+      fontWeight: "bold",
+      textAlign: "center",
+      color: '#ffffff',
+  },
+});
 export default ResultEvaluation;
 

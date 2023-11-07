@@ -10,10 +10,11 @@ const EvaluationBefore = () => {
 
   const goToEvaluation = async () => {
     evaluationData.resetValues();
-    evaluationData.originScreen = 'evaluationComponents/evaluationBefore';
+    evaluationData.originScreen = 'evaluationComponents/evaluationAfter';
     evaluationData.isTraining = 1;
     evaluationData.beforeAfterTraining = 0;
-    router.replace({pathname: 'evaluationComponents/evaluationYR'});
+    evaluationData.printValues();
+    router.replace({pathname: 'tabs/EvaluationScreen'});
   };
 
   return (

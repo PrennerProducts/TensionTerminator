@@ -26,8 +26,22 @@ const evaluationControl = () => {
   };
 
   const exitEvaluation = async () => {
-    if (evaluationData.isTraining) router.replace({pathname: 'evaluationComponents/evaluationAfter'});
-    else router.replace({pathname: 'evaluationComponents/resultEvaluation'});
+    if (evaluationData.isTraining && evaluationData.beforeAfterTraining === 0){
+      console.log("Updating values after training");
+      evaluationData.maxYLBefore = maxYL;
+      evaluationData.maxYRBefore = maxYR;
+      evaluationData.maxRLBefore = maxRL;
+      evaluationData.maxRRBefore = maxRR;
+      router.replace({pathname: '/trainingStart'});
+    }
+    else if (evaluationData.isTraining && evaluationData.beforeAfterTraining === 1){
+      console.log("Updating values after training");
+      evaluationData.maxYLAfter = maxYL;
+      evaluationData.maxYRAfter = maxYR;
+      evaluationData.maxRLAfter = maxRL;
+      evaluationData.maxRRAfter = maxRR;
+      router.replace({pathname: 'evaluationComponents/resultEvaluation'});
+    }
   };
 
   if (exercise === 0){

@@ -189,9 +189,25 @@ export default function Layout() {
         }}
       />
       <Stack.Screen
+        name="evaluationComponents/evaluationYR"
+        options={{
+          headerTitle: 'Evaluierungsübung',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="evaluationComponents/evaluationControl"
+        options={{
+          headerTitle: 'Kontrolle',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
         name="evaluationComponents/resultEvaluation"
         options={{
-          headerTitle: 'Ergebnisanzeige Evaluierung',
+          headerTitle: 'Ergebnis',
           headerShown: true,
           headerTitleAlign: 'center',
           headerRight: () => (
