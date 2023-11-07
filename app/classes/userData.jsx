@@ -7,12 +7,20 @@
 import { saveUserData, getUserData } from '../services/storage.jsx';
 
 class UserData {
-  constructor() {
-    this.userName = 'Default';
-    this.reseted = false;
-    this.pictureList = null;
-    this.level = 0;
-    this.points = 0;
+  constructor(
+    userName = 'Default',
+    reseted = false,
+    profilepicture = 0,
+    level = 0,
+    points = 0
+    // observers = []
+  ) {
+    this.userName = userName;
+    this.reseted = reseted;
+    this.profilepicture = profilepicture;
+    this.level = level;
+    this.points = points;
+    // this.observers = [];
   }
 
   // intitialize muss nach dem erzeugen der instanz ausgeführt werden:
@@ -26,13 +34,28 @@ class UserData {
       myObj = JSON.parse(data);
       this.userName = myObj.userName ?? 'Default';
       this.reseted = myObj.reseted ?? false;
-      this.pictureList = myObj.pictureList ?? [null];
+      console.log('Vor Zuweisung: ', myObj.profilepicture);
+      this.profilepicture = myObj.profilepicture ?? 0;
+      console.log('Nach Zuweisung: ', this.profilepicture);
       this.level = myObj.level ?? 0;
       this.points = myObj.points ?? 0;
+      // this.observers = myObj.observers ?? [];
     } catch (e) {
       console.error('Error parsing user data:', e);
     }
   }
+
+  // observer
+  // addObserver(callback) {
+  //   this.observers.push(callback);
+  // }
+
+  // removeObserver(callback) {
+  //   this.observers = this.observers.filter((obs) => obs !== callback);
+  // }
+  // notifyObservers() {
+  //   this.observers.forEach((callback) => callback());
+  // }
 
   // Getters
   getUserName() {
@@ -52,16 +75,13 @@ class UserData {
     this.reseted = reseted;
   }
 
-  getpictureList() {
-    return this.pictureList;
+  getprofilepicture() {
+    return this.profilepicture;
   }
 
-  getAvailableAvatars() {
-    return this.availableAvatars;
-  }
-
-  setpictureList(pictureList) {
-    this.pictureList = pictureList;
+  setprofilepicture(profilepicture) {
+    this.profilepicture = profilepicture;
+    // this.notifyObservers();
   }
 
   setLevel(level) {
@@ -82,7 +102,7 @@ class UserData {
 
   // Other methods
   toString() {
-    return `User: ${this.userName}, reseted: ${this.reseted}, pictureList: ${this.pictureList}, level: ${this.level}, points: ${this.points}`;
+    return `User: ${this.userName}, reseted: ${this.reseted}, profilepicture: ${this.profilepicture}, level: ${this.level}, points: ${this.points}`;
   }
 
   toJson() {
@@ -94,9 +114,11 @@ class UserData {
     return new UserData(
       obj.userName,
       obj.reseted,
-      obj.pictureList,
+      // obj.profilepicture ?? 0,
+      obj.profilepicture,
       obj.level,
       obj.points
+      // obj.observers
     );
   }
 
@@ -119,8 +141,7 @@ class UserData {
       return new UserData(
         myObj.userName,
         myObj.reseted,
-        myObj.pictureList,
-        myObj.availableAvatars,
+        myObj.profilepicture,
         myObj.level,
         myObj.points
       );

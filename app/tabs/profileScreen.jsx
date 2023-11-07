@@ -11,6 +11,17 @@ import { getProfileName, setProfileName } from '../services/storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UserData from '../classes/userData';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { avatarList } from '../config/avatarConfig';
+import { saveUserData, getUserData } from '../services/storage.jsx';
+import { useProfileImage } from '../components/ProfileImageContext';
+
+// const avatarList = [
+//   require('../../assets/images/avatar1.png'),
+//   require('../../assets/images/avatar2.png'),
+//   require('../../assets/images/avatar3.png'),
+//   require('../../assets/images/avatar4.png'),
+//   // ... weitere Avatare
+// ];
 
 const profileScreen = () => {
   const [name, setName] = useState('SpongeBob42');
@@ -18,45 +29,67 @@ const profileScreen = () => {
   const [user, setUser] = useState(new UserData());
   const [userName, setUserName] = useState();
   const [newName, setNewName] = useState('');
-  const [image, setImage] = useState(null);
-  const [imageList, setImageList] = useState([]);
-  const [currentImage, setCurrentImage] = useState();
-  const [selectedAvatar, setSelectedAvatar] = useState(0);
-
+  // const [image, setImage] = useState(null);
+  // const [imageList, setImageList] = useState([]);
+  // const [currentImage, setCurrentImage] = useState();
+  const [selectedAvatarIndex, setselectedAvatarIndex] = useState(0);
+  let myImageList = [];
   //dropdown picker
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(selectedAvatarIndex);
+  const { currentImageIndex, updateImageIndex } = useProfileImage();
 
   useEffect(() => {
     const initializeUser = async () => {
       await user.initialize();
       setUserName(user.getUserName());
-      setImageList(user.getpictureList());
+      setselectedAvatarIndex(user.getprofilepicture());
     };
 
     initializeUser();
   }, []);
 
+  useEffect(() => {
+    console.log(
+      'Aktualisierter Wert von selectetAvatarIndex:',
+      selectedAvatarIndex
+    );
+  }, [selectedAvatarIndex]);
+
   const handleNameChange = async () => {
     try {
       user.setUserName(newName);
-      await user.save();
+      user.save();
       setUserName(newName);
+
       setIsEditing(false);
     } catch (error) {
       console.log('Fehler beim Ändern des Namens:', error);
     }
   };
 
-  const pickImage = (selectedIndex) => {
+  const pickImage = async (selectedIndex) => {
     console.log('Ausgewählter Avatar-Index:', selectedIndex);
-    setSelectedAvatar(selectedIndex);
+    if (selectedIndex >= 0 && selectedIndex < avatarList.length) {
+      setselectedAvatarIndex(selectedIndex);
+      updateImageIndex(selectedIndex);
+      user.setprofilepicture(selectedIndex);
+      await user.save();
+      console.log(
+        'Im Speicher steht jetz der index:: ' + user.getprofilepicture()
+      );
+      console.log(
+        'LOGtheFuck StorageProvider getUserData: ' + (await getUserData())
+      );
+    }
   };
 
-  const avatars = [
-    require('../../assets/images/avatar.png'),
-    require('../../assets/images/avatar1.jpg'),
-  ];
+  const itemsList = avatarList.map((image, index) => {
+    return {
+      label: `Avatar ${index + 1}`,
+      value: index,
+    };
+  });
 
   return (
     <View style={{ padding: 20 }}>
@@ -66,16 +99,15 @@ const profileScreen = () => {
           alignItems: 'center',
           marginBottom: 20,
           position: 'relative',
-          zIndex: 1,
-          elevation: 1,
-          width: '100%',
         }}
       >
         <Image
           source={
-            typeof selectedAvatar === 'number'
-              ? avatars[selectedAvatar]
-              : require('../../assets/images/avatar.png')
+            selectedAvatarIndex >= 0 &&
+            selectedAvatarIndex != null &&
+            selectedAvatarIndex < avatarList.length
+              ? avatarList[selectedAvatarIndex]
+              : require('../../assets/images/error.jpg')
           }
           style={{ width: 100, height: 100, borderRadius: 50 }}
         />
@@ -85,11 +117,8 @@ const profileScreen = () => {
           value={value}
           setValue={setValue}
           // setItems={setItems}
-          items={[
-            { label: 'Avatar 1', value: 0 },
-            { label: 'Avatar 2', value: 1 },
-          ]}
-          defaultValue={'Hallo'}
+          items={itemsList}
+          defaultValue={currentImageIndex} //entry point im DropdownPicker
           containerStyle={{ height: 150, width: 150 }}
           // onChangeItem={(item) => pickImage(item.value)}
           onChangeValue={(value) => {
@@ -97,14 +126,6 @@ const profileScreen = () => {
             console.log(value);
           }}
         />
-        {/* <DropDownPicker
-          open={open}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setItems}
-        /> */}
       </View>
 
       {/* Profilname */}
