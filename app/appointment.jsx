@@ -1,6 +1,6 @@
 import "expo-router/entry";
-import { View, Text, Pressable, Button, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, Pressable, Button, StyleSheet, Alert } from "react-native";
+import React, { useEffect } from "react";
 import { Link, useRouter } from "expo-router";
 import * as Notifications from "expo-notifications";
 
@@ -15,17 +15,112 @@ const Appointment = () => {
 
   const router = useRouter();
 
+  //ToDO: Check Permissions to send Notifications
+  getPermissions = async () => {
+    const { status } = await Notifications.getPermissionsAsync();
+    console.log("getPermissions: " + status);
+    if (status === "granted") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  getPermissionAndSchedule = async () => {
+    //Creating a channel for the notifications
+    console.log("Setting Channel");
+
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+
+    // if (Platform.OS === "android") {
+    //   await Notifications.setNotificationChannelAsync("default", {
+    //     name: "default",
+    //     importance: Notifications.AndroidImportance.MAX,
+    //     vibrationPattern: [0, 250, 250, 250],
+    //     lightColor: "#FF231F7C",
+    //   });
+    // }
+
+    if (true) {
+      // const { status: existingStatus } =
+      //   await Notifications.getPermissionsAsync();
+      // let finalStatus = existingStatus;
+      // if (existingStatus !== "granted") {
+      //   const { status } = await Notifications.requestPermissionsAsync();
+      //   finalStatus = status;
+      // }
+      const { status } = await Notifications.requestPermissionsAsync();
+
+      finalStatus = status;
+      if (finalStatus !== "granted") {
+        alert("Final Status not granted\nStatus: " + finalStatus);
+        return;
+      }
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+
+    // const { status } = await Notifications.requestPermissionsAsync();
+    // console.log("getPermissionAndSchedule: " + status);
+    // if (status === "granted") {
+    //   await schedulePushNotification();
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+  };
+
+  useEffect(() => {}, []);
+
   setAppointment = async () => {
     //we need to save the trainingstype and the dateTime. Probably we can jump to it?
     //DemoAppointment in 3 seconds
-    await schedulePushNotification();
-    console.log("Appointment set");
+    const status = await getPermissions();
+    if (status) {
+      await schedulePushNotification();
+      console.log("Appointment set");
+    } else {
+      Alert.alert(
+        "Pushbenachrichtigung",
+        "Wir benötigen deine Erlaubnis um dich an dein Training zu erinnern.\n\n Möchtest du die Erlaubnis erteilen?",
+        [
+          // {
+          //     text: 'Nochmal fragen',
+          //     onPress: () => {
+          //         saveData('pushPermission', 'askMeLater');
+          //         console.log('Ask me later pressed');
+          //     },
+          // },
+          {
+            text: "Nein",
+            onPress: () => {
+              // saveData('pushPermission', false);
+              router.push("/");
+              console.log("Cancel Pressed");
+            },
+            style: "cancel",
+            isPreferred: true,
+          },
+          {
+            text: "Ja",
+            onPress: async () => {
+              // saveData('pushPermission', true);
+              await getPermissionAndSchedule();
+              console.log("Appointment not set");
+            },
+          },
+        ]
+      );
+    }
   };
 
   async function schedulePushNotification() {
-    // const trigger = new Date(Date.now() + 60 * 60 * 1000);
-    // trigger.setMinutes(0);
-    // trigger.setSeconds(0);
+    // await addChannel();
 
     await Notifications.scheduleNotificationAsync({
       content: {
@@ -63,11 +158,11 @@ const Appointment = () => {
         <Text style={styles.text2}>Uhrzeit: </Text>
         <Text style={styles.text2}>10:00</Text>
       </View>
-      <Link href={"/"} asChild>
-        <Pressable style={styles.button} onPress={setAppointment}>
-          <Text style={styles.buttonFont}>Bestätigen</Text>
-        </Pressable>
-      </Link>
+      {/* <Link href={"/"} asChild> */}
+      <Pressable style={styles.button} onPress={setAppointment}>
+        <Text style={styles.buttonFont}>Bestätigen</Text>
+      </Pressable>
+      {/* </Link> */}
     </View>
   );
 };
