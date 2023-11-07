@@ -58,7 +58,9 @@ const EvaluationScreen = () => {
         />
       </View>
 
-      <Button title="Anleitungsvideo schauen" onPress={toggleModal} />
+      <Pressable style={styles.button} onPress={toggleModal}>
+        <Text style={styles.buttonText}>Anleitungsvideo schauen</Text>
+      </Pressable>
       <Modal
         options={{ presentation: 'fullscreen-modal' }}
         isVisible={isModalVisible}
@@ -72,12 +74,19 @@ const EvaluationScreen = () => {
             mediaPlaybackRequiresUserAction={false}
             style={{ flex: 1 }}
           />
-          <Button title="Schließen" onPress={toggleModal} />
+          <View style={{ alignItems: 'center' }}>
+            <Pressable style={styles.button} onPress={toggleModal}>
+              <Text style={styles.buttonText}>Schließen</Text>
+            </Pressable>
+          </View>
         </View>
       </Modal>
 
       <View style={{ marginTop: 150 }}>
-        <Button title="Evaluierungsübung starten" onPress={handleEvaluierung} />
+        <Pressable style={styles.button} onPress={handleEvaluierung}>
+          <Text style={styles.buttonText}>Evaluierungsübung starten</Text>
+        </Pressable>
+        {/* <Button title="Evaluierungsübung starten" onPress={handleEvaluierung} /> */}
       </View>
     </View>
   );
