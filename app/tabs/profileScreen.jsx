@@ -9,80 +9,123 @@ import {
 import React, { useEffect, useState } from 'react';
 import { getProfileName, setProfileName } from '../services/storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import * as ImagePicker from 'expo-image-picker';
+import UserData from '../classes/userData';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { avatarList } from '../config/avatarConfig';
+import { saveUserData, getUserData } from '../services/storage.jsx';
+import { useProfileImage } from '../components/ProfileImageContext';
+
+// const avatarList = [
+//   require('../../assets/images/avatar1.png'),
+//   require('../../assets/images/avatar2.png'),
+//   require('../../assets/images/avatar3.png'),
+//   require('../../assets/images/avatar4.png'),
+//   // ... weitere Avatare
+// ];
 
 const profileScreen = () => {
   const [name, setName] = useState('SpongeBob42');
-  const [newName, setNewName] = useState('');
   const [isEditing, setIsEditing] = useState(false);
-  const [image, setImage] = useState(null);
+  const [user, setUser] = useState(new UserData());
+  const [userName, setUserName] = useState();
+  const [newName, setNewName] = useState('');
+  // const [image, setImage] = useState(null);
+  // const [imageList, setImageList] = useState([]);
+  // const [currentImage, setCurrentImage] = useState();
+  const [selectedAvatarIndex, setselectedAvatarIndex] = useState(0);
+  let myImageList = [];
+  //dropdown picker
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(selectedAvatarIndex);
+  const { currentImageIndex, updateImageIndex } = useProfileImage();
 
   useEffect(() => {
-    const fetchProfileName = async () => {
-      try {
-        const fetchedName = await getProfileName();
-        if (fetchedName !== null) {
-          setName(fetchedName);
-        } else {
-          console.log(
-            'Name nicht gefunden, jetz setzen wir einen Defaultnamen (SpongeBob42)'
-          );
-          setName(name);
-        }
-      } catch (error) {
-        console.log('Fehler beim Abrufen des Namens:', error);
-      }
+    const initializeUser = async () => {
+      await user.initialize();
+      setUserName(user.getUserName());
+      setselectedAvatarIndex(user.getprofilepicture());
     };
 
-    fetchProfileName();
+    initializeUser();
   }, []);
+
+  useEffect(() => {
+    console.log(
+      'Aktualisierter Wert von selectetAvatarIndex:',
+      selectedAvatarIndex
+    );
+  }, [selectedAvatarIndex]);
 
   const handleNameChange = async () => {
     try {
-      await setProfileName(newName);
-      setName(newName);
+      user.setUserName(newName);
+      user.save();
+      setUserName(newName);
+
       setIsEditing(false);
     } catch (error) {
       console.log('Fehler beim Ändern des Namens:', error);
     }
   };
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-      // Speichern Sie das Bild-URI irgendwo, z.B. in AsyncStorage oder in einer Datenbank
+  const pickImage = async (selectedIndex) => {
+    console.log('Ausgewählter Avatar-Index:', selectedIndex);
+    if (selectedIndex >= 0 && selectedIndex < avatarList.length) {
+      setselectedAvatarIndex(selectedIndex);
+      updateImageIndex(selectedIndex);
+      user.setprofilepicture(selectedIndex);
+      await user.save();
+      console.log(
+        'Im Speicher steht jetz der index:: ' + user.getprofilepicture()
+      );
+      console.log(
+        'LOGtheFuck StorageProvider getUserData: ' + (await getUserData())
+      );
     }
   };
+
+  const itemsList = avatarList.map((image, index) => {
+    return {
+      label: `Avatar ${index + 1}`,
+      value: index,
+    };
+  });
 
   return (
     <View style={{ padding: 20 }}>
       {/* Avatar Bild */}
       <View
-        style={{ alignItems: 'center', marginBottom: 20, position: 'relative' }}
+        style={{
+          alignItems: 'center',
+          marginBottom: 20,
+          position: 'relative',
+        }}
       >
         <Image
           source={
-            image ? { uri: image } : require('../../assets/images/avatar.png')
+            selectedAvatarIndex >= 0 &&
+            selectedAvatarIndex != null &&
+            selectedAvatarIndex < avatarList.length
+              ? avatarList[selectedAvatarIndex]
+              : require('../../assets/images/error.jpg')
           }
           style={{ width: 100, height: 100, borderRadius: 50 }}
         />
-        <TouchableOpacity
-          style={{
-            position: 'absolute',
-            left: '60%',
-            bottom: 0,
+        <DropDownPicker
+          open={open}
+          setOpen={setOpen}
+          value={value}
+          setValue={setValue}
+          // setItems={setItems}
+          items={itemsList}
+          defaultValue={currentImageIndex} //entry point im DropdownPicker
+          containerStyle={{ height: 150, width: 150 }}
+          // onChangeItem={(item) => pickImage(item.value)}
+          onChangeValue={(value) => {
+            pickImage(value);
+            console.log(value);
           }}
-          onPress={pickImage}
-        >
-          <Icon name="pencil" size={30} />
-        </TouchableOpacity>
+        />
       </View>
 
       {/* Profilname */}
@@ -94,20 +137,27 @@ const profileScreen = () => {
         }}
       >
         {isEditing ? (
-          <TextInput
-            value={newName}
-            placeholder="Neuen Namen eingeben"
-            onChangeText={(text) => setNewName(text)}
-            onSubmitEditing={handleNameChange}
-          />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <TextInput
+              value={newName}
+              placeholder="Neuen Namen eingeben"
+              onChangeText={(text) => setNewName(text)}
+            />
+            <TouchableOpacity onPress={handleNameChange}>
+              <Text>OK</Text>
+            </TouchableOpacity>
+          </View>
         ) : (
           <Text style={{ fontSize: 24 }}>
-            Username: {name}{' '}
+            Username: {userName}
             <TouchableOpacity
               style={{ marginLeft: 5 }}
-              onPress={() => setIsEditing(!isEditing)}
+              onPress={() => {
+                setNewName(user.getUserName());
+                setIsEditing(true);
+              }}
             >
-              <Icon name="pencil" size={30} />
+              <Icon name="pencil" size={15} />
             </TouchableOpacity>
           </Text>
         )}
