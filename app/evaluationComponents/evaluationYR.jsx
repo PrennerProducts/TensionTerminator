@@ -26,9 +26,11 @@ const evaluationYR = () => {
   const [yaw, setYaw] = useState(0);
   const [isYawStable, setIsYawStable] = useState(true);
 
-  const minYaw = 15;
-  const minRoll = 7;
-  const maxCounter = 2;
+  // Parameter fuer Feinjustierung
+  const minYaw = 15; // Ab wieviel Grad soll Rotation erkannt werden... 
+  const minRoll = 7; // Ab wieviel Grad soll Neigung erkannt werden... 
+  const maxCounter = 1; // Zaehler fuer Auto Exit
+  const detectionInterval = 100; // Abtastrate in Milli-Sekunden
 
   const [roll, setRoll] = useState(0);
   const [isRollStable, setIsRollStable] = useState(true);
@@ -189,7 +191,7 @@ const evaluationYR = () => {
   const isYawNeutral = () => {return yaw < 5 || yaw > 355;};
   const isRollNeutral = () => {return roll <= 5 || roll >= 365;};
 
-  // Face Detector Logik
+  // Gesichtsdetektion Logik
   const handleFacesDetected = ({ faces }) => {
     if (faces.length === 0) {
       setScreenText('Keine Erkennung');
@@ -282,8 +284,6 @@ const evaluationYR = () => {
       setMaxL(0);
       setScreenText('');
       setInstruction('');
-      setMaxValuesLText('');
-      setMaxValuesRText('');
       setLineCoordinates(null);
       const landmarkData = {
           leftEye: 0, rightEye: 0, noseBase: 0, bottomMouth: 0, leftMouth: 0, rightMouth: 0, leftEar: 0, rightEar: 0,
@@ -312,13 +312,14 @@ const evaluationYR = () => {
             cameraRef.current = ref;
           }}
           type={Camera.Constants.Type.front}
+          autoFocus={false}
           style={styles.camera}
           onFacesDetected={handleFacesDetected}
           faceDetectorSettings={{
             mode: FaceDetector.FaceDetectorMode.accurate,
             detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
             runClassifications: FaceDetector.FaceDetectorClassifications.none,
-            minDetectionInterval: 100,
+            minDetectionInterval: {detectionInterval},
             tracking: true,
           }}
         >

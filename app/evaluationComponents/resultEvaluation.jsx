@@ -1,24 +1,21 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity, ToastAndroid, Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Pressable, ToastAndroid, Alert } from 'react-native';
 import React from 'react';
-import { useRouter} from 'expo-router';
+import { Link, useRouter} from 'expo-router';
 import styles from '../components/StyleSheet';
 import * as FileSystem from 'expo-file-system';
 import { evaluationData } from './evaluationData';
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
+import DrawingY from './drawingY';
+import EvaluationEE from './evaluationEE';
 
 const ResultEvaluation = () => {
   const router = useRouter();
-
   const currentDate = new Date();
   const day = currentDate.getDate();
   const month = currentDate.getMonth() + 1;
   const year = currentDate.getFullYear();
-  const formattedDate = `${day}/${month}/${year}`;
-
-  evaluationData.printValues();
-  
-  const originScreen = evaluationData.originScreen;
+  const formattedDate = `${day}/${month}/${year}`; 
   const maxYLBefore = evaluationData.maxYLBefore;
   const maxYRBefore = evaluationData.maxYRBefore;
   const maxRLBefore = evaluationData.maxRLBefore;
@@ -27,7 +24,35 @@ const ResultEvaluation = () => {
   const maxYRAfter = evaluationData.maxYRAfter;
   const maxRLAfter = evaluationData.maxRLAfter;
   const maxRRAfter = evaluationData.maxRRAfter;
-  const [transmitted, SetTransmitted] = useState(false);
+  const deltaYL = maxYLAfter-maxYLBefore;
+  const deltaYR = maxYRAfter-maxYRBefore;
+  const deltaYS = deltaYL+deltaYR;
+  const deltaRL = maxRLAfter-maxRLBefore;
+  const deltaRR = maxRRAfter-maxRRBefore;
+  const deltaRS = deltaRL+deltaRR;
+  const textColorDeltaYL = (deltaYL <= 0)
+  ? stylesRE.textRed
+  : stylesRE.textGreen;
+  const textColorDeltaYR = (deltaYR <= 0)
+  ? stylesRE.textRed
+  : stylesRE.textGreen;
+  const textColorDeltaYS = (deltaYS <= 0)
+  ? stylesRE.textRed
+  : stylesRE.textGreen;
+  const textColorDeltaRL = (deltaRL <= 0)
+  ? stylesRE.textRed
+  : stylesRE.textGreen;
+  const textColorDeltaRR = (deltaRR <= 0)
+  ? stylesRE.textRed
+  : stylesRE.textGreen;
+  const textColorDeltaRS = (deltaRS <= 0)
+  ? stylesRE.textRed
+  : stylesRE.textGreen;
+
+  useEffect(() => {
+    saveData();
+    transmitData();
+  }, []);
 
   const saveData = async () => {
     //save evaluation data to json...
@@ -35,7 +60,7 @@ const ResultEvaluation = () => {
   };
 
   const transmitData = async () => {
-    //// send evaluation data to server...
+    //// BEISPIEL
     // const jsonData = ...
     // const parsedData = JSON.parse(jsonData);
     // const serializedData = JSON.stringify(parsedData);
@@ -56,13 +81,6 @@ const ResultEvaluation = () => {
     //   });
     console.log('Data trasmitted');
     ToastAndroid.show('Daten wurden übertragen. Danke!', ToastAndroid.SHORT);
-    SetTransmitted(true);
-  };
-
-  const goToGratulation = async () => {
-    saveData();
-    evaluationData.resetValues();
-    router.replace({pathname: 'components/gratulation'});
   };
 
   const exitEvaluation = async () => {
@@ -88,7 +106,13 @@ const ResultEvaluation = () => {
     <View style={stylesRE.container}>
       <View style={stylesRE.top}>
       <Text style={stylesRE.header}>Beurteilung Ihrer Beweglichkeit - Aktueller Status {formattedDate}</Text>
-      <ScrollView style={{ padding: 5 }}>
+      <ScrollView style={{ padding: 0, top: -10 }}>
+      <DrawingY 
+        maxYLBefore={maxYLBefore}
+        maxYRBefore={maxYRBefore}
+        maxYLAfter={maxYLAfter}
+        maxYRAfter={maxYRAfter}
+      />
       <Text style={stylesRE.header}>Vor dem Training</Text>
       <Text style={styles.paragraph}>Rotation:{'\n'}Links {maxYLBefore}°, Rechts: {maxYRBefore}°, Summe: {maxYRBefore+maxYLBefore}°</Text>
       <Text style={styles.paragraph}>Seitenneigung:{'\n'}Links: {maxRLBefore}°, Rechts: {maxRRBefore}°, Summe: {maxRRBefore+maxRLBefore}°</Text>
@@ -97,22 +121,18 @@ const ResultEvaluation = () => {
       <Text style={styles.paragraph}>Rotation:{'\n'}Links {maxYLAfter}°, Rechts: {maxYRAfter}°, Summe: {maxYRAfter+maxYLAfter}°</Text>
       <Text style={styles.paragraph}>Seitenneigung:{'\n'}Links: {maxRLAfter}°, Rechts: {maxRRAfter}°, Summe: {maxRRAfter+maxRLAfter}°</Text>
       <Text style={styles.paragraph}>Schmerzintensität: ...</Text>
+      <Text style={stylesRE.header}>Wie haben Sie sich verbessert?</Text>
+      <Text style={styles.paragraph}>Rotation:{'\n'}Links <Text style={textColorDeltaYL}>{deltaYL}°</Text>, Rechts: <Text style={textColorDeltaYR}>{deltaYR}°</Text>, Summe: <Text style={textColorDeltaYS}>{deltaYL+deltaYR}°</Text></Text>
+      <Text style={styles.paragraph}>Seitenneigung:{'\n'}Links <Text style={textColorDeltaRL}>{deltaRL}°</Text>, Rechts: <Text style={textColorDeltaRR}>{deltaRR}°</Text>, Summe: <Text style={textColorDeltaRS}>{deltaRL+deltaRR}°{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text></Text><EvaluationEE/>
       </ScrollView>
       </View>
       <View style={stylesRE.bottom}>
-        {!transmitted && (
-          <TouchableOpacity onPress={transmitData} style={stylesRE.button}>
-            <Text style={stylesRE.buttonText}>Daten übertragen?</Text>
-          </TouchableOpacity>
-        )}
-        <TouchableOpacity onPress={goToGratulation} style={stylesRE.button}>
-          <Text style={stylesRE.buttonText}>Speichern und Fortfahren</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={exitEvaluation} style={stylesRE.button}>
-          <Text style={stylesRE.buttonText}>Beenden ohne Speichern</Text>
-        </TouchableOpacity>
+        <Link href={'gratulation'} asChild>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>OK</Text>
+          </Pressable>
+        </Link>
       </View>
-      
     </View>
   );
 };
@@ -125,7 +145,7 @@ const stylesRE = StyleSheet.create({
       backgroundColor: '#ffffff',
   },
   top: {
-    flex: 2,
+    flex: 5,
     justifyContent: 'flex-start',
     top: "2%",
     backgroundColor: '#ffffff',
@@ -142,21 +162,12 @@ const stylesRE = StyleSheet.create({
     marginVertical: 10,
     color: "#10069F",
   },
-  button: {
-      display: "flex",
-      height: 42,
-      width: 300,
-      backgroundColor: "#0650b0",
-      borderRadius: 20,
-      marginTop: "3%",
-      justifyContent: "center",
+  textRed:{
+    color: "red",
   },
-  buttonText: {
-      fontSize: 25,
-      fontWeight: "bold",
-      textAlign: "center",
-      color: '#ffffff',
-  },
+  textGreen:{
+    color: "green",
+  }
 });
 export default ResultEvaluation;
 

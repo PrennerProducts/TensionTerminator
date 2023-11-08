@@ -32,7 +32,7 @@ const LoginPage = () => {
       />
 
       <View style={styles.bottom}>
-        <Link href={'./QRScan'} asChild>
+        <Link href={'QRScan'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>App Starten</Text>
           </Pressable>
