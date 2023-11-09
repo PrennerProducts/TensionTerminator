@@ -8,14 +8,14 @@ export const evaluationData = {
     maxYR: 0,
     maxRL: 0,
     maxRR: 0,
-    maxYLBefore: 0,
-    maxYRBefore: 0,
-    maxRLBefore: 0,
-    maxRRBefore: 0,
-    maxYLAfter: 0,
-    maxYRAfter: 0,
-    maxRLAfter: 0,
-    maxRRAfter: 0,
+    maxYLBefore: 20,
+    maxYRBefore: 30,
+    maxRLBefore: 40,
+    maxRRBefore: 55,
+    maxYLAfter: 60,
+    maxYRAfter: 70,
+    maxRLAfter: 60,
+    maxRRAfter: 50,
     resetValues: function() {
         this.originScreen = '';
         this.imageName = '';

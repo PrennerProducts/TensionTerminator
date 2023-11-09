@@ -9,7 +9,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 import DrawingY from './drawingY';
 import EvaluationEE from './evaluationEE';
 
+
 const ResultEvaluation = () => {
+  const imageSourceR = require('../../assets/images/headTopDownBW.png');
+  const imageSourceY = require('../../assets/images/mansuit.png');
   const router = useRouter();
   const currentDate = new Date();
   const day = currentDate.getDate();
@@ -108,22 +111,44 @@ const ResultEvaluation = () => {
       <Text style={stylesRE.header}>Beurteilung Ihrer Beweglichkeit - Aktueller Status {formattedDate}</Text>
       <ScrollView style={{ padding: 0, top: -10 }}>
       <DrawingY 
-        maxYLBefore={maxYLBefore}
-        maxYRBefore={maxYRBefore}
-        maxYLAfter={maxYLAfter}
-        maxYRAfter={maxYRAfter}
+        maxLBefore={maxYLBefore}
+        maxRBefore={maxYRBefore}
+        maxLAfter={maxYLAfter}
+        maxRAfter={maxYRAfter}
+        TitleString = {'Rotation'}
+        imageSource={imageSourceR}
+        degreeAdd = {90}
+        imageHeight = {400}
+        xAdd = {0}
+        yAdd = {-30}
+        titleXAdd = {-120}
+        titleYAdd = {-50}
+      />
+      <DrawingY 
+        maxLBefore={maxRLBefore}
+        maxRBefore={maxRRBefore}
+        maxLAfter={maxRLAfter}
+        maxRAfter={maxRRAfter}
+        TitleString = {'Neigung'}
+        imageSource={imageSourceY}
+        degreeAdd = {-90}
+        imageHeight = {300}
+        xAdd = {10}
+        yAdd = {40}
+        titleXAdd = {-130}
+        titleYAdd = {-160}
       />
       <Text style={stylesRE.header}>Vor dem Training</Text>
-      <Text style={styles.paragraph}>Rotation:{'\n'}Links {maxYLBefore}°, Rechts: {maxYRBefore}°, Summe: {maxYRBefore+maxYLBefore}°</Text>
-      <Text style={styles.paragraph}>Seitenneigung:{'\n'}Links: {maxRLBefore}°, Rechts: {maxRRBefore}°, Summe: {maxRRBefore+maxRLBefore}°</Text>
+      <Text style={styles.paragraph}>Rotation: Links {maxYLBefore}°, Rechts: {maxYRBefore}°, Summe: {maxYRBefore+maxYLBefore}°</Text>
+      <Text style={styles.paragraph}>Seitenneigung: Links: {maxRLBefore}°, Rechts: {maxRRBefore}°, Summe: {maxRRBefore+maxRLBefore}°</Text>
       <Text style={styles.paragraph}>Schmerzintensität: ...</Text>
       <Text style={stylesRE.header}>Nach dem Training</Text>
-      <Text style={styles.paragraph}>Rotation:{'\n'}Links {maxYLAfter}°, Rechts: {maxYRAfter}°, Summe: {maxYRAfter+maxYLAfter}°</Text>
-      <Text style={styles.paragraph}>Seitenneigung:{'\n'}Links: {maxRLAfter}°, Rechts: {maxRRAfter}°, Summe: {maxRRAfter+maxRLAfter}°</Text>
+      <Text style={styles.paragraph}>Rotation: Links {maxYLAfter}°, Rechts: {maxYRAfter}°, Summe: {maxYRAfter+maxYLAfter}°</Text>
+      <Text style={styles.paragraph}>Seitenneigung: Links: {maxRLAfter}°, Rechts: {maxRRAfter}°, Summe: {maxRRAfter+maxRLAfter}°</Text>
       <Text style={styles.paragraph}>Schmerzintensität: ...</Text>
       <Text style={stylesRE.header}>Wie haben Sie sich verbessert?</Text>
-      <Text style={styles.paragraph}>Rotation:{'\n'}Links <Text style={textColorDeltaYL}>{deltaYL}°</Text>, Rechts: <Text style={textColorDeltaYR}>{deltaYR}°</Text>, Summe: <Text style={textColorDeltaYS}>{deltaYL+deltaYR}°</Text></Text>
-      <Text style={styles.paragraph}>Seitenneigung:{'\n'}Links <Text style={textColorDeltaRL}>{deltaRL}°</Text>, Rechts: <Text style={textColorDeltaRR}>{deltaRR}°</Text>, Summe: <Text style={textColorDeltaRS}>{deltaRL+deltaRR}°{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text></Text><EvaluationEE/>
+      <Text style={styles.paragraph}>Rotation: Links <Text style={textColorDeltaYL}>{deltaYL}°</Text>, Rechts: <Text style={textColorDeltaYR}>{deltaYR}°</Text>, Summe: <Text style={textColorDeltaYS}>{deltaYL+deltaYR}°</Text></Text>
+      <Text style={styles.paragraph}>Seitenneigung: Links <Text style={textColorDeltaRL}>{deltaRL}°</Text>, Rechts: <Text style={textColorDeltaRR}>{deltaRR}°</Text>, Summe: <Text style={textColorDeltaRS}>{deltaRL+deltaRR}°{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text></Text><EvaluationEE/>
       </ScrollView>
       </View>
       <View style={stylesRE.bottom}>
