@@ -59,7 +59,7 @@ const LoginPage = () => {
   // }, []);
 
   const handlePress = () => {
-    router.replace('tabs');
+    router.replace('components/barcode');
   };
 
   return (

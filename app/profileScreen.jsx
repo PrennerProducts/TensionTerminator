@@ -7,13 +7,13 @@ import {
   Button,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { getProfileName, setProfileName } from '../services/storage';
+import { getProfileName, setProfileName } from './services/storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import UserData from '../classes/userData';
+import UserData from './classes/userData';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { avatarList } from '../config/avatarConfig';
-import { saveUserData, getUserData } from '../services/storage.jsx';
-import { useProfileImage } from '../components/ProfileImageContext';
+import { avatarList } from './config/avatarConfig';
+import { saveUserData, getUserData } from './services/storage.jsx';
+import { useProfileImage } from './components/ProfileImageContext';
 
 // const avatarList = [
 //   require('../../assets/images/avatar1.png'),
@@ -107,7 +107,7 @@ const profileScreen = () => {
             selectedAvatarIndex != null &&
             selectedAvatarIndex < avatarList.length
               ? avatarList[selectedAvatarIndex]
-              : require('../../assets/images/error.jpg')
+              : require('../assets/images/error.jpg')
           }
           style={{ width: 100, height: 100, borderRadius: 50 }}
         />

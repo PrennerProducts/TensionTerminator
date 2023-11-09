@@ -12,7 +12,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { WebView } from 'react-native-webview';
 import Modal from 'react-native-modal';
 import { Link, useRouter } from 'expo-router';
-import { evaluationData } from '../evaluationComponents/evaluationData';
+import { evaluationData } from './evaluationData';
 
 const EvaluationScreen = () => {
   const router = useRouter();

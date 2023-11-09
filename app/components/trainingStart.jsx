@@ -1,8 +1,8 @@
 import { View, Text, Pressable, Button, Image } from 'react-native';
 import React from 'react';
 import { Link, useRouter } from 'expo-router';
-import styles from '../components/StyleSheet';
-import { useProfileImage } from '../components/ProfileImageContext';
+import styles from './StyleSheet';
+import { useProfileImage } from './ProfileImageContext';
 import { avatarList } from '../config/avatarConfig';
 
 const TrainingStart = () => {
