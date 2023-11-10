@@ -4,7 +4,11 @@ import React, { useEffect } from "react";
 import { Link, useRouter } from "expo-router";
 import * as Notifications from "expo-notifications";
 
+import styles from "./components/StyleSheet";
+
 const Appointment = () => {
+  const [OurfinalStatus, setFinalStatus] = React.useState(null);
+
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,
@@ -30,13 +34,16 @@ const Appointment = () => {
     //Creating a channel for the notifications
     console.log("Setting Channel");
 
-    await Notifications.setNotificationChannelAsync("default", {
-      name: "default",
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: "#FF231F7C",
-    });
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("Trainings", {
+        name: "Trainings",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
 
+    console.log("Setting Channel finished");
     // if (Platform.OS === "android") {
     //   await Notifications.setNotificationChannelAsync("default", {
     //     name: "default",
@@ -57,6 +64,9 @@ const Appointment = () => {
       const { status } = await Notifications.requestPermissionsAsync();
 
       finalStatus = status;
+      if (finalStatus !== "denied") {
+        return;
+      }
       if (finalStatus !== "granted") {
         alert("Final Status not granted\nStatus: " + finalStatus);
         return;
@@ -75,7 +85,9 @@ const Appointment = () => {
     // }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getPermissions();
+  }, []);
 
   setAppointment = async () => {
     //we need to save the trainingstype and the dateTime. Probably we can jump to it?
@@ -111,7 +123,6 @@ const Appointment = () => {
             onPress: async () => {
               // saveData('pushPermission', true);
               await getPermissionAndSchedule();
-              console.log("Appointment not set");
             },
           },
         ]
@@ -159,54 +170,54 @@ const Appointment = () => {
         <Text style={styles.text2}>10:00</Text>
       </View>
       {/* <Link href={"/"} asChild> */}
-      <Pressable style={styles.button} onPress={setAppointment}>
-        <Text style={styles.buttonFont}>Bestätigen</Text>
+      <Pressable style={[styles.button]} onPress={setAppointment}>
+        <Text style={styles.buttonText}>Bestätigen</Text>
       </Pressable>
       {/* </Link> */}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 20,
-    color: "#10069F",
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: "#10069F",
-    borderRadius: 10,
-    padding: 10,
-    marginVertical: 20,
-  },
-  buttonFont: {
-    color: "white",
-  },
-  buttonBottom: {
-    marginTop: -30,
-  },
-  text: {
-    fontSize: 16,
-    marginVertical: 20,
-  },
-  text2: {
-    fontSize: 12,
-  },
-  section: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  checkbox: {
-    margin: 8,
-    color: "#111111",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     paddingHorizontal: 20,
+//   },
+//   header: {
+//     fontSize: 20,
+//     fontWeight: "bold",
+//     textAlign: "center",
+//     marginVertical: 20,
+//     color: "#10069F",
+//   },
+//   button: {
+//     alignItems: "center",
+//     backgroundColor: "#10069F",
+//     borderRadius: 10,
+//     padding: 10,
+//     marginVertical: 20,
+//   },
+//   buttonFont: {
+//     color: "white",
+//   },
+//   buttonBottom: {
+//     marginTop: -30,
+//   },
+//   text: {
+//     fontSize: 16,
+//     marginVertical: 20,
+//   },
+//   text2: {
+//     fontSize: 12,
+//   },
+//   section: {
+//     flexDirection: "row",
+//     alignItems: "center",
+//   },
+//   checkbox: {
+//     margin: 8,
+//     color: "#111111",
+//   },
+// });
 
 export default Appointment;

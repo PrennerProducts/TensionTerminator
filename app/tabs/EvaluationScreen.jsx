@@ -25,7 +25,7 @@ const EvaluationScreen = () => {
 
   const handleEvaluierung = () => {
     setEvaluationStarted(true);
-    router.replace('evaluationYaw');
+    router.replace('../evaluationComponents/evaluationYaw');
   };
 
   return (
