@@ -203,21 +203,16 @@ const Appointment = () => {
       </Text>
 
       <View style={{ paddingTop: 25, paddingBottom: 25 }}>
-        <Text>
+        <Text style={styles.text}>
           {date.toLocaleDateString()} um {date.toLocaleTimeString()}
         </Text>
       </View>
 
-      <View style={{ paddingTop: 25, paddingBottom: 25 }}>
-        <Button
-          onPress={showDatepicker}
-          title="Datum ändern"
-          style={{ marginBottom: 20 }}
-        ></Button>
-
+      <View style={styles.section}>
+        <Button onPress={showDatepicker} title="Datum ändern"></Button>
+        <Text> </Text>
         <Button onPress={showTimepicker} title="Uhrzeit ändern"></Button>
       </View>
-
       {show && (
         <DateTimePicker
           value={date}
