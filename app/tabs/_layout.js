@@ -121,6 +121,7 @@ export default () => {
         tabBarLabelStyle: {
           fontSize: 14, // Schriftgröße der Tab-Labels
         },
+
       }}
     >
       <Tabs.Screen

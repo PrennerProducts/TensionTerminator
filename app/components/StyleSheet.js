@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
   },
   button: {
     display: 'flex',
-    height: 62,
-    width: 300,
+    height: 60,
+    minWidth: '90%',
     //        padding: 10,
     backgroundColor: '#0650b0',
     borderRadius: 20,
