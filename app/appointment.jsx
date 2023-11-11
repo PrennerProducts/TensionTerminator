@@ -1,13 +1,25 @@
 import "expo-router/entry";
-import { View, Text, Pressable, Button, StyleSheet, Alert } from "react-native";
-import React, { useEffect } from "react";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import {
+  View,
+  Text,
+  Pressable,
+  Button,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { Link, useRouter } from "expo-router";
 import * as Notifications from "expo-notifications";
 
 import styles from "./components/StyleSheet";
 
 const Appointment = () => {
-  const [OurfinalStatus, setFinalStatus] = React.useState(null);
+  const [OurfinalStatus, setFinalStatus] = useState(null);
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
 
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -44,14 +56,14 @@ const Appointment = () => {
     }
 
     console.log("Setting Channel finished");
-    // if (Platform.OS === "android") {
-    //   await Notifications.setNotificationChannelAsync("default", {
-    //     name: "default",
-    //     importance: Notifications.AndroidImportance.MAX,
-    //     vibrationPattern: [0, 250, 250, 250],
-    //     lightColor: "#FF231F7C",
-    //   });
-    // }
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
 
     if (true) {
       // const { status: existingStatus } =
@@ -87,11 +99,13 @@ const Appointment = () => {
 
   useEffect(() => {
     getPermissions();
+    setDate(new Date());
   }, []);
 
   setAppointment = async () => {
     //we need to save the trainingstype and the dateTime. Probably we can jump to it?
     //DemoAppointment in 3 seconds
+    console.log("Setting Appointment");
     const status = await getPermissions();
     if (status) {
       await schedulePushNotification();
@@ -132,16 +146,42 @@ const Appointment = () => {
 
   async function schedulePushNotification() {
     // await addChannel();
-
-    await Notifications.scheduleNotificationAsync({
+    console.log("Scheduling Push Notification");
+    let seconds = Math.round(
+      date.getTime() / 1000 - new Date().getTime() / 1000
+    );
+    console.log("Seconds: " + seconds);
+    secondstoEvent = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Trainingserinnerung",
         body: "Hey, es ist zeit für dein Training!",
         data: { data: "TrainingsType" },
       },
-      trigger: { seconds: 3, channelId: "Trainings" },
+
+      trigger: { seconds: seconds, channelId: "Trainings" },
     });
+    router.push("/");
   }
+
+  //DateTimePickerFunctions
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const showTimepicker = () => {
+    showMode("time");
+  };
 
   return (
     <View style={styles.container}>
@@ -161,14 +201,32 @@ const Appointment = () => {
       <Text style={styles.text}>
         Sollen wir dich an ein weiteres Training erinnern?
       </Text>
-      <View style={styles.section}>
-        <Text style={styles.text2}>Datum: </Text>
-        <Text style={styles.text2}>01.01.2021</Text>
+
+      <View style={{ paddingTop: 25, paddingBottom: 25 }}>
+        <Text>
+          {date.toLocaleDateString()} um {date.toLocaleTimeString()}
+        </Text>
       </View>
-      <View style={styles.section}>
-        <Text style={styles.text2}>Uhrzeit: </Text>
-        <Text style={styles.text2}>10:00</Text>
+
+      <View style={{ paddingTop: 25, paddingBottom: 25 }}>
+        <Button
+          onPress={showDatepicker}
+          title="Datum ändern"
+          style={{ marginBottom: 20 }}
+        ></Button>
+
+        <Button onPress={showTimepicker} title="Uhrzeit ändern"></Button>
       </View>
+
+      {show && (
+        <DateTimePicker
+          value={date}
+          minimumDate={new Date()}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+        />
+      )}
       {/* <Link href={"/"} asChild> */}
       <Pressable style={[styles.button]} onPress={setAppointment}>
         <Text style={styles.buttonText}>Bestätigen</Text>
