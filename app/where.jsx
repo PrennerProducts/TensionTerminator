@@ -39,7 +39,7 @@ const WherePain = () => {
                 <Link href={"/how"} asChild>
 
                     <Pressable style={styles.button}>
-                        <Text style={styles.buttonText}>Becken/Gesaess</Text>
+                        <Text style={styles.buttonText}>Becken/Gesäß</Text>
                     </Pressable>
                 </Link>
             </View>
