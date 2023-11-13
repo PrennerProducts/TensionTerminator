@@ -12,7 +12,8 @@ class UserData {
     reseted = false,
     profilepicture = 0,
     level = 0,
-    points = 0
+    points = 0,
+    sendData = true
     // observers = []
   ) {
     this.userName = userName;
@@ -20,6 +21,7 @@ class UserData {
     this.profilepicture = profilepicture;
     this.level = level;
     this.points = points;
+    this.sendData = sendData;
     // this.observers = [];
   }
 
@@ -39,6 +41,7 @@ class UserData {
       console.log('Nach Zuweisung: ', this.profilepicture);
       this.level = myObj.level ?? 0;
       this.points = myObj.points ?? 0;
+      this.sendData = myObj.sendData ?? true;
       // this.observers = myObj.observers ?? [];
     } catch (e) {
       console.error('Error parsing user data:', e);
@@ -60,6 +63,14 @@ class UserData {
   // Getters
   getUserName() {
     return this.userName;
+  }
+
+  getSendData() {
+    return this.sendData;
+  }
+
+  setSendData(sendData) {
+    this.sendData = sendData;
   }
 
   // Setters
@@ -102,7 +113,7 @@ class UserData {
 
   // Other methods
   toString() {
-    return `User: ${this.userName}, reseted: ${this.reseted}, profilepicture: ${this.profilepicture}, level: ${this.level}, points: ${this.points}`;
+    return `User: ${this.userName}, reseted: ${this.reseted}, profilepicture: ${this.profilepicture}, level: ${this.level}, points: ${this.points}, , sendData: ${this.sendData}`;
   }
 
   toJson() {
@@ -117,7 +128,8 @@ class UserData {
       // obj.profilepicture ?? 0,
       obj.profilepicture,
       obj.level,
-      obj.points
+      obj.points,
+      obj.sendData
       // obj.observers
     );
   }
@@ -143,7 +155,8 @@ class UserData {
         myObj.reseted,
         myObj.profilepicture,
         myObj.level,
-        myObj.points
+        myObj.points,
+        myObj.sendData
       );
     } catch (e) {
       console.error('Error parsing user data:', e);

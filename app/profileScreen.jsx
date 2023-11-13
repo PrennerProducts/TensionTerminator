@@ -5,15 +5,23 @@ import {
   Image,
   TextInput,
   Button,
+  Switch,
+  Modal,
+  StyleSheet,
+  Dimensions,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { getProfileName, setProfileName } from './services/storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UserData from './classes/userData';
 import DropDownPicker from 'react-native-dropdown-picker';
+import styles from './components/StyleSheet';
 import { avatarList } from './config/avatarConfig';
 import { saveUserData, getUserData } from './services/storage.jsx';
 import { useProfileImage } from './components/ProfileImageContext';
+import { Appointment } from './components/appointment';
+import { Link, useRouter } from 'expo-router';
+import GameStatusGif from './components/GameStatusGif';
 
 // const avatarList = [
 //   require('../../assets/images/avatar1.png'),
@@ -38,12 +46,28 @@ const profileScreen = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(selectedAvatarIndex);
   const { currentImageIndex, updateImageIndex } = useProfileImage();
+  // Switch
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
+    setIsEnabled((previousState) => !previousState);
+  };
+  const [sendData, setSendData] = useState(true);
+  //Gif GameStatus
+  const [showGameStatusGif, setShowGameStatusGif] = useState(false);
+
+  // Screen Dimensions Calculation
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
+
+  //Router
+  const router = useRouter();
 
   useEffect(() => {
     const initializeUser = async () => {
       await user.initialize();
       setUserName(user.getUserName());
       setselectedAvatarIndex(user.getprofilepicture());
+      setSendData(user.getSendData());
     };
 
     initializeUser();
@@ -65,6 +89,20 @@ const profileScreen = () => {
       setIsEditing(false);
     } catch (error) {
       console.log('Fehler beim Ändern des Namens:', error);
+    }
+  };
+
+  const handleSendDataChange = async () => {
+    try {
+      toggleSwitch();
+      const newSendDataValue = !sendData;
+
+      user.setSendData(newSendDataValue);
+      await user.save();
+
+      setSendData(newSendDataValue);
+    } catch (error) {
+      console.log('Fehler beim Ändern von sendData:', error);
     }
   };
 
@@ -90,6 +128,13 @@ const profileScreen = () => {
       value: index,
     };
   });
+
+  const handleShowGif = () => {
+    setShowGameStatusGif(true);
+    setTimeout(() => {
+      setShowGameStatusGif(false);
+    }, 3000);
+  };
 
   return (
     <View style={{ padding: 20 }}>
@@ -157,7 +202,7 @@ const profileScreen = () => {
                 setIsEditing(true);
               }}
             >
-              <Icon name="pencil" size={15} />
+              <Icon style={{ marginLeft: 15 }} name="pencil" size={15} />
             </TouchableOpacity>
           </Text>
         )}
@@ -165,30 +210,113 @@ const profileScreen = () => {
 
       {/* Game Status */}
       <View style={{ alignItems: 'center', marginBottom: 20 }}>
-        <Text style={{ fontSize: 20 }}>Game Status: Level 1</Text>
+        <TouchableOpacity
+          onPress={handleShowGif}
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
+          <Icon
+            style={{ marginRight: 10 }}
+            name="trophy"
+            size={24}
+            color="gold"
+          />
+          <Text style={{ fontSize: 20 }}>Game Status: Level 1</Text>
+        </TouchableOpacity>
       </View>
+      {showGameStatusGif && (
+        <GameStatusGif
+          visible={showGameStatusGif}
+          onClose={() => setShowGameStatusGif(false)}
+        />
+      )}
 
       {/* Reminder setzen */}
       <View style={{ alignItems: 'center', marginBottom: 20 }}>
-        <TouchableOpacity>
-          <Text style={{ fontSize: 18 }}>Reminder setzen</Text>
+        <TouchableOpacity
+          onPress={() => {
+            router.push('components/appointment');
+          }}
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
+          <Icon
+            style={{ marginRight: 10 }}
+            name="calendar"
+            size={24}
+            color="black"
+          />
+          <Text style={{ fontSize: 18, marginLeft: 10 }}>Reminder setzen</Text>
         </TouchableOpacity>
       </View>
 
       {/* Meine Statistiken */}
       <View style={{ alignItems: 'center', marginBottom: 20 }}>
-        <Text style={{ fontSize: 16 }}>Meine Statistiken: </Text>
+        <TouchableOpacity
+          onPress={() => {
+            router.push('components/appointment');
+          }}
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
+          <Icon
+            style={{ marginRight: 10 }}
+            name="bar-chart"
+            size={24}
+            color="black"
+          />
+          <Text style={{ fontSize: 16 }}>Meine Statistiken </Text>
+        </TouchableOpacity>
         {/* Hier können Sie weitere Details zu den Statistiken hinzufügen */}
       </View>
 
       {/* Datenschutz */}
       <View style={{ alignItems: 'center', marginBottom: 20 }}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+          onPress={() => {
+            router.push('components/datenschutzScreen');
+          }}
+        >
+          <Icon
+            style={{ marginRight: 10 }}
+            name="lock"
+            size={24}
+            color="black"
+          />
           <Text style={{ fontSize: 18 }}>Datenschutz</Text>
         </TouchableOpacity>
+      </View>
+
+      {/* Switch */}
+      <View style={styles.switchcontainer}>
+        <Text style={styles.switchtext}>Daten an ErgoPhysion senden</Text>
+        <Switch
+          trackColor={{ false: '#767577', true: '#10069F' }}
+          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={handleSendDataChange}
+          value={isEnabled}
+        />
+      </View>
+      <View style={styles.switchcontainer}>
+        <Text style={styles.switchtext}>Analyse und Verbesserung</Text>
+        <Switch
+          trackColor={{ false: '#767577', true: '#10069F' }}
+          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={handleSendDataChange}
+          value={isEnabled}
+        />
       </View>
     </View>
   );
 };
+
+const stylesLocal = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparenter Hintergrund
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default profileScreen;

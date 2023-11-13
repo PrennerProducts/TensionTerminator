@@ -13,16 +13,16 @@ const EvaluationAfter = () => {
     evaluationData.exercise = 0;
     evaluationData.beforeAfterTraining = 1;
     evaluationData.printValues();
-    router.replace({pathname: 'tabs/EvaluationScreen'});
+    router.replace({ pathname: 'evaluationComponents/EvaluationScreen' });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Evaluierungsübung NACHHER</Text>
       <View style={styles.bottom}>
-          <TouchableOpacity onPress={goToEvaluation} style={styles.button}>
-            <Text style={styles.buttonText}>Evaluierung Ihrer Beweglichkeit</Text>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={goToEvaluation} style={styles.button}>
+          <Text style={styles.buttonText}>Evaluierung Ihrer Beweglichkeit</Text>
+        </TouchableOpacity>
         <Link href={'../components/intensityAfter'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Überspringen</Text>

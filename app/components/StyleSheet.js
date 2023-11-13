@@ -73,5 +73,16 @@ const styles = StyleSheet.create({
     width: '85%',
     fontWeight: 'bold',
   },
+  switchcontainer: {
+    flexDirection: 'row', // Elemente nebeneinander
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    backgroundColor: '#AFEEEE',
+    width: '100%',
+  },
+  switchtext: {
+    marginRight: 10,
+  },
 });
 export default styles;
