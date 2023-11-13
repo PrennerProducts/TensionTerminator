@@ -219,7 +219,7 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="components/where"
+          name="where"
           options={{
             headerTitle: 'Wo tut es weh?',
             headerShown: true,
