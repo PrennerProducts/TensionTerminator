@@ -13,9 +13,8 @@ const styles = StyleSheet.create({
   },
   button: {
     display: 'flex',
-    minHeight: 60,
-    minWidth: '95%',
-    maxWidth: '95%',
+    height: 60,
+    minWidth: '90%',
     //        padding: 10,
     backgroundColor: '#10069f',
     borderRadius: 10,
