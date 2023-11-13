@@ -234,7 +234,7 @@ const profileScreen = () => {
       <View style={{ alignItems: 'center', marginBottom: 20 }}>
         <TouchableOpacity
           onPress={() => {
-            router.push('components/appointment');
+            router.push('appointment');
           }}
           style={{ flexDirection: 'row', alignItems: 'center' }}
         >
