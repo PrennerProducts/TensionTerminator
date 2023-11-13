@@ -18,7 +18,7 @@ export default function Layout() {
   // Hier könnten Sie jetzt currentImageIndex verwenden, um z.B. ein Profilbild anzuzeigen
   // const profileImageSource =
   //   currentImageIndex && avatarList[currentImageIndex]
-  //     ? avatarList[currentImageIndex]
+  // //     ? avatarList[currentImageIndex]
   //     : require('../assets/images/error.jpg'); // Standardbild, falls kein Index vorhanden ist
 
   // useFocusEffect(
@@ -66,11 +66,9 @@ export default function Layout() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-
-
         }}
       >
-          {/* ------------------------------------------------------------------------------------- */}
+        {/* ------------------------------------------------------------------------------------- */}
         {/*  root App FOLDER  */}
         {/* ------------------------------------------------------------------------------------- */}
 
@@ -135,7 +133,7 @@ export default function Layout() {
               <TouchableOpacity onPress={goToProfile}>
                 {/* <Icon name="person-circle" size={30} color="#fff" /> */}
                 {/* Alternativ ein Bild nutzen: */}
-                <Image
+                {/* <Image
                   source={
                     currentImageIndex && avatarList[currentImageIndex]
                       ? avatarList[currentImageIndex]
@@ -146,8 +144,8 @@ export default function Layout() {
                     height: 40,
                     borderRadius: 50,
                     margin: 15,
-                  }}
-                />
+                  }} 
+                />*/}
               </TouchableOpacity>
             ),
           }}
@@ -290,7 +288,7 @@ export default function Layout() {
               <TouchableOpacity onPress={goToProfile}>
                 {/* <Icon name="person-circle" size={30} color="#fff" /> */}
                 {/* Alternativ ein Bild nutzen: */}
-                <Image
+                {/* <Image
                   source={
                     currentImageIndex && avatarList[currentImageIndex]
                       ? avatarList[currentImageIndex]
@@ -302,7 +300,7 @@ export default function Layout() {
                     borderRadius: 50,
                     margin: 15,
                   }}
-                />
+                /> */}
               </TouchableOpacity>
             ),
           }}
