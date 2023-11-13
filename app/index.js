@@ -59,6 +59,7 @@ const LoginPage = () => {
   // }, []);
 
   const handlePress = () => {
+
     router.replace('components/barcode');
   };
 
@@ -122,6 +123,7 @@ const LoginPage = () => {
       </Link>
 
 */}
+
       </View>
     </ProfileImageProvider>
   );
