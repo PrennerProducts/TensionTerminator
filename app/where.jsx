@@ -1,3 +1,10 @@
+import "expo-router/entry";
+import {View, Text, Pressable, Button} from "react-native";
+import React from "react";
+import {Link, useRouter} from "expo-router";
+import {removeData} from "./services/storage";
+import styles from "./components/StyleSheet";
+
 import 'expo-router/entry';
 import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import React from 'react';
@@ -97,5 +104,7 @@ const WherePain = () => {
 
     );
 };
+};
 
 export default WherePain;
+
