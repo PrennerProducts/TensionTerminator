@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, Tabs } from 'expo-router';
 import { Stack } from 'expo-router/stack';
 
-import Icon from 'react-native-vector-icons/Ionicons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
 import { useFocusEffect } from '@react-navigation/native';
@@ -77,19 +76,25 @@ export default function Layout() {
           name="index"
           options={({ navigation }) => ({
             headerTitle: 'Tension Terminator',
+            // () => (
+            //   <Image
+            //     source={require('../assets/logo.png')}
+            //     style={{
+            //       width: 190, // Breite des Logos anpassen
+            //       height: 50, // Höhe des Logos anpassen
+            //       resizeMode: 'contain',
+            //     }}
+            //   />
+            // ),
             headerShown: true,
             headerTitleAlign: 'center',
             headerRight: () => (
               <TouchableOpacity onPress={goToProfile}>
-                {/* Alternativ ein Bild nutzen: */}
-                <Image
-                  source={require('../assets/images/tt_user.png')}
-                  style={{
-                    width: 50,
-                    height: 92,
-                    borderRadius: 0,
-                    margin: 15,
-                  }}
+                <Icon
+                  name="user-circle"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
                 />
               </TouchableOpacity>
             ),
