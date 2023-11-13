@@ -19,7 +19,7 @@ const LoginPage = () => {
   const user = new UserData();
   const [currentImageIndex, setCurrentImageIndex] = useState();
 
-  useEffect(() => {
+ /* useEffect(() => {
     const initializeUser = async () => {
       await user.initialize();
       // if (user.getprofilepicture() === null) {
@@ -33,7 +33,7 @@ const LoginPage = () => {
     };
 
     initializeUser();
-  });
+  });*/
 
   const getProfileImage = () => {
     if (
