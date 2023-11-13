@@ -12,6 +12,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { WebView } from 'react-native-webview';
 import Modal from 'react-native-modal';
 import { Link, useRouter } from 'expo-router';
+import { evaluationData } from './evaluationData';
 
 const EvaluationScreen = () => {
   const router = useRouter();
@@ -25,7 +26,8 @@ const EvaluationScreen = () => {
 
   const handleEvaluierung = () => {
     setEvaluationStarted(true);
-    router.replace('../evaluationComponents/evaluationYaw');
+    evaluationData.printValues();
+    router.replace('../evaluationComponents/evaluationYR');
   };
 
   return (
@@ -56,7 +58,9 @@ const EvaluationScreen = () => {
         />
       </View>
 
-      <Button title="Anleitungsvideo schauen" onPress={toggleModal} />
+      <Pressable style={styles.button} onPress={toggleModal}>
+        <Text style={styles.buttonText}>Anleitungsvideo schauen</Text>
+      </Pressable>
       <Modal
         options={{ presentation: 'fullscreen-modal' }}
         isVisible={isModalVisible}
@@ -70,12 +74,19 @@ const EvaluationScreen = () => {
             mediaPlaybackRequiresUserAction={false}
             style={{ flex: 1 }}
           />
-          <Button title="Schließen" onPress={toggleModal} />
+          <View style={{ alignItems: 'center' }}>
+            <Pressable style={styles.button} onPress={toggleModal}>
+              <Text style={styles.buttonText}>Schließen</Text>
+            </Pressable>
+          </View>
         </View>
       </Modal>
 
       <View style={{ marginTop: 150 }}>
-        <Button title="Evaluierungsübung starten" onPress={handleEvaluierung} />
+        <Pressable style={styles.button} onPress={handleEvaluierung}>
+          <Text style={styles.buttonText}>Evaluierungsübung starten</Text>
+        </Pressable>
+        {/* <Button title="Evaluierungsübung starten" onPress={handleEvaluierung} /> */}
       </View>
     </View>
   );
@@ -124,6 +135,79 @@ const styles = StyleSheet.create({
   maxValues: {
     fontSize: 20,
     color: 'yellow',
+  },
+
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  bottom: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    bottom: '10%',
+  },
+  button: {
+    display: 'flex',
+    height: 62,
+    width: 300,
+    //        padding: 10,
+    backgroundColor: '#0650b0',
+    borderRadius: 20,
+    marginTop: '10%',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#ffffff',
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: '700',
+    textAlign: 'center',
+    top: '5%',
+  },
+  top: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    top: '5%',
+    backgroundColor: '#ffffff',
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  roundButton: {
+    width: 60,
+    color: '#640a12',
+  },
+  header: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 20,
+    color: '#10069F',
+  },
+  buttonBottom: {
+    marginTop: -30,
+  },
+  text: {
+    fontSize: 16,
+    marginVertical: 20,
+  },
+  section: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  checkbox: {
+    margin: 8,
+    color: '#111111',
+  },
+  paragraph: {
+    margin: 8,
+    width: '85%',
+    fontWeight: 'bold',
   },
 });
 

@@ -1,15 +1,30 @@
-import 'expo-router/entry';
-import { View, Text, Pressable, Button } from 'react-native';
+import { View, Text, Pressable, Button, Image } from 'react-native';
 import React from 'react';
 import { Link, useRouter } from 'expo-router';
-import styles from '../components/StyleSheet';
+import styles from './StyleSheet';
+import { useProfileImage } from './ProfileImageContext';
+import { avatarList } from '../config/avatarConfig';
 
 const TrainingStart = () => {
   const router = useRouter();
 
+  const { currentImageIndex } = useProfileImage(); // Verwenden des ProfileImageContext hooks
+  // Hier könnten Sie jetzt currentImageIndex verwenden, um z.B. ein Profilbild anzuzeigen
+  const profileImageSource =
+    currentImageIndex && avatarList[currentImageIndex]
+      ? avatarList[currentImageIndex]
+      : require('../../assets/images/error.jpg'); // Standardbild, falls kein Index vorhanden ist
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Training</Text>
+
+      {/* Profilbild anzeigen */}
+      <Image
+        source={profileImageSource}
+        style={{ width: 80, height: 80, borderRadius: 40, margin: 50 }}
+      />
+
       <View style={styles.bottom}>
         <Link href={'../training'} asChild>
           <Pressable style={styles.button}>
@@ -29,7 +44,11 @@ const TrainingStart = () => {
           </Pressable>
         </Link>
       </View>
-      <Link href="/" style={{ textAlign: 'right', fontSize: 24, margin: 20 }}>
+      <Link
+        replace
+        href="/"
+        style={{ textAlign: 'right', fontSize: 24, margin: 20 }}
+      >
         Go to Startseite
       </Link>
     </View>
