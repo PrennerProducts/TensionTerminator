@@ -92,15 +92,15 @@ const criteriaScreen = () => {
             'Sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht')
         )}
         <Text style={styles.text}>vor.</Text>
-        <View style={styles.bottom}>
-          <Link href={'./where'} asChild>
-            <Pressable onPress={changeFirstTime} style={styles.button}>
-              <Text style={styles.buttonText}>Bestätigen</Text>
-            </Pressable>
-          </Link>
-        </View>
-        {/* <View>{skipCriteria}</View> */}
       </ScrollView>
+      <View style={styles.bottom}>
+        <Link href={'./where'} asChild>
+          <Pressable onPress={changeFirstTime} style={styles.button}>
+            <Text style={styles.buttonText}>Bestätigen</Text>
+          </Pressable>
+        </Link>
+      </View>
+      {/* <View>{skipCriteria}</View> */}
     </View>
   );
 };
