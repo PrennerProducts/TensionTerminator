@@ -155,7 +155,7 @@ export default function Layout() {
         {/*  FOLDER components */}
         {/* ------------------------------------------------------------------------------------- */}
         <Stack.Screen
-          name="components/appointment"
+          name="appointment"
           options={{
             headerTitle: 'appointment',
             headerShown: true,
@@ -163,7 +163,7 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="components/criteria"
+          name="criteria"
           options={{
             headerTitle: 'Ausschlusskriterien',
             headerShown: true,
@@ -171,7 +171,7 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="components/explanationText"
+          name="explanationText"
           options={{
             headerTitle: 'Erklärung lesen',
             headerShown: true,
@@ -179,7 +179,7 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="components/explanationVideo"
+          name="explanationVideo"
           options={{
             headerTitle: 'Erklärvideo',
             headerShown: true,
@@ -187,7 +187,7 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="components/gratulation"
+          name="gratulation"
           options={{
             headerTitle: 'Gratulation',
             headerShown: true,

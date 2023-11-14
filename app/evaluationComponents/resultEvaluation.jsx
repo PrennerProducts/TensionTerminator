@@ -171,7 +171,7 @@ const ResultEvaluation = () => {
       </ScrollView>
       </View>
       <View style={stylesRE.bottom}>
-        <Link href={'components/gratulation'} asChild>
+        <Link href={'../gratulation'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>OK</Text>
           </Pressable>
