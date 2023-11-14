@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     height: 60,
     minWidth: '90%',
-    //        padding: 10,
     backgroundColor: '#10069f',
     borderRadius: 10,
     marginTop: '10%',
@@ -59,6 +58,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     marginVertical: 20,
+
   },
   section: {
     flexDirection: 'row',

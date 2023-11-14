@@ -1,4 +1,4 @@
-import 'expo-router/entry';
+ import 'expo-router/entry';
 import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import React from 'react';
 import { Link, useRouter} from 'expo-router';

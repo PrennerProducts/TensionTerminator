@@ -19,7 +19,7 @@ import styles from './components/StyleSheet';
 import { avatarList } from './config/avatarConfig';
 import { saveUserData, getUserData } from './services/storage.jsx';
 import { useProfileImage } from './components/ProfileImageContext';
-import { Appointment } from './components/appointment';
+import { Appointment } from './appointment';
 import { Link, useRouter } from 'expo-router';
 import GameStatusGif from './components/GameStatusGif';
 

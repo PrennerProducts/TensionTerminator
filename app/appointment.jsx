@@ -16,7 +16,7 @@ import * as Notifications from "expo-notifications";
 import styles from "./components/StyleSheet";
 
 const Appointment = () => {
-  const [OurfinalStatus, setFinalStatus] = useState(null);
+  const [ourFinalStatus, setFinalStatus] = useState(null);
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
@@ -32,7 +32,7 @@ const Appointment = () => {
   const router = useRouter();
 
   //ToDO: Check Permissions to send Notifications
-  getPermissions = async () => {
+  let getPermissions = async () => {
     const { status } = await Notifications.getPermissionsAsync();
     console.log("getPermissions: " + status);
     if (status === "granted") {
@@ -42,7 +42,7 @@ const Appointment = () => {
     }
   };
 
-  getPermissionAndSchedule = async () => {
+  let getPermissionAndSchedule = async () => {
     //Creating a channel for the notifications
     console.log("Setting Channel");
 
@@ -75,7 +75,7 @@ const Appointment = () => {
       // }
       const { status } = await Notifications.requestPermissionsAsync();
 
-      finalStatus = status;
+      let finalStatus = status;
       if (finalStatus !== "denied") {
         return;
       }
@@ -102,7 +102,7 @@ const Appointment = () => {
     setDate(new Date());
   }, []);
 
-  setAppointment = async () => {
+  let setAppointment = async () => {
     //we need to save the trainingstype and the dateTime. Probably we can jump to it?
     //DemoAppointment in 3 seconds
     console.log("Setting Appointment");
@@ -151,7 +151,7 @@ const Appointment = () => {
       date.getTime() / 1000 - new Date().getTime() / 1000
     );
     console.log("Seconds: " + seconds);
-    secondstoEvent = await Notifications.scheduleNotificationAsync({
+    let secondstoEvent = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Trainingserinnerung",
         body: "Hey, es ist zeit für dein Training!",
@@ -209,9 +209,9 @@ const Appointment = () => {
       </View>
 
       <View style={styles.section}>
-        <Button onPress={showDatepicker} title="Datum ändern"></Button>
+        <Button color='#10069f' onPress={showDatepicker} title="Datum ändern"></Button>
         <Text> </Text>
-        <Button onPress={showTimepicker} title="Uhrzeit ändern"></Button>
+        <Button color='#10069f' onPress={showTimepicker} title="Uhrzeit ändern"></Button>
       </View>
       {show && (
         <DateTimePicker
@@ -230,47 +230,5 @@ const Appointment = () => {
     </View>
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingHorizontal: 20,
-//   },
-//   header: {
-//     fontSize: 20,
-//     fontWeight: "bold",
-//     textAlign: "center",
-//     marginVertical: 20,
-//     color: "#10069F",
-//   },
-//   button: {
-//     alignItems: "center",
-//     backgroundColor: "#10069F",
-//     borderRadius: 10,
-//     padding: 10,
-//     marginVertical: 20,
-//   },
-//   buttonFont: {
-//     color: "white",
-//   },
-//   buttonBottom: {
-//     marginTop: -30,
-//   },
-//   text: {
-//     fontSize: 16,
-//     marginVertical: 20,
-//   },
-//   text2: {
-//     fontSize: 12,
-//   },
-//   section: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//   },
-//   checkbox: {
-//     margin: 8,
-//     color: "#111111",
-//   },
-// });
 
 export default Appointment;

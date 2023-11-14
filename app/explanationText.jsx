@@ -2,8 +2,8 @@ import 'expo-router/entry';
 import { View, Text, Pressable, Button } from 'react-native';
 import React from 'react';
 import {Link, useRouter} from 'expo-router';
-import styles from './StyleSheet';
-import AudioPlayer from '../services/audioPlayer';
+import styles from './components/StyleSheet';
+import AudioPlayer from './services/audioPlayer';
 
 const Gratulation = () => {
     const router = useRouter();
@@ -11,7 +11,7 @@ const Gratulation = () => {
     return (
         <View style={styles.container}>
                 <View>
-      <AudioPlayer audioUri={require('../../assets/sounds/Chimes.wav')} />
+      <AudioPlayer audioUri={require('../assets/sounds/Chimes.wav')} />
     </View>
             <Text style={styles.title}>Gratulation!</Text>
             <View style={styles.bottom}>
