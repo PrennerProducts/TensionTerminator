@@ -8,29 +8,12 @@ import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
 import { useFocusEffect } from '@react-navigation/native';
 import { ProfileImageProvider } from './components/ProfileImageContext';
+import myheaderRight from './components/headerRight';
 import { useProfileImage } from './components/ProfileImageContext';
 
 export default function Layout() {
   const router = useRouter();
   const user = new UserData();
-
-  //const { currentImageIndex } = useProfileImage(); // Verwenden des ProfileImageContext hooks
-  // Hier könnten Sie jetzt currentImageIndex verwenden, um z.B. ein Profilbild anzuzeigen
-  // const profileImageSource =
-  //   currentImageIndex && avatarList[currentImageIndex]
-  // //     ? avatarList[currentImageIndex]
-  //     : require('../assets/images/error.jpg'); // Standardbild, falls kein Index vorhanden ist
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     setSomeStateValue(SomeStateValue + 1);
-  //     console.log('SomeStateValue: ' + SomeStateValue);
-
-  //     return () => {
-  //       console.log('Rerender Babe!!');
-  //     };
-  //   }, [])
-  // );
 
   useEffect(() => {
     const initializeUser = async () => {
@@ -38,18 +21,11 @@ export default function Layout() {
       if (user.getprofilepicture() === null) {
         user.setprofilepicture(0);
       }
-      //setCurrentImageIndex(user.getprofilepicture());
-      // console.log(
-      //   '_layout2 liest aus dem speicher den Image index: ' +
-      //     user.getprofilepicture()
-      // );
     };
-
     initializeUser();
   }, []);
 
   const goToProfile = () => {
-    // Funktion zum Navigieren zu den Profileinstellungen
     router.push('/profileScreen');
   };
 
@@ -76,28 +52,9 @@ export default function Layout() {
           name="index"
           options={({ navigation }) => ({
             headerTitle: 'Tension Terminator',
-            // () => (
-            //   <Image
-            //     source={require('../assets/logo.png')}
-            //     style={{
-            //       width: 190, // Breite des Logos anpassen
-            //       height: 50, // Höhe des Logos anpassen
-            //       resizeMode: 'contain',
-            //     }}
-            //   />
-            // ),
             headerShown: true,
             headerTitleAlign: 'center',
-            headerRight: () => (
-              <TouchableOpacity onPress={goToProfile}>
-                <Icon
-                  name="user-circle"
-                  size={35}
-                  color="#fff"
-                  style={{ marginRight: 15 }}
-                />
-              </TouchableOpacity>
-            ),
+            headerRight: myheaderRight,
           })}
         />
         <Stack.Screen
@@ -106,21 +63,7 @@ export default function Layout() {
             headerTitle: 'QR-Code scannen',
             headerShown: true,
             headerTitleAlign: 'center',
-            // headerRight: () => (
-            //   <TouchableOpacity onPress={goToProfile}>
-            //     {/* <Icon name="person-circle" size={30} color="#fff" /> */}
-            //     {/* Alternativ ein Bild nutzen: */}
-            //     <Image
-            //       source={profileImageSource}
-            //       style={{
-            //         width: 40,
-            //         height: 40,
-            //         borderRadius: 50,
-            //         margin: 15,
-            //       }}
-            //     />
-            //   </TouchableOpacity>
-            // ),
+            headerRight: myheaderRight,
           }}
         />
         <Stack.Screen
@@ -129,25 +72,7 @@ export default function Layout() {
             headerTitle: 'Training',
             headerShown: true,
             headerTitleAlign: 'center',
-            headerRight: () => (
-              <TouchableOpacity onPress={goToProfile}>
-                {/* <Icon name="person-circle" size={30} color="#fff" /> */}
-                {/* Alternativ ein Bild nutzen: */}
-                {/* <Image
-                  source={
-                    currentImageIndex && avatarList[currentImageIndex]
-                      ? avatarList[currentImageIndex]
-                      : require('../assets/images/avatar2.png')
-                  }
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 50,
-                    margin: 15,
-                  }} 
-                />*/}
-              </TouchableOpacity>
-            ),
+            headerRight: myheaderRight,
           }}
         />
 
@@ -160,6 +85,7 @@ export default function Layout() {
             headerTitle: 'appointment',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
         <Stack.Screen
@@ -168,6 +94,7 @@ export default function Layout() {
             headerTitle: 'Ausschlusskriterien',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
         <Stack.Screen
@@ -176,6 +103,7 @@ export default function Layout() {
             headerTitle: 'Erklärung lesen',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
         <Stack.Screen
@@ -184,6 +112,7 @@ export default function Layout() {
             headerTitle: 'Erklärvideo',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
         <Stack.Screen
@@ -192,6 +121,7 @@ export default function Layout() {
             headerTitle: 'Gratulation',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
         <Stack.Screen
@@ -200,6 +130,7 @@ export default function Layout() {
             headerTitle: 'Wie tut es weh?',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
         <Stack.Screen
@@ -208,6 +139,7 @@ export default function Layout() {
             headerTitle: 'Wie stark tut es weh?',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
         <Stack.Screen
@@ -216,6 +148,7 @@ export default function Layout() {
             headerTitle: 'Wie stark tut es weh?',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
         <Stack.Screen
@@ -224,6 +157,7 @@ export default function Layout() {
             headerTitle: 'Wo tut es weh?',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
 
@@ -236,22 +170,25 @@ export default function Layout() {
             headerTitle: 'Evaluierungsübung NACHHER',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
-          <Stack.Screen
-              name="evaluationComponents/EvaluationScreen"
-              options={{
-                  headerTitle: 'EvaluationScreen',
-                  headerShown: true,
-                  headerTitleAlign: 'center',
-              }}
-          />
+        <Stack.Screen
+          name="evaluationComponents/EvaluationScreen"
+          options={{
+            headerTitle: 'EvaluationScreen',
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerRight: myheaderRight,
+          }}
+        />
         <Stack.Screen
           name="evaluationComponents/evaluationBefore"
           options={{
             headerTitle: 'Evaluierungsübung VORHER',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
         <Stack.Screen
@@ -268,6 +205,7 @@ export default function Layout() {
             headerTitle: 'Kontrolle',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: myheaderRight,
           }}
         />
         <Stack.Screen
@@ -276,25 +214,7 @@ export default function Layout() {
             headerTitle: 'Ergebnis',
             headerShown: true,
             headerTitleAlign: 'center',
-            headerRight: () => (
-              <TouchableOpacity onPress={goToProfile}>
-                {/* <Icon name="person-circle" size={30} color="#fff" /> */}
-                {/* Alternativ ein Bild nutzen: */}
-                {/* <Image
-                  source={
-                    currentImageIndex && avatarList[currentImageIndex]
-                      ? avatarList[currentImageIndex]
-                      : require('../assets/images/avatar2.png')
-                  }
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 50,
-                    margin: 15,
-                  }}
-                /> */}
-              </TouchableOpacity>
-            ),
+            headerRight: myheaderRight,
           }}
         />
 

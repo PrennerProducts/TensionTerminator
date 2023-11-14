@@ -1,23 +1,19 @@
 import 'expo-router/entry';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Link, useRouter } from 'expo-router';
 import styles from './components/StyleSheet';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
 import { ProfileImageProvider } from '../app/components/ProfileImageContext';
+import { useProfileImage } from '../app/components/ProfileImageContext';
 import { evaluationData } from './evaluationComponents/evaluationData';
 
 const LoginPage = () => {
   const router = useRouter();
   const [user, setUser] = useState(new UserData());
   const [userName, setUserName] = useState();
-  const [selectedAvatarIndex, setselectedAvatarIndex] = useState(0);
+  const { currentImageIndex, updateImageIndex } = useProfileImage();
 
   const goToEvaluation = async () => {
     evaluationData.resetValues();
@@ -31,21 +27,14 @@ const LoginPage = () => {
     const initializeUser = async () => {
       await user.initialize();
       setUserName(user.getUserName());
-      setselectedAvatarIndex(user.getprofilepicture());
-      //console.log('Name: ', userName);
-      //console.log('Avatar Index: ', selectedAvatarIndex);
     };
     initializeUser();
   }, []);
 
   return (
     <ProfileImageProvider>
-      <View style={{flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  }}>
-        <View style={{
-            }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{}}>
           <Text style={styles.header}>Home</Text>
           {/*<Image
             source={require('../assets/logo.png')}
@@ -55,21 +44,21 @@ const LoginPage = () => {
             }}
           />*/}
           <Image
-          source={
-            selectedAvatarIndex >= 0 &&
-            selectedAvatarIndex != null &&
-            selectedAvatarIndex < avatarList.length
-              ? avatarList[selectedAvatarIndex]
-              : require('../assets/images/error.jpg')
-          }
-          style={{ 
-            resizeMode: 'contain',
-            width: 200, 
-            height: 200, 
-            borderRadius: 100 
-          }}
-        />
-        <Text style={styles.header}>{userName}</Text>
+            source={
+              currentImageIndex >= 0 &&
+              currentImageIndex != null &&
+              currentImageIndex < avatarList.length
+                ? avatarList[currentImageIndex]
+                : require('../assets/images/hello.jpg')
+            }
+            style={{
+              resizeMode: 'contain',
+              width: 200,
+              height: 200,
+              borderRadius: 100,
+            }}
+          />
+          <Text style={styles.header}>{userName}</Text>
         </View>
         <View style={styles.bottom}>
           <Link href={'./QRScan'} asChild>
@@ -83,9 +72,14 @@ const LoginPage = () => {
             </TouchableOpacity>
           </Link>
 
-            <TouchableOpacity style={styles.button} onPress={() => {goToEvaluation();}}>
-              <Text style={styles.buttonText}>Beweglichkeitsmessung</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              goToEvaluation();
+            }}
+          >
+            <Text style={styles.buttonText}>Beweglichkeitsmessung</Text>
+          </TouchableOpacity>
 
           <Link href={'./components/painWhere'} asChild>
             <TouchableOpacity style={styles.button}>
