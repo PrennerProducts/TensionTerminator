@@ -3,8 +3,8 @@ import { View, Dimensions } from 'react-native';
 import Svg, { Image as SvgImage, Line, Polygon, Path, Text } from 'react-native-svg';
 
 const DrawingY = ({ maxLBefore, maxRBefore, maxLAfter, maxRAfter, TitleString, imageSource, degreeAdd, imageHeight, xAdd, yAdd, titleXAdd, titleYAdd }) => {
-  const imgWidth = Dimensions.get("window").width;
-  const imgHeight = imageHeight;
+  const imgWidth = (Dimensions.get("window").width)/2;
+  const imgHeight = (imageHeight)/2;
 
   const centerX = (imgWidth / 2) +xAdd;
   const centerY = (imgHeight / 2) +yAdd;

@@ -119,6 +119,7 @@ const ResultEvaluation = () => {
       <View style={stylesRE.top}>
       <Text style={stylesRE.header}>Beurteilung Ihrer Beweglichkeit - Aktueller Status {formattedDate}</Text>
       <ScrollView style={{ padding: 0, top: -10 }}>
+        <View style={styles.section}>
       <DrawingY 
         maxLBefore={maxYLBefore}
         maxRBefore={maxYRBefore}
@@ -147,6 +148,7 @@ const ResultEvaluation = () => {
         titleXAdd = {-130}
         titleYAdd = {-160}
       />
+      </View>
       <Text style={stylesRE.header}>Vor dem Training</Text>
       <Text style={styles.paragraph}>
         Rotation: Links {maxYLBefore}°, Rechts: {maxYRBefore}°, Summe: {maxYRBefore+maxYLBefore}°</Text>

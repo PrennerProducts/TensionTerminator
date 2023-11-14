@@ -1,4 +1,4 @@
-import { View, Text, Button, TouchableOpacity, Image } from 'react-native';
+import { View, Text, Button, TouchableOpacity, Image, Modal } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useRouter, Tabs } from 'expo-router';
 import { Stack } from 'expo-router/stack';
@@ -53,6 +53,10 @@ export default function Layout() {
     router.push('/profileScreen');
   };
 
+  const goToHome = () => {
+    router.replace('/home');
+  };
+
   return (
     <ProfileImageProvider>
       <Stack
@@ -71,27 +75,34 @@ export default function Layout() {
         {/* ------------------------------------------------------------------------------------- */}
         {/*  root App FOLDER  */}
         {/* ------------------------------------------------------------------------------------- */}
-
         <Stack.Screen
           name="index"
           options={({ navigation }) => ({
             headerTitle: 'Tension Terminator',
-            // () => (
-            //   <Image
-            //     source={require('../assets/logo.png')}
-            //     style={{
-            //       width: 190, // Breite des Logos anpassen
-            //       height: 50, // Höhe des Logos anpassen
-            //       resizeMode: 'contain',
-            //     }}
-            //   />
-            // ),
             headerShown: true,
             headerTitleAlign: 'center',
+          })}
+        />
+        <Stack.Screen
+          name="home"
+          options={({ navigation }) => ({
+            headerTitle: 'Tension Terminator',
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerLeft: () => (
+              <TouchableOpacity >
+                <Icon
+                  name="comment-o"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
             headerRight: () => (
               <TouchableOpacity onPress={goToProfile}>
                 <Icon
-                  name="user-circle"
+                  name="cog"
                   size={35}
                   color="#fff"
                   style={{ marginRight: 15 }}
@@ -99,6 +110,24 @@ export default function Layout() {
               </TouchableOpacity>
             ),
           })}
+        />
+                <Stack.Screen
+          name="profileScreen"
+          options={{
+            headerTitle: 'Profil',
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerRight: () => (
+              <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                  name="check"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
+          }}
         />
         <Stack.Screen
           name="QRScan"
@@ -121,6 +150,16 @@ export default function Layout() {
             //     />
             //   </TouchableOpacity>
             // ),
+            headerRight: () => (
+              <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                  name="home"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
           }}
         />
         <Stack.Screen
@@ -160,6 +199,16 @@ export default function Layout() {
             headerTitle: 'appointment',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: () => (
+              <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                  name="home"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
           }}
         />
         <Stack.Screen
@@ -168,6 +217,16 @@ export default function Layout() {
             headerTitle: 'Ausschlusskriterien',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: () => (
+              <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                  name="home"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
           }}
         />
         <Stack.Screen
@@ -176,6 +235,16 @@ export default function Layout() {
             headerTitle: 'Erklärung lesen',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: () => (
+              <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                  name="home"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
           }}
         />
         <Stack.Screen
@@ -184,6 +253,16 @@ export default function Layout() {
             headerTitle: 'Erklärvideo',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: () => (
+              <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                  name="home"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
           }}
         />
         <Stack.Screen
@@ -192,6 +271,16 @@ export default function Layout() {
             headerTitle: 'Gratulation',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: () => (
+              <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                  name="home"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
           }}
         />
         <Stack.Screen
@@ -200,7 +289,18 @@ export default function Layout() {
             headerTitle: 'Wie tut es weh?',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: () => (
+              <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                  name="home"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
           }}
+          
         />
         <Stack.Screen
           name="components/intensityAfter"
@@ -208,6 +308,16 @@ export default function Layout() {
             headerTitle: 'Wie stark tut es weh?',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: () => (
+              <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                  name="home"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
           }}
         />
         <Stack.Screen
@@ -216,6 +326,16 @@ export default function Layout() {
             headerTitle: 'Wie stark tut es weh?',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: () => (
+              <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                  name="home"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
           }}
         />
         <Stack.Screen
@@ -224,6 +344,16 @@ export default function Layout() {
             headerTitle: 'Wo tut es weh?',
             headerShown: true,
             headerTitleAlign: 'center',
+            headerRight: () => (
+              <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                  name="home"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
+                />
+              </TouchableOpacity>
+            ),
           }}
         />
 
@@ -276,25 +406,6 @@ export default function Layout() {
             headerTitle: 'Ergebnis',
             headerShown: true,
             headerTitleAlign: 'center',
-            headerRight: () => (
-              <TouchableOpacity onPress={goToProfile}>
-                {/* <Icon name="person-circle" size={30} color="#fff" /> */}
-                {/* Alternativ ein Bild nutzen: */}
-                {/* <Image
-                  source={
-                    currentImageIndex && avatarList[currentImageIndex]
-                      ? avatarList[currentImageIndex]
-                      : require('../assets/images/avatar2.png')
-                  }
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 50,
-                    margin: 15,
-                  }}
-                /> */}
-              </TouchableOpacity>
-            ),
           }}
         />
 

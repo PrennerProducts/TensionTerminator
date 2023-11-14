@@ -1,7 +1,7 @@
 {
   "name": "tensionterminator",
   "version": "1.0.0",
-  "main": "app/index.js",
+  "main": "app/home.jsx",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
