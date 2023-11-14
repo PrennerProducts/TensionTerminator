@@ -1,12 +1,5 @@
 import 'expo-router/entry';
-import {
-  View,
-  Text,
-  Pressable,
-  Button,
-  ImageBackground,
-  Image,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Link, useRouter } from 'expo-router';
 import styles from './components/StyleSheet';
@@ -14,67 +7,84 @@ import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
 import { ProfileImageProvider } from '../app/components/ProfileImageContext';
 import { useProfileImage } from '../app/components/ProfileImageContext';
+import { evaluationData } from './evaluationComponents/evaluationData';
 
 const LoginPage = () => {
   const router = useRouter();
-  const user = new UserData();
+  const [user, setUser] = useState(new UserData());
+  const [userName, setUserName] = useState();
   const { currentImageIndex, updateImageIndex } = useProfileImage();
+
+  const goToEvaluation = async () => {
+    evaluationData.resetValues();
+    evaluationData.originScreen = '../homeScreen';
+    evaluationData.isTraining = 0;
+    evaluationData.beforeAfterTraining = 0;
+    router.replace({ pathname: 'evaluationComponents/EvaluationScreen' });
+  };
+
+  useEffect(() => {
+    const initializeUser = async () => {
+      await user.initialize();
+      setUserName(user.getUserName());
+    };
+    initializeUser();
+  }, []);
 
   return (
     <ProfileImageProvider>
-      <View style={styles.container}>
-        <View
-          style={{
-            position: 'absolute',
-            width: '100%',
-            flex: 1,
-            flexDirection: 'column',
-            top: 0,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Image
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{}}>
+          <Text style={styles.header}>Home</Text>
+          {/*<Image
             source={require('../assets/logo.png')}
             style={{
-              position: 'absolute',
               width: '100%',
               resizeMode: 'contain',
-              top: 0,
             }}
-          />
+          />*/}
           <Image
             source={
-              avatarList[currentImageIndex != null ? currentImageIndex : 1]
+              currentImageIndex >= 0 &&
+              currentImageIndex != null &&
+              currentImageIndex < avatarList.length
+                ? avatarList[currentImageIndex]
+                : require('../assets/images/hello.jpg')
             }
             style={{
-              position: 'absolute',
-              width: '30%',
               resizeMode: 'contain',
-              top: -300,
+              width: 200,
+              height: 200,
+              borderRadius: 100,
             }}
           />
+          <Text style={styles.header}>{userName}</Text>
         </View>
         <View style={styles.bottom}>
           <Link href={'./QRScan'} asChild>
-            <Pressable style={styles.button}>
+            <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>QR-Code scannen</Text>
-            </Pressable>
+            </TouchableOpacity>
           </Link>
           <Link href={'./components/criteria'} asChild>
-            <Pressable style={styles.button}>
+            <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Ausschlusskriterien</Text>
-            </Pressable>
+            </TouchableOpacity>
           </Link>
-          <Link href={'./evaluationComponents/EvaluationScreen'} asChild>
-            <Pressable style={styles.button}>
-              <Text style={styles.buttonText}>Beweglichkeitsmessung</Text>
-            </Pressable>
-          </Link>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              goToEvaluation();
+            }}
+          >
+            <Text style={styles.buttonText}>Beweglichkeitsmessung</Text>
+          </TouchableOpacity>
+
           <Link href={'./components/painWhere'} asChild>
-            <Pressable style={styles.button}>
+            <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Training</Text>
-            </Pressable>
+            </TouchableOpacity>
           </Link>
         </View>
       </View>
