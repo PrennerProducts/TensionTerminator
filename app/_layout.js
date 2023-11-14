@@ -3,29 +3,34 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, Tabs } from 'expo-router';
 import { Stack } from 'expo-router/stack';
 
-import Icon from 'react-native-vector-icons/Ionicons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
 import { useFocusEffect } from '@react-navigation/native';
 import { ProfileImageProvider } from './components/ProfileImageContext';
+import { useProfileImage } from './components/ProfileImageContext';
 
 export default function Layout() {
   const router = useRouter();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const user = new UserData();
-  const [SomeStateValue, setSomeStateValue] = useState(0);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setSomeStateValue(SomeStateValue + 1);
-      console.log('SomeStateValue: ' + SomeStateValue);
+  //const { currentImageIndex } = useProfileImage(); // Verwenden des ProfileImageContext hooks
+  // Hier könnten Sie jetzt currentImageIndex verwenden, um z.B. ein Profilbild anzuzeigen
+  // const profileImageSource =
+  //   currentImageIndex && avatarList[currentImageIndex]
+  // //     ? avatarList[currentImageIndex]
+  //     : require('../assets/images/error.jpg'); // Standardbild, falls kein Index vorhanden ist
 
-      return () => {
-        console.log('Rerender Babe!!');
-      };
-    }, [])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     setSomeStateValue(SomeStateValue + 1);
+  //     console.log('SomeStateValue: ' + SomeStateValue);
+
+  //     return () => {
+  //       console.log('Rerender Babe!!');
+  //     };
+  //   }, [])
+  // );
 
   useEffect(() => {
     const initializeUser = async () => {
@@ -33,7 +38,7 @@ export default function Layout() {
       if (user.getprofilepicture() === null) {
         user.setprofilepicture(0);
       }
-      setCurrentImageIndex(user.getprofilepicture());
+      //setCurrentImageIndex(user.getprofilepicture());
       // console.log(
       //   '_layout2 liest aus dem speicher den Image index: ' +
       //     user.getprofilepicture()
@@ -43,19 +48,9 @@ export default function Layout() {
     initializeUser();
   }, []);
 
-  useEffect(() => {
-    // console.log(
-    //   'Layout1 Aktueller Wert von currentImageIndex:',
-    //   currentImageIndex
-    // );
-    // console.log(
-    //   'Layout1 aktueller url string: ' + avatarList[currentImageIndex]
-    // );
-  }, [currentImageIndex]);
-
   const goToProfile = () => {
     // Funktion zum Navigieren zu den Profileinstellungen
-    router.replace('tabs/profileScreen');
+    router.push('/profileScreen');
   };
 
   return (
@@ -81,20 +76,25 @@ export default function Layout() {
           name="index"
           options={({ navigation }) => ({
             headerTitle: 'Tension Terminator',
-
+            // () => (
+            //   <Image
+            //     source={require('../assets/logo.png')}
+            //     style={{
+            //       width: 190, // Breite des Logos anpassen
+            //       height: 50, // Höhe des Logos anpassen
+            //       resizeMode: 'contain',
+            //     }}
+            //   />
+            // ),
             headerShown: true,
             headerTitleAlign: 'center',
             headerRight: () => (
               <TouchableOpacity onPress={goToProfile}>
-                {/* Alternativ ein Bild nutzen: */}
-                <Image
-                  source={require('../assets/images/tt_user.png')}
-                  style={{
-                    width: 50,
-                    height: 92,
-                    borderRadius: 0,
-                    margin: 15,
-                  }}
+                <Icon
+                  name="user-circle"
+                  size={35}
+                  color="#fff"
+                  style={{ marginRight: 15 }}
                 />
               </TouchableOpacity>
             ),
@@ -106,6 +106,21 @@ export default function Layout() {
             headerTitle: 'QR-Code scannen',
             headerShown: true,
             headerTitleAlign: 'center',
+            // headerRight: () => (
+            //   <TouchableOpacity onPress={goToProfile}>
+            //     {/* <Icon name="person-circle" size={30} color="#fff" /> */}
+            //     {/* Alternativ ein Bild nutzen: */}
+            //     <Image
+            //       source={profileImageSource}
+            //       style={{
+            //         width: 40,
+            //         height: 40,
+            //         borderRadius: 50,
+            //         margin: 15,
+            //       }}
+            //     />
+            //   </TouchableOpacity>
+            // ),
           }}
         />
         <Stack.Screen
@@ -118,7 +133,7 @@ export default function Layout() {
               <TouchableOpacity onPress={goToProfile}>
                 {/* <Icon name="person-circle" size={30} color="#fff" /> */}
                 {/* Alternativ ein Bild nutzen: */}
-                <Image
+                {/* <Image
                   source={
                     currentImageIndex && avatarList[currentImageIndex]
                       ? avatarList[currentImageIndex]
@@ -129,8 +144,8 @@ export default function Layout() {
                     height: 40,
                     borderRadius: 50,
                     margin: 15,
-                  }}
-                />
+                  }} 
+                />*/}
               </TouchableOpacity>
             ),
           }}
@@ -257,7 +272,7 @@ export default function Layout() {
               <TouchableOpacity onPress={goToProfile}>
                 {/* <Icon name="person-circle" size={30} color="#fff" /> */}
                 {/* Alternativ ein Bild nutzen: */}
-                <Image
+                {/* <Image
                   source={
                     currentImageIndex && avatarList[currentImageIndex]
                       ? avatarList[currentImageIndex]
@@ -269,7 +284,7 @@ export default function Layout() {
                     borderRadius: 50,
                     margin: 15,
                   }}
-                />
+                /> */}
               </TouchableOpacity>
             ),
           }}
@@ -288,7 +303,7 @@ export default function Layout() {
           }}
         />
 
-        <Stack.Screen name="tabs" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="tabs" options={{ headerShown: false }} /> */}
       </Stack>
     </ProfileImageProvider>
   );

@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
   },
   button: {
     display: 'flex',
-    height: 62,
-    width: 300,
+    height: 60,
+    minWidth: '90%',
     //        padding: 10,
-    backgroundColor: '#0650b0',
-    borderRadius: 20,
+    backgroundColor: '#10069f',
+    borderRadius: 10,
     marginTop: '10%',
     justifyContent: 'center',
   },
@@ -73,14 +73,16 @@ const styles = StyleSheet.create({
     width: '85%',
     fontWeight: 'bold',
   },
-  input: {
-    height: 50,
-    width: 100,
-    borderColor: 'red',
-    borderWidth: 4,
-    borderRadius: 2,
+  switchcontainer: {
+    flexDirection: 'row', // Elemente nebeneinander
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 10,
-    fontSize: 30,
+    backgroundColor: '#AFEEEE',
+    width: '100%',
+  },
+  switchtext: {
+    marginRight: 10,
   },
 });
 export default styles;

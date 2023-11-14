@@ -100,6 +100,7 @@ const criteriaScreen = () => {
           </Pressable>
         </Link>
       </View>
+
       {/* <View>{skipCriteria}</View> */}
     </View>
   );

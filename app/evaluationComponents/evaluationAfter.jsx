@@ -13,7 +13,7 @@ const EvaluationAfter = () => {
     evaluationData.exercise = 0;
     evaluationData.beforeAfterTraining = 1;
     evaluationData.printValues();
-    router.replace({pathname: 'tabs/EvaluationScreen'});
+    router.replace({ pathname: 'evaluationComponents/EvaluationScreen' });
   };
 
   return (

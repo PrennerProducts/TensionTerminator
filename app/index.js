@@ -19,7 +19,7 @@ const LoginPage = () => {
   const user = new UserData();
   const [currentImageIndex, setCurrentImageIndex] = useState();
 
-  useEffect(() => {
+ /* useEffect(() => {
     const initializeUser = async () => {
       await user.initialize();
       // if (user.getprofilepicture() === null) {
@@ -33,7 +33,7 @@ const LoginPage = () => {
     };
 
     initializeUser();
-  });
+  });*/
 
   const getProfileImage = () => {
     if (
@@ -59,7 +59,7 @@ const LoginPage = () => {
   // }, []);
 
   const handlePress = () => {
-    router.replace('tabs');
+    router.replace('components/barcode');
   };
 
   return (
@@ -80,16 +80,37 @@ const LoginPage = () => {
             top: 20,
           }}
         /> */}
-        <Image
-          source={require('../assets/logo.png')}
+        <View
           style={{
             position: 'absolute',
-            width: '90%',
-            resizeMode: 'contain',
-            top: 20,
+            width: '100%',
+            flex: 1,
+            flexDirection: 'column',
+            top: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
-        />
+        >
+          <Image
+            source={require('../assets/logo.png')}
+            style={{
+              position: 'absolute',
+              width: '50%',
+              resizeMode: 'contain',
+              top: 0,
+            }}
+          />
 
+          <Image
+            source={require('../assets/TTmodel.png')}
+            style={{
+              position: 'relative',
+              width: '80%',
+              resizeMode: 'contain',
+              top: '15%',
+            }}
+          />
+        </View>
         <View style={styles.bottom}>
           <Link href={'./QRScan'} asChild>
             <Pressable style={styles.button}>
