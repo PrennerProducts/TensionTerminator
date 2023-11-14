@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     marginVertical: 20,
-
   },
   section: {
     flexDirection: 'row',
