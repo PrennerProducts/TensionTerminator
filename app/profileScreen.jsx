@@ -2,6 +2,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Pressable,
   Image,
   TextInput,
   Button,
@@ -23,34 +24,24 @@ import { Appointment } from './appointment';
 import { Link, useRouter } from 'expo-router';
 import GameStatusGif from './components/GameStatusGif';
 
-// const avatarList = [
-//   require('../../assets/images/avatar1.png'),
-//   require('../../assets/images/avatar2.png'),
-//   require('../../assets/images/avatar3.png'),
-//   require('../../assets/images/avatar4.png'),
-//   // ... weitere Avatare
-// ];
-
 const profileScreen = () => {
-  const [name, setName] = useState('SpongeBob42');
   const [isEditing, setIsEditing] = useState(false);
+  // Userdata Class from storage
   const [user, setUser] = useState(new UserData());
   const [userName, setUserName] = useState();
   const [newName, setNewName] = useState('');
-  // const [image, setImage] = useState(null);
-  // const [imageList, setImageList] = useState([]);
-  // const [currentImage, setCurrentImage] = useState();
   const [selectedAvatarIndex, setselectedAvatarIndex] = useState(0);
-  let myImageList = [];
   //dropdown picker
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(selectedAvatarIndex);
+  // ProfileImageContext Provider
   const { currentImageIndex, updateImageIndex } = useProfileImage();
   // Switch
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
   };
+  // Send Uerdata to ErgoPhysion
   const [sendData, setSendData] = useState(true);
   //Gif GameStatus
   const [showGameStatusGif, setShowGameStatusGif] = useState(false);
@@ -66,7 +57,9 @@ const profileScreen = () => {
     const initializeUser = async () => {
       await user.initialize();
       setUserName(user.getUserName());
-      setselectedAvatarIndex(user.getprofilepicture());
+      const profileIndex = user.getprofilepicture();
+      setselectedAvatarIndex(profileIndex);
+      setValue(profileIndex);
       setSendData(user.getSendData());
     };
 
@@ -113,12 +106,12 @@ const profileScreen = () => {
       updateImageIndex(selectedIndex);
       user.setprofilepicture(selectedIndex);
       await user.save();
-      console.log(
-        'Im Speicher steht jetz der index:: ' + user.getprofilepicture()
-      );
-      console.log(
-        'LOGtheFuck StorageProvider getUserData: ' + (await getUserData())
-      );
+      // console.log(
+      //   'Im Speicher steht jetz der index:: ' + user.getprofilepicture()
+      // );
+      // console.log(
+      //   'LOGtheFuck StorageProvider getUserData: ' + (await getUserData())
+      // );
     }
   };
 
@@ -154,18 +147,27 @@ const profileScreen = () => {
               ? avatarList[selectedAvatarIndex]
               : require('../assets/images/error.jpg')
           }
-          style={{ width: 100, height: 100, borderRadius: 50 }}
+          style={{
+            width: 100,
+            height: 100,
+            borderRadius: 50,
+            marginBottom: 20,
+          }}
         />
         <DropDownPicker
           open={open}
           setOpen={setOpen}
           value={value}
-          setValue={setValue}
+          //setValue={setValue}
+          setValue={(newValue) => {
+            setValue(newValue);
+            setselectedAvatarIndex(newValue); // Aktualisieren von selectedAvatarIndex
+            pickImage(newValue);
+          }}
           // setItems={setItems}
           items={itemsList}
-          defaultValue={currentImageIndex} //entry point im DropdownPicker
+          //defaultValue={selectedAvatarIndex} //entry point im DropdownPicker
           containerStyle={{ height: 150, width: 150 }}
-          // onChangeItem={(item) => pickImage(item.value)}
           onChangeValue={(value) => {
             pickImage(value);
             console.log(value);
@@ -176,6 +178,8 @@ const profileScreen = () => {
       {/* Profilname */}
       <View
         style={{
+          position: 'relative',
+          top: -50,
           flexDirection: 'column',
           alignItems: 'center',
           marginBottom: 20,
@@ -186,15 +190,20 @@ const profileScreen = () => {
             <TextInput
               value={newName}
               placeholder="Neuen Namen eingeben"
+              autoFocus={true}
               onChangeText={(text) => setNewName(text)}
+              style={stylesLocal.textInputStyle}
             />
-            <TouchableOpacity onPress={handleNameChange}>
-              <Text>OK</Text>
+            <TouchableOpacity
+              onPress={handleNameChange}
+              style={stylesLocal.okButtonStyle}
+            >
+              <Text style={stylesLocal.okButtonText}>OK</Text>
             </TouchableOpacity>
           </View>
         ) : (
-          <Text style={{ fontSize: 24 }}>
-            Username: {userName}
+          <Text style={{ fontSize: 34, fontWeight: 'bold' }}>
+            {userName}
             <TouchableOpacity
               style={{ marginLeft: 5 }}
               onPress={() => {
@@ -209,7 +218,7 @@ const profileScreen = () => {
       </View>
 
       {/* Game Status */}
-      <View style={{ alignItems: 'center', marginBottom: 20 }}>
+      <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
         <TouchableOpacity
           onPress={handleShowGif}
           style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -220,7 +229,7 @@ const profileScreen = () => {
             size={24}
             color="gold"
           />
-          <Text style={{ fontSize: 20 }}>Game Status: Level 1</Text>
+          <Text style={stylesLocal.text}>Game-Level: 1</Text>
         </TouchableOpacity>
       </View>
       {showGameStatusGif && (
@@ -231,7 +240,7 @@ const profileScreen = () => {
       )}
 
       {/* Reminder setzen */}
-      <View style={{ alignItems: 'center', marginBottom: 20 }}>
+      <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
         <TouchableOpacity
           onPress={() => {
             router.push('appointment');
@@ -244,12 +253,12 @@ const profileScreen = () => {
             size={24}
             color="black"
           />
-          <Text style={{ fontSize: 18, marginLeft: 10 }}>Reminder setzen</Text>
+          <Text style={stylesLocal.text}>Reminder setzen</Text>
         </TouchableOpacity>
       </View>
 
       {/* Meine Statistiken */}
-      <View style={{ alignItems: 'center', marginBottom: 20 }}>
+      <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
         <TouchableOpacity
           onPress={() => {
             router.push('components/appointment');
@@ -262,13 +271,12 @@ const profileScreen = () => {
             size={24}
             color="black"
           />
-          <Text style={{ fontSize: 16 }}>Meine Statistiken </Text>
+          <Text style={stylesLocal.text}>Meine Statistiken </Text>
         </TouchableOpacity>
-        {/* Hier können Sie weitere Details zu den Statistiken hinzufügen */}
       </View>
 
       {/* Datenschutz */}
-      <View style={{ alignItems: 'center', marginBottom: 20 }}>
+      <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center' }}
           onPress={() => {
@@ -281,31 +289,27 @@ const profileScreen = () => {
             size={24}
             color="black"
           />
-          <Text style={{ fontSize: 18 }}>Datenschutz</Text>
+          <Text style={stylesLocal.text}>Datenschutzbestimmungen</Text>
         </TouchableOpacity>
       </View>
 
       {/* Switch */}
-      <View style={styles.switchcontainer}>
-        <Text style={styles.switchtext}>Daten an ErgoPhysion senden</Text>
+      <View style={stylesLocal.switchcontainer}>
+        <Text style={stylesLocal.text}>Daten an ErgoPhysion senden</Text>
         <Switch
           trackColor={{ false: '#767577', true: '#10069F' }}
-          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+          thumbColor={isEnabled ? '#979797' : '#f4f3f4'}
           ios_backgroundColor="#3e3e3e"
           onValueChange={handleSendDataChange}
           value={isEnabled}
         />
       </View>
-      <View style={styles.switchcontainer}>
-        <Text style={styles.switchtext}>Analyse und Verbesserung</Text>
-        <Switch
-          trackColor={{ false: '#767577', true: '#10069F' }}
-          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={handleSendDataChange}
-          value={isEnabled}
-        />
-      </View>
+
+      <Link href={'/'} asChild>
+        <Pressable style={styles.button}>
+          <Text style={styles.buttonText}>Home</Text>
+        </Pressable>
+      </Link>
     </View>
   );
 };
@@ -316,6 +320,38 @@ const stylesLocal = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparenter Hintergrund
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  text: {
+    fontSize: 17,
+    marginVertical: 18,
+  },
+  textInputStyle: {
+    borderWidth: 1,
+    borderColor: 'grey',
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    minWidth: 150,
+  },
+  okButtonStyle: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+  },
+  okButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  switchcontainer: {
+    flexDirection: 'row', // Elemente nebeneinander
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    backgroundColor: '#C5C5C5',
+    width: '100%',
+  },
+  switchtext: {
+    marginRight: 10,
   },
 });
 
