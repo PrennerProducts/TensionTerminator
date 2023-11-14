@@ -65,7 +65,6 @@ const criteriaScreen = () => {
     </View>
   );
 
-    let text;
     return (
     <View style={styles.container}>
       {/* <Text style={styles.header}>Ausschlusskriterien</Text> */}
@@ -75,23 +74,17 @@ const criteriaScreen = () => {
       </Text>
       <ScrollView style={{ padding: 5 }}>
         <Text style={styles.text}>Ich habe keine</Text>
-        {myCheckBox2((text = 'frischen Verletzungen'))}
-        {myCheckBox2((text = 'Knochenbrücke'))}
-        {myCheckBox2((text = 'Wunden bzw. starke Hautreizungen'))}
-        {myCheckBox2((text = 'Haut Tumor oder Metastasierungen'))}
+        {myCheckBox2(('frischen Verletzungen'))}
+        {myCheckBox2(('Knochenbrücke'))}
+        {myCheckBox2(('Wunden bzw. starke Hautreizungen'))}
+        {myCheckBox2(('Haut Tumor oder Metastasierungen'))}
         <Text style={styles.text}>
           im Nacken-, Schulter/Arm oder Rückenbereich.
         </Text>
         <Text style={styles.text}>Es liegt keine</Text>
-        {myCheckBox2((text = 'Schwangerschaft ab dem 6. Monat'))}
-        {myCheckBox2(
-          (text =
-            'Neurologische Erkrankung welche auf mechanische Einwirkung reagieren (z.B. Epilepsie, Schwindel)')
-        )}
-        {myCheckBox2(
-          (text =
-            'Sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht')
-        )}
+        {myCheckBox2(('Schwangerschaft ab dem 6. Monat'))}
+        {myCheckBox2(('Neurologische Erkrankung welche auf mechanische Einwirkung reagieren (z.B. Epilepsie, Schwindel)'))}
+        {myCheckBox2(('Sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht'))}
         <Text style={styles.text}>vor.</Text>
       </ScrollView>
       <View style={styles.bottom}>
