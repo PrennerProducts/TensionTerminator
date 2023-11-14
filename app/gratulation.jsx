@@ -21,7 +21,7 @@ const Gratulation = () => {
                 </Pressable>
             </Link>
 
-            <Link href={'/where'} asChild>
+            <Link href={'/components/wherePain'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Neues Training starten</Text>
                 </Pressable>

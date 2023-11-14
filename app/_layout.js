@@ -180,7 +180,7 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="components/how"
+          name="components/painHow"
           options={{
             headerTitle: 'Wie tut es weh?',
             headerShown: true,
@@ -204,7 +204,7 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="components/where"
+          name="components/painWhere"
           options={{
             headerTitle: 'Wo tut es weh?',
             headerShown: true,
@@ -227,22 +227,6 @@ export default function Layout() {
           name="evaluationComponents/evaluationBefore"
           options={{
             headerTitle: 'Evaluierungsübung VORHER',
-            headerShown: true,
-            headerTitleAlign: 'center',
-          }}
-        />
-        <Stack.Screen
-          name="evaluationComponents/evaluationRoll"
-          options={{
-            headerTitle: 'Evaluierungsübung Roll',
-            headerShown: true,
-            headerTitleAlign: 'center',
-          }}
-        />
-        <Stack.Screen
-          name="evaluationComponents/evaluationYaw"
-          options={{
-            headerTitle: 'Evaluierungsübung YAW',
             headerShown: true,
             headerTitleAlign: 'center',
           }}

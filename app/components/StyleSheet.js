@@ -73,5 +73,14 @@ const styles = StyleSheet.create({
     width: '85%',
     fontWeight: 'bold',
   },
+  input: {
+    height: 50,
+    width: 100,
+    borderColor: 'red',
+    borderWidth: 4,
+    borderRadius: 2,
+    paddingHorizontal: 10,
+    fontSize: 30,
+  },
 });
 export default styles;
