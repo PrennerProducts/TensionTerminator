@@ -65,7 +65,8 @@ const criteriaScreen = () => {
     </View>
   );
 
-  return (
+    let text;
+    return (
     <View style={styles.container}>
       {/* <Text style={styles.header}>Ausschlusskriterien</Text> */}
       <Text style={styles.text}>
