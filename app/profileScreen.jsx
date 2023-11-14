@@ -23,8 +23,21 @@ import { useProfileImage } from './components/ProfileImageContext';
 import { Appointment } from './appointment';
 import { Link, useRouter } from 'expo-router';
 import GameStatusGif from './components/GameStatusGif';
-
+import { useUserContext } from './components/userContextProvider';
+import { UserContextProvider } from './components/userContextProvider';
 const profileScreen = () => {
+  // User context provider
+  const {
+    username,
+    gameLevel,
+    points,
+    profileImageIndex,
+    setUsername,
+    setGameLevel,
+    setPoints,
+    setProfileImageIndex,
+    updateUserDetails,
+  } = useUserContext();
   const [isEditing, setIsEditing] = useState(false);
   // Userdata Class from storage
   const [user, setUser] = useState(new UserData());
@@ -78,7 +91,7 @@ const profileScreen = () => {
       user.setUserName(newName);
       user.save();
       setUserName(newName);
-
+      //updateUserName(newName);
       setIsEditing(false);
     } catch (error) {
       console.log('Fehler beim Ändern des Namens:', error);
@@ -104,6 +117,7 @@ const profileScreen = () => {
     if (selectedIndex >= 0 && selectedIndex < avatarList.length) {
       setselectedAvatarIndex(selectedIndex);
       updateImageIndex(selectedIndex);
+      setProfileImageIndex(selectedIndex);
       user.setprofilepicture(selectedIndex);
       await user.save();
       // console.log(
