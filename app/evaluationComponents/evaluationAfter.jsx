@@ -20,10 +20,10 @@ const EvaluationAfter = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Evaluierungsübung NACHHER</Text>
       <View style={styles.bottom}>
-        <TouchableOpacity onPress={goToEvaluation} style={styles.button}>
-          <Text style={styles.buttonText}>Evaluierung Ihrer Beweglichkeit</Text>
-        </TouchableOpacity>
-        <Link href={'../intensityAfter'} asChild>
+          <TouchableOpacity onPress={goToEvaluation} style={styles.button}>
+            <Text style={styles.buttonText}>Evaluierung Ihrer Beweglichkeit</Text>
+          </TouchableOpacity>
+        <Link href={'../evaluationComponents/resultEvaluation'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Überspringen</Text>
           </Pressable>

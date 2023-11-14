@@ -2,6 +2,7 @@ import { View, Text, Button, TouchableOpacity, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useRouter, Tabs } from 'expo-router';
 import { Stack } from 'expo-router/stack';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
@@ -99,70 +100,6 @@ export default function Layout() {
             ),
           })}
         />
-          <Stack.Screen
-              name="appointment"
-              options={{
-                  headerTitle: 'appointment',
-                  headerShown: true,
-                  headerTitleAlign: 'center',
-              }}
-          />
-          <Stack.Screen
-              name="criteria"
-              options={{
-                  headerTitle: 'Ausschlusskriterien',
-                  headerShown: true,
-                  headerTitleAlign: 'center',
-              }}
-          />
-          <Stack.Screen
-              name="explanationText"
-              options={{
-                  headerTitle: 'Erklärung lesen',
-                  headerShown: true,
-                  headerTitleAlign: 'center',
-              }}
-          />
-          <Stack.Screen
-              name="explanationVideo"
-              options={{
-                  headerTitle: 'Erklärvideo',
-                  headerShown: true,
-                  headerTitleAlign: 'center',
-              }}
-          />
-          <Stack.Screen
-              name="gratulation"
-              options={{
-                  headerTitle: 'Gratulation',
-                  headerShown: true,
-                  headerTitleAlign: 'center',
-              }}
-          />
-          <Stack.Screen
-              name="how"
-              options={{
-                  headerTitle: 'Wie tut es weh?',
-                  headerShown: true,
-                  headerTitleAlign: 'center',
-              }}
-          />
-          <Stack.Screen
-              name="intensityAfter"
-              options={{
-                  headerTitle: 'Wie stark tut es weh? NACHHER',
-                  headerShown: true,
-                  headerTitleAlign: 'center',
-              }}
-          />
-          <Stack.Screen
-              name="intensityBefore"
-              options={{
-                  headerTitle: 'Wie stark tut es weh? VORHER',
-                  headerShown: true,
-                  headerTitleAlign: 'center',
-              }}
-          />
         <Stack.Screen
           name="QRScan"
           options={{
@@ -213,14 +150,82 @@ export default function Layout() {
             ),
           }}
         />
-          <Stack.Screen
-              name="where"
-              options={{
-                  headerTitle: 'Wo tut es weh?',
-                  headerShown: true,
-                  headerTitleAlign: 'center',
-              }}
-          />
+
+        {/* ------------------------------------------------------------------------------------- */}
+        {/*  FOLDER components */}
+        {/* ------------------------------------------------------------------------------------- */}
+        <Stack.Screen
+          name="components/appointment"
+          options={{
+            headerTitle: 'appointment',
+            headerShown: true,
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="components/criteria"
+          options={{
+            headerTitle: 'Ausschlusskriterien',
+            headerShown: true,
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="components/explanationText"
+          options={{
+            headerTitle: 'Erklärung lesen',
+            headerShown: true,
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="components/explanationVideo"
+          options={{
+            headerTitle: 'Erklärvideo',
+            headerShown: true,
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="components/gratulation"
+          options={{
+            headerTitle: 'Gratulation',
+            headerShown: true,
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="components/painHow"
+          options={{
+            headerTitle: 'Wie tut es weh?',
+            headerShown: true,
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="components/intensityAfter"
+          options={{
+            headerTitle: 'Wie stark tut es weh? NACHHER',
+            headerShown: true,
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="components/intensityBefore"
+          options={{
+            headerTitle: 'Wie stark tut es weh? VORHER',
+            headerShown: true,
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="components/painWhere"
+          options={{
+            headerTitle: 'Wo tut es weh?',
+            headerShown: true,
+            headerTitleAlign: 'center',
+          }}
+        />
 
         {/* ------------------------------------------------------------------------------------- */}
         {/*  FOLDER evaluationComponents */}
@@ -241,22 +246,6 @@ export default function Layout() {
             headerTitleAlign: 'center',
           }}
         />
-        {/* <Stack.Screen
-          name="evaluationComponents/evaluationRoll"
-          options={{
-            headerTitle: 'Evaluierungsübung Roll',
-            headerShown: true,
-            headerTitleAlign: 'center',
-          }}
-        /> */}
-        {/* <Stack.Screen
-          name="evaluationComponents/evaluationYaw"
-          options={{
-            headerTitle: 'Evaluierungsübung YAW',
-            headerShown: true,
-            headerTitleAlign: 'center',
-          }}
-        /> */}
         <Stack.Screen
           name="evaluationComponents/evaluationYR"
           options={{

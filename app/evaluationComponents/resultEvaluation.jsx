@@ -4,6 +4,7 @@ import { Link, useRouter} from 'expo-router';
 import styles from '../components/StyleSheet';
 import * as FileSystem from 'expo-file-system';
 import { evaluationData } from './evaluationData';
+import { painData } from '../components/painData';
 import { useState, useEffect} from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import DrawingY from './drawingY';
@@ -19,6 +20,7 @@ const ResultEvaluation = () => {
   const month = currentDate.getMonth() + 1;
   const year = currentDate.getFullYear();
   const formattedDate = `${day}/${month}/${year}`; 
+
   const maxYLBefore = evaluationData.maxYLBefore;
   const maxYRBefore = evaluationData.maxYRBefore;
   const maxRLBefore = evaluationData.maxRLBefore;
@@ -27,12 +29,16 @@ const ResultEvaluation = () => {
   const maxYRAfter = evaluationData.maxYRAfter;
   const maxRLAfter = evaluationData.maxRLAfter;
   const maxRRAfter = evaluationData.maxRRAfter;
+  const painIntensityBefore = painData.painIntensityBefore;
+  const painIntensityAfter = painData.painIntensityAfter;
   const deltaYL = maxYLAfter-maxYLBefore;
   const deltaYR = maxYRAfter-maxYRBefore;
   const deltaYS = deltaYL+deltaYR;
   const deltaRL = maxRLAfter-maxRLBefore;
   const deltaRR = maxRRAfter-maxRRBefore;
   const deltaRS = deltaRL+deltaRR;
+  const deltaPain = painIntensityAfter-painIntensityBefore;
+
   const textColorDeltaYL = (deltaYL <= 0)
   ? stylesRE.textRed
   : stylesRE.textGreen;
@@ -49,6 +55,9 @@ const ResultEvaluation = () => {
   ? stylesRE.textRed
   : stylesRE.textGreen;
   const textColorDeltaRS = (deltaRS <= 0)
+  ? stylesRE.textRed
+  : stylesRE.textGreen;
+  const textColorDeltaPain = (deltaPain >= 0)
   ? stylesRE.textRed
   : stylesRE.textGreen;
 
@@ -139,20 +148,30 @@ const ResultEvaluation = () => {
         titleYAdd = {-160}
       />
       <Text style={stylesRE.header}>Vor dem Training</Text>
-      <Text style={styles.paragraph}>Rotation: Links {maxYLBefore}°, Rechts: {maxYRBefore}°, Summe: {maxYRBefore+maxYLBefore}°</Text>
-      <Text style={styles.paragraph}>Seitenneigung: Links: {maxRLBefore}°, Rechts: {maxRRBefore}°, Summe: {maxRRBefore+maxRLBefore}°</Text>
-      <Text style={styles.paragraph}>Schmerzintensität: ...</Text>
+      <Text style={styles.paragraph}>
+        Rotation: Links {maxYLBefore}°, Rechts: {maxYRBefore}°, Summe: {maxYRBefore+maxYLBefore}°</Text>
+      <Text style={styles.paragraph}>
+        Seitenneigung: Links: {maxRLBefore}°, Rechts: {maxRRBefore}°, Summe: {maxRRBefore+maxRLBefore}°</Text>
+      <Text style={styles.paragraph}>
+        Schmerzintensität: {painIntensityBefore}</Text>
       <Text style={stylesRE.header}>Nach dem Training</Text>
-      <Text style={styles.paragraph}>Rotation: Links {maxYLAfter}°, Rechts: {maxYRAfter}°, Summe: {maxYRAfter+maxYLAfter}°</Text>
-      <Text style={styles.paragraph}>Seitenneigung: Links: {maxRLAfter}°, Rechts: {maxRRAfter}°, Summe: {maxRRAfter+maxRLAfter}°</Text>
-      <Text style={styles.paragraph}>Schmerzintensität: ...</Text>
+      <Text style={styles.paragraph}>
+        Rotation: Links {maxYLAfter}°, Rechts: {maxYRAfter}°, Summe: {maxYRAfter+maxYLAfter}°</Text>
+      <Text style={styles.paragraph}>
+        Seitenneigung: Links: {maxRLAfter}°, Rechts: {maxRRAfter}°, Summe: {maxRRAfter+maxRLAfter}°</Text>
+      <Text style={styles.paragraph}>
+        Schmerzintensität: {painIntensityAfter}</Text>
       <Text style={stylesRE.header}>Wie haben Sie sich verbessert?</Text>
-      <Text style={styles.paragraph}>Rotation: Links <Text style={textColorDeltaYL}>{deltaYL}°</Text>, Rechts: <Text style={textColorDeltaYR}>{deltaYR}°</Text>, Summe: <Text style={textColorDeltaYS}>{deltaYL+deltaYR}°</Text></Text>
-      <Text style={styles.paragraph}>Seitenneigung: Links <Text style={textColorDeltaRL}>{deltaRL}°</Text>, Rechts: <Text style={textColorDeltaRR}>{deltaRR}°</Text>, Summe: <Text style={textColorDeltaRS}>{deltaRL+deltaRR}°{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text></Text><EvaluationEE/>
+      <Text style={styles.paragraph}>
+        Rotation: Links <Text style={textColorDeltaYL}>{deltaYL}°</Text>, Rechts: <Text style={textColorDeltaYR}>{deltaYR}°</Text>, Summe: <Text style={textColorDeltaYS}>{deltaYL+deltaYR}°</Text></Text>
+      <Text style={styles.paragraph}>
+        Seitenneigung: Links <Text style={textColorDeltaRL}>{deltaRL}°</Text>, Rechts: <Text style={textColorDeltaRR}>{deltaRR}°</Text>, Summe: <Text style={textColorDeltaRS}>{deltaRL+deltaRR}°</Text></Text>
+      <Text style={styles.paragraph}>
+        Schmerzintensität: <Text style={textColorDeltaPain}>{deltaPain}</Text>{'\n'}</Text><EvaluationEE/>
       </ScrollView>
       </View>
       <View style={stylesRE.bottom}>
-        <Link href={'gratulation'} asChild>
+        <Link href={'components/gratulation'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>OK</Text>
           </Pressable>

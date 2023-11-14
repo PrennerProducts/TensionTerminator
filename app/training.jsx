@@ -11,7 +11,7 @@ const TrainingScreen = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Training</Text>
       <View style={styles.bottom}>
-        <Link href={'../evaluationComponents/evaluationAfter'} asChild>
+        <Link href={'../components/intensityAfter'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Training beenden</Text>
           </Pressable>
