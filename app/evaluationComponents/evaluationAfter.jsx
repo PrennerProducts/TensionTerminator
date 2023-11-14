@@ -23,7 +23,7 @@ const EvaluationAfter = () => {
         <TouchableOpacity onPress={goToEvaluation} style={styles.button}>
           <Text style={styles.buttonText}>Evaluierung Ihrer Beweglichkeit</Text>
         </TouchableOpacity>
-        <Link href={'../components/intensityAfter'} asChild>
+        <Link href={'../intensityAfter'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Überspringen</Text>
           </Pressable>

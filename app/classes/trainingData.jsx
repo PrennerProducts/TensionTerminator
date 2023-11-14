@@ -1,3 +1,4 @@
+/*
 //todo: connect trainingdata with the id
 
 import { saveUserData, getUserData } from '../services/storage.jsx';
@@ -178,3 +179,4 @@ class TrainingData {
 }
 
 export default TrainingData;
+*/

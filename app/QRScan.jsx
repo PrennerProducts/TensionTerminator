@@ -27,13 +27,13 @@ const QRcodeScreen = ({}) => {
       </View>
 
       <View style={styles.bottom}>
-        <Link href={'components/barcode'} asChild>
+        <Link href={'./components/barcode'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Barcode Scannen</Text>
           </Pressable>
         </Link>
 
-        <Link href={'./components/criteria'} asChild>
+        <Link href={'./criteria'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Überspringen</Text>
           </Pressable>
