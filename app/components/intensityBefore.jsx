@@ -1,45 +1,100 @@
 import 'expo-router/entry';
-import { View, Text, Pressable} from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import Slider from '@react-native-community/slider';
 import React from 'react';
 import { Link } from 'expo-router';
 import styles from './StyleSheet';
 import { painData } from './painData';
-import { Image } from 'react-native-svg';
+import { useState } from 'react';
 
 const intensityBefore = () => {
+  const [painValue, setPainValue] = useState(5);
+  const sliderColorPainValue = (painValue > 7)
+  ? '#F9150C'
+  : (painValue >= 4 && painValue <= 7)
+    ? '#D49E5B'
+    : '#C0E583';
+  const textColorPainValue = (painValue > 7)
+  ? stylesI.textRed
+  : (painValue >= 4 && painValue <= 7)
+    ? stylesI.textBlue
+    : stylesI.textGreen;
   const handleSliderChange = (sliderValue) => {
-    painData.painIntensityBefore = sliderValue;
-      console.log(painData.painIntensityBefore);
+    setPainValue(sliderValue);
   };
   return (
     <View style={styles.container}>
-            <View >
-        <Image Source={require('../../assets/images/roll.png')} styles={{width:'100%', height:'100%'}}/>
-        </View>
-      <Text style={styles.title}>Wie stark tut es weh? VORHER</Text>
-
+      <Text style={styles.header}>Wie beurteilen Sie die Intensität Ihrer Schmerzen?</Text>
+      
         <View style={styles.bottom}>
-      <Slider
+        <Text style={stylesI.painValue}><Text style={textColorPainValue}>{painValue}</Text></Text>
+        <View >
+        <Slider
         minimumValue={0}
         maximumValue={10}
-        height = {10}
-        minimumTrackTintColor={'red'}
-        maximumTrackTintColor='grey'
-        trackImage={require('../../assets/images/PainMeter.png')}
+        height = {5}
+        minimumTrackTintColor={sliderColorPainValue}
+        maximumTrackTintColor={sliderColorPainValue}
+        thumbTintColor={sliderColorPainValue}
         step={1}
-        value={5}
+        value={painValue}
         onValueChange={handleSliderChange}
       />
+            <Image
+            source={require('../../assets/images/PainMeterS.png')}
+            style={{
+              position: 'relative',
+              width: '100%',
+              resizeMode: 'contain',
+              top: '0%',
+            }}
+          />
+        </View>
+
         <Link href={'../evaluationComponents/evaluationBefore'} asChild>
-          <Pressable style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={() => {painData.painIntensityBefore = painValue;}}>
             <Text style={styles.buttonText}>Weiter</Text>
-          </Pressable>
+          </TouchableOpacity>
         </Link>
       </View>
       
     </View>
   );
 };
+
+const stylesI = StyleSheet.create({
+  container: {
+      flex: 1,
+      alignItems: "center",
+      backgroundColor: '#ffffff',
+  },
+  top: {
+    flex: 5,
+    justifyContent: 'flex-start',
+    top: "2%",
+    backgroundColor: '#ffffff',
+  },
+  bottom: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      bottom: "5%",
+  },
+  painValue: {
+    fontSize: 200,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 10,
+    color: "#10069F",
+  },
+  textRed:{
+    color: '#F9150C',
+  },
+  textBlue:{
+    color: '#D49E5B',
+  },
+  textGreen:{
+    color: '#C0E583',
+  }
+});
 
 export default intensityBefore;

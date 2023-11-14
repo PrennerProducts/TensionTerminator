@@ -205,7 +205,7 @@ export default function Layout() {
         <Stack.Screen
           name="components/intensityAfter"
           options={{
-            headerTitle: 'Wie stark tut es weh? NACHHER',
+            headerTitle: 'Wie stark tut es weh?',
             headerShown: true,
             headerTitleAlign: 'center',
           }}
@@ -213,7 +213,7 @@ export default function Layout() {
         <Stack.Screen
           name="components/intensityBefore"
           options={{
-            headerTitle: 'Wie stark tut es weh? VORHER',
+            headerTitle: 'Wie stark tut es weh?',
             headerShown: true,
             headerTitleAlign: 'center',
           }}

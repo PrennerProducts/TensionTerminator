@@ -95,54 +95,43 @@ const LoginPage = () => {
             source={require('../assets/logo.png')}
             style={{
               position: 'absolute',
-              width: '50%',
+              width: '100%',
               resizeMode: 'contain',
               top: 0,
             }}
           />
-
           <Image
-            source={require('../assets/TTmodel.png')}
+            source={require('../assets/images/avatar1.png')}
             style={{
-              position: 'relative',
-              width: '80%',
+              position: 'absolute',
+              width: '30%',
               resizeMode: 'contain',
-              top: '15%',
+              top: -300,
             }}
           />
         </View>
         <View style={styles.bottom}>
           <Link href={'./QRScan'} asChild>
             <Pressable style={styles.button}>
-              <Text style={styles.buttonText}>App Starten</Text>
+              <Text style={styles.buttonText}>QR-Code scannen</Text>
+            </Pressable>
+          </Link>
+          <Link href={'./components/criteria'} asChild>
+            <Pressable style={styles.button}>
+              <Text style={styles.buttonText}>Ausschlusskriterien</Text>
+            </Pressable>
+          </Link>
+          <Link href={'./evaluationComponents/EvaluationScreen'} asChild>
+            <Pressable style={styles.button}>
+              <Text style={styles.buttonText}>Beweglichkeitsmessung</Text>
+            </Pressable>
+          </Link>
+          <Link href={'./components/painWhere'} asChild>
+            <Pressable style={styles.button}>
+              <Text style={styles.buttonText}>Training</Text>
             </Pressable>
           </Link>
         </View>
-
-        {/*Verschiedene Varianten um ans Ziel zu kommen*/}
-        {/*
-
-        <Button title="App Starten" onPress= {() => router.push('QRscan')}>
-        </Button>
-
-        handlePress geht zu home
-        <Pressable style={{ top: 0 }} onPress= {() => router.push('QRscan')}>
-            <Text style={{ top: 0 }}>App Starten</Text>
-        </Pressable>
-
-        <Link href={'/QRscan'} asChild>
-            <Pressable>
-                <Text>App Starten</Text>
-            </Pressable>
-        </Link>
-
-              <Link href={"/criteria"} asChild>
-        <Pressable>
-          <Text>Kriterien</Text>
-        </Pressable>
-      </Link>
-
-*/}
       </View>
     </ProfileImageProvider>
   );

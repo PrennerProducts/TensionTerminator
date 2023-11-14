@@ -22,7 +22,7 @@ const painHow = () => {
                             painData.painType = 1;
                             //console.log('Druckschmerz im Schulter-Nacken-Bereich ausgewählt.');
                         }}>
-              <Image source={require('../../assets/images/gif/1druck.gif')} style={stylesP.image} />
+              <Image source={require('../../assets/gifs/1druck.gif')} style={stylesP.image} />
               <Text style={stylesP.buttonText}>{'\n'}Druckschmerz im Bereich Schulter-Nacken</Text>
             </TouchableOpacity>
           </Link>
@@ -35,7 +35,7 @@ const painHow = () => {
                             //console.log('Ziehender Schmerz im Schulter-Nacken-Bereich ausgewählt.');
                         }}>
             <Text style={stylesP.buttonText}>{'\n'}Ziehender Schmerz im Bereich Schulter-Nacken</Text>
-            <Image source={require('../../assets/images/gif/1zieh.gif')} style={stylesP.image} />
+            <Image source={require('../../assets/gifs/1zieh.gif')} style={stylesP.image} />
               
             </TouchableOpacity>
           </Link>
@@ -46,7 +46,7 @@ const painHow = () => {
               painData.painType = 3;
               //console.log('Druckschmerz im oberem Schulterblatt- oder Rücken-Bereich ausgewählt.');
                         }}>
-            <Image source={require('../../assets/images/gif/1druck2.gif')} style={stylesP.image} />
+            <Image source={require('../../assets/gifs/1druck2.gif')} style={stylesP.image} />
               <Text style={stylesP.buttonText}>{'\n'}Druckschmerz im Bereich oberes Schulterblatt- oder Rücken</Text>
             </TouchableOpacity>
           </Link>
@@ -68,7 +68,7 @@ const painHow = () => {
                           painData.painType = 1;
                           //console.log('Druckschmerz im mittleren Rückenbereich ausgewählt.');
                       }}>
-            <Image source={require('../../assets/images/gif/2druck.gif')} style={stylesP.image} />
+            <Image source={require('../../assets/gifs/2druck.gif')} style={stylesP.image} />
             <Text style={stylesP.buttonText}>{'\n'}Druckschmerz im mittleren Rückenbereich</Text>
           </TouchableOpacity>
         </Link>
@@ -81,7 +81,7 @@ const painHow = () => {
                           //console.log('Ziehender Schmerz entlang der Brustwirbelsäule ausgewählt.');
                       }}>
           <Text style={stylesP.buttonText}>{'\n'}Ziehender Schmerz entlang der Brustwirbelsäule</Text>
-          <Image source={require('../../assets/images/gif/2zieh.gif')} style={stylesP.image} />
+          <Image source={require('../../assets/gifs/2zieh.gif')} style={stylesP.image} />
             
           </TouchableOpacity>
         </Link>
@@ -102,7 +102,7 @@ const painHow = () => {
                           painData.painType = 1;
                           //console.log('Druckschmerz im unteren Rückenbereich ausgewählt.');
                       }}>
-            <Image source={require('../../assets/images/gif/3druck.gif')} style={stylesP.image} />
+            <Image source={require('../../assets/gifs/3druck.gif')} style={stylesP.image} />
             <Text style={stylesP.buttonText}>{'\n'}Druckschmerz im unteren Rückenbereich</Text>
           </TouchableOpacity>
         </Link>
@@ -115,7 +115,7 @@ const painHow = () => {
                           //console.log('Ziehender Schmerz entlang der Lendenwirbelsäule/im Kreuzbeinbereich ausgewählt.');
                       }}>
           <Text style={stylesP.buttonText}>{'\n'}Ziehender Schmerz entlang der Lendenwirbelsäule/im Kreuzbeinbereich</Text>
-          <Image source={require('../../assets/images/gif/3zieh.gif')} style={stylesP.image} />
+          <Image source={require('../../assets/gifs/3zieh.gif')} style={stylesP.image} />
             
           </TouchableOpacity>
         </Link>
@@ -136,7 +136,7 @@ const painHow = () => {
                           painData.painType = 1;
                           //console.log('Druckschmerz im Becken- Gesäßbereichausgewählt.');
                       }}>
-            <Image source={require('../../assets/images/gif/4druck.gif')} style={stylesP.image} />
+            <Image source={require('../../assets/gifs/4druck.gif')} style={stylesP.image} />
             <Text style={stylesP.buttonText}>{'\n'}Druckschmerz im Becken- Gesäßbereich</Text>
           </TouchableOpacity>
         </Link>
@@ -168,7 +168,7 @@ const stylesP = StyleSheet.create({
     flexDirection: 'row',
     height: '28%',
     width: '100%',
-    backgroundColor: '#0650b0',
+    backgroundColor: '#10069F',
     borderBottomEndRadius: 0,
     marginTop: '5%',
   },
