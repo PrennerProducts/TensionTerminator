@@ -12,7 +12,7 @@ const intensityAfter = () => {
         <View style={styles.container}>
             <Text style={styles.title}>Wie stark tut es weh? VORHER</Text>
             <View style={styles.bottom}>
-            <Link href={'/resultEvaluation'} asChild>
+            <Link href={'./evaluationComponents/resultEvaluation'} asChild>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Weiter</Text>
                 </Pressable>

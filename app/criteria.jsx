@@ -2,9 +2,9 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Link } from 'expo-router';
-import { getData, removeData, saveData } from '../services/storage';
+import { getData, removeData, saveData } from './services/storage';
 import CheckBox from 'expo-checkbox';
-import styles from './StyleSheet';
+import styles from './components/StyleSheet';
 import { useIsFocused } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 
