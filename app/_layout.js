@@ -238,6 +238,14 @@ export default function Layout() {
             headerTitleAlign: 'center',
           }}
         />
+          <Stack.Screen
+              name="evaluationComponents/EvaluationScreen"
+              options={{
+                  headerTitle: 'EvaluationScreen',
+                  headerShown: true,
+                  headerTitleAlign: 'center',
+              }}
+          />
         <Stack.Screen
           name="evaluationComponents/evaluationBefore"
           options={{
