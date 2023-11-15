@@ -7,23 +7,35 @@ import {
   Switch,
   StyleSheet,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import { Svg } from 'react-native-svg';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   VictoryAxis,
   VictoryBar,
   VictoryChart,
   VictoryTheme,
+  axis,
+  Axis,
   VictoryPie,
   VictoryLabel,
   Circle,
   VictoryLegend,
+  VictoryArea,
   VictoryTooltip,
+  VictoryPolarAxis,
 } from 'victory-native';
+
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const statistics = () => {
   const date = new Date();
+  //dropdown picker
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(0);
+  const [selectedChart, setSelectedChart] = useState('WochenChart');
+
   const months = [
     'Jan',
     'Feb',
@@ -58,29 +70,101 @@ const statistics = () => {
     { x: 'KratzArm', y: 183 },
   ];
 
+  levelData = [
+    { x: '0', y: 0 },
+    { x: '1', y: 1 },
+    { x: '2', y: 2 },
+    { x: '3', y: 3 },
+    { x: '4', y: null },
+    { x: '5', y: null },
+    { x: '6', y: null },
+    { x: '7', y: null },
+    { x: '8', y: null },
+    { x: '9', y: null },
+    { x: '10', y: null },
+  ];
+
+  maxYawData = [
+    { x: 40, y: 0 },
+    { x: 420, y: 0 },
+  ];
+
+  maxRollData = [
+    { x: 0, y: 30 },
+    { x: 0, y: 31 },
+  ];
+
   titles = ['RollenKlein', 'RollenGroß', 'KratzArm'];
   return (
-    <View>
-      <View style={stylesLocal.gridContainer}>
-        {/* Spalte 1 */}
-        <View style={stylesLocal.gridColumn}>
-          <Text style={stylesLocal.gridTitle}>Anzahl Trainings</Text>
-          <Text style={stylesLocal.gridValue}>123</Text>
-        </View>
-        {/* Spalte 2 */}
-        <View style={stylesLocal.gridColumn}>
-          <Text style={stylesLocal.gridTitle}>TrainingsZeit</Text>
-          <Text style={stylesLocal.gridValue}>456 Min</Text>
-        </View>
+    <ScrollView>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={stylesLocal.scrollViewContainer}
+      >
+        <View style={stylesLocal.gridContainer}>
+          {/* Spalte 1 */}
+          <View style={stylesLocal.gridColumn}>
+            <Text style={stylesLocal.gridTitle}>Anzahl Trainings</Text>
+            <Text style={stylesLocal.gridValue}>123</Text>
+          </View>
+          {/* Spalte 2 */}
+          <View style={stylesLocal.gridColumn}>
+            <Text style={stylesLocal.gridTitle}>TrainingsZeit</Text>
+            <Text style={stylesLocal.gridValue}>456 Min</Text>
+          </View>
 
-        {/* Spalte 3 */}
-        <View style={stylesLocal.gridColumn}>
-          <Text style={stylesLocal.gridTitle}>Highscore</Text>
-          <Text style={stylesLocal.gridValue}>789 Punkte</Text>
+          {/* Spalte 3 */}
+          <View style={stylesLocal.gridColumn}>
+            <Text style={stylesLocal.gridTitle}>Highscore</Text>
+            <Text style={stylesLocal.gridValue}>789 Punkte</Text>
+          </View>
+          {/* Spalte 4 */}
+          <View style={stylesLocal.gridColumn}>
+            <Text style={stylesLocal.gridTitle}>Anzahl Trainings</Text>
+            <Text style={stylesLocal.gridValue}>123</Text>
+          </View>
+          {/* Spalte 5 */}
+          <View style={stylesLocal.gridColumn}>
+            <Text style={stylesLocal.gridTitle}>TrainingsZeit</Text>
+            <Text style={stylesLocal.gridValue}>456 Min</Text>
+          </View>
+
+          {/* Spalte 6 */}
+          <View style={stylesLocal.gridColumn}>
+            <Text style={stylesLocal.gridTitle}>Highscore</Text>
+            <Text style={stylesLocal.gridValue}>789 Punkte</Text>
+          </View>
         </View>
+      </ScrollView>
+
+      {/* --------------------------------DropDownPickerCharts------------------------------------------ */}
+
+      <View style={stylesLocal.dropdownContainer}>
+        <DropDownPicker
+          open={open}
+          setOpen={setOpen}
+          value={selectedChart} // Aktueller ausgewählter Chart
+          setValue={(newValue) => {
+            setValue(newValue);
+          }}
+          items={[
+            { label: 'WochenChart', value: 'WochenChart' },
+            { label: 'MonatsChart', value: 'MonatsChart' },
+            { label: 'JahresChart', value: 'JahresChart' },
+          ]}
+          containerStyle={{ width: 150 }}
+          onChangeValue={(value) => setSelectedChart(value)} // Aktualisiere den ausgewählten Chart
+        />
       </View>
+      {/* Hier ist dein Chart */}
       <View style={[stylesLocal.barchart, stylesLocal.shadowProp]}>
-        <Text>Your Traing this Year </Text>
+        {/* Hier dein Chart-Inhalt */}
+      </View>
+
+      {/* --------------------------------Ende------------------------------------------ */}
+      <View style={[stylesLocal.barchart, stylesLocal.shadowProp]}>
+        <Text>Dein Training </Text>
         <VictoryChart
           theme={VictoryTheme.material}
           domainPadding={{ x: 20, y: 50 }} //padding for your chart horizontal and vertical
@@ -106,6 +190,32 @@ const statistics = () => {
             animate
           />
         </VictoryChart>
+      </View>
+
+      <View style={stylesLocal.piechart}>
+        <Text>High-Score Beweglichkeit</Text>
+        <Svg width={400} height={400}>
+          <VictoryAxis
+            crossAxis
+            width={400}
+            height={400}
+            domain={[-100, 100]}
+            theme={VictoryTheme.material}
+            offsetY={200}
+            standalone={false}
+            data={maxRollData}
+          />
+          <VictoryAxis
+            dependentAxis
+            crossAxis
+            width={400}
+            height={400}
+            domain={[-50, 50]}
+            theme={VictoryTheme.material}
+            offsetX={200}
+            standalone={false}
+          />
+        </Svg>
       </View>
 
       <View style={stylesLocal.piechart}>
@@ -173,26 +283,58 @@ const statistics = () => {
           />
         </Svg>
       </View>
-    </View>
+
+      <View style={stylesLocal.piechart}>
+        <Text>Dein aktuelles Game-Level</Text>
+        <VictoryChart
+          theme={VictoryTheme.material}
+          animate={{
+            duration: 2000,
+            onLoad: { duration: 1000 },
+          }}
+          style={{
+            background: { fill: 'lightblue' },
+            data: { fill: 'red' },
+          }}
+        >
+          <VictoryArea
+            data={levelData}
+            style={{
+              data: { fill: '#10069F' },
+            }}
+          />
+          <VictoryAxis />
+        </VictoryChart>
+      </View>
+    </ScrollView>
   );
 };
 
 const stylesLocal = StyleSheet.create({
-  barchart: {
-    margin: 20,
+  scrollViewContainer: {
+    backgroundColor: '#fff',
+    padding: 6,
+    margin: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#10069F',
   },
-  shadowProp: {},
-  piechart: {
-    margin: 20,
-  },
+
   gridContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    margin: 20,
+    margin: 0,
   },
   gridColumn: {
+    backgroundColor: 'lightgray',
+    padding: 10,
+    margin: 5,
+    borderRadius: 5,
     alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#10069F',
   },
   gridTitle: {
     fontSize: 16,
@@ -201,7 +343,19 @@ const stylesLocal = StyleSheet.create({
   },
   gridValue: {
     fontSize: 14,
-    color: '#333',
+    fontWeight: 'bold',
+    color: '#10069F',
+
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  barchart: {
+    margin: 20,
+  },
+  shadowProp: {},
+  piechart: {
+    margin: 20,
   },
 });
 
