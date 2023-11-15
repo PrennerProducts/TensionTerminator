@@ -2,29 +2,22 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Pressable,
   Image,
   TextInput,
-  Button,
   Switch,
-  Modal,
   StyleSheet,
   Dimensions,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { getProfileName, setProfileName } from './services/storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UserData from './classes/userData';
 import DropDownPicker from 'react-native-dropdown-picker';
 import styles from './components/StyleSheet';
 import { avatarList } from './config/avatarConfig';
-import { saveUserData, getUserData } from './services/storage.jsx';
-import { useProfileImage } from './components/ProfileImageContext';
-import { Appointment } from './appointment';
 import { Link, useRouter } from 'expo-router';
 import GameStatusGif from './components/GameStatusGif';
 import { useUserContext } from './components/userContextProvider';
-import { UserContextProvider } from './components/userContextProvider';
+
 const profileScreen = () => {
   // User context provider
   const {
@@ -32,34 +25,27 @@ const profileScreen = () => {
     gameLevel,
     points,
     profileImageIndex,
-    setUsername,
-    setGameLevel,
-    setPoints,
-    setProfileImageIndex,
+    sendData,
     updateUserDetails,
     updateProfileImageIndex,
     updateUsername,
     updateGameLevel,
     updatePoints,
+    updateSendData,
   } = useUserContext();
   const [isEditing, setIsEditing] = useState(false);
   // Userdata Class from storage
   const [user, setUser] = useState(new UserData());
-  const [userName, setUserName] = useState();
   const [newName, setNewName] = useState('');
-  const [selectedAvatarIndex, setselectedAvatarIndex] = useState(0);
   //dropdown picker
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(selectedAvatarIndex);
-  // ProfileImageContext Provider
-  const { currentImageIndex, updateImageIndex } = useProfileImage();
+  const [value, setValue] = useState(profileImageIndex);
   // Switch
   const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
   };
-  // Send Uerdata to ErgoPhysion
-  const [sendData, setSendData] = useState(true);
+
   //Gif GameStatus
   const [showGameStatusGif, setShowGameStatusGif] = useState(false);
 
@@ -73,17 +59,12 @@ const profileScreen = () => {
   useEffect(() => {
     const initializeUser = async () => {
       await user.initialize();
-      setUserName(user.getUserName());
-      const profileIndex = user.getprofilepicture();
-      setselectedAvatarIndex(profileIndex);
-      setValue(profileIndex);
-      setSendData(user.getSendData());
+      setValue(profileImageIndex);
       await updateProfileImageIndex(user.getprofilepicture());
       await updateUsername(user.getUserName());
       await updateGameLevel(user.getLevel());
       await updatePoints(user.getPoints());
-
-      //updateImageIndex(user.getprofilepicture());
+      await updateSendData(user.getSendData());
     };
 
     initializeUser();
@@ -92,15 +73,14 @@ const profileScreen = () => {
   useEffect(() => {
     console.log(
       'Aktualisierter Wert von selectetAvatarIndex:',
-      selectedAvatarIndex
+      profileImageIndex
     );
-  }, [selectedAvatarIndex]);
+  }, [profileImageIndex]);
 
   const handleNameChange = async () => {
     try {
       user.setUserName(newName);
       user.save();
-      setUserName(newName);
       // User Context Provider
       updateUsername(newName);
       //updateUserName(newName);
@@ -114,11 +94,9 @@ const profileScreen = () => {
     try {
       toggleSwitch();
       const newSendDataValue = !sendData;
-
+      updateSendData(newSendDataValue);
       user.setSendData(newSendDataValue);
       await user.save();
-
-      setSendData(newSendDataValue);
     } catch (error) {
       console.log('Fehler beim Ändern von sendData:', error);
     }
@@ -127,17 +105,9 @@ const profileScreen = () => {
   const pickImage = async (selectedIndex) => {
     console.log('Ausgewählter Avatar-Index:', selectedIndex);
     if (selectedIndex >= 0 && selectedIndex < avatarList.length) {
-      setselectedAvatarIndex(selectedIndex);
-      updateImageIndex(selectedIndex);
       updateProfileImageIndex(selectedIndex);
       user.setprofilepicture(selectedIndex);
       await user.save();
-      // console.log(
-      //   'Im Speicher steht jetz der index:: ' + user.getprofilepicture()
-      // );
-      // console.log(
-      //   'LOGtheFuck StorageProvider getUserData: ' + (await getUserData())
-      // );
     }
   };
 
@@ -167,10 +137,10 @@ const profileScreen = () => {
       >
         <Image
           source={
-            selectedAvatarIndex >= 0 &&
-            selectedAvatarIndex != null &&
-            selectedAvatarIndex < avatarList.length
-              ? avatarList[selectedAvatarIndex]
+            profileImageIndex >= 0 &&
+            profileImageIndex != null &&
+            profileImageIndex < avatarList.length
+              ? avatarList[profileImageIndex]
               : require('../assets/images/error.jpg')
           }
           style={{
@@ -187,7 +157,7 @@ const profileScreen = () => {
           //setValue={setValue}
           setValue={(newValue) => {
             setValue(newValue);
-            setselectedAvatarIndex(newValue); // Aktualisieren von selectedAvatarIndex
+            updateProfileImageIndex(newValue); // update User Context Provider
             pickImage(newValue);
           }}
           // setItems={setItems}
@@ -229,7 +199,7 @@ const profileScreen = () => {
           </View>
         ) : (
           <Text style={{ fontSize: 34, fontWeight: 'bold' }}>
-            {userName}
+            {username}
             <TouchableOpacity
               style={{ marginLeft: 5 }}
               onPress={() => {
@@ -255,7 +225,7 @@ const profileScreen = () => {
             size={24}
             color="gold"
           />
-          <Text style={stylesLocal.text}>Game-Level: 1</Text>
+          <Text style={stylesLocal.text}>Game-Level: {gameLevel}</Text>
         </TouchableOpacity>
       </View>
       {showGameStatusGif && (
@@ -264,6 +234,22 @@ const profileScreen = () => {
           onClose={() => setShowGameStatusGif(false)}
         />
       )}
+
+      {/* Points */}
+      <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
+        <TouchableOpacity
+          onPress={handleShowGif}
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
+          <Icon
+            style={{ marginRight: 10 }}
+            name="bullseye"
+            size={24}
+            color="red"
+          />
+          <Text style={stylesLocal.text}>Punktestand: {points}</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Reminder setzen */}
       <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
@@ -277,7 +263,7 @@ const profileScreen = () => {
             style={{ marginRight: 10 }}
             name="calendar"
             size={24}
-            color="black"
+            color="green"
           />
           <Text style={stylesLocal.text}>Reminder setzen</Text>
         </TouchableOpacity>
@@ -295,7 +281,7 @@ const profileScreen = () => {
             style={{ marginRight: 10 }}
             name="bar-chart"
             size={24}
-            color="black"
+            color="#10069F"
           />
           <Text style={stylesLocal.text}>Meine Statistiken </Text>
         </TouchableOpacity>
@@ -313,7 +299,7 @@ const profileScreen = () => {
             style={{ marginRight: 10 }}
             name="lock"
             size={24}
-            color="black"
+            color="#000"
           />
           <Text style={stylesLocal.text}>Datenschutzbestimmungen</Text>
         </TouchableOpacity>
@@ -331,11 +317,11 @@ const profileScreen = () => {
         />
       </View>
 
-      <Link href={'/'} asChild>
+      {/* <Link href={'/'} asChild>
         <Pressable style={styles.button}>
           <Text style={styles.buttonText}>Home</Text>
         </Pressable>
-      </Link>
+      </Link> */}
     </View>
   );
 };
@@ -343,12 +329,12 @@ const profileScreen = () => {
 const stylesLocal = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparenter Hintergrund
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   text: {
-    fontSize: 17,
+    fontSize: 20,
     marginVertical: 18,
   },
   textInputStyle: {
@@ -369,7 +355,7 @@ const stylesLocal = StyleSheet.create({
     fontWeight: 'bold',
   },
   switchcontainer: {
-    flexDirection: 'row', // Elemente nebeneinander
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 10,

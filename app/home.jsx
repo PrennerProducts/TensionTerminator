@@ -80,7 +80,7 @@ const Home = () => {
           />
           <Text style={styles.row}>
             {' '}
-            Stufe: {gameLevel};{'\n'}Punkte: {points};
+            Level: {gameLevel};{'\n'}Punkte: {points};
           </Text>
 
           <Link href={'./QRScan'} asChild>

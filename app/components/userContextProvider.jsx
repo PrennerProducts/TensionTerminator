@@ -13,17 +13,20 @@ export const UserContextProvider = ({ children }) => {
   const [gameLevel, setGameLevel] = useState(null);
   const [points, setPoints] = useState(null);
   const [profileImageIndex, setProfileImageIndex] = useState(null);
+  const [sendData, setSendData] = useState(null);
 
   const updateUserDetails = (
     newUsername,
     newGameLevel,
     newPoints,
-    newIndex
+    newIndex,
+    sendData
   ) => {
     setUsername(newUsername);
     setGameLevel(newGameLevel);
     setPoints(newPoints);
     setProfileImageIndex(newIndex);
+    setSendData(sendData);
   };
 
   const updateProfileImageIndex = (profileImageIndex) => {
@@ -38,6 +41,9 @@ export const UserContextProvider = ({ children }) => {
   };
   const updatePoints = (points) => {
     setPoints(points);
+  };
+  const updateSendData = (sendData) => {
+    setSendData(sendData);
   };
 
   return (
@@ -55,6 +61,8 @@ export const UserContextProvider = ({ children }) => {
         updateUsername,
         updateGameLevel,
         updatePoints,
+        sendData,
+        updateSendData,
       }}
     >
       {children}

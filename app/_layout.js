@@ -18,6 +18,7 @@ import { ProfileImageProvider } from './components/ProfileImageContext';
 import myheaderRight from './components/headerRight';
 import { useProfileImage } from './components/ProfileImageContext';
 import { UserContextProvider } from './components/userContextProvider';
+import headerRight from './components/headerRight';
 
 export default function Layout() {
   const router = useRouter();
@@ -75,16 +76,17 @@ export default function Layout() {
               headerTitle: 'Tension Terminator',
               headerShown: true,
               headerTitleAlign: 'center',
-              headerLeft: () => (
-                <TouchableOpacity>
-                  <Icon
-                    name="comment-o"
-                    size={35}
-                    color="#fff"
-                    style={{ marginRight: 15 }}
-                  />
-                </TouchableOpacity>
-              ),
+              // headerLeft: () => (
+              //   <TouchableOpacity>
+              //     <Icon
+              //       name="comment-o"
+              //       size={35}
+              //       color="#fff"
+              //       style={{ marginRight: 15 }}
+              //     />
+              //   </TouchableOpacity>
+              // ),
+              //headerRight: myheaderRight,
               headerRight: () => (
                 <TouchableOpacity onPress={goToProfile}>
                   <Icon
@@ -103,16 +105,16 @@ export default function Layout() {
               headerTitle: 'Profil',
               headerShown: true,
               headerTitleAlign: 'center',
-              headerRight: () => (
-                <TouchableOpacity onPress={goToHome}>
-                  <Icon
-                    name="check"
-                    size={35}
-                    color="#fff"
-                    style={{ marginRight: 15 }}
-                  />
-                </TouchableOpacity>
-              ),
+              // headerRight: () => (
+              //   <TouchableOpacity onPress={goToHome}>
+              //     <Icon
+              //       name="check"
+              //       size={35}
+              //       color="#fff"
+              //       style={{ marginRight: 15 }}
+              //     />
+              //   </TouchableOpacity>
+              // ),
             }}
           />
           <Stack.Screen
@@ -185,16 +187,7 @@ export default function Layout() {
               headerTitle: 'Ausschlusskriterien',
               headerShown: true,
               headerTitleAlign: 'center',
-              headerRight: () => (
-                <TouchableOpacity onPress={goToHome}>
-                  <Icon
-                    name="home"
-                    size={35}
-                    color="#fff"
-                    style={{ marginRight: 15 }}
-                  />
-                </TouchableOpacity>
-              ),
+              headerRight: myheaderRight,
             }}
           />
           <Stack.Screen
@@ -311,16 +304,7 @@ export default function Layout() {
               headerTitle: 'Wo tut es weh?',
               headerShown: true,
               headerTitleAlign: 'center',
-              headerRight: () => (
-                <TouchableOpacity onPress={goToHome}>
-                  <Icon
-                    name="home"
-                    size={35}
-                    color="#fff"
-                    style={{ marginRight: 15 }}
-                  />
-                </TouchableOpacity>
-              ),
+              headerRight: myheaderRight,
             }}
           />
 
@@ -342,7 +326,16 @@ export default function Layout() {
               headerTitle: 'EvaluationScreen',
               headerShown: true,
               headerTitleAlign: 'center',
-              headerRight: myheaderRight,
+              headerRight: () => (
+                <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                    name="home"
+                    size={35}
+                    color="#fff"
+                    style={{ marginRight: 15 }}
+                  />
+                </TouchableOpacity>
+              ),
             }}
           />
           <Stack.Screen
