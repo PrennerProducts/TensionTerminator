@@ -14,7 +14,7 @@ const evaluationControl = () => {
   const maxYR = evaluationData.maxYR;
   const maxRL = evaluationData.maxRL;
   const maxRR = evaluationData.maxRR;
-  const shouldTakePictures = evaluationControl.shouldTakePictures;
+  const shouldTakePictures = evaluationData.shouldTakePictures;
 
   const restartEvaluation = async () => {
     router.replace({pathname: 'evaluationComponents/evaluationYR'});
@@ -27,7 +27,6 @@ const evaluationControl = () => {
 
   const exitEvaluation = async () => {
     if (evaluationData.isTraining && evaluationData.beforeAfterTraining === 0){
-      console.log("Updating values after training");
       evaluationData.maxYLBefore = maxYL;
       evaluationData.maxYRBefore = maxYR;
       evaluationData.maxRLBefore = maxRL;
@@ -42,12 +41,17 @@ const evaluationControl = () => {
       evaluationData.maxRRAfter = maxRR;
       router.replace({pathname: 'evaluationComponents/resultEvaluation'});
     }
+    evaluationData.maxYLBefore = maxYL;
+    evaluationData.maxYRBefore = maxYR;
+    evaluationData.maxRLBefore = maxRL;
+    evaluationData.maxRRBefore = maxRR;
+    router.replace({pathname: 'evaluationComponents/resultEvaluation'});
   };
 
   if (exercise === 0){
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>Bewegung {(exercise+1)}</Text>
+          <Text style={styles.header}>Bewegung {(exercise+1)}: Drehung</Text>
           {shouldTakePictures ? (
             <View>
               <Image
@@ -66,12 +70,12 @@ const evaluationControl = () => {
               <Text style={stylesEC.imageTextR}>Max R {maxYR}°</Text>
             </View>              
             ):(
-              <Text style={stylesEC.imageTextR}>Max R {maxYR}°</Text>
+              <Text></Text>
             )            
           }
 
           <View style={styles.bottom}>
-            <Text style={styles.text}>Summe Drehung: {maxYR+maxYL}°</Text>
+          <Text style={styles.text}>Maximal erreichte Winkel:{'\n'}Links: {maxYL}°; Rechts: {maxYR}°{'\n'}Summe: {maxYR+maxYL}°</Text>
             <TouchableOpacity onPress={restartEvaluation} style={styles.button}>
               <Text style={styles.buttonText}>Bewegung 1 wiederholen</Text>
             </TouchableOpacity>
@@ -85,7 +89,10 @@ const evaluationControl = () => {
     else if (exercise === 1){
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>Bewegung {(exercise+1)}</Text>
+          <Text style={styles.header}>Bewegung {(exercise+1)}: Seitneigung</Text>
+          {shouldTakePictures ? (
+            <View>
+
           <Image
                 source={{
                   uri: `${FileSystem.documentDirectory}MaxRL.jpg?${cacheBuster}`,
@@ -100,8 +107,11 @@ const evaluationControl = () => {
                 style={stylesEC.imageR}
                 />
                 <Text style={stylesEC.imageTextR}>Max R {maxRR}°</Text>
+                </View>):(
+                <Text style={stylesEC.imageTextR}>Max R {maxRR}°</Text>
+                )}
           <View style={styles.bottom}>
-            <Text style={styles.text}>Summe Neigung: {maxRR+maxRL}°</Text>
+          <Text style={styles.text}>Maximal erreichte Winkel:{'\n'}Links: {maxRL}°; Rechts: {maxRR}°{'\n'}Summe: {maxRR+maxRL}°</Text>
             <TouchableOpacity onPress={restartEvaluation} style={styles.button}>
               <Text style={styles.buttonText}>Bewegung 2 wiederholen</Text>
             </TouchableOpacity>
@@ -119,32 +129,34 @@ const stylesEC = StyleSheet.create({
   container:{
     backgroundColor: 'black'
   },
-  imageL: {
-    position: 'absolute',
-    top: 100,
-    left: 20,
-    width: 150,
-    height: 150,
-  },
   imageR: {
     position: 'absolute',
-    top: 100,
-    right: 20,
+    top: '20%',
+    left: '5%',
     width: 150,
     height: 150,
+    transform: [{ scaleX: -1 }],
   },
-  imageTextL: {
+  imageL: {
     position: 'absolute',
-    top: 100,
-    left: 30,
-    color: 'white',
-    fontSize: 16,
+    top: '20%',
+    right: '5%',
+    width: 150,
+    height: 150,
+    transform: [{ scaleX: -1 }],
   },
   imageTextR: {
     position: 'absolute',
-    top: 100,
-    right: 30,
-    color: 'white',
+    top: '20%',
+    left: '8%',
+    color: 'orange',
+    fontSize: 16,
+  },
+  imageTextL: {
+    position: 'absolute',
+    top: '20%',
+    right: '8%',
+    color: 'green',
     fontSize: 16,
   },
 });

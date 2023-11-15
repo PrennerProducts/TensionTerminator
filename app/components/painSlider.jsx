@@ -34,7 +34,7 @@ const PainSlider = ({beforeAfter}) => {
         <Slider
             minimumValue={0}
             maximumValue={10}
-            height = {150}
+            height = {50}
             vertical = {true}
             minimumTrackTintColor={sliderColorPainValue}
             maximumTrackTintColor={sliderColorPainValue}
@@ -52,7 +52,7 @@ const PainSlider = ({beforeAfter}) => {
 
 const stylesI = StyleSheet.create({
   painValue: {
-    fontSize: 100,
+    fontSize: 60,
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,

@@ -4,7 +4,7 @@ export const evaluationData = {
     exercise: 0,
     isTraining: 0,
     beforeAfterTraining: 0,
-    shouldTakePictures: 1,
+    shouldTakePictures: true,
     maxYL: 0,
     maxYR: 0,
     maxRL: 0,

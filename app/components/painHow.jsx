@@ -16,7 +16,7 @@ const painHow = () => {
 
           <Link href={'./intensityBefore'} asChild>
             <TouchableOpacity 
-              style={stylesP.button}                         
+              style={stylesP.buttonSmall}                         
               onPress={() => {
                             painData.painType = 1;
                             painData.painToString = 'Druckschmerz im Schulter-Nacken-Bereich';
@@ -28,7 +28,7 @@ const painHow = () => {
 
           <Link href={'./intensityBefore'} asChild>
             <TouchableOpacity 
-              style={stylesP.button}                        
+              style={stylesP.buttonSmall}                        
               onPress={() => {
                             painData.painType = 2;
                             painData.painToString = 'Ziehende Schmerzen im Schulter-Nacken-Bereich';
@@ -40,7 +40,7 @@ const painHow = () => {
           </Link>
 
           <Link href={'./intensityBefore'} asChild>
-            <TouchableOpacity style={stylesP.button}
+            <TouchableOpacity style={stylesP.buttonSmall}
               onPress={() => {
               painData.painType = 3;
               painData.painToString = 'Druckschmerz im oberem Schulterblatt- oder Rücken-Bereich';
@@ -154,7 +154,7 @@ const stylesP = StyleSheet.create({
   },
   bottom: {
     flex: 1,
-    marginTop: '2%',
+    marginTop: '-5%',
     width: '80%',
     marginBottom: '6%',
     alignItems: 'center',
@@ -166,7 +166,15 @@ const stylesP = StyleSheet.create({
   },
   button: {
     flexDirection: 'row',
-    height: '28%',
+    height: '35%',
+    width: '100%',
+    backgroundColor: '#10069F',
+    borderRadius: 20,
+    marginTop: '6%',
+  },
+  buttonSmall: {
+    flexDirection: 'row',
+    height: '30%',
     width: '100%',
     backgroundColor: '#10069F',
     borderRadius: 20,
@@ -174,7 +182,7 @@ const stylesP = StyleSheet.create({
   },
   buttonText: {
     width: '50%',
-    fontSize: 20,
+    fontSize: 16,
     textAlign: 'center',
     color: 'white',
   },
