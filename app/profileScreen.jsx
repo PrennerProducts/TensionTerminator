@@ -292,7 +292,7 @@ const profileScreen = () => {
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center' }}
           onPress={() => {
-            router.push('components/datenschutzScreen');
+            router.push('components/dataProtection');
           }}
         >
           <Icon
