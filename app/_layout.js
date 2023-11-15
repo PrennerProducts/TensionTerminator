@@ -60,6 +60,8 @@ export default function Layout() {
             headerTitleStyle: {
               fontWeight: 'bold',
             },
+            //animationTypeForReplace: 'push', // oder 'pop'
+            animationEnabled: false,
           }}
         >
           {/* ------------------------------------------------------------------------------------- */}

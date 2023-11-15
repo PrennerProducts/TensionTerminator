@@ -39,7 +39,8 @@
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^10.0.0",
     "react-native-video": "^5.2.1",
-    "react-native-webview": "11.26.0"
+    "react-native-webview": "11.26.0",
+    "victory-native": "^36.6.12"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

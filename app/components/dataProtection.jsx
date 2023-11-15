@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, Text, StyleSheet, Linking } from 'react-native';
 
-const datenschutzScreen = () => {
+const dataProtection = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.heading}>Datenschutzerklärung</Text>
@@ -237,4 +237,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default datenschutzScreen;
+export default dataProtection;

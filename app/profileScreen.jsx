@@ -273,7 +273,7 @@ const profileScreen = () => {
       <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
         <TouchableOpacity
           onPress={() => {
-            router.push('components/appointment');
+            router.push('components/statistics');
           }}
           style={{ flexDirection: 'row', alignItems: 'center' }}
         >
@@ -292,7 +292,7 @@ const profileScreen = () => {
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center' }}
           onPress={() => {
-            router.push('components/datenschutzScreen');
+            router.push('components/dataProtection');
           }}
         >
           <Icon
