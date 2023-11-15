@@ -37,6 +37,10 @@ const profileScreen = () => {
     setPoints,
     setProfileImageIndex,
     updateUserDetails,
+    updateProfileImageIndex,
+    updateUsername,
+    updateGameLevel,
+    updatePoints,
   } = useUserContext();
   const [isEditing, setIsEditing] = useState(false);
   // Userdata Class from storage
@@ -74,6 +78,12 @@ const profileScreen = () => {
       setselectedAvatarIndex(profileIndex);
       setValue(profileIndex);
       setSendData(user.getSendData());
+      await updateProfileImageIndex(user.getprofilepicture());
+      await updateUsername(user.getUserName());
+      await updateGameLevel(user.getLevel());
+      await updatePoints(user.getPoints());
+
+      //updateImageIndex(user.getprofilepicture());
     };
 
     initializeUser();
@@ -91,6 +101,8 @@ const profileScreen = () => {
       user.setUserName(newName);
       user.save();
       setUserName(newName);
+      // User Context Provider
+      updateUsername(newName);
       //updateUserName(newName);
       setIsEditing(false);
     } catch (error) {
@@ -117,7 +129,7 @@ const profileScreen = () => {
     if (selectedIndex >= 0 && selectedIndex < avatarList.length) {
       setselectedAvatarIndex(selectedIndex);
       updateImageIndex(selectedIndex);
-      setProfileImageIndex(selectedIndex);
+      updateProfileImageIndex(selectedIndex);
       user.setprofilepicture(selectedIndex);
       await user.save();
       // console.log(

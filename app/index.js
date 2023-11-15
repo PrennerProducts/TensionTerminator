@@ -4,7 +4,6 @@ import styles from './components/StyleSheet';
 import UserData from './classes/userData';
 import { useUserContext } from './components/userContextProvider';
 import React, { useEffect, useState } from 'react';
-import { UserContextProvider } from './components/userContextProvider';
 import { resetAllData } from './services/storage';
 
 const WelcomeScreen = () => {
@@ -19,6 +18,10 @@ const WelcomeScreen = () => {
     setPoints,
     setProfileImageIndex,
     updateUserDetails,
+    updateProfileImageIndex,
+    updateUsername,
+    updateGameLevel,
+    updatePoints,
   } = useUserContext();
 
   // user instance
@@ -40,12 +43,11 @@ const WelcomeScreen = () => {
   useEffect(() => {
     const initializeUser = async () => {
       await user.initialize();
-      await updateUserDetails(
-        user.getUserName(),
-        user.getLevel(),
-        user.getPoints(),
-        user.getprofilepicture()
-      );
+      await user.load();
+      await updateProfileImageIndex(user.getprofilepicture());
+      await updateUsername(user.getUserName());
+      await updateGameLevel(user.getLevel());
+      await updatePoints(user.getPoints());
     };
 
     initializeUser();
@@ -58,13 +60,11 @@ const WelcomeScreen = () => {
   }, []);
 
   return (
-    <UserContextProvider>
-      <View style={styles.container}>
-        <Image source={require('../assets/logo.png')} />
-        <Image source={require('../assets/gifs/loading.gif')} />
-        <Text>Lade...</Text>
-      </View>
-    </UserContextProvider>
+    <View style={styles.container}>
+      <Image source={require('../assets/logo.png')} />
+      <Image source={require('../assets/gifs/loading.gif')} />
+      <Text>Lade...</Text>
+    </View>
   );
 };
 

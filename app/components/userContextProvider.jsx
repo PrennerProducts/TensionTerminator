@@ -33,6 +33,12 @@ export const UserContextProvider = ({ children }) => {
   const updateUsername = (username) => {
     setUsername(username);
   };
+  const updateGameLevel = (gameLevel) => {
+    setGameLevel(gameLevel);
+  };
+  const updatePoints = (points) => {
+    setPoints(points);
+  };
 
   return (
     <UserContext.Provider
@@ -45,6 +51,10 @@ export const UserContextProvider = ({ children }) => {
         setPoints,
         profileImageIndex,
         setProfileImageIndex,
+        updateProfileImageIndex,
+        updateUsername,
+        updateGameLevel,
+        updatePoints,
       }}
     >
       {children}

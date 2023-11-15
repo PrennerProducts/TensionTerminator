@@ -17,16 +17,17 @@ const Home = () => {
     gameLevel,
     points,
     profileImageIndex,
-    setUsername,
-    setGameLevel,
-    setPoints,
-    setProfileImageIndex,
     updateUserDetails,
+    updateProfileImageIndex,
+    updateUsername,
+    updateGameLevel,
+    updatePoints,
   } = useUserContext();
+
+  // router
   const router = useRouter();
+  // user Instance
   const [user, setUser] = useState(new UserData());
-  const [userName, setUserName] = useState();
-  //const [points, setPoints] = useState(0);
 
   const goToEvaluation = async () => {
     evaluationData.resetValues();
@@ -39,14 +40,10 @@ const Home = () => {
   useEffect(() => {
     const initializeUser = async () => {
       await user.initialize();
-      if (user.getUserName() == null) {
-        user.setUserName('Default');
-      } else {
-        setUserName(user.getUserName());
-      }
-      setProfileImageIndex(user.getprofilepicture());
-      setGameLevel(user.getLevel);
-      setPoints(user.getPoints);
+      await updateProfileImageIndex(user.getprofilepicture());
+      await updateUsername(user.getUserName());
+      await updateGameLevel(user.getLevel());
+      await updatePoints(user.getPoints());
     };
     initializeUser();
   }, []);
@@ -64,7 +61,7 @@ const Home = () => {
               borderRadius: 10,
             }}
           />
-          <Text style={styles.header}>{userName}'s Startseite</Text>
+          <Text style={styles.header}>{username}'s Startseite</Text>
 
           <Image
             source={
