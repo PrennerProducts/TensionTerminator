@@ -8,7 +8,7 @@ import {
   Alert
 } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
-import { Camera } from 'expo-camera';
+import { Camera, requestMicrophonePermissionsAsync } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import * as FileSystem from 'expo-file-system';
 import { Link, useRouter } from 'expo-router';
@@ -31,6 +31,8 @@ const evaluationYR = () => {
   const minRoll = 7; // Ab wieviel Grad soll Neigung erkannt werden... 
   const maxCounter = 1; // Zaehler fuer Auto Exit
   const detectionInterval = 100; // Abtastrate in Milli-Sekunden
+
+  const shouldTakePictures = evaluationData.shouldTakePictures; // Eventuell Fotologik deaktivieren (bei aelteren Handys)
 
   const [roll, setRoll] = useState(0);
   const [isRollStable, setIsRollStable] = useState(true);
@@ -61,6 +63,7 @@ const evaluationYR = () => {
 
   // Foto Logik
   const takePicture = async () => {
+    if (shouldTakePictures === false) return;
     const capturePromise = new Promise(async (resolve, reject) => {
       if (mutex.current) {return;}
       mutex.current = true;

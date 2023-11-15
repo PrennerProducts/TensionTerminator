@@ -4,18 +4,19 @@ export const evaluationData = {
     exercise: 0,
     isTraining: 0,
     beforeAfterTraining: 0,
+    shouldTakePictures: 1,
     maxYL: 0,
     maxYR: 0,
     maxRL: 0,
     maxRR: 0,
-    maxYLBefore: 20,
-    maxYRBefore: 30,
+    maxYLBefore: 0,
+    maxYRBefore: 0,
     maxRLBefore: 40,
     maxRRBefore: 55,
     maxYLAfter: 60,
     maxYRAfter: 70,
-    maxRLAfter: 60,
-    maxRRAfter: 50,
+    maxRLAfter: 90,
+    maxRRAfter: 90,
     resetValues: function() {
         this.originScreen = '';
         this.imageName = '';

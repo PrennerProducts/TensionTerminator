@@ -12,8 +12,8 @@ import EvaluationEE from './evaluationEE';
 
 
 const ResultEvaluation = () => {
-  const imageSourceR = require('../../assets/images/headTopDownBW.png');
-  const imageSourceY = require('../../assets/images/mansuit.png');
+  const imageSourceR = require('../../assets/images/HeadT.png');
+  const imageSourceY = require('../../assets/images/HeadF.png');
   const router = useRouter();
   const currentDate = new Date();
   const day = currentDate.getDate();
@@ -67,7 +67,6 @@ const ResultEvaluation = () => {
   }, []);
 
   const saveData = async () => {
-    //save evaluation data to json...
     console.log('Data saved');
   };
 
@@ -117,67 +116,94 @@ const ResultEvaluation = () => {
   return (
     <View style={stylesRE.container}>
       <View style={stylesRE.top}>
-      <Text style={stylesRE.header}>Beurteilung Ihrer Beweglichkeit - Aktueller Status {formattedDate}</Text>
+      <Text style={stylesRE.rowBold}>Aktueller Status {formattedDate}</Text>
+      <Text style={stylesRE.header}>Beurteilung Ihrer Beweglichkeit</Text>
+      
       <ScrollView style={{ padding: 0, top: -10 }}>
-        <View style={styles.section}>
+
+      <Text style={stylesRE.header}>Bewegung 1: Rotation</Text>
+
       <DrawingY 
         maxLBefore={maxYLBefore}
         maxRBefore={maxYRBefore}
         maxLAfter={maxYLAfter}
         maxRAfter={maxYRAfter}
-        TitleString = {'Rotation'}
+        TitleString = {''}
         imageSource={imageSourceR}
         degreeAdd = {90}
-        imageHeight = {400}
+        imageHeight = {300}
         xAdd = {0}
-        yAdd = {-30}
-        titleXAdd = {-120}
-        titleYAdd = {-50}
+        yAdd = {-40}
+        titleXAdd = {0}
+        titleYAdd = {0}
+        resize = {1}
+        lineLengthFactor = {2.5}
       />
+
+      <Text style={stylesRE.rowBold}>Vor dem Training</Text>
+      <Text style={stylesRE.row}>
+        Links: {maxYLBefore}°, 
+        Rechts: {maxYRBefore}°, 
+        Summe: {maxYRBefore+maxYLBefore}°</Text>
+      <Text style={stylesRE.rowBold}>Nach dem Training</Text>
+      <Text style={stylesRE.row}>
+        Links: {maxYLAfter}°, 
+        Rechts: {maxYRAfter}°, 
+        Summe: {maxYRAfter+maxYLAfter}°</Text>
+      
+      
+      <Text style={stylesRE.rowBold}>Um wie viel haben Sie sich verbessert?</Text>
+      <Text style={stylesRE.row}>
+        Links: <Text style={textColorDeltaYL}>{deltaYL}°</Text>, 
+        Rechts: <Text style={textColorDeltaYR}>{deltaYR}°</Text>, 
+        Summe: <Text style={textColorDeltaYS}>{deltaYL+deltaYR}°</Text>{'\n'}
+      </Text>
+
+      <Text style={stylesRE.header}>Bewegung 2: Seitneigung</Text>
       <DrawingY 
         maxLBefore={maxRLBefore}
         maxRBefore={maxRRBefore}
         maxLAfter={maxRLAfter}
         maxRAfter={maxRRAfter}
-        TitleString = {'Neigung'}
+        TitleString = {''}
         imageSource={imageSourceY}
         degreeAdd = {-90}
         imageHeight = {300}
-        xAdd = {10}
+        xAdd = {0}
         yAdd = {40}
-        titleXAdd = {-130}
-        titleYAdd = {-160}
+        titleXAdd = {0}
+        titleYAdd = {0}
+        resize = {1}
+        lineLengthFactor = {2.3}
       />
-      </View>
-      <Text style={stylesRE.header}>Vor dem Training</Text>
-      <Text style={styles.paragraph}>
-        Rotation: Links {maxYLBefore}°, Rechts: {maxYRBefore}°, Summe: {maxYRBefore+maxYLBefore}°</Text>
-      <Text style={styles.paragraph}>
-        Seitenneigung: Links: {maxRLBefore}°, Rechts: {maxRRBefore}°, Summe: {maxRRBefore+maxRLBefore}°</Text>
-      <Text style={styles.paragraph}>
-        Schmerzintensität: {painIntensityBefore}</Text>
-      <Text style={stylesRE.header}>Nach dem Training</Text>
-      <Text style={styles.paragraph}>
-        Rotation: Links {maxYLAfter}°, Rechts: {maxYRAfter}°, Summe: {maxYRAfter+maxYLAfter}°</Text>
-      <Text style={styles.paragraph}>
-        Seitenneigung: Links: {maxRLAfter}°, Rechts: {maxRRAfter}°, Summe: {maxRRAfter+maxRLAfter}°</Text>
-      <Text style={styles.paragraph}>
-        Schmerzintensität: {painIntensityAfter}</Text>
-      <Text style={stylesRE.header}>Wie haben Sie sich verbessert?</Text>
-      <Text style={styles.paragraph}>
-        Rotation: Links <Text style={textColorDeltaYL}>{deltaYL}°</Text>, Rechts: <Text style={textColorDeltaYR}>{deltaYR}°</Text>, Summe: <Text style={textColorDeltaYS}>{deltaYL+deltaYR}°</Text></Text>
-      <Text style={styles.paragraph}>
-        Seitenneigung: Links <Text style={textColorDeltaRL}>{deltaRL}°</Text>, Rechts: <Text style={textColorDeltaRR}>{deltaRR}°</Text>, Summe: <Text style={textColorDeltaRS}>{deltaRL+deltaRR}°</Text></Text>
-      <Text style={styles.paragraph}>
-        Schmerzintensität: <Text style={textColorDeltaPain}>{deltaPain}</Text>{'\n'}</Text><EvaluationEE/>
+
+      <Text style={stylesRE.rowBold}>Vor dem Training</Text>
+      <Text style={stylesRE.row}>
+        Links: {maxRLBefore}°, 
+        Rechts: {maxRRBefore}°, 
+        Summe: {maxRRBefore+maxRLBefore}°
+      </Text>
+      <Text style={stylesRE.rowBold}>Nach dem Training</Text>
+      <Text style={stylesRE.row}>
+        Links: {maxRLAfter}°, 
+        Rechts: {maxRRAfter}°, 
+        Summe: {maxRRAfter+maxRLAfter}°
+      </Text>
+    
+      <Text style={stylesRE.rowBold}>Um wie view haben Sie sich verbessert?</Text>
+      <Text style={stylesRE.row}>
+        Links: <Text style={textColorDeltaRL}>{deltaRL}°</Text>, 
+        Rechts: <Text style={textColorDeltaRR}>{deltaRR}°</Text>, 
+        Summe: <Text style={textColorDeltaRS}>{deltaRL+deltaRR}°</Text>{'\n'}
+      </Text>
+
+      <Text style={stylesRE.header}>Schmerzintensität{'\n'}({painData.painToString})</Text>
+
+      <Text style={stylesRE.row}>Vor dem Training: {painIntensityBefore}</Text>
+      <Text style={stylesRE.row}>Nach dem Training: {painIntensityAfter}</Text>
+      <Text style={stylesRE.rowBold}>Die Intensität Ihrer Schmerzen  hat sich um <Text style={textColorDeltaPain}>{deltaPain}</Text> Punkte verändert!{'\n\n'}</Text>
+
       </ScrollView>
-      </View>
-      <View style={stylesRE.bottom}>
-        <Link href={'../gratulation'} asChild>
-          <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>OK</Text>
-          </Pressable>
-        </Link>
       </View>
     </View>
   );
@@ -205,7 +231,20 @@ const stylesRE = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 10,
+    margin: '5%',
+    color: "#10069F",
+  },
+  row: {
+    fontSize: 16,
+    textAlign: "center",
+    margin: '2%',
+    color: "#10069F",
+  },
+  rowBold: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    margin: '1%',
     color: "#10069F",
   },
   textRed:{

@@ -83,7 +83,7 @@ const Home = () => {
             Level: {gameLevel};{'\n'}Punkte: {points};
           </Text>
 
-          <Link href={'./QRScan'} asChild>
+          <Link href={'./components/barcode'} asChild>
             <TouchableOpacity style={styles.button}>
               <View style={styles.section}>
                 <Icon

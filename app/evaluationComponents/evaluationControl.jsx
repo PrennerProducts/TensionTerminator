@@ -8,13 +8,13 @@ import { evaluationData } from './evaluationData';
 
 const evaluationControl = () => {
   const router = useRouter();
-  //const { exercise, maxL, maxR } = useLocalSearchParams();
   const cacheBuster = Date.now();
   const exercise = evaluationData.exercise;
   const maxYL = evaluationData.maxYL;
   const maxYR = evaluationData.maxYR;
   const maxRL = evaluationData.maxRL;
   const maxRR = evaluationData.maxRR;
+  const shouldTakePictures = evaluationControl.shouldTakePictures;
 
   const restartEvaluation = async () => {
     router.replace({pathname: 'evaluationComponents/evaluationYR'});
@@ -48,20 +48,28 @@ const evaluationControl = () => {
       return (
         <View style={styles.container}>
           <Text style={styles.title}>Bewegung {(exercise+1)}</Text>
-          <Image
-                source={{
-                  uri: `${FileSystem.documentDirectory}MaxYL.jpg?${cacheBuster}`,
-                }}
-                style={stylesEC.imageL}
-                />
-                <Text style={stylesEC.imageTextL}>Max L {maxYL}°</Text>
-          <Image
-                source={{
-                  uri: `${FileSystem.documentDirectory}MaxYR.jpg?${cacheBuster}`,
-                }}
-                style={stylesEC.imageR}
-                />
-                <Text style={stylesEC.imageTextR}>Max R {maxYR}°</Text>
+          {shouldTakePictures ? (
+            <View>
+              <Image
+                  source={{
+                    uri: `${FileSystem.documentDirectory}MaxYL.jpg?${cacheBuster}`,
+                  }}
+                  style={stylesEC.imageL}
+                  />
+                  <Text style={stylesEC.imageTextL}>Max L {maxYL}°</Text>
+              <Image
+                  source={{
+                    uri: `${FileSystem.documentDirectory}MaxYR.jpg?${cacheBuster}`,
+                  }}
+                  style={stylesEC.imageR}
+                  />
+              <Text style={stylesEC.imageTextR}>Max R {maxYR}°</Text>
+            </View>              
+            ):(
+              <Text style={stylesEC.imageTextR}>Max R {maxYR}°</Text>
+            )            
+          }
+
           <View style={styles.bottom}>
             <Text style={styles.text}>Summe Drehung: {maxYR+maxYL}°</Text>
             <TouchableOpacity onPress={restartEvaluation} style={styles.button}>
