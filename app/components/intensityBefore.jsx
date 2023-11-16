@@ -1,100 +1,33 @@
 import 'expo-router/entry';
-import { View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
-import Slider from '@react-native-community/slider';
+import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
 import styles from './StyleSheet';
+import PainSlider from './painSlider';
 import { painData } from './painData';
-import { useState } from 'react';
 
 const intensityBefore = () => {
-  const [painValue, setPainValue] = useState(5);
-  const sliderColorPainValue = (painValue > 7)
-  ? '#F9150C'
-  : (painValue >= 4 && painValue <= 7)
-    ? '#D49E5B'
-    : '#C0E583';
-  const textColorPainValue = (painValue > 7)
-  ? stylesI.textRed
-  : (painValue >= 4 && painValue <= 7)
-    ? stylesI.textBlue
-    : stylesI.textGreen;
-  const handleSliderChange = (sliderValue) => {
-    setPainValue(sliderValue);
-  };
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Wie beurteilen Sie die Intensität Ihrer Schmerzen?</Text>
-      
+      <Text style={styles.header}>Wie beurteilen Sie die derzeitige Intensität Ihrer Schmerzen? ({painData.painToString})</Text>
+      <View style={{flex: 0, width: '80%', top: '5%', bottom: '5%'}}>
+        
+        <PainSlider
+        beforeAfter = {0}
+        />
+      <Text style={styles.paragraph}>Bitte vergeben Sie Punkte auf einer Skala von 0 bis 10.{'\n'}
+      {/*0 bedeutet beispielsweise keine Schmerzen und 10 bedeutet sehr starke Schmerzen.{'\n'}Bitte verwenden Sie den Schieberegler unten und bewegen Sie den Regler von links nach rechts (oder in die entgegengesetzte Richtung) zur Vergabe der Punkte.*/}
+      </Text>
+      </View>
         <View style={styles.bottom}>
-        <Text style={stylesI.painValue}><Text style={textColorPainValue}>{painValue}</Text></Text>
-        <View >
-        <Slider
-        minimumValue={0}
-        maximumValue={10}
-        height = {5}
-        minimumTrackTintColor={sliderColorPainValue}
-        maximumTrackTintColor={sliderColorPainValue}
-        thumbTintColor={sliderColorPainValue}
-        step={1}
-        value={painValue}
-        onValueChange={handleSliderChange}
-      />
-            <Image
-            source={require('../../assets/images/PainMeterS.png')}
-            style={{
-              position: 'relative',
-              width: '100%',
-              resizeMode: 'contain',
-              top: '0%',
-            }}
-          />
-        </View>
-
         <Link href={'../evaluationComponents/evaluationBefore'} asChild>
-          <TouchableOpacity style={styles.button} onPress={() => {painData.painIntensityBefore = painValue;}}>
+          <TouchableOpacity style={styles.button} onPress={() => {}}>
             <Text style={styles.buttonText}>Weiter</Text>
           </TouchableOpacity>
         </Link>
       </View>
-      
     </View>
   );
 };
-
-const stylesI = StyleSheet.create({
-  container: {
-      flex: 1,
-      alignItems: "center",
-      backgroundColor: '#ffffff',
-  },
-  top: {
-    flex: 5,
-    justifyContent: 'flex-start',
-    top: "2%",
-    backgroundColor: '#ffffff',
-  },
-  bottom: {
-      flex: 1,
-      justifyContent: 'flex-end',
-      bottom: "5%",
-  },
-  painValue: {
-    fontSize: 200,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 10,
-    color: "#10069F",
-  },
-  textRed:{
-    color: '#F9150C',
-  },
-  textBlue:{
-    color: '#D49E5B',
-  },
-  textGreen:{
-    color: '#C0E583',
-  }
-});
 
 export default intensityBefore;

@@ -11,8 +11,8 @@ class UserData {
     userName = 'Default',
     reseted = false,
     profilepicture = 0,
-    level = 42,
-    points = 69,
+    level = 0,
+    points = 0,
     sendData = true
     // observers = []
   ) {

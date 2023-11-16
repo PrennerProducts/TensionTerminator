@@ -42,6 +42,10 @@ export default function Layout() {
     router.replace('/home');
   };
 
+  const goToGratulation = () => {
+    router.replace('/gratulation');
+  };
+
   return (
     <UserContextProvider>
       <ProfileImageProvider>
@@ -117,39 +121,6 @@ export default function Layout() {
               //     />
               //   </TouchableOpacity>
               // ),
-            }}
-          />
-          <Stack.Screen
-            name="QRScan"
-            options={{
-              headerTitle: 'QR-Code scannen',
-              headerShown: true,
-              headerTitleAlign: 'center',
-              // headerRight: () => (
-              //   <TouchableOpacity onPress={goToProfile}>
-              //     {/* <Icon name="person-circle" size={30} color="#fff" /> */}
-              //     {/* Alternativ ein Bild nutzen: */}
-              //     <Image
-              //       source={profileImageSource}
-              //       style={{
-              //         width: 40,
-              //         height: 40,
-              //         borderRadius: 50,
-              //         margin: 15,
-              //       }}
-              //     />
-              //   </TouchableOpacity>
-              // ),
-              headerRight: () => (
-                <TouchableOpacity onPress={goToHome}>
-                  <Icon
-                    name="home"
-                    size={35}
-                    color="#fff"
-                    style={{ marginRight: 15 }}
-                  />
-                </TouchableOpacity>
-              ),
             }}
           />
           <Stack.Screen
@@ -372,6 +343,16 @@ export default function Layout() {
               headerTitle: 'Ergebnis',
               headerShown: true,
               headerTitleAlign: 'center',
+              headerRight: () => (
+                <TouchableOpacity onPress={goToGratulation}>
+                  <Icon
+                    name="check"
+                    size={35}
+                    color="#fff"
+                    style={{ marginRight: 15 }}
+                  />
+                </TouchableOpacity>
+              ),
             }}
           />
 

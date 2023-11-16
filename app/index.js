@@ -30,7 +30,6 @@ const WelcomeScreen = () => {
   // router
   const navigation = useRouter();
 
-  // reset all data
   // useEffect(() => {
   //   const resetDataAndInitialize = async () => {
   //     await resetAllData(); // Daten zurücksetzen
@@ -40,18 +39,18 @@ const WelcomeScreen = () => {
   // }, []);
 
   // init userData
-  useEffect(() => {
-    const initializeUser = async () => {
-      await user.initialize();
-      await user.load();
-      await updateProfileImageIndex(user.getprofilepicture());
-      await updateUsername(user.getUserName());
-      await updateGameLevel(user.getLevel());
-      await updatePoints(user.getPoints());
-    };
+  // useEffect(() => {
+  //   const initializeUser = async () => {
+  //     await user.initialize();
+  //     await user.load();
+  //     await updateProfileImageIndex(user.getprofilepicture());
+  //     await updateUsername(user.getUserName());
+  //     await updateGameLevel(user.getLevel());
+  //     await updatePoints(user.getPoints());
+  //   };
 
-    initializeUser();
-  }, []);
+  //   initializeUser();
+  // }, []);
 
   useEffect(() => {
     setTimeout(async () => {

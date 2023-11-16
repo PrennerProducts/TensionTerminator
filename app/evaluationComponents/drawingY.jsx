@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { View, Dimensions } from 'react-native';
 import Svg, { Image as SvgImage, Line, Polygon, Path, Text } from 'react-native-svg';
 
-const DrawingY = ({ maxLBefore, maxRBefore, maxLAfter, maxRAfter, TitleString, imageSource, degreeAdd, imageHeight, xAdd, yAdd, titleXAdd, titleYAdd }) => {
-  const imgWidth = (Dimensions.get("window").width)/2;
-  const imgHeight = (imageHeight)/2;
+const DrawingY = ({ maxLBefore, maxRBefore, maxLAfter, maxRAfter, TitleString, TitleStringB, shouldAnimate, interval, imageSource, degreeAdd, imageHeight, xAdd, yAdd, titleXAdd, titleYAdd, resize, lineLengthFactor}) => {
+  const imgWidth = (Dimensions.get("window").width)/resize;
+  const imgHeight = (imageHeight)/resize;
 
   const centerX = (imgWidth / 2) +xAdd;
   const centerY = (imgHeight / 2) +yAdd;
 
-  const animInterval = 2000; // In Milli-Sekunden
+  const animInterval = interval; // In Milli-Sekunden
+
   const [animatingB, setAnimatingB] = useState(true);
  
-  const lineLength = imgWidth/2.2;
+  const lineLength = imgWidth/lineLengthFactor;
   const lineLBeforeEndX = centerX + Math.cos((degreeAdd+maxLBefore) * (Math.PI / 180)) * lineLength;
   const lineLBeforeEndY = centerY + Math.sin((degreeAdd+maxLBefore) * (Math.PI / 180)) * lineLength;
   const lineRBeforeEndX = centerX + Math.cos((degreeAdd-maxRBefore) * (Math.PI / 180)) * lineLength;
@@ -25,7 +26,7 @@ const DrawingY = ({ maxLBefore, maxRBefore, maxLAfter, maxRAfter, TitleString, i
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setAnimatingB((animatingB) => !animatingB);
+      if (shouldAnimate) setAnimatingB((animatingB) => !animatingB);
     }, animInterval);
     return () => {
       clearInterval(intervalId);
@@ -78,11 +79,11 @@ const DrawingY = ({ maxLBefore, maxRBefore, maxLAfter, maxRAfter, TitleString, i
       </Text>
     </View>
     <Svg width={imgWidth} height={imgHeight}>
-      <SvgImage width={imgWidth} height={imgHeight} href={imageSource} />
+      <SvgImage width={imgWidth} height={imgHeight} href={imageSource}/>
 {/*BEFORE*/}
       {animatingB && ( 
       <View>
-        <Text x={centerX+titleXAdd} y={centerY+titleYAdd} fill="red" fontSize="32">{TitleString} Vorher</Text>
+        <Text x={centerX+titleXAdd} y={centerY+titleYAdd} fill="red" fontSize="32">{TitleString}</Text>
       <Polygon points={polygonBeforePoints.join(' ')} fill="rgba(255, 0, 0, 0.05)"/>
       <Path d={dBefore} fill="transparent" stroke="red" strokeWidth="2" strokeDasharray="3,10"/>
       <Line
@@ -117,7 +118,7 @@ const DrawingY = ({ maxLBefore, maxRBefore, maxLAfter, maxRAfter, TitleString, i
 {/*After*/}
       {!animatingB && (
       <View>
-      <Text x={centerX+titleXAdd} y={centerY+titleYAdd} fill="blue" fontSize="32">{TitleString} Nachher</Text>
+      <Text x={centerX+titleXAdd} y={centerY+titleYAdd} fill="blue" fontSize="32">{TitleStringB}</Text>
       <Path d={dAfter} fill="transparent" stroke="blue" strokeWidth="2" strokeDasharray="3,10"/>
       <Polygon points={polygonAfterPoints.join(' ')} fill="rgba(0, 0, 255, 0.05)"/>
       <Line

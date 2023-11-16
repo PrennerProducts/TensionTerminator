@@ -7,7 +7,6 @@ import { painData } from './painData';
 
 const painHow = () => {
   const router = useRouter();
-  console.log(painData.painRegion);
 
   if (painData.painRegion === 1){
     return (
@@ -17,10 +16,10 @@ const painHow = () => {
 
           <Link href={'./intensityBefore'} asChild>
             <TouchableOpacity 
-              style={stylesP.button}                         
+              style={stylesP.buttonSmall}                         
               onPress={() => {
                             painData.painType = 1;
-                            //console.log('Druckschmerz im Schulter-Nacken-Bereich ausgewählt.');
+                            painData.painToString = 'Druckschmerz im Schulter-Nacken-Bereich';
                         }}>
               <Image source={require('../../assets/gifs/1druck.gif')} style={stylesP.image} />
               <Text style={stylesP.buttonText}>{'\n'}Druckschmerz im Bereich Schulter-Nacken</Text>
@@ -29,22 +28,22 @@ const painHow = () => {
 
           <Link href={'./intensityBefore'} asChild>
             <TouchableOpacity 
-              style={stylesP.button}                        
+              style={stylesP.buttonSmall}                        
               onPress={() => {
                             painData.painType = 2;
-                            //console.log('Ziehender Schmerz im Schulter-Nacken-Bereich ausgewählt.');
+                            painData.painToString = 'Ziehende Schmerzen im Schulter-Nacken-Bereich';
                         }}>
-            <Text style={stylesP.buttonText}>{'\n'}Ziehender Schmerz im Bereich Schulter-Nacken</Text>
+            <Text style={stylesP.buttonText}>{'\n'}Ziehende Schmerzen im Bereich Schulter-Nacken</Text>
             <Image source={require('../../assets/gifs/1zieh.gif')} style={stylesP.image} />
               
             </TouchableOpacity>
           </Link>
 
           <Link href={'./intensityBefore'} asChild>
-            <TouchableOpacity style={stylesP.button}
+            <TouchableOpacity style={stylesP.buttonSmall}
               onPress={() => {
               painData.painType = 3;
-              //console.log('Druckschmerz im oberem Schulterblatt- oder Rücken-Bereich ausgewählt.');
+              painData.painToString = 'Druckschmerz im oberem Schulterblatt- oder Rücken-Bereich';
                         }}>
             <Image source={require('../../assets/gifs/1druck2.gif')} style={stylesP.image} />
               <Text style={stylesP.buttonText}>{'\n'}Druckschmerz im Bereich oberes Schulterblatt- oder Rücken</Text>
@@ -66,7 +65,7 @@ const painHow = () => {
             style={stylesP.button}                         
             onPress={() => {
                           painData.painType = 1;
-                          //console.log('Druckschmerz im mittleren Rückenbereich ausgewählt.');
+                          painData.painToString = 'Druckschmerz im mittleren Rückenbereich';
                       }}>
             <Image source={require('../../assets/gifs/2druck.gif')} style={stylesP.image} />
             <Text style={stylesP.buttonText}>{'\n'}Druckschmerz im mittleren Rückenbereich</Text>
@@ -78,9 +77,9 @@ const painHow = () => {
             style={stylesP.button}                        
             onPress={() => {
                           painData.painType = 2;
-                          //console.log('Ziehender Schmerz entlang der Brustwirbelsäule ausgewählt.');
+                          painData.painToString = 'Ziehende Schmerzen entlang der Brustwirbelsäule';
                       }}>
-          <Text style={stylesP.buttonText}>{'\n'}Ziehender Schmerz entlang der Brustwirbelsäule</Text>
+          <Text style={stylesP.buttonText}>{'\n'}Ziehende Schmerzen entlang der Brustwirbelsäule</Text>
           <Image source={require('../../assets/gifs/2zieh.gif')} style={stylesP.image} />
             
           </TouchableOpacity>
@@ -100,7 +99,7 @@ const painHow = () => {
             style={stylesP.button}                         
             onPress={() => {
                           painData.painType = 1;
-                          //console.log('Druckschmerz im unteren Rückenbereich ausgewählt.');
+                          painData.painToString = 'Druckschmerz im unteren Rückenbereich';
                       }}>
             <Image source={require('../../assets/gifs/3druck.gif')} style={stylesP.image} />
             <Text style={stylesP.buttonText}>{'\n'}Druckschmerz im unteren Rückenbereich</Text>
@@ -112,9 +111,9 @@ const painHow = () => {
             style={stylesP.button}                        
             onPress={() => {
                           painData.painType = 2;
-                          //console.log('Ziehender Schmerz entlang der Lendenwirbelsäule/im Kreuzbeinbereich ausgewählt.');
+                          painData.painToString = 'Ziehende Schmerzen entlang der Lendenwirbelsäule/im Kreuzbeinbereich';
                       }}>
-          <Text style={stylesP.buttonText}>{'\n'}Ziehender Schmerz entlang der Lendenwirbelsäule/im Kreuzbeinbereich</Text>
+          <Text style={stylesP.buttonText}>{'\n'}Ziehende Schmerzen entlang der Lendenwirbelsäule/im Kreuzbeinbereich</Text>
           <Image source={require('../../assets/gifs/3zieh.gif')} style={stylesP.image} />
             
           </TouchableOpacity>
@@ -134,7 +133,7 @@ const painHow = () => {
             style={stylesP.button}                         
             onPress={() => {
                           painData.painType = 1;
-                          //console.log('Druckschmerz im Becken- Gesäßbereichausgewählt.');
+                          painData.painToString = 'Druckschmerz im Becken- Gesäßbereich';
                       }}>
             <Image source={require('../../assets/gifs/4druck.gif')} style={stylesP.image} />
             <Text style={stylesP.buttonText}>{'\n'}Druckschmerz im Becken- Gesäßbereich</Text>
@@ -150,31 +149,40 @@ const stylesP = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    height: '100%',
     backgroundColor: '#fffff',
   },
   bottom: {
     flex: 1,
-    marginTop: '6%',
-    width: '90%',
-    bottom: '6%',
+    marginTop: '-5%',
+    width: '80%',
+    marginBottom: '6%',
     alignItems: 'center',
   },
   image: {
     height: '100%',
     width: '50%',
-    resizeMode: 'cover',
+    resizeMode: 'stretch',
   },
   button: {
     flexDirection: 'row',
-    height: '28%',
+    height: '35%',
     width: '100%',
     backgroundColor: '#10069F',
-    borderBottomEndRadius: 0,
-    marginTop: '5%',
+    borderRadius: 20,
+    marginTop: '6%',
+  },
+  buttonSmall: {
+    flexDirection: 'row',
+    height: '30%',
+    width: '100%',
+    backgroundColor: '#10069F',
+    borderRadius: 20,
+    marginTop: '6%',
   },
   buttonText: {
     width: '50%',
-    fontSize: 20,
+    fontSize: 16,
     textAlign: 'center',
     color: 'white',
   },

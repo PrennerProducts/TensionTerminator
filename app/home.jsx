@@ -9,6 +9,7 @@ import { ProfileImageProvider } from '../app/components/ProfileImageContext';
 import { evaluationData } from './evaluationComponents/evaluationData';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useUserContext } from './components/userContextProvider';
+import { painData } from './components/painData';
 
 const Home = () => {
   // User context provider
@@ -35,6 +36,16 @@ const Home = () => {
     evaluationData.isTraining = 0;
     evaluationData.beforeAfterTraining = 0;
     router.replace({ pathname: 'evaluationComponents/EvaluationScreen' });
+  };
+
+  const goToTraining = async () => {
+    painData.resetValues();
+    painData.painIntensityBefore = 5;
+    evaluationData.resetValues();
+    evaluationData.originScreen = '../home';
+    evaluationData.isTraining = 1;
+    evaluationData.beforeAfterTraining = 0;
+    router.replace({ pathname: 'components/painWhere' });
   };
 
   useEffect(() => {
@@ -83,7 +94,7 @@ const Home = () => {
             Level: {gameLevel};{'\n'}Punkte: {points};
           </Text>
 
-          <Link href={'./QRScan'} asChild>
+          <Link href={'./components/barcode'} asChild>
             <TouchableOpacity style={styles.button}>
               <View style={styles.section}>
                 <Icon
@@ -114,8 +125,7 @@ const Home = () => {
             style={styles.button}
             onPress={() => {
               goToEvaluation();
-            }}
-          >
+            }}>
             <View style={styles.section}>
               <Icon
                 name="reiterate"
@@ -127,19 +137,22 @@ const Home = () => {
             </View>
           </TouchableOpacity>
 
-          <Link href={'./components/painWhere'} asChild>
-            <TouchableOpacity style={styles.button}>
-              <View style={styles.section}>
-                <Icon
-                  name="rowing"
-                  size={30}
-                  color="#fff"
-                  style={{ marginLeft: 30 }}
-                />
-                <Text style={styles.buttonText}> Training starten</Text>
-              </View>
-            </TouchableOpacity>
-          </Link>
+          <TouchableOpacity 
+            style={styles.button}
+            onPress={() => {
+              goToTraining();
+            }}>
+            <View style={styles.section}>
+              <Icon
+                name="rowing"
+                size={30}
+                color="#fff"
+                style={{ marginLeft: 30 }}
+              />
+              <Text style={styles.buttonText}> Training starten</Text>
+            </View>
+          </TouchableOpacity>
+
         </View>
       </View>
     </View>

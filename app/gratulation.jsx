@@ -4,9 +4,12 @@ import React from 'react';
 import {Link, useRouter} from 'expo-router';
 import styles from "./components/StyleSheet";
 import AudioPlayer from './services/audioPlayer';
+import { useUserContext } from './components/userContextProvider';
+import { saveUserData, getUserData } from './services/storage.jsx';
 
 const Gratulation = () => {
     const router = useRouter();
+    console.log(getUserData());
 
     return (
         <View style={styles.container}>

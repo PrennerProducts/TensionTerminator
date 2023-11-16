@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
   button: {
     display: 'flex',
     height: '9%',
+    minHeight: 50,
     minWidth: '90%',
     backgroundColor: '#10069f',
     borderRadius: 10,
