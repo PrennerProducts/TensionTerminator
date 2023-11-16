@@ -9,6 +9,9 @@ import { ProfileImageProvider } from '../app/components/ProfileImageContext';
 import { evaluationData } from './evaluationComponents/evaluationData';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useUserContext } from './components/userContextProvider';
+import {Button} from '@rneui/themed';
+import {Box} from "victory-native";
+import {useNavigation} from "@react-navigation/native";
 
 const Home = () => {
   // User context provider
@@ -29,12 +32,13 @@ const Home = () => {
   // user Instance
   const [user, setUser] = useState(new UserData());
 
+
   const goToEvaluation = async () => {
     evaluationData.resetValues();
     evaluationData.originScreen = '../home';
     evaluationData.isTraining = 0;
     evaluationData.beforeAfterTraining = 0;
-    router.replace({ pathname: 'evaluationComponents/EvaluationScreen' });
+    router.push({ pathname: 'evaluationComponents/EvaluationScreen' });
   };
 
   useEffect(() => {
@@ -83,14 +87,68 @@ const Home = () => {
             Level: {gameLevel};{'\n'}Punkte: {points};
           </Text>
 
-          <Link href={'./components/barcode'} asChild>
+
+          <Button
+            title="QR-Code scannen"
+            onPress={() => {router.push({ pathname: 'components/barcode' });}}
+           buttonStyle={styles.button}
+            titleStyle={styles.buttonText}
+            icon ={<Icon
+              name="qrcode-scan"
+              size={30}
+              color="#fff"
+          />}
+            />
+
+          <Button
+              title="Ausschlusskriterien"
+              onPress={() => {router.push({ pathname: 'criteria' });}}
+              buttonStyle={styles.button}
+              titleStyle={styles.buttonText}
+              icon ={<Icon
+                  name="information"
+                  size={30}
+                  color="#fff"
+              />}
+          />
+
+          <Button
+              title="Beweglichkeit messen"
+              onPress={() => {goToEvaluation();}}
+              buttonStyle={styles.button}
+              titleStyle={styles.buttonText}
+              icon ={<Icon
+                  name="reiterate"
+                  size={30}
+                  color="#fff"
+              />}
+          />
+
+          <Button
+              title="Training starten"
+              onPress={() => {router.push({ pathname: 'components/painWhere' });}}
+              buttonStyle={styles.button}
+              titleStyle={styles.buttonText}
+              icon ={<Icon
+                  name="rowing"
+                  size={30}
+                  color="#fff"
+                  marginRight={30}
+              />}
+          />
+
+
+
+
+
+ {/*         <Link href={'./components/barcode'} asChild>
             <TouchableOpacity style={styles.button}>
               <View style={styles.section}>
                 <Icon
                   name="qrcode-scan"
                   size={30}
                   color="#fff"
-                  style={{ marginLeft: 30 }}
+                  style={{ marginLeft: '5%' }}
                 />
                 <Text style={styles.buttonText}> QR-Code scannen</Text>
               </View>
@@ -103,7 +161,7 @@ const Home = () => {
                   name="information"
                   size={30}
                   color="#fff"
-                  style={{ marginLeft: 30 }}
+                  style={{ marginLeft: '5%' }}
                 />
                 <Text style={styles.buttonText}> Ausschlusskriterien</Text>
               </View>
@@ -121,7 +179,7 @@ const Home = () => {
                 name="reiterate"
                 size={30}
                 color="#fff"
-                style={{ marginLeft: 30 }}
+                style={{ marginLeft: '5%' }}
               />
               <Text style={styles.buttonText}> Beweglichkeit messen</Text>
             </View>
@@ -134,12 +192,12 @@ const Home = () => {
                   name="rowing"
                   size={30}
                   color="#fff"
-                  style={{ marginLeft: 30 }}
+                  style={{ marginLeft: '5%' }}
                 />
                 <Text style={styles.buttonText}> Training starten</Text>
               </View>
             </TouchableOpacity>
-          </Link>
+          </Link>*/}
         </View>
       </View>
     </View>

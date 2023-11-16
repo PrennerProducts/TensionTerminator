@@ -19,6 +19,7 @@ import myheaderRight from './components/headerRight';
 import { useProfileImage } from './components/ProfileImageContext';
 import { UserContextProvider } from './components/userContextProvider';
 import headerRight from './components/headerRight';
+import {NativeBaseProvider} from "native-base";
 
 export default function Layout() {
   const router = useRouter();
@@ -47,6 +48,7 @@ export default function Layout() {
   };
 
   return (
+
     <UserContextProvider>
       <ProfileImageProvider>
         <Stack

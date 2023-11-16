@@ -6,7 +6,7 @@ import {
   TextInput,
   Switch,
   StyleSheet,
-  Dimensions,
+  Dimensions, ScrollView,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -127,6 +127,7 @@ const profileScreen = () => {
 
   return (
     <View style={{ padding: 20 }}>
+      <ScrollView style={{ padding: 5 }}>
       {/* Avatar Bild */}
       <View
         style={{
@@ -322,6 +323,7 @@ const profileScreen = () => {
           <Text style={styles.buttonText}>Home</Text>
         </Pressable>
       </Link> */}
+        </ScrollView>
     </View>
   );
 };

@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   },
   button: {
     display: 'flex',
-    height: '9%',
     minHeight: 50,
     minWidth: '90%',
     backgroundColor: '#10069f',
@@ -25,6 +24,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     color: '#ffffff',
+    marginLeft: 30,
+
   },
   title: {
     fontSize: 30,
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: '#10069F',
+    borderColor: '#10069f',
     borderRadius: 10,
     padding: 10,
     backgroundColor: '#fffff',

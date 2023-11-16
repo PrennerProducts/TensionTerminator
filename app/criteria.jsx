@@ -86,14 +86,16 @@ const criteriaScreen = () => {
         {myCheckBox2(('Neurologische Erkrankung welche auf mechanische Einwirkung reagieren (z.B. Epilepsie, Schwindel)'))}
         {myCheckBox2(('Sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht'))}
         <Text style={styles.text}>vor.</Text>
-      </ScrollView>
-      <View style={styles.bottom}>
+
+      {/*<View style={styles.bottom}>*/}
         <Link href={'./home'} asChild>
           <Pressable onPress={changeFirstTime} style={styles.button}>
             <Text style={styles.buttonText}>Bestätigen</Text>
           </Pressable>
         </Link>
-      </View>
+        <Text>{"\n"}{"\n"}</Text>
+{/*      </View>*/}
+      </ScrollView>
 
       {/* <View>{skipCriteria}</View> */}
     </View>
