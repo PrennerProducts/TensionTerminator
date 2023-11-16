@@ -41,7 +41,7 @@ constSetMyUserName(user.getUserName());
 }, []);
 
 const handlePress = () => {
-router.replace("evaluationComponents");
+router.push("evaluationComponents");
 };
 
 onChangeText = (text) => {

@@ -253,7 +253,7 @@ const evaluationYR = () => {
     else{
     console.log("Invalid exercise: " + exercise);
     }
-    router.replace({pathname: 'evaluationComponents/evaluationControl'});
+    router.push({pathname: 'evaluationComponents/evaluationControl'});
   };
 
   const cancelEvaluation = async () => {
@@ -266,7 +266,7 @@ const evaluationYR = () => {
           onPress: () => {
             const originScreen = evaluationData.originScreen;
             evaluationData.resetValues();
-            router.replace({pathname: originScreen});
+            router.push({pathname: originScreen});
           },
         },
         {

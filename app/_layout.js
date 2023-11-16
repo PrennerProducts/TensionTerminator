@@ -40,11 +40,11 @@ export default function Layout() {
   };
 
   const goToHome = () => {
-    router.replace('/home');
+    router.push('/home');
   };
 
   const goToGratulation = () => {
-    router.replace('/gratulation');
+    router.push('/gratulation');
   };
 
   return (

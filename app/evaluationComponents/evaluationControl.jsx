@@ -17,12 +17,12 @@ const evaluationControl = () => {
   const shouldTakePictures = evaluationData.shouldTakePictures;
 
   const restartEvaluation = async () => {
-    router.replace({pathname: 'evaluationComponents/evaluationYR'});
+    router.push({pathname: 'evaluationComponents/evaluationYR'});
   };
 
   const nextEvaluation = async () => {
     evaluationData.exercise = 1;
-    router.replace({pathname: 'evaluationComponents/evaluationYR'});
+    router.push({pathname: 'evaluationComponents/evaluationYR'});
   };
 
   const exitEvaluation = async () => {
@@ -31,7 +31,7 @@ const evaluationControl = () => {
       evaluationData.maxYRBefore = maxYR;
       evaluationData.maxRLBefore = maxRL;
       evaluationData.maxRRBefore = maxRR;
-      router.replace({pathname: '/trainingStart'});
+      router.push({pathname: '/trainingStart'});
     }
     else if (evaluationData.isTraining && evaluationData.beforeAfterTraining === 1){
       console.log("Updating values after training");
@@ -39,13 +39,13 @@ const evaluationControl = () => {
       evaluationData.maxYRAfter = maxYR;
       evaluationData.maxRLAfter = maxRL;
       evaluationData.maxRRAfter = maxRR;
-      router.replace({pathname: 'evaluationComponents/resultEvaluation'});
+      router.push({pathname: 'evaluationComponents/resultEvaluation'});
     }
     evaluationData.maxYLBefore = maxYL;
     evaluationData.maxYRBefore = maxYR;
     evaluationData.maxRLBefore = maxRL;
     evaluationData.maxRRBefore = maxRR;
-    router.replace({pathname: 'evaluationComponents/resultEvaluation'});
+    router.push({pathname: 'evaluationComponents/resultEvaluation'});
   };
 
   if (exercise === 0){

@@ -3,7 +3,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Button,
   Image,
   Pressable,
 } from 'react-native';
@@ -13,6 +12,7 @@ import Modal from 'react-native-modal';
 import { Link, useRouter } from 'expo-router';
 import { evaluationData } from './evaluationData';
 import styles from '../components/StyleSheet';
+import { Button } from '@rneui/themed';
 
 const EvaluationScreen = () => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const EvaluationScreen = () => {
   const handleEvaluierung = () => {
     setEvaluationStarted(true);
     evaluationData.printValues();
-    router.replace('../evaluationComponents/evaluationYR');
+    router.push('../evaluationComponents/evaluationYR');
   };
 
   return (
@@ -57,9 +57,12 @@ const EvaluationScreen = () => {
         />
       </View>
       <View style={styles.bottom}>
-      <Pressable style={styles.button} onPress={toggleModal}>
-        <Text style={styles.buttonText}>Anleitungsvideo schauen</Text>
-      </Pressable>
+          <Button
+              title="Anleitungsvideo schauen"
+              onPress={toggleModal}
+              buttonStyle={styles.button}
+              titleStyle={styles.buttonText}
+            />
       <Modal
         options={{ presentation: 'fullscreen-modal' }}
         isVisible={isModalVisible}
@@ -74,17 +77,24 @@ const EvaluationScreen = () => {
             style={{ flex: 1 }}
           />
           <View style={{ alignItems: 'center' }}>
-            <Pressable style={styles.button} onPress={toggleModal}>
-              <Text style={styles.buttonText}>Schließen</Text>
-            </Pressable>
+
+              <Button
+                  title="Schließen"
+                  onPress={toggleModal}
+                  buttonStyle={styles.button}
+                  titleStyle={styles.buttonText}
+              />
           </View>
         </View>
       </Modal>
 
       <View>
-        <Pressable style={styles.button} onPress={handleEvaluierung}>
-          <Text style={styles.buttonText}>Evaluierungsübung starten</Text>
-        </Pressable>
+          <Button
+              title="Evaluierungsübung starten"
+              onPress={handleEvaluierung}
+              buttonStyle={styles.button}
+              titleStyle={styles.buttonText}
+          />
         {/* <Button title="Evaluierungsübung starten" onPress={handleEvaluierung} /> */}
       </View>
     </View>

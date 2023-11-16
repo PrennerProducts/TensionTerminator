@@ -14,7 +14,7 @@ const EvaluationBefore = () => {
     evaluationData.isTraining = 1;
     evaluationData.beforeAfterTraining = 0;
     evaluationData.printValues();
-    router.replace({ pathname: 'evaluationComponents/EvaluationScreen' });
+    router.push({ pathname: 'evaluationComponents/EvaluationScreen' });
   };
 
   return (
