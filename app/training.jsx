@@ -1,6 +1,6 @@
 import 'expo-router/entry';
-import { View, Text, Pressable, Button } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import { View, Text, Pressable, Button, Animated } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
 import {Link, useRouter} from 'expo-router';
 import styles from "./components/StyleSheet";
 
@@ -15,6 +15,7 @@ const TrainingScreen = () => {
     const [elements, setElements] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [intervalInput, setIntervalInput] = useState(null);
+    const fadeAnim = useRef(new Animated.Value(0)).current;
 
 
     useEffect(() => {
@@ -56,6 +57,7 @@ const TrainingScreen = () => {
           setIntervalInput(
             setInterval(() => {
               setCurrentIndex((prevIndex) => (prevIndex + 1) % elements.length);
+              fadeIn();
             }, 2000)
           );
         } else {
@@ -80,19 +82,38 @@ const TrainingScreen = () => {
         setPressableVisible(false);
       };
 
+      const fadeIn = () => {
+        console.log("Fade IN")
+        // Will change fadeAnim value to 1 in 5 seconds
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 3000,
+          useNativeDriver: true,
+        }).start();
+      };
+
+      const fadeOut = () => {
+        // Will change fadeAnim value to 0 in 3 seconds
+        console.log("Fade OUT")
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 10,
+          useNativeDriver: true,
+        }).start();
+      };
 
     return (
         <View style={styles.container}>
-            <View style={[{flex:2.5, width:'80%',justifyContent: 'center', paddingTop: 5,
-    alignItems: 'center',backgroundColor: elements[currentIndex]?.color || 'white' }]}>
+            <Animated.View style={[styles.fadingContainer,{flex:2.5, width:'80%',justifyContent: 'center', paddingTop: 5,
+                 alignItems: 'center',backgroundColor: elements[currentIndex]?.color || 'white' , opacity: fadeAnim}]}>
                 <Text style={{fontSize: 30, fontWeight: 'bold'}}>{elements[currentIndex]?.text || ''}</Text>
-            </View>
+            </Animated.View>
 
 
             <Text style={{fontSize: 60}}>{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</Text>
             <View style={styles.bottom}>
             {isPressableVisible && (
-                <Pressable                     onPress={() => {
+                <Pressable onPress={() => {
                         handleStart();
                     }}style={styles.button}>
 
