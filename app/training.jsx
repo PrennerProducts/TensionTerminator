@@ -52,7 +52,6 @@ const TrainingScreen = () => {
       }, []); 
 
       useEffect(() => {
-        // Display text and change background color at 2-second intervals
         if (isRunning) {
           setIntervalInput(
             setInterval(() => {
@@ -61,11 +60,9 @@ const TrainingScreen = () => {
             }, 2000)
           );
         } else {
-          // Clear the interval if not started or stopped
           clearInterval(intervalInput);
         }
     
-        // Clear the interval when the component unmounts
         return () => clearInterval(intervalInput);
       }, [elements, isRunning]);
 
@@ -84,7 +81,6 @@ const TrainingScreen = () => {
 
       const fadeIn = () => {
         console.log("Fade IN")
-        // Will change fadeAnim value to 1 in 5 seconds
         Animated.timing(fadeAnim, {
           toValue: 1,
           duration: 3000,
@@ -93,7 +89,6 @@ const TrainingScreen = () => {
       };
 
       const fadeOut = () => {
-        // Will change fadeAnim value to 0 in 3 seconds
         console.log("Fade OUT")
         Animated.timing(fadeAnim, {
           toValue: 0,
