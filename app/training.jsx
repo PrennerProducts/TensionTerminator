@@ -57,7 +57,7 @@ const TrainingScreen = () => {
             setInterval(() => {
               setCurrentIndex((prevIndex) => (prevIndex + 1) % elements.length);
               fadeIn();
-            }, 2000)
+            }, 8000)
           );
         } else {
           clearInterval(intervalInput);
@@ -83,16 +83,20 @@ const TrainingScreen = () => {
         console.log("Fade IN")
         Animated.timing(fadeAnim, {
           toValue: 1,
-          duration: 3000,
+          duration: 1000,
           useNativeDriver: true,
-        }).start();
+        }).start(({ finished }) => {
+          if (finished) {
+            setTimeout(() => fadeOut(), 3000); // Wait for 3 seconds before fading out
+          }
+        });
       };
 
       const fadeOut = () => {
         console.log("Fade OUT")
         Animated.timing(fadeAnim, {
           toValue: 0,
-          duration: 10,
+          duration: 3000,
           useNativeDriver: true,
         }).start();
       };
