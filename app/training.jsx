@@ -35,6 +35,7 @@ const TrainingScreen = () => {
 
     useEffect(() => {
         // Load data from local JSON file
+
         const fetchData = () => {
           try {
             const data = require('./data/inputgrp2.json');
@@ -68,6 +69,7 @@ const TrainingScreen = () => {
 
 
     const handleStop = () => {
+        setPressableVisible(true);
         setIsRunning(false);
         setSeconds(0);
         setMinutes(0);
@@ -81,10 +83,10 @@ const TrainingScreen = () => {
 
     return (
         <View style={styles.container}>
-    <View style={[styles.container, { backgroundColor: elements[currentIndex]?.color || 'white' }]}>
-        <Text style={styles.text}>{elements[currentIndex]?.text || ''}</Text>
-
-    </View>
+            <View style={[{flex:2.5, width:'80%',justifyContent: 'center', paddingTop: 5,
+    alignItems: 'center',backgroundColor: elements[currentIndex]?.color || 'white' }]}>
+                <Text style={{fontSize: 30, fontWeight: 'bold'}}>{elements[currentIndex]?.text || ''}</Text>
+            </View>
 
 
             <Text style={{fontSize: 60}}>{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</Text>
