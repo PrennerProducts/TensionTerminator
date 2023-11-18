@@ -38,6 +38,13 @@ const LoginPage = () => {
           </Pressable>
         </Link>
       </View>
+      <View style={styles.bottom}>
+        <Link href={'./training'} asChild>
+        <Pressable style={styles.button}>
+          <Text style={styles.buttonText}>Training starten</Text>
+          </Pressable>
+        </Link>
+      </View>
 
       {/*Verschiedene Varianten um ans Ziel zu kommen*/}
       {/*
