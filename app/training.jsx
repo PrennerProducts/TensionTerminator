@@ -1,5 +1,5 @@
 import 'expo-router/entry';
-import { View, Text, Pressable, Button, Animated } from 'react-native';
+import { View, Text, Pressable, Animated } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import {Link, useRouter} from 'expo-router';
 import styles from "./components/StyleSheet";
@@ -8,6 +8,7 @@ import styles from "./components/StyleSheet";
 
 const TrainingScreen = () => {
     const router = useRouter();
+
     const [isRunning, setIsRunning] = useState(false);
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
@@ -105,7 +106,7 @@ const TrainingScreen = () => {
         <View style={styles.container}>
             <Animated.View style={[styles.fadingContainer,{flex:2.5, width:'80%',justifyContent: 'center', paddingTop: 5,
                  alignItems: 'center',backgroundColor: elements[currentIndex]?.color || 'white' , opacity: fadeAnim}]}>
-                <Text style={{fontSize: 30, fontWeight: 'bold'}}>{elements[currentIndex]?.text || ''}</Text>
+                <Text style={{fontSize: 22, fontWeight: 'bold'}}>{elements[currentIndex]?.text || ''}</Text>
             </Animated.View>
 
 
