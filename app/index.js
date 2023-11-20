@@ -1,78 +1,70 @@
-import 'expo-router/entry';
-import {
-  View,
-  Text,
-  Pressable,
-  Button,
-  ImageBackground,
-  Image,
-} from 'react-native';
-import React from 'react';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import styles from './components/StyleSheet';
+import UserData from './classes/userData';
+import { useUserContext } from './components/userContextProvider';
+import React, { useEffect, useState } from 'react';
+import { resetAllData } from './services/storage';
 
+const WelcomeScreen = () => {
+  // User context provider
+  const {
+    username,
+    gameLevel,
+    points,
+    profileImageIndex,
+    setUsername,
+    setGameLevel,
+    setPoints,
+    setProfileImageIndex,
+    updateUserDetails,
+    updateProfileImageIndex,
+    updateUsername,
+    updateGameLevel,
+    updatePoints,
+  } = useUserContext();
 
-const LoginPage = () => {
-  const router = useRouter();
+  // user instance
+  const [user, setUser] = useState(new UserData());
 
-  const handlePress = () => {
-    router.replace('tabs');
-  };
+  // router
+  const navigation = useRouter();
+
+  // useEffect(() => {
+  //   const resetDataAndInitialize = async () => {
+  //     await resetAllData(); // Daten zurücksetzen
+  //   };
+
+  //   resetDataAndInitialize();
+  // }, []);
+
+  // init userData
+  // useEffect(() => {
+  //   const initializeUser = async () => {
+  //     await user.initialize();
+  //     await user.load();
+  //     await updateProfileImageIndex(user.getprofilepicture());
+  //     await updateUsername(user.getUserName());
+  //     await updateGameLevel(user.getLevel());
+  //     await updatePoints(user.getPoints());
+  //   };
+
+  //   initializeUser();
+  // }, []);
+
+  useEffect(() => {
+    setTimeout(async () => {
+      navigation.replace('/home');
+    }, 1000);
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../assets/logo.png')}
-        style={{
-          position: 'absolute',
-          width: '90%',
-          resizeMode: 'contain',
-          top: 20,
-        }}
-      />
-
-      <View style={styles.bottom}>
-        <Link href={'./QRScan'} asChild>
-          <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>App Starten</Text>
-          </Pressable>
-        </Link>
-      </View>
-      <View style={styles.bottom}>
-        <Link href={'./training'} asChild>
-        <Pressable style={styles.button}>
-          <Text style={styles.buttonText}>Training starten</Text>
-          </Pressable>
-        </Link>
-      </View>
-
-      {/*Verschiedene Varianten um ans Ziel zu kommen*/}
-      {/*
-
-        <Button title="App Starten" onPress= {() => router.push('QRscan')}>
-        </Button>
-
-        handlePress geht zu home
-        <Pressable style={{ top: 0 }} onPress= {() => router.push('QRscan')}>
-            <Text style={{ top: 0 }}>App Starten</Text>
-        </Pressable>
-
-        <Link href={'/QRscan'} asChild>
-            <Pressable>
-                <Text>App Starten</Text>
-            </Pressable>
-        </Link>
-
-              <Link href={"/criteria"} asChild>
-        <Pressable>
-          <Text>Kriterien</Text>
-        </Pressable>
-      </Link>
-
-*/}
-
+      <Image source={require('../assets/logo.png')} />
+      <Image source={require('../assets/gifs/loading.gif')} />
+      <Text>Lade...</Text>
     </View>
   );
 };
 
-export default LoginPage;
+export default WelcomeScreen;

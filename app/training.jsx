@@ -7,7 +7,7 @@ import styles from "./components/StyleSheet";
 
 
 const TrainingScreen = () => {
-    const router = useRouter();
+  const router = useRouter();
 
     const [isRunning, setIsRunning] = useState(false);
     const [seconds, setSeconds] = useState(0);
