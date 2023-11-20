@@ -1,39 +1,32 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Button,
-  Image,
-  Alert
-} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, Dimensions} from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import * as FileSystem from 'expo-file-system';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { evaluationData } from './evaluationData';
+
+// Komponente zur Winkelerkennung. Konsolenlogs und Landmark-Ausgabe wurden auskommentiert...
 
 const evaluationYR = () => {
   const router = useRouter();
-  
+  const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
   const [hasPermission, setHasPermission] = useState(null);
-  const [landmarkData, setLandmarkData] = useState([]);
   const [ScreenText, setScreenText] = useState('');
+  const exercise = evaluationData.exercise; // 0: Bewegung 1; 1: Bewegung 2
+  const [yaw, setYaw] = useState(0); // yaw = Rotation
+  const [roll, setRoll] = useState(0); // roll = Neigung
 
-  const exercise = evaluationData.exercise; // 0: Yaw, 1: Roll
-
-  const [yaw, setYaw] = useState(0);
-  const [isYawStable, setIsYawStable] = useState(true);
-
-  // Parameter fuer Feinjustierung
+  // Parameter zur Feinjustierung
   const minYaw = 15; // Ab wieviel Grad soll Rotation erkannt werden... 
   const minRoll = 7; // Ab wieviel Grad soll Neigung erkannt werden... 
   const maxCounter = 1; // Zaehler fuer Auto Exit
-  const detectionInterval = 100; // Abtastrate in Milli-Sekunden
+  const detectionInterval = 30; // Abtastrate in Milli-Sekunden
+  const minDegreeForPic = 2.5; // Wieviel Grad Winkel zwischen 2 Fotos
+  const minTimeForPic = 200; // Wieviel Millisekunden zwischen 2 Fotos
 
-  const [roll, setRoll] = useState(0);
-  const [isRollStable, setIsRollStable] = useState(true);
+  const shouldTakePictures = evaluationData.shouldTakePictures; // Zum Deaktivieren der Foto-Logik
+  const [savedTimestamp, setSavedTimestamp] = useState(new Date());
 
   const [maxR, setMaxR] = useState(0);
   const [maxL, setMaxL] = useState(0);
@@ -45,9 +38,10 @@ const evaluationYR = () => {
   const [evaluationSuccess, setEvaluationSuccess] = useState(false);
   const mutex = useRef(false);
 
-  const [instruction, setInstruction] = useState('');
+  const [instruction, setInstruction] = useState('Anleitungstext');
   const [counterR, setCounterR] = useState(0);
   const [counterL, setCounterL] = useState(0);
+  // const [landmarkData, setLandmarkData] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -61,10 +55,11 @@ const evaluationYR = () => {
 
   // Foto Logik
   const takePicture = async () => {
+    if (shouldTakePictures === false) return;
     const capturePromise = new Promise(async (resolve, reject) => {
       if (mutex.current) {return;}
       mutex.current = true;
-      console.log('mutex ' + mutex.current);
+      //console.log('mutex ' + mutex.current);
       try {
         const options = { quality: 0.2, base64: false, skipProcessing: true };
         const photo = await cameraRef.current.takePictureAsync(options);
@@ -82,9 +77,9 @@ const evaluationYR = () => {
           from: capturedImage.uri,
           to: `${FileSystem.documentDirectory}${evaluationData.imageName}`,
         });
-        console.log('Image captured and stored: ' + evaluationData.imageName);
+        //console.log('Image captured and stored: ' + evaluationData.imageName);
         mutex.current = false;
-        console.log('mutex ' + mutex.current);
+        //console.log('mutex ' + mutex.current);
       } catch (error) {
         console.error('Error capturing and storing image:', error);
       }
@@ -96,29 +91,43 @@ const evaluationYR = () => {
     if (!evaluationActive) return;
     if (exercise === 0){
       updateLogicBasedOnCounters();
-      if (!isYawStable) {return;}
       if (yaw > minYaw && yaw < 180) {
         setCounterR(1);
-        console.log(`Current YawR: ${yaw}, Max YawR: ${maxR}`);
+        //console.log(`Current YawR: ${yaw}, Max YawR: ${maxR}`);
         setScreenText('-> ' + yaw + '°');
         setMaxR((prev) => {
           if (yaw > prev) {
-            console.log('New MaxYR reached');
+            //console.log('New MaxYR reached');
             evaluationData.imageName = 'MaxYR.jpg';
-            takePicture(); 
+            const diff = yaw-prev;
+            //console.log(diff);
+            const timestamp = new Date();
+            const timeDifference = timestamp - savedTimestamp;
+            //console.log(diff, timestamp.toISOString(), savedTimestamp, timeDifference);
+            if (diff > minDegreeForPic && timeDifference > minTimeForPic) {
+              //console.log('Picture taken', diff, timestamp.toISOString());
+              takePicture();
+              setSavedTimestamp(timestamp); 
+            }
           }
           return Math.max(prev, yaw);
         });
       } else if (yaw < (360-minYaw) && yaw > 180) {
         setCounterL(1);
         let yawL = 360 - yaw;
-        console.log(`Current YawL: ${yawL}, Max YawL: ${maxL}`);
+        //console.log(`Current YawL: ${yawL}, Max YawL: ${maxL}`);
         setScreenText('<- ' + yawL + '°');
         setMaxL((prev) => {
           if (yawL > prev) {
-            console.log('New MaxYL reached');
+            //console.log('New MaxYL reached');
             evaluationData.imageName = 'MaxYL.jpg';
-            takePicture(); 
+            const diff = yawL-prev;
+            const timestamp = new Date();
+            const timeDifference = timestamp - savedTimestamp;
+            if (diff > minDegreeForPic && timeDifference > minTimeForPic) {
+              takePicture();
+              setSavedTimestamp(timestamp); 
+            }
           }
           return Math.max(prev, yawL);
         });
@@ -134,29 +143,40 @@ const evaluationYR = () => {
     if (!evaluationActive) return;
     if (exercise === 1){
       updateLogicBasedOnCounters();
-      if (!isRollStable) {return;}
       if (roll > minRoll && roll < 80) {
         setCounterR(counterR + 1);
-        console.log(`Current RollR: ${roll}, Max RollR: ${maxR}`);
+        //console.log(`Current RollR: ${roll}, Max RollR: ${maxR}`);
         setScreenText('-> ' + roll + '°');
         setMaxR((prev) => {
           if (roll > prev) {
-            console.log('New MaxRR reached');
+            //console.log('New MaxRR reached');
             evaluationData.imageName = 'MaxRR.jpg';
-            takePicture(); 
+            const diff = roll-prev;
+            const timestamp = new Date();
+            const timeDifference = timestamp - savedTimestamp;
+            if (diff > minDegreeForPic && timeDifference > minTimeForPic) {
+              takePicture();
+              setSavedTimestamp(timestamp); 
+            } 
           }
           return Math.max(prev, roll);
         });
       } else if (roll < (360-minRoll) && roll > 280) {
         setCounterL(counterL + 1);
         let rollL = 360 - roll;
-        console.log(`Current RollL: ${rollL}, Max RollL: ${maxL}`);
+        //console.log(`Current RollL: ${rollL}, Max RollL: ${maxL}`);
         setScreenText('<- ' + rollL + '°');
         setMaxL((prev) => {
           if (rollL > prev) {
-            console.log('New MaxRL reached');
+            //console.log('New MaxRL reached');
             evaluationData.imageName = 'MaxRL.jpg';
-            takePicture(); 
+            const diff = rollL-prev;
+            const timestamp = new Date();
+            const timeDifference = timestamp - savedTimestamp;
+            if (diff > minDegreeForPic && timeDifference > minTimeForPic) {
+              takePicture();
+              setSavedTimestamp(timestamp); 
+            }
           }
           return Math.max(prev, rollL);
         });
@@ -167,7 +187,7 @@ const evaluationYR = () => {
     }
   }, [roll]);
 
-  // 
+  // Counter Logik
   const updateLogicBasedOnCounters = () => {
     if (!evaluationActive) return;
     if (counterR === 0 && counterL === 0) {
@@ -204,11 +224,11 @@ const evaluationYR = () => {
       if (exercise === 0) setYaw(face.yawAngle.toFixed(0));
       else if (exercise === 1) setRoll(face.rollAngle.toFixed(0));
       if (
-        face.LEFT_EYE && face.RIGHT_EYE &&
-        face.NOSE_BASE && 
-        face.BOTTOM_MOUTH &&
-        face.LEFT_MOUTH && face.RIGHT_MOUTH &&
-        face.LEFT_EAR && face.RIGHT_EAR
+        face.LEFT_EYE && face.RIGHT_EYE && face.BOTTOM_MOUTH 
+        //&&
+        //face.NOSE_BASE && 
+        //face.LEFT_MOUTH && face.RIGHT_MOUTH &&
+        //face.LEFT_EAR && face.RIGHT_EAR
       ) {
         const leftEye = face.RIGHT_EYE; 
         const rightEye = face.LEFT_EYE;
@@ -221,14 +241,14 @@ const evaluationYR = () => {
           bottomX: bottomMouth.x, bottomY: bottomMouth.y,
         };
         setLineCoordinates(lineCoordinates);
-        const landmarkData = {
-          leftEye: face.LEFT_EYE, rightEye: face.RIGHT_EYE,
-          noseBase: face.NOSE_BASE,
-          bottomMouth: face.BOTTOM_MOUTH,
-          leftMouth: face.LEFT_MOUTH, rightMouth: face.RIGHT_MOUTH,
-          leftEar: face.LEFT_EAR, rightEar: face.RIGHT_EAR,
-        };
-        setLandmarkData(landmarkData);
+        // const landmarkData = {
+        //   leftEye: face.LEFT_EYE, rightEye: face.RIGHT_EYE,
+        //   noseBase: face.NOSE_BASE,
+        //   bottomMouth: face.BOTTOM_MOUTH,
+        //   leftMouth: face.LEFT_MOUTH, rightMouth: face.RIGHT_MOUTH,
+        //   leftEar: face.LEFT_EAR, rightEar: face.RIGHT_EAR,
+        // };
+        // setLandmarkData(landmarkData);
       }
     }
   };
@@ -285,14 +305,14 @@ const evaluationYR = () => {
       setScreenText('');
       setInstruction('');
       setLineCoordinates(null);
-      const landmarkData = {
-          leftEye: 0, rightEye: 0, noseBase: 0, bottomMouth: 0, leftMouth: 0, rightMouth: 0, leftEar: 0, rightEar: 0,
-        };
-        setLandmarkData(landmarkData);
+      // const landmarkData = {
+      //     leftEye: 0, rightEye: 0, noseBase: 0, bottomMouth: 0, leftMouth: 0, rightMouth: 0, leftEar: 0, rightEar: 0,
+      //   };
+      //   setLandmarkData(landmarkData);
       console.log("Values resetted!");
   };
 
-  // Kurze Verzoergerung am Anfang, damit Kamera Zeit hat Gesicht zu erkennen (+100 ms)
+  // Kurzes Warten am Anfang, damit Kamera Zeit hat, Gesicht zu erkennen (+100 ms)
   useEffect(() => {
     if (!evaluationActive) {
       setTimeout(() => {
@@ -326,18 +346,52 @@ const evaluationYR = () => {
           <Text style={styles.instructionText}>{instruction}</Text>
           {lineCoordinates && (
             <>
-              {/* White Line */}
+              {/* Fadenkreuz: */}
+              {/* Linie durch Augenmitte vertikal */}
               <View
                 style={{
                   position: 'absolute',
                   left: lineCoordinates.eyeCenterX,
-                  top: lineCoordinates.eyeCenterY - 500,
+                  top: lineCoordinates.eyeCenterY - 50,
+                  width: 2,
+                  height: 100,
+                  backgroundColor: '#10069f',
+                }}></View>
+
+              {/* Linie durch Augenmitte horizontal */}
+              <View
+                style={{
+                  position: 'absolute',
+                  left: lineCoordinates.eyeCenterX - 50,
+                  top: lineCoordinates.eyeCenterY,
+                  width: 100,
+                  height: 2,
+                  backgroundColor: '#10069f',
+                }}></View>
+
+              {/* Linien vertikal und horizontal zur Bildmitte */}
+              <View
+                style={{
+                  position: 'absolute',
+                  left: (screenWidth - 1000) / 2,
+                  top: (screenHeight - 1) / 2,
+                  width: 1000,
+                  height: 1,
+                  backgroundColor: 'white',
+                }}
+              ></View>
+              <View
+                style={{
+                  position: 'absolute',
+                  left: (screenWidth - 1) / 2,
+                  top: (screenHeight - 1000) / 2,
                   width: 1,
                   height: 1000,
                   backgroundColor: 'white',
                 }}
-              ></View>
-              {/* Red Line */}
+                ></View>
+
+              {/* Linie zwischen Augen 
               <View
                 style={{
                   position: 'absolute',
@@ -351,7 +405,8 @@ const evaluationYR = () => {
                   transformOrigin: '0% 0%',
                 }}
               ></View>
-              {/* Green Line */}
+              */}
+              {/* Linie Augenmitte zu Nase 
               <View
                 style={{
                   position: 'absolute',
@@ -364,7 +419,9 @@ const evaluationYR = () => {
                   transformOrigin: '0% 0%',
                 }}
               ></View>
-              {/* Dots*/}
+              */}
+
+              {/* Dots
               {Object.keys(landmarkData).map((landmarkName, index) => (
                 <View
                   key={index}
@@ -374,11 +431,13 @@ const evaluationYR = () => {
                     top: landmarkData[landmarkName].y,
                     width: 4,
                     height: 4,
-                    backgroundColor: 'blue',
+                    backgroundColor: '#10069f',
                     borderRadius: 2,
                   }}
                 ></View>
               ))}
+              */}
+
             </>
           )}
         </Camera>
@@ -392,17 +451,18 @@ const evaluationYR = () => {
           <Text style={styles.exitButtonText}>Abbrechen</Text>
         </TouchableOpacity>
       )}
+      {/* Button zum Zurücksetzen der Werte
       {evaluationStarted && (
         <TouchableOpacity onPress={resetValues} style={styles.resetButton}>
           <Text style={styles.exitButtonText}>Zurücksetzen</Text>
         </TouchableOpacity>
       )}
+      */}
       {evaluationStarted && (
-        <View style={styles.textContainer}>
-          <Text style={styles.faceDesc}>{ScreenText}</Text>
-          <Text style={styles.maxValues}>
-            Max L: {maxL}; Max R: {maxR}
-          </Text>
+        <View style={styles.maxValuesContainer}>
+            <Text style={styles.maxValuesL}>Max L: {maxL}° </Text>
+            <Text style={styles.faceDesc}>{ScreenText}</Text>
+            <Text style={styles.maxValuesR}>Max R: {maxR}° </Text>
         </View>
       )}
       {evaluationSuccess && (
@@ -428,7 +488,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     padding: 10,
-    backgroundColor: 'blue',
+    backgroundColor: '#10069f',
     margin: 20,
   },
   camera: {
@@ -438,7 +498,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 20,
     left: 20,
-    backgroundColor: 'blue',
+    backgroundColor: '#10069f',
     padding: 10,
     borderRadius: 5,
   },
@@ -475,17 +535,28 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
   },
-  maxValues: {
-    fontSize: 20,
-    color: 'yellow',
+  maxValuesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+  },
+  maxValuesL: {
+    fontSize: 24,
+    textAlign: 'left',
+    color: 'green',
+  },
+  maxValuesR: {
+    fontSize: 24,
+    textAlign: 'right',
+    color: 'orange',
   },
   instructionText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: 'black',
-    position: 'absolute',
-    top: 100,
-    left: 20,
+    justifyContent: 'center',
+    fontSize: 24,
+    fontWeight: '700',
+    textAlign: 'center',
+    top: '20%',
+    color: '#10069f',
   }
 });
 

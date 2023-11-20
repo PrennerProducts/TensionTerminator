@@ -39,8 +39,8 @@ class UserData {
       console.log('Vor Zuweisung: ', myObj.profilepicture);
       this.profilepicture = myObj.profilepicture ?? 0;
       console.log('Nach Zuweisung: ', this.profilepicture);
-      this.level = myObj.level ?? 0;
-      this.points = myObj.points ?? 0;
+      this.level = myObj.level ?? 42;
+      this.points = myObj.points ?? 69;
       this.sendData = myObj.sendData ?? true;
       // this.observers = myObj.observers ?? [];
     } catch (e) {

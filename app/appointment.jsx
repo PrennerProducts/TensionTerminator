@@ -1,5 +1,5 @@
-import "expo-router/entry";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import 'expo-router/entry';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import {
   View,
   Text,
@@ -8,17 +8,17 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { Link, useRouter } from "expo-router";
-import * as Notifications from "expo-notifications";
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Link, useRouter } from 'expo-router';
+import * as Notifications from 'expo-notifications';
 
-import styles from "./components/StyleSheet";
+import styles from './components/StyleSheet';
 
 const Appointment = () => {
-  const [OurfinalStatus, setFinalStatus] = useState(null);
+  const [ourFinalStatus, setFinalStatus] = useState(null);
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState("date");
+  const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
   Notifications.setNotificationHandler({
@@ -32,36 +32,36 @@ const Appointment = () => {
   const router = useRouter();
 
   //ToDO: Check Permissions to send Notifications
-  getPermissions = async () => {
+  let getPermissions = async () => {
     const { status } = await Notifications.getPermissionsAsync();
-    console.log("getPermissions: " + status);
-    if (status === "granted") {
+    console.log('getPermissions: ' + status);
+    if (status === 'granted') {
       return true;
     } else {
       return false;
     }
   };
 
-  getPermissionAndSchedule = async () => {
+  let getPermissionAndSchedule = async () => {
     //Creating a channel for the notifications
-    console.log("Setting Channel");
+    console.log('Setting Channel');
 
-    if (Platform.OS === "android") {
-      await Notifications.setNotificationChannelAsync("Trainings", {
-        name: "Trainings",
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('Trainings', {
+        name: 'Trainings',
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
+        lightColor: '#FF231F7C',
       });
     }
 
-    console.log("Setting Channel finished");
-    if (Platform.OS === "android") {
-      await Notifications.setNotificationChannelAsync("default", {
-        name: "default",
+    console.log('Setting Channel finished');
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
+        lightColor: '#FF231F7C',
       });
     }
 
@@ -75,16 +75,16 @@ const Appointment = () => {
       // }
       const { status } = await Notifications.requestPermissionsAsync();
 
-      finalStatus = status;
-      if (finalStatus !== "denied") {
+      let finalStatus = status;
+      if (finalStatus !== 'denied') {
         return;
       }
-      if (finalStatus !== "granted") {
-        alert("Final Status not granted\nStatus: " + finalStatus);
+      if (finalStatus !== 'granted') {
+        alert('Final Status not granted\nStatus: ' + finalStatus);
         return;
       }
     } else {
-      alert("Must use physical device for Push Notifications");
+      alert('Must use physical device for Push Notifications');
     }
 
     // const { status } = await Notifications.requestPermissionsAsync();
@@ -102,18 +102,18 @@ const Appointment = () => {
     setDate(new Date());
   }, []);
 
-  setAppointment = async () => {
+  let setAppointment = async () => {
     //we need to save the trainingstype and the dateTime. Probably we can jump to it?
     //DemoAppointment in 3 seconds
-    console.log("Setting Appointment");
+    console.log('Setting Appointment');
     const status = await getPermissions();
     if (status) {
       await schedulePushNotification();
-      console.log("Appointment set");
+      console.log('Appointment set');
     } else {
       Alert.alert(
-        "Pushbenachrichtigung",
-        "Wir benötigen deine Erlaubnis um dich an dein Training zu erinnern.\n\n Möchtest du die Erlaubnis erteilen?",
+        'Pushbenachrichtigung',
+        'Wir benötigen deine Erlaubnis um dich an dein Training zu erinnern.\n\n Möchtest du die Erlaubnis erteilen?',
         [
           // {
           //     text: 'Nochmal fragen',
@@ -123,17 +123,17 @@ const Appointment = () => {
           //     },
           // },
           {
-            text: "Nein",
+            text: 'Nein',
             onPress: () => {
               // saveData('pushPermission', false);
-              router.push("/");
-              console.log("Cancel Pressed");
+              router.replace('home');
+              console.log('Cancel Pressed');
             },
-            style: "cancel",
+            style: 'cancel',
             isPreferred: true,
           },
           {
-            text: "Ja",
+            text: 'Ja',
             onPress: async () => {
               // saveData('pushPermission', true);
               await getPermissionAndSchedule();
@@ -146,21 +146,21 @@ const Appointment = () => {
 
   async function schedulePushNotification() {
     // await addChannel();
-    console.log("Scheduling Push Notification");
+    console.log('Scheduling Push Notification');
     let seconds = Math.round(
       date.getTime() / 1000 - new Date().getTime() / 1000
     );
-    console.log("Seconds: " + seconds);
-    secondstoEvent = await Notifications.scheduleNotificationAsync({
+    console.log('Seconds: ' + seconds);
+    let secondstoEvent = await Notifications.scheduleNotificationAsync({
       content: {
-        title: "Trainingserinnerung",
-        body: "Hey, es ist zeit für dein Training!",
-        data: { data: "TrainingsType" },
+        title: 'Trainingserinnerung',
+        body: 'Hey, es ist zeit für dein Training!',
+        data: { data: 'TrainingsType' },
       },
 
-      trigger: { seconds: seconds, channelId: "Trainings" },
+      trigger: { seconds: seconds, channelId: 'Trainings' },
     });
-    router.push("/");
+    router.replace('home');
   }
 
   //DateTimePickerFunctions
@@ -176,11 +176,11 @@ const Appointment = () => {
   };
 
   const showDatepicker = () => {
-    showMode("date");
+    showMode('date');
   };
 
   const showTimepicker = () => {
-    showMode("time");
+    showMode('time');
   };
 
   return (
@@ -190,9 +190,9 @@ const Appointment = () => {
         style={[
           styles.text,
           {
-            textAlign: "center",
+            textAlign: 'center',
             fontSize: 20,
-            fontWeight: "bold",
+            fontWeight: 'bold',
           },
         ]}
       >
@@ -209,9 +209,17 @@ const Appointment = () => {
       </View>
 
       <View style={styles.section}>
-        <Button onPress={showDatepicker} title="Datum ändern"></Button>
+        <Button
+          color="#10069f"
+          onPress={showDatepicker}
+          title="Datum ändern"
+        ></Button>
         <Text> </Text>
-        <Button onPress={showTimepicker} title="Uhrzeit ändern"></Button>
+        <Button
+          color="#10069f"
+          onPress={showTimepicker}
+          title="Uhrzeit ändern"
+        ></Button>
       </View>
       {show && (
         <DateTimePicker
@@ -230,47 +238,5 @@ const Appointment = () => {
     </View>
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingHorizontal: 20,
-//   },
-//   header: {
-//     fontSize: 20,
-//     fontWeight: "bold",
-//     textAlign: "center",
-//     marginVertical: 20,
-//     color: "#10069F",
-//   },
-//   button: {
-//     alignItems: "center",
-//     backgroundColor: "#10069F",
-//     borderRadius: 10,
-//     padding: 10,
-//     marginVertical: 20,
-//   },
-//   buttonFont: {
-//     color: "white",
-//   },
-//   buttonBottom: {
-//     marginTop: -30,
-//   },
-//   text: {
-//     fontSize: 16,
-//     marginVertical: 20,
-//   },
-//   text2: {
-//     fontSize: 12,
-//   },
-//   section: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//   },
-//   checkbox: {
-//     margin: 8,
-//     color: "#111111",
-//   },
-// });
 
 export default Appointment;

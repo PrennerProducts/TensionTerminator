@@ -7,12 +7,12 @@ import {
   Image,
   Pressable,
 } from 'react-native';
-
 import React, { useState, useEffect, useRef } from 'react';
 import { WebView } from 'react-native-webview';
 import Modal from 'react-native-modal';
 import { Link, useRouter } from 'expo-router';
 import { evaluationData } from './evaluationData';
+import styles from '../components/StyleSheet';
 
 const EvaluationScreen = () => {
   const router = useRouter();
@@ -32,14 +32,13 @@ const EvaluationScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Evaluierungsübungen Anleitung</Text>
-      <Text>HIER KOMMT NOCH EINE DETEILIERTERE ANLEITUNG HIN</Text>
-      <Text>Die Übungen werden in 2 schritten durchgführt:</Text>
-      <Text>Erste Übung Yaw (Kopfrotation)</Text>
-      <Text>Zweite Übung Rol (Kopf zu Schulterbewegung):</Text>
+      <Text style={{fontSize: 25, marginTop: 20}}>Evaluierungsübungen Anleitung {"\n"} {"\n"}</Text>
+      <Text style={styles.text}>HIER KOMMT NOCH EINE DETEILIERTERE ANLEITUNG HIN {"\n"} {"\n"}
+      Die Übungen werden in 2 Schritten durchgführt: {"\n"}
+      + Erste Übung Yaw (Kopfrotation) {"\n"}
+      + Zweite Übung Rol (Kopf zu Schulterbewegung):</Text>
 
-      <Text>AnleitungsViedeo anschauen:</Text>
-      {/* Hier das Video einbetten  url: https://vimeo.com/853027148?share=copy */}
+
       <View
         style={{
           flexDirection: 'row',
@@ -57,7 +56,7 @@ const EvaluationScreen = () => {
           style={{ width: 100, height: 100 }}
         />
       </View>
-
+      <View style={styles.bottom}>
       <Pressable style={styles.button} onPress={toggleModal}>
         <Text style={styles.buttonText}>Anleitungsvideo schauen</Text>
       </Pressable>
@@ -82,133 +81,15 @@ const EvaluationScreen = () => {
         </View>
       </Modal>
 
-      <View style={{ marginTop: 150 }}>
+      <View>
         <Pressable style={styles.button} onPress={handleEvaluierung}>
           <Text style={styles.buttonText}>Evaluierungsübung starten</Text>
         </Pressable>
         {/* <Button title="Evaluierungsübung starten" onPress={handleEvaluierung} /> */}
       </View>
     </View>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'grey',
-  },
-  startScreen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  startButton: {
-    fontSize: 20,
-    color: 'white',
-    padding: 10,
-    backgroundColor: 'blue',
-  },
-  camera: {
-    flex: 1,
-  },
-  exitButton: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-  },
-  exitButtonText: {
-    fontSize: 16,
-    color: 'white',
-  },
-  textContainer: {
-    position: 'absolute',
-    bottom: 16,
-    left: 16,
-  },
-  faceDesc: {
-    fontSize: 20,
-    color: 'white',
-  },
-  maxValues: {
-    fontSize: 20,
-    color: 'yellow',
-  },
-
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-  },
-  bottom: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    bottom: '10%',
-  },
-  button: {
-    display: 'flex',
-    height: 62,
-    width: 300,
-    //        padding: 10,
-    backgroundColor: '#0650b0',
-    borderRadius: 20,
-    marginTop: '10%',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#ffffff',
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: '700',
-    textAlign: 'center',
-    top: '5%',
-  },
-  top: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    top: '5%',
-    backgroundColor: '#ffffff',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  roundButton: {
-    width: 60,
-    color: '#640a12',
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 20,
-    color: '#10069F',
-  },
-  buttonBottom: {
-    marginTop: -30,
-  },
-  text: {
-    fontSize: 16,
-    marginVertical: 20,
-  },
-  section: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  checkbox: {
-    margin: 8,
-    color: '#111111',
-  },
-  paragraph: {
-    margin: 8,
-    width: '85%',
-    fontWeight: 'bold',
-  },
-});
 
 export default EvaluationScreen;

@@ -13,17 +13,16 @@ const styles = StyleSheet.create({
   },
   button: {
     display: 'flex',
-    height: 62,
-    width: 300,
-    //        padding: 10,
-    backgroundColor: '#0650b0',
-    borderRadius: 20,
-    marginTop: '10%',
+    height: '9%',
+    minHeight: 50,
+    minWidth: '90%',
+    backgroundColor: '#10069f',
+    borderRadius: 10,
+    marginTop: '5%',
     justifyContent: 'center',
   },
   buttonText: {
-    fontSize: 25,
-    fontWeight: 'bold',
+    fontSize: 20,
     textAlign: 'center',
     color: '#ffffff',
   },
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
     color: '#640a12',
   },
   header: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 20,
@@ -83,6 +82,18 @@ const styles = StyleSheet.create({
   },
   switchtext: {
     marginRight: 10,
+  },
+  box: {
+    flex: 1,
+    marginTop: 10,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#10069F',
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: '#fffff',
   },
 });
 export default styles;
