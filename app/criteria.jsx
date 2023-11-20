@@ -77,19 +77,18 @@ const criteriaScreen = () => {
         <Text style={styles.text}>
           Ich habe im Nacken-, Schulter/Arm oder Rückenbereich
         </Text>
-        {myCheckBox2("keine frischen Verletzungen")}
-        {myCheckBox2("keine Knochenbrücke")}
-        {myCheckBox2("keine Wunden bzw. starke Hautreizungen")}
-        {myCheckBox2("keine Haut Tumor oder Metastasierungen")}
+        {myCheckBox2("keine frischen Verletzungen.")}
+        {myCheckBox2("keine Knochenbrücke.")}
+        {myCheckBox2("keine Wunden bzw. starke Hautreizungen.")}
+        {myCheckBox2("keine Haut Tumor oder Metastasierungen.")}
         <Text style={styles.text}>Es liegt</Text>
-        {myCheckBox2("keine Schwangerschaft ab dem 6. Monat")}
+        {myCheckBox2("keine Schwangerschaft ab dem 6. Monat vor.")}
         {myCheckBox2(
-          "keine Neurologische Erkrankung welche auf mechanische Einwirkung reagieren (z.B. Epilepsie, Schwindel)"
+          "keine neurologische Erkrankung welche auf mechanische Einwirkung reagiert (z.B. Epilepsie, Schwindel) vor."
         )}
         {myCheckBox2(
-          "keine Sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht"
+          "keine sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht vor."
         )}
-        <Text style={styles.text}>vor.</Text>
       </ScrollView>
 
       <View style={[styles.bottom, { flex: 0, marginTop: "3%", bottom: "3%" }]}>
