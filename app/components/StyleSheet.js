@@ -23,13 +23,16 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
+//    fontSize: 13,
+//    fontFamily: 'Pano B',
     textAlign: 'center',
     color: '#ffffff',
   },
   title: {
-    fontSize: 30,
+    fontSize: 20,
+//    fontFamily: 'Pano B',
     fontWeight: '700',
-    textAlign: 'center',
+    textAlign: 'left',
     top: '5%',
   },
   top: {
@@ -47,8 +50,9 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 24,
+//    fontFamily: 'Pano B',
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'left',
     marginVertical: 20,
     color: '#10069F',
   },
@@ -57,7 +61,14 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+//    fontFamily: 'Loew Next R',
     marginVertical: 20,
+  },
+  link: {
+    fontSize: 16,
+//    fontFamily: 'Loew Next R',
+    marginVertical: 20,
+    textDecorationLine: 'underline',
   },
   section: {
     flexDirection: 'row',
@@ -70,7 +81,8 @@ const styles = StyleSheet.create({
   paragraph: {
     margin: 8,
     width: '85%',
-    fontWeight: 'bold',
+//    fontFamily: 'Loew Next B',
+    fontSize: 16,
   },
   switchcontainer: {
     flexDirection: 'row', // Elemente nebeneinander
@@ -95,5 +107,24 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#fffff',
   },
+  thumbnail: {
+    width: '100%',
+    resizeMode: 'contain',
+    height: 200
+  },
+  thumbnailContainer: {
+    position: 'relative',
+  },
+
+  playIconContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+
 });
 export default styles;
