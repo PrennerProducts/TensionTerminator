@@ -87,7 +87,7 @@ const criteriaScreen = () => {
           "keine neurologische Erkrankung vor, welche auf mechanische Einwirkung reagiert (z.B. Epilepsie, Schwindel)."
         )}
         {myCheckBox2(
-          "keine sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht vor."
+          "keine sonstige med. Gegebenheit vor, welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht."
         )}
       </ScrollView>
 
