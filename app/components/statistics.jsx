@@ -28,13 +28,45 @@ import {
 } from 'victory-native';
 
 import DropDownPicker from 'react-native-dropdown-picker';
+import { evaluationData } from '../evaluationComponents/evaluationData';
+import SlotMachine from 'react-native-slot-machine';
+import { useUserContext } from './userContextProvider';
+import DrawingY from '../evaluationComponents/drawingY';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 const statistics = () => {
   const date = new Date();
+
+  // highscore Yaw Roll
+  const imageSourceR = require('../../assets/images/HeadT.png');
+  const imageSourceY = require('../../assets/images/HeadF.png');
+  const highscoreYL = 42;
+  const highscoreYR = 41;
+  const highscoreRL = 30;
+  const highscoreRR = 29;
+
+  // GameLevel
+  const [highestLevel, setHighestLevel] = useState(0);
+  // User Context Provider
+  const {
+    username,
+    gameLevel,
+    points,
+    profileImageIndex,
+    sendData,
+    updateUserDetails,
+    updateProfileImageIndex,
+    updateUsername,
+    updateGameLevel,
+    updatePoints,
+    updateSendData,
+  } = useUserContext();
+
+  // Bar Chart
+  const [selectedChart, setSelectedChart] = useState('Week'); // Standardmäßig auf 'Week' gesetzt
+
   //dropdown picker
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(0);
-  const [selectedChart, setSelectedChart] = useState('WochenChart');
 
   const months = [
     'Jan',
@@ -50,7 +82,13 @@ const statistics = () => {
     'Nov',
     'Dez',
   ];
-  barChartData = [
+  barChartDataMonth = [
+    { x: 'w1', y: 310 },
+    { x: 'w2', y: 512 },
+    { x: 'w3', y: 48 },
+    { x: 'w4', y: 183 },
+  ];
+  barChartDataYear = [
     { x: 'Jan', y: 8 },
     { x: 'Feb', y: 63 },
     { x: 'Mar', y: 183 },
@@ -64,6 +102,16 @@ const statistics = () => {
     { x: 'Nov', y: 183 },
     { x: 'Dez', y: 253 },
   ];
+  barChartDataWeek = [
+    { x: 'Mo', y: 8 },
+    { x: 'Di', y: 63 },
+    { x: 'Mi', y: 183 },
+    { x: 'Do', y: 253 },
+    { x: 'Fr', y: 147 },
+    { x: 'Sa', y: 63 },
+    { x: 'So', y: 183 },
+  ];
+
   pieChartData = [
     { x: 'RollenKlein', y: 8 },
     { x: 'RollenGroß', y: 63 },
@@ -84,6 +132,27 @@ const statistics = () => {
     { x: '10', y: null },
   ];
 
+  const chartData = {
+    Week: barChartDataWeek,
+    Month: barChartDataMonth,
+    Year: barChartDataYear,
+  };
+
+  useEffect(() => {
+    const getHighestLevel = () => {
+      for (const data of levelData) {
+        if (
+          data.y !== null &&
+          (highestLevel === null || data.y > highestLevel)
+        ) {
+          setHighestLevel(data.y);
+        }
+      }
+    };
+
+    getHighestLevel();
+  }, []);
+
   maxYawData = [
     { x: 40, y: 0 },
     { x: 420, y: 0 },
@@ -96,95 +165,199 @@ const statistics = () => {
 
   titles = ['RollenKlein', 'RollenGroß', 'KratzArm'];
   return (
-    <ScrollView>
-      <ScrollView
+    <ScrollView style={stylesLocal.mainscrollViewContainer}>
+      {/* <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         style={stylesLocal.scrollViewContainer}
-      >
-        <View style={stylesLocal.gridContainer}>
-          {/* Spalte 1 */}
-          <View style={stylesLocal.gridColumn}>
-            <Text style={stylesLocal.gridTitle}>Anzahl Trainings</Text>
-            <Text style={stylesLocal.gridValue}>123</Text>
-          </View>
-          {/* Spalte 2 */}
-          <View style={stylesLocal.gridColumn}>
-            <Text style={stylesLocal.gridTitle}>TrainingsZeit</Text>
-            <Text style={stylesLocal.gridValue}>456 Min</Text>
-          </View>
-
-          {/* Spalte 3 */}
-          <View style={stylesLocal.gridColumn}>
-            <Text style={stylesLocal.gridTitle}>Highscore</Text>
-            <Text style={stylesLocal.gridValue}>789 Punkte</Text>
-          </View>
-          {/* Spalte 4 */}
-          <View style={stylesLocal.gridColumn}>
-            <Text style={stylesLocal.gridTitle}>Anzahl Trainings</Text>
-            <Text style={stylesLocal.gridValue}>123</Text>
-          </View>
-          {/* Spalte 5 */}
-          <View style={stylesLocal.gridColumn}>
-            <Text style={stylesLocal.gridTitle}>TrainingsZeit</Text>
-            <Text style={stylesLocal.gridValue}>456 Min</Text>
-          </View>
-
-          {/* Spalte 6 */}
-          <View style={stylesLocal.gridColumn}>
-            <Text style={stylesLocal.gridTitle}>Highscore</Text>
-            <Text style={stylesLocal.gridValue}>789 Punkte</Text>
-          </View>
+      > */}
+      <View style={stylesLocal.gridContainer}>
+        {/* Spalte 1 */}
+        <View style={stylesLocal.gridColumn}>
+          <Text style={stylesLocal.gridTitle}>Anzahl Trainings</Text>
+          <Text style={stylesLocal.gridValue}>123</Text>
         </View>
-      </ScrollView>
+        {/* Spalte 2 */}
+        <View style={stylesLocal.gridColumn}>
+          <Text style={stylesLocal.gridTitle}>TrainingsZeit</Text>
+          <Text style={stylesLocal.gridValue}>456 Min</Text>
+        </View>
 
-      {/* --------------------------------DropDownPickerCharts------------------------------------------ */}
+        {/* Spalte 3 */}
+        <View style={stylesLocal.gridColumn}>
+          <Text style={stylesLocal.gridTitle}>Highscore</Text>
+          <Text style={stylesLocal.gridValue}>{points} Punkte</Text>
+        </View>
+      </View>
+      {/* </ScrollView> */}
 
-      <View style={stylesLocal.dropdownContainer}>
-        <DropDownPicker
-          open={open}
-          setOpen={setOpen}
-          value={selectedChart} // Aktueller ausgewählter Chart
-          setValue={(newValue) => {
-            setValue(newValue);
+      {/* Slotmachine Points Highscore*/}
+      <View style={stylesLocal.slotcontainer}>
+        <Text style={stylesLocal.slotheader}> Dein Punkte Highscore:</Text>
+
+        <SlotMachine
+          initialAnimation={true}
+          text={points}
+          duration={2000}
+          width={60}
+          height={80}
+          range={'9876543210'}
+          styles={{
+            container: {
+              backgroundColor: '#10069f', // Hintergrundfarbe des gesamten Slot-Machine-Bereichs
+
+              alignItems: 'center', // Horizontal zentrierte Ausrichtung
+              justifyContent: 'center', // Vertikal zentrierte Ausrichtung
+              borderColor: '#10069f',
+            },
+            slotWrapper: {
+              backgroundColor: '#10069f', // Hintergrundfarbe des Slot-Containers
+              borderColor: '#10069f',
+            },
+            slotInner: {
+              backgroundColor: 'white', // Hintergrundfarbe des inneren Slot-Bereichs
+              borderRadius: 10, // Runde Ecken
+              borderColor: '#10069f',
+              padding: 5, // Innenabstand
+              alignItems: 'center', // Horizontal zentrierte Ausrichtung
+              justifyContent: 'center', // Vertikal zentrierte Ausrichtung
+            },
+            innerBorder: {
+              display: 'none',
+              // borderWidth: 2,
+              // borderColor: 'blue',
+            },
+            outerBorder: {
+              display: 'none',
+              // borderWidth: 2,
+              // borderColor: 'blue',
+            },
+            overlay: {
+              display: 'none',
+            },
+            text: {
+              color: 'black', // Textfarbe
+              fontSize: 48, // Textgröße
+              fontWeight: 'bold', // Fetter Text
+            },
           }}
-          items={[
-            { label: 'WochenChart', value: 'WochenChart' },
-            { label: 'MonatsChart', value: 'MonatsChart' },
-            { label: 'JahresChart', value: 'JahresChart' },
-          ]}
-          containerStyle={{ width: 150 }}
-          onChangeValue={(value) => setSelectedChart(value)} // Aktualisiere den ausgewählten Chart
         />
       </View>
-      {/* Hier ist dein Chart */}
-      <View style={[stylesLocal.barchart, stylesLocal.shadowProp]}>
-        {/* Hier dein Chart-Inhalt */}
+
+      {/* --------------------   Level    --------------------------------------- */}
+      <View style={stylesLocal.headerWrapper}>
+        <Text style={stylesLocal.max_header}>
+          Dein aktuelles Game-Level: {highestLevel}
+        </Text>
+      </View>
+      <View style={stylesLocal.levelcontainer}>
+        <AnimatedCircularProgress
+          size={120}
+          width={15}
+          fill={highestLevel * 10}
+          tintColor="#10069F"
+          rotation={270}
+          backgroundColor="lightgrey"
+          arcSweepAngle={180}
+          delay={2000}
+          duration={2000}
+        >
+          {(fill) => (
+            <Text style={stylesLocal.max_header}>{`Level ${Math.round(
+              highestLevel
+            )} `}</Text>
+          )}
+        </AnimatedCircularProgress>
       </View>
 
-      {/* --------------------------------Ende------------------------------------------ */}
+      {/* --------------------    Highscore Yaw Roll    --------------------------------------- */}
+      <View style={stylesLocal.headerWrapper}>
+        <Text style={stylesLocal.max_header}>
+          Highscore Kopfrotation: {highscoreYL + highscoreYR}°{' '}
+        </Text>
+      </View>
+      <DrawingY
+        maxLBefore={highscoreYL}
+        maxRBefore={highscoreYR}
+        TitleString={''}
+        shouldAnimate={false}
+        interval={2000}
+        imageSource={imageSourceR}
+        degreeAdd={90}
+        imageHeight={300}
+        xAdd={0}
+        yAdd={-40}
+        titleXAdd={0}
+        titleYAdd={0}
+        resize={1}
+        lineLengthFactor={2.5}
+      />
+
+      <View style={stylesLocal.headerWrapper}>
+        <Text style={stylesLocal.max_header}>
+          Highscore Kopfneigung: {highscoreRL + highscoreRR}°
+        </Text>
+      </View>
+      <DrawingY
+        maxLBefore={highscoreRL}
+        maxRBefore={highscoreRR}
+        TitleString={''}
+        shouldAnimate={false}
+        interval={2000}
+        imageSource={imageSourceY}
+        degreeAdd={90}
+        imageHeight={300}
+        xAdd={0}
+        yAdd={-40}
+        titleXAdd={0}
+        titleYAdd={0}
+        resize={1}
+        lineLengthFactor={2.5}
+      />
+
+      {/* --------------------------------Trainings Chart------------------------------------------ */}
       <View style={[stylesLocal.barchart, stylesLocal.shadowProp]}>
-        <Text>Dein Training </Text>
+        <View style={stylesLocal.headerWrapper}>
+          <Text style={stylesLocal.max_header}>Dein Training </Text>
+        </View>
+        {/* ----DropDownPickerCharts--------- */}
+
+        <View style={stylesLocal.dropdownContainer}>
+          <DropDownPicker
+            open={open}
+            setOpen={setOpen}
+            value={selectedChart}
+            setValue={(selectedChart) => {
+              setSelectedChart(selectedChart);
+            }}
+            items={[
+              { label: 'WochenChart', value: 'Week' },
+              { label: 'MonatsChart', value: 'Month' },
+              { label: 'JahresChart', value: 'Year' },
+            ]}
+            onChangeValue={(value) => setSelectedChart(value)}
+          />
+        </View>
+
         <VictoryChart
           theme={VictoryTheme.material}
-          domainPadding={{ x: 20, y: 50 }} //padding for your chart horizontal and vertical
-          alignment="middle"
+          domainPadding={{ x: 20, y: 50 }}
         >
+          {/* VictoryAxis für die X-Achse */}
+
           <VictoryAxis
-            tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}
-            tickFormat={months}
+            tickValues={selectedChart === 'Year' ? months : undefined}
+            tickFormat={selectedChart === 'Year' ? months : undefined}
           />
-          <VictoryAxis
-            dependentAxis
-            //tickFormat specifies how ticks should be displayed
-            tickFormat={[60, 120, 180, 240, 300]}
-          />
+
+          <VictoryAxis dependentAxis tickFormat={[60, 120, 180, 240, 300]} />
           <VictoryBar
-            data={barChartData}
+            data={chartData[selectedChart]}
             labels={({ datum }) => `${datum.y}sec`}
             cornerRadius={{ topLeft: 8 }}
             alignment="start"
-            x="Month"
+            x="x"
+            y="y"
             barWidth={18}
             style={{ data: { fill: '#10069F' } }}
             animate
@@ -192,34 +365,11 @@ const statistics = () => {
         </VictoryChart>
       </View>
 
-      <View style={stylesLocal.piechart}>
-        <Text>High-Score Beweglichkeit</Text>
-        <Svg width={400} height={400}>
-          <VictoryAxis
-            crossAxis
-            width={400}
-            height={400}
-            domain={[-100, 100]}
-            theme={VictoryTheme.material}
-            offsetY={200}
-            standalone={false}
-            data={maxRollData}
-          />
-          <VictoryAxis
-            dependentAxis
-            crossAxis
-            width={400}
-            height={400}
-            domain={[-50, 50]}
-            theme={VictoryTheme.material}
-            offsetX={200}
-            standalone={false}
-          />
-        </Svg>
+      {/* --------------------------------Geraete Chart------------------------------------------ */}
+      <View style={stylesLocal.headerWrapper}>
+        <Text style={stylesLocal.max_header}>Deine Geräte</Text>
       </View>
-
       <View style={stylesLocal.piechart}>
-        <Text>Welche Geräte hast du verwendet</Text>
         <Svg
           width={380}
           height={310}
@@ -233,16 +383,23 @@ const statistics = () => {
             data={pieChartData}
             innerRadius={60}
             labelRadius={90}
-            //labels={() => null}
-            style={{ labels: { fontSize: 28, fill: 'white' } }}
+            labels={({ datum }) => {
+              const total = pieChartData.reduce((acc, val) => acc + val.y, 0);
+              return `${((datum.y / total) * 100).toFixed(2)}%`;
+            }}
+            style={{ labels: { fontSize: 18, fill: 'white' } }}
             animate={{
-              duration: 4000,
+              duration: 8000,
               onLoad: {
-                duration: 4000,
+                duration: 8000,
               },
             }}
             colorScale={[
-              'tomato',
+              'lightgreen',
+              'orange',
+              'cornflowerblue',
+              'lightgreen',
+              'blue',
               'orange',
               'gold',
               'cyan',
@@ -256,16 +413,16 @@ const statistics = () => {
             cy={200}
             r={63}
             fill="none"
-            //stroke='black'
-            strokeWidth={3}
+            stroke="#10069F"
+            strokeWidth={0}
           />
           <Circle
             cx={200}
             cy={200}
             r={150}
             fill="none"
-            //stroke={Theme.primary}
-            strokeWidth={3}
+            stroke={'#10069F'}
+            strokeWidth={0}
           />
           <VictoryLabel
             textAnchor="middle"
@@ -278,39 +435,32 @@ const statistics = () => {
           <VictoryLegend
             orientation="vertical"
             gutter={10}
-            data={titles}
+            data={[
+              { name: 'KratzArm', symbol: { fill: 'cornflowerblue' } },
+              { name: 'RollenKlein', symbol: { fill: 'orange' } },
+              { name: 'RollenGroß', symbol: { fill: 'lightgreen' } },
+            ]}
             labelComponent={<VictoryLabel angle={360} />}
           />
         </Svg>
-      </View>
-
-      <View style={stylesLocal.piechart}>
-        <Text>Dein aktuelles Game-Level</Text>
-        <VictoryChart
-          theme={VictoryTheme.material}
-          animate={{
-            duration: 2000,
-            onLoad: { duration: 1000 },
-          }}
-          style={{
-            background: { fill: 'lightblue' },
-            data: { fill: 'red' },
-          }}
-        >
-          <VictoryArea
-            data={levelData}
-            style={{
-              data: { fill: '#10069F' },
-            }}
-          />
-          <VictoryAxis />
-        </VictoryChart>
       </View>
     </ScrollView>
   );
 };
 
 const stylesLocal = StyleSheet.create({
+  // Main Scroll View vertical
+  mainscrollViewContainer: {
+    backgroundColor: '#fff',
+  },
+
+  // wrapper
+  headerWrapper: {
+    margin: 10,
+    marginBottom: 30,
+  },
+
+  // Horizontal Scroll View
   scrollViewContainer: {
     backgroundColor: '#fff',
     padding: 6,
@@ -350,12 +500,63 @@ const stylesLocal = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  // bar chart
+  dropdownContainer: {
+    alignItems: 'center',
+  },
+
   barchart: {
-    margin: 20,
+    margin: 0,
+    marginTop: 0,
   },
   shadowProp: {},
+
+  // Geraete Chart
   piechart: {
-    margin: 20,
+    marginTop: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  // Slotmachine
+  slotheader: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: 0,
+    color: '#fff',
+    backgroundColor: '#10069F',
+  },
+  slotcontainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#10069f',
+    paddingBottom: 10,
+    marginBottom: 20,
+  },
+
+  // max yaw roll
+
+  max_header: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#fff',
+    backgroundColor: '#10069F',
+    width: '100%',
+    borderRadius: 50,
+  },
+
+  // Level
+  levelcontainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  points: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
   },
 });
 
