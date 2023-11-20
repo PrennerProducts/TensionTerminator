@@ -84,7 +84,7 @@ const criteriaScreen = () => {
         <Text style={styles.text}>Es liegt</Text>
         {myCheckBox2("keine Schwangerschaft ab dem 6. Monat vor.")}
         {myCheckBox2(
-          "keine neurologische Erkrankung welche auf mechanische Einwirkung reagiert (z.B. Epilepsie, Schwindel) vor."
+          "keine neurologische Erkrankung vor, welche auf mechanische Einwirkung reagiert (z.B. Epilepsie, Schwindel)."
         )}
         {myCheckBox2(
           "keine sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht vor."
