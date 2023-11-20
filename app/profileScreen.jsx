@@ -59,6 +59,7 @@ const profileScreen = () => {
   useEffect(() => {
     const initializeUser = async () => {
       await user.initialize();
+      //await user.setLevel(4);
       setValue(profileImageIndex);
       await updateProfileImageIndex(user.getprofilepicture());
       await updateUsername(user.getUserName());

@@ -46,7 +46,7 @@ const statistics = () => {
   const highscoreRR = 29;
 
   // GameLevel
-  const [highestLevel, setHighestLevel] = useState(0);
+
   // User Context Provider
   const {
     username,
@@ -64,6 +64,7 @@ const statistics = () => {
 
   // Bar Chart
   const [selectedChart, setSelectedChart] = useState('Week'); // Standardmäßig auf 'Week' gesetzt
+  updateGameLevel(4);
 
   //dropdown picker
   const [open, setOpen] = useState(false);
@@ -118,40 +119,11 @@ const statistics = () => {
     { x: 'KratzArm', y: 183 },
   ];
 
-  levelData = [
-    { x: '0', y: 0 },
-    { x: '1', y: 1 },
-    { x: '2', y: 2 },
-    { x: '3', y: 3 },
-    { x: '4', y: null },
-    { x: '5', y: null },
-    { x: '6', y: null },
-    { x: '7', y: null },
-    { x: '8', y: null },
-    { x: '9', y: null },
-    { x: '10', y: null },
-  ];
-
   const chartData = {
     Week: barChartDataWeek,
     Month: barChartDataMonth,
     Year: barChartDataYear,
   };
-
-  useEffect(() => {
-    const getHighestLevel = () => {
-      for (const data of levelData) {
-        if (
-          data.y !== null &&
-          (highestLevel === null || data.y > highestLevel)
-        ) {
-          setHighestLevel(data.y);
-        }
-      }
-    };
-
-    getHighestLevel();
-  }, []);
 
   maxYawData = [
     { x: 40, y: 0 },
@@ -247,14 +219,14 @@ const statistics = () => {
       {/* --------------------   Level    --------------------------------------- */}
       <View style={stylesLocal.headerWrapper}>
         <Text style={stylesLocal.max_header}>
-          Dein aktuelles Game-Level: {highestLevel}
+          Dein aktuelles Game-Level: {gameLevel}
         </Text>
       </View>
       <View style={stylesLocal.levelcontainer}>
         <AnimatedCircularProgress
           size={120}
           width={15}
-          fill={highestLevel * 10}
+          fill={gameLevel * 10}
           tintColor="#10069F"
           rotation={270}
           backgroundColor="lightgrey"
@@ -264,7 +236,7 @@ const statistics = () => {
         >
           {(fill) => (
             <Text style={stylesLocal.max_header}>{`Level ${Math.round(
-              highestLevel
+              gameLevel
             )} `}</Text>
           )}
         </AnimatedCircularProgress>
