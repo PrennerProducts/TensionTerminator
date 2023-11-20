@@ -1,42 +1,32 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Button,
-  Image,
-  Alert
-} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, Dimensions} from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
-import { Camera, requestMicrophonePermissionsAsync } from 'expo-camera';
+import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import * as FileSystem from 'expo-file-system';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { evaluationData } from './evaluationData';
-import { Dimensions } from 'react-native';
+
+// Komponente zur Winkelerkennung. Konsolenlogs und Landmark-Ausgabe wurden auskommentiert...
 
 const evaluationYR = () => {
   const router = useRouter();
   const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
   const [hasPermission, setHasPermission] = useState(null);
-  const [landmarkData, setLandmarkData] = useState([]);
   const [ScreenText, setScreenText] = useState('');
+  const exercise = evaluationData.exercise; // 0: Bewegung 1; 1: Bewegung 2
+  const [yaw, setYaw] = useState(0); // yaw = Rotation
+  const [roll, setRoll] = useState(0); // roll = Neigung
 
-  const exercise = evaluationData.exercise; // 0: Yaw, 1: Roll
-
-  const [yaw, setYaw] = useState(0);
-  const [isYawStable, setIsYawStable] = useState(true);
-
-  // Parameter fuer Feinjustierung
+  // Parameter zur Feinjustierung
   const minYaw = 15; // Ab wieviel Grad soll Rotation erkannt werden... 
   const minRoll = 7; // Ab wieviel Grad soll Neigung erkannt werden... 
   const maxCounter = 1; // Zaehler fuer Auto Exit
   const detectionInterval = 30; // Abtastrate in Milli-Sekunden
+  const minDegreeForPic = 2.5; // Wieviel Grad Winkel zwischen 2 Fotos
+  const minTimeForPic = 200; // Wieviel Millisekunden zwischen 2 Fotos
 
-  const shouldTakePictures = evaluationData.shouldTakePictures; // Eventuell Fotologik deaktivieren (bei aelteren Handys)
-
-  const [roll, setRoll] = useState(0);
-  const [isRollStable, setIsRollStable] = useState(true);
+  const shouldTakePictures = evaluationData.shouldTakePictures; // Zum Deaktivieren der Foto-Logik
+  const [savedTimestamp, setSavedTimestamp] = useState(new Date());
 
   const [maxR, setMaxR] = useState(0);
   const [maxL, setMaxL] = useState(0);
@@ -51,6 +41,7 @@ const evaluationYR = () => {
   const [instruction, setInstruction] = useState('Anleitungstext');
   const [counterR, setCounterR] = useState(0);
   const [counterL, setCounterL] = useState(0);
+  // const [landmarkData, setLandmarkData] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -100,7 +91,6 @@ const evaluationYR = () => {
     if (!evaluationActive) return;
     if (exercise === 0){
       updateLogicBasedOnCounters();
-      if (!isYawStable) {return;}
       if (yaw > minYaw && yaw < 180) {
         setCounterR(1);
         //console.log(`Current YawR: ${yaw}, Max YawR: ${maxR}`);
@@ -109,7 +99,16 @@ const evaluationYR = () => {
           if (yaw > prev) {
             //console.log('New MaxYR reached');
             evaluationData.imageName = 'MaxYR.jpg';
-            takePicture(); 
+            const diff = yaw-prev;
+            //console.log(diff);
+            const timestamp = new Date();
+            const timeDifference = timestamp - savedTimestamp;
+            //console.log(diff, timestamp.toISOString(), savedTimestamp, timeDifference);
+            if (diff > minDegreeForPic && timeDifference > minTimeForPic) {
+              //console.log('Picture taken', diff, timestamp.toISOString());
+              takePicture();
+              setSavedTimestamp(timestamp); 
+            }
           }
           return Math.max(prev, yaw);
         });
@@ -122,7 +121,13 @@ const evaluationYR = () => {
           if (yawL > prev) {
             //console.log('New MaxYL reached');
             evaluationData.imageName = 'MaxYL.jpg';
-            takePicture(); 
+            const diff = yawL-prev;
+            const timestamp = new Date();
+            const timeDifference = timestamp - savedTimestamp;
+            if (diff > minDegreeForPic && timeDifference > minTimeForPic) {
+              takePicture();
+              setSavedTimestamp(timestamp); 
+            }
           }
           return Math.max(prev, yawL);
         });
@@ -138,7 +143,6 @@ const evaluationYR = () => {
     if (!evaluationActive) return;
     if (exercise === 1){
       updateLogicBasedOnCounters();
-      if (!isRollStable) {return;}
       if (roll > minRoll && roll < 80) {
         setCounterR(counterR + 1);
         //console.log(`Current RollR: ${roll}, Max RollR: ${maxR}`);
@@ -147,7 +151,13 @@ const evaluationYR = () => {
           if (roll > prev) {
             //console.log('New MaxRR reached');
             evaluationData.imageName = 'MaxRR.jpg';
-            takePicture(); 
+            const diff = roll-prev;
+            const timestamp = new Date();
+            const timeDifference = timestamp - savedTimestamp;
+            if (diff > minDegreeForPic && timeDifference > minTimeForPic) {
+              takePicture();
+              setSavedTimestamp(timestamp); 
+            } 
           }
           return Math.max(prev, roll);
         });
@@ -160,7 +170,13 @@ const evaluationYR = () => {
           if (rollL > prev) {
             //console.log('New MaxRL reached');
             evaluationData.imageName = 'MaxRL.jpg';
-            takePicture(); 
+            const diff = rollL-prev;
+            const timestamp = new Date();
+            const timeDifference = timestamp - savedTimestamp;
+            if (diff > minDegreeForPic && timeDifference > minTimeForPic) {
+              takePicture();
+              setSavedTimestamp(timestamp); 
+            }
           }
           return Math.max(prev, rollL);
         });
@@ -171,7 +187,7 @@ const evaluationYR = () => {
     }
   }, [roll]);
 
-  // 
+  // Counter Logik
   const updateLogicBasedOnCounters = () => {
     if (!evaluationActive) return;
     if (counterR === 0 && counterL === 0) {
@@ -208,11 +224,11 @@ const evaluationYR = () => {
       if (exercise === 0) setYaw(face.yawAngle.toFixed(0));
       else if (exercise === 1) setRoll(face.rollAngle.toFixed(0));
       if (
-        face.LEFT_EYE && face.RIGHT_EYE &&
-        face.NOSE_BASE && 
-        face.BOTTOM_MOUTH &&
-        face.LEFT_MOUTH && face.RIGHT_MOUTH &&
-        face.LEFT_EAR && face.RIGHT_EAR
+        face.LEFT_EYE && face.RIGHT_EYE && face.BOTTOM_MOUTH 
+        //&&
+        //face.NOSE_BASE && 
+        //face.LEFT_MOUTH && face.RIGHT_MOUTH &&
+        //face.LEFT_EAR && face.RIGHT_EAR
       ) {
         const leftEye = face.RIGHT_EYE; 
         const rightEye = face.LEFT_EYE;
@@ -225,14 +241,14 @@ const evaluationYR = () => {
           bottomX: bottomMouth.x, bottomY: bottomMouth.y,
         };
         setLineCoordinates(lineCoordinates);
-        const landmarkData = {
-          leftEye: face.LEFT_EYE, rightEye: face.RIGHT_EYE,
-          noseBase: face.NOSE_BASE,
-          bottomMouth: face.BOTTOM_MOUTH,
-          leftMouth: face.LEFT_MOUTH, rightMouth: face.RIGHT_MOUTH,
-          leftEar: face.LEFT_EAR, rightEar: face.RIGHT_EAR,
-        };
-        setLandmarkData(landmarkData);
+        // const landmarkData = {
+        //   leftEye: face.LEFT_EYE, rightEye: face.RIGHT_EYE,
+        //   noseBase: face.NOSE_BASE,
+        //   bottomMouth: face.BOTTOM_MOUTH,
+        //   leftMouth: face.LEFT_MOUTH, rightMouth: face.RIGHT_MOUTH,
+        //   leftEar: face.LEFT_EAR, rightEar: face.RIGHT_EAR,
+        // };
+        // setLandmarkData(landmarkData);
       }
     }
   };
@@ -289,14 +305,14 @@ const evaluationYR = () => {
       setScreenText('');
       setInstruction('');
       setLineCoordinates(null);
-      const landmarkData = {
-          leftEye: 0, rightEye: 0, noseBase: 0, bottomMouth: 0, leftMouth: 0, rightMouth: 0, leftEar: 0, rightEar: 0,
-        };
-        setLandmarkData(landmarkData);
+      // const landmarkData = {
+      //     leftEye: 0, rightEye: 0, noseBase: 0, bottomMouth: 0, leftMouth: 0, rightMouth: 0, leftEar: 0, rightEar: 0,
+      //   };
+      //   setLandmarkData(landmarkData);
       console.log("Values resetted!");
   };
 
-  // Kurzes Warten am Anfang, damit Kamera Zeit hat Gesicht zu erkennen (+100 ms)
+  // Kurzes Warten am Anfang, damit Kamera Zeit hat, Gesicht zu erkennen (+100 ms)
   useEffect(() => {
     if (!evaluationActive) {
       setTimeout(() => {

@@ -247,7 +247,7 @@ const ResultEvaluation = () => {
       <Text style={stylesRE.row}>
         Links: {maxRLBefore}°, 
         Rechts: {maxRRBefore}°, 
-        Summe: {maxRRBefore+maxRLBefore}°
+        Summe: {maxRRBefore+maxRLBefore}°{'\n'}{'\n'}
       </Text>
       </ScrollView>
       </View>
