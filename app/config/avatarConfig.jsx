@@ -10,8 +10,8 @@ export const avatarList = [
   require('../../assets/images/avatar5.png'),
   require('../../assets/images/avatar6.png'),
   require('../../assets/images/avatar3.png'),
-
-
+  require('../../assets/images/avatarowl.png'),
+  require('../../assets/images/avatarsnake.png'),
 
 
 
