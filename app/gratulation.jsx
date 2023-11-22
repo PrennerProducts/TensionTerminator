@@ -16,20 +16,16 @@ const Gratulation = () => {
     const { points, updatePoints, gameLevel, updateGameLevel, profileImageIndex, updateProfileImageIndex } = useUserContext();
     const user = new UserData();
     const [constMyUserName, constSetMyUserName] = React.useState("");
-    const modulo=points%200;
+    const modulo=200-points%200;
 
     useEffect(() => {
         const lpunkte = points + 150;
-
-
-
 
 
             user.setPoints(lpunkte);
             updatePoints(lpunkte);
 
             console.log(user.toString());
-
 
             if (lpunkte < 199) {
                 updateGameLevel(1);
@@ -50,6 +46,7 @@ const Gratulation = () => {
                 updateProfileImageIndex(2);
                 user.setprofilepicture(2);
             }
+
 
             if (lpunkte > 599 && lpunkte < 799) {
                 updateGameLevel(4);
@@ -116,15 +113,67 @@ const Gratulation = () => {
             <View>
             <Text style={styles.title}>Gratulation!</Text></View>
 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-    <Text style={stylesLocal.text}>Wow, du hast dir für deine Leistung 150 Punkte verdient!</Text>
-    <View>
-        <SlotMachine text={points} duration={2000} width={60} height={80} />
+
+    <Text style={stylesLocal.text}>Wow, du hast dir für deine Leistung 150 Punkte verdient! Dein neuer Punktestand:</Text>
+    <View style={stylesLocal.slotcontainer}>
+
+
+
+        <SlotMachine
+            initialAnimation={true}
+            text={points}
+            duration={2000}
+            width={60}
+            height={80}
+            range={'9876543210'}
+            styles={{
+                container: {
+                    backgroundColor: 'white', // Hintergrundfarbe des gesamten Slot-Machine-Bereichs
+
+                    alignItems: 'center', // Horizontal zentrierte Ausrichtung
+                    justifyContent: 'center', // Vertikal zentrierte Ausrichtung
+                    borderColor: 'white',
+                },
+                slotWrapper: {
+                    backgroundColor: 'white', // Hintergrundfarbe des Slot-Containers
+                    borderColor: 'white',
+                },
+                slotInner: {
+                    backgroundColor: 'white', // Hintergrundfarbe des inneren Slot-Bereichs
+                    borderRadius: 10, // Runde Ecken
+                    borderColor: 'white',
+                    padding: 5, // Innenabstand
+                    alignItems: 'center', // Horizontal zentrierte Ausrichtung
+                    justifyContent: 'center', // Vertikal zentrierte Ausrichtung
+                },
+                innerBorder: {
+                    display: 'none',
+                    // borderWidth: 2,
+                    // borderColor: 'blue',
+                },
+                outerBorder: {
+                    display: 'none',
+                    // borderWidth: 2,
+                    // borderColor: 'blue',
+                },
+                overlay: {
+                    display: 'none',
+                },
+                text: {
+                    color: '#10069f', // Textfarbe
+                    fontSize: 60, // Textgröße
+                    fontWeight: 'bold', // Fetter Text
+                },
+            }}
+        />
 
     </View>
-    <Text style={stylesLocal.text}>Dein aktuelles Game-Level: {gameLevel} {'\n'}
-        Du benötigst noch {modulo} Punkte für das nächste Level</Text>
+    <Text style={stylesLocal.text}>Dein aktuelles <Text style={{ fontWeight: 'bold' }}>Game-Level: {gameLevel}</Text> {'\n'}Du benötigst noch {modulo} Punkte für das nächste Level.</Text>
 
 </View>
+
+
+
             <Image
                 source={
                     profileImageIndex >= 0 &&
@@ -147,6 +196,7 @@ const Gratulation = () => {
                     <Text style={styles.buttonText}>Termin planen</Text>
                 </Pressable>
             </Link>
+
 
             <Link href={'./components/painWhere'} asChild>
                 <Pressable style={styles.button}>
@@ -192,6 +242,13 @@ const stylesLocal = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: '#C5C5C5',
         width: '100%',
+    },
+    slotcontainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        paddingBottom: 10,
+        marginBottom: 20,
     },
     switchtext: {
         marginRight: 10,
