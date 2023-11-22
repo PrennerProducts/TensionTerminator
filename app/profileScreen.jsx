@@ -126,6 +126,7 @@ const profileScreen = () => {
   };
 
   return (
+    // scrollview einfügen!!!!!!!!!!!!!!!!!!!!!!!!!
     <View style={{ padding: 20 }}>
       {/* Avatar Bild */}
       <View
