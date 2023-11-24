@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontWeight: "700",
-    textAlign: "center",
-    top: "5%",
+    fontWeight: '700',
+    textAlign: 'center',
+    top: '5%',
   },
   top: {
     flex: 1,
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     marginVertical: 20,
     color: "#10069F",
   },
@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     margin: 8,
-    width: "85%",
-    fontWeight: "bold",
+    width: '85%',
+    fontWeight: 'bold',
   },
   switchcontainer: {
     flexDirection: "row", // Elemente nebeneinander

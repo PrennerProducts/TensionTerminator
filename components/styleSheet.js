@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 30,
+        fontFamily: "Pano B",
         fontWeight: "700",
         textAlign: "center",
         top: "5%",

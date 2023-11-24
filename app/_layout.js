@@ -5,6 +5,11 @@ import {
   TouchableOpacity,
   Image,
   Modal,
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {useFonts} from 'expo-font';
+import {useRouter, Tabs, SplashScreen} from 'expo-router';
+import { Stack } from 'expo-router/stack';
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter, Tabs } from "expo-router";
@@ -22,7 +27,34 @@ import headerRight from './components/headerRight';
 import {NativeBaseProvider} from "native-base";
 
 
-export default function Layout() {
+//Prevent splash screen from autohiding before asset loading is completed
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+    const [loaded, error] = useFonts({
+//        'Pano B': require('../assets/fonts/Pano Bold.otf'),
+        'Loew Next R': require('../assets/fonts/LoewNext-Regular-BF63fd638aa2303.otf'),
+        'Loew Next B': require('../assets/fonts/LoewNext-Bold-BF63fd638abb9de.otf')
+    });
+
+    useEffect(() => {
+        if (error) throw error;
+    }, [error]);
+
+    useEffect(() => {
+        if (loaded) {
+            SplashScreen.hideAsync();
+        }
+    }, [loaded]);
+
+    if (!loaded) {
+        return null;
+    }
+
+    return <Layout />;
+}
+
+function Layout() {
   const router = useRouter();
   const user = new UserData();
 
