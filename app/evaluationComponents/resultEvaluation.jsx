@@ -1,17 +1,16 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity, Pressable, ToastAndroid, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Pressable, ToastAndroid, Alert } from 'react-native';
 import React from 'react';
-import { Link, useRouter} from 'expo-router';
+import { useRouter} from 'expo-router';
 import styles from '../components/StyleSheet';
-import * as FileSystem from 'expo-file-system';
 import { evaluationData } from './evaluationData';
 import { painData } from '../components/painData';
-import { useState, useEffect} from 'react';
+import { useEffect} from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import DrawingY from './drawingY';
-import EvaluationEE from './evaluationEE';
 
 
 const ResultEvaluation = () => {
+  evaluationData.printValues();
   const imageSourceR = require('../../assets/images/HeadT.png');
   const imageSourceY = require('../../assets/images/HeadF.png');
   const router = useRouter();
@@ -113,22 +112,22 @@ const ResultEvaluation = () => {
     );
   };
 
-  return (
-    <View style={stylesRE.container}>
-      <View style={stylesRE.top}>
+  if (evaluationData.isTraining === 1) return (
+    <View style={styles.container}>
+      <View style={styles.top}>
       <Text style={stylesRE.rowBold}>Aktueller Status {formattedDate}</Text>
       <Text style={stylesRE.header}>Beurteilung Ihrer Beweglichkeit</Text>
-      
       <ScrollView style={{ padding: 0, top: -10 }}>
-
       <Text style={stylesRE.header}>Bewegung 1: Rotation</Text>
-
       <DrawingY 
         maxLBefore={maxYLBefore}
         maxRBefore={maxYRBefore}
         maxLAfter={maxYLAfter}
         maxRAfter={maxYRAfter}
-        TitleString = {''}
+        TitleString = {'Vorher'}
+        TitleStringB = {'Nachher'}
+        shouldAnimate = {true}
+        interval = {2000}
         imageSource={imageSourceR}
         degreeAdd = {90}
         imageHeight = {300}
@@ -139,7 +138,6 @@ const ResultEvaluation = () => {
         resize = {1}
         lineLengthFactor = {2.5}
       />
-
       <Text style={stylesRE.rowBold}>Vor dem Training</Text>
       <Text style={stylesRE.row}>
         Links: {maxYLBefore}°, 
@@ -150,22 +148,23 @@ const ResultEvaluation = () => {
         Links: {maxYLAfter}°, 
         Rechts: {maxYRAfter}°, 
         Summe: {maxYRAfter+maxYLAfter}°</Text>
-      
-      
       <Text style={stylesRE.rowBold}>Um wie viel haben Sie sich verbessert?</Text>
       <Text style={stylesRE.row}>
         Links: <Text style={textColorDeltaYL}>{deltaYL}°</Text>, 
         Rechts: <Text style={textColorDeltaYR}>{deltaYR}°</Text>, 
         Summe: <Text style={textColorDeltaYS}>{deltaYL+deltaYR}°</Text>{'\n'}
+        In Prozent: <Text style={textColorDeltaYS}>{(100*(deltaYL+deltaYR)/(maxYLBefore+maxYRBefore)).toFixed(2)}%</Text>{'\n'}
       </Text>
-
       <Text style={stylesRE.header}>Bewegung 2: Seitneigung</Text>
       <DrawingY 
         maxLBefore={maxRLBefore}
         maxRBefore={maxRRBefore}
         maxLAfter={maxRLAfter}
         maxRAfter={maxRRAfter}
-        TitleString = {''}
+        TitleString = {'Vorher'}
+        TitleStringB = {'Nachher'}
+        shouldAnimate = {true}
+        interval = {2000}
         imageSource={imageSourceY}
         degreeAdd = {-90}
         imageHeight = {300}
@@ -176,7 +175,6 @@ const ResultEvaluation = () => {
         resize = {1}
         lineLengthFactor = {2.3}
       />
-
       <Text style={stylesRE.rowBold}>Vor dem Training</Text>
       <Text style={stylesRE.row}>
         Links: {maxRLBefore}°, 
@@ -189,20 +187,72 @@ const ResultEvaluation = () => {
         Rechts: {maxRRAfter}°, 
         Summe: {maxRRAfter+maxRLAfter}°
       </Text>
-    
       <Text style={stylesRE.rowBold}>Um wie view haben Sie sich verbessert?</Text>
       <Text style={stylesRE.row}>
         Links: <Text style={textColorDeltaRL}>{deltaRL}°</Text>, 
         Rechts: <Text style={textColorDeltaRR}>{deltaRR}°</Text>, 
         Summe: <Text style={textColorDeltaRS}>{deltaRL+deltaRR}°</Text>{'\n'}
+        In Prozent: <Text style={textColorDeltaRS}>{(100*(deltaRL+deltaRR)/(maxRLBefore+maxRRBefore)).toFixed(2)}%</Text>{'\n'}
       </Text>
-
       <Text style={stylesRE.header}>Schmerzintensität{'\n'}({painData.painToString})</Text>
-
       <Text style={stylesRE.row}>Vor dem Training: {painIntensityBefore}</Text>
       <Text style={stylesRE.row}>Nach dem Training: {painIntensityAfter}</Text>
-      <Text style={stylesRE.rowBold}>Die Intensität Ihrer Schmerzen  hat sich um <Text style={textColorDeltaPain}>{deltaPain}</Text> Punkte verändert!{'\n\n'}</Text>
-
+      <Text style={stylesRE.rowBold}>Die Intensität Ihrer Schmerzen  hat sich um <Text style={textColorDeltaPain}>{deltaPain} </Text> Punkte (<Text style={textColorDeltaPain}>{(100*(deltaPain)/(painIntensityBefore)).toFixed(2)}%</Text>) verändert!{'\n\n\n'}
+      
+      </Text>
+      </ScrollView>
+      </View>
+    </View>
+  );
+  else if (evaluationData.isTraining === 0) return (
+    <View style={styles.container}>
+      <View style={styles.top}>
+      <Text style={stylesRE.rowBold}>Aktueller Status {formattedDate}</Text>
+      <Text style={stylesRE.header}>Beurteilung Ihrer Beweglichkeit</Text>
+      <ScrollView style={{ padding: 0, top: -10 }}>
+      <Text style={stylesRE.header}>Bewegung 1: Rotation</Text>
+      <DrawingY 
+        maxLBefore={maxYLBefore}
+        maxRBefore={maxYRBefore}
+        TitleString = {''}
+        shouldAnimate = {false}
+        imageSource={imageSourceR}
+        degreeAdd = {90}
+        imageHeight = {300}
+        xAdd = {0}
+        yAdd = {-40}
+        titleXAdd = {0}
+        titleYAdd = {0}
+        resize = {1}
+        lineLengthFactor = {2.5}
+      />
+      <Text style={stylesRE.rowBold}>Ihre Werte</Text>
+      <Text style={stylesRE.row}>
+        Links: {maxYLBefore}°, 
+        Rechts: {maxYRBefore}°, 
+        Summe: {maxYRBefore+maxYLBefore}°</Text>
+      <Text style={stylesRE.header}>Bewegung 2: Seitneigung</Text>
+      <DrawingY 
+        maxLBefore={maxRLBefore}
+        maxRBefore={maxRRBefore}
+        TitleString = {''}
+        shouldAnimate = {false}
+        imageSource={imageSourceY}
+        degreeAdd = {-90}
+        imageHeight = {300}
+        xAdd = {0}
+        yAdd = {40}
+        titleXAdd = {0}
+        titleYAdd = {0}
+        resize = {1}
+        lineLengthFactor = {2.3}
+      />
+      <Text style={stylesRE.rowBold}>Ihre Werte</Text>
+      <Text style={stylesRE.row}>
+        Links: {maxRLBefore}°, 
+        Rechts: {maxRRBefore}°, 
+        Summe: {maxRRBefore+maxRLBefore}°{'\n'}{'\n'}
+      </Text>
       </ScrollView>
       </View>
     </View>
@@ -211,22 +261,6 @@ const ResultEvaluation = () => {
 
 
 const stylesRE = StyleSheet.create({
-  container: {
-      flex: 1,
-      alignItems: "center",
-      backgroundColor: '#ffffff',
-  },
-  top: {
-    flex: 5,
-    justifyContent: 'flex-start',
-    top: "2%",
-    backgroundColor: '#ffffff',
-  },
-  bottom: {
-      flex: 1,
-      justifyContent: 'flex-end',
-      bottom: "5%",
-  },
   header: {
     fontSize: 20,
     fontWeight: "bold",

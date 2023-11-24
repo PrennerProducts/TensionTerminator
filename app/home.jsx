@@ -12,6 +12,7 @@ import { useUserContext } from './components/userContextProvider';
 import {Button} from '@rneui/themed';
 import {Box} from "victory-native";
 import {useNavigation} from "@react-navigation/native";
+import { painData } from './components/painData';
 
 const Home = () => {
   // User context provider
@@ -39,6 +40,16 @@ const Home = () => {
     evaluationData.isTraining = 0;
     evaluationData.beforeAfterTraining = 0;
     router.push({ pathname: 'evaluationComponents/EvaluationScreen' });
+  };
+
+  const goToTraining = async () => {
+    painData.resetValues();
+    painData.painIntensityBefore = 5;
+    evaluationData.resetValues();
+    evaluationData.originScreen = '../home';
+    evaluationData.isTraining = 1;
+    evaluationData.beforeAfterTraining = 0;
+    router.replace({ pathname: 'components/painWhere' });
   };
 
   useEffect(() => {
@@ -172,8 +183,7 @@ const Home = () => {
             style={styles.button}
             onPress={() => {
               goToEvaluation();
-            }}
-          >
+            }}>
             <View style={styles.section}>
               <Icon
                 name="reiterate"
@@ -198,6 +208,22 @@ const Home = () => {
               </View>
             </TouchableOpacity>
           </Link>*/}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              goToTraining();
+            }}>
+            <View style={styles.section}>
+              <Icon
+                name="rowing"
+                size={30}
+                color="#fff"
+                style={{ marginLeft: 30 }}
+              />
+              <Text style={styles.buttonText}> Training starten</Text>
+            </View>
+          </TouchableOpacity>
+
         </View>
       </View>
     </View>
