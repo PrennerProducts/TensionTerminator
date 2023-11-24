@@ -1,5 +1,5 @@
 import 'expo-router/entry';
-import {View, Text, Pressable, Button, TouchableOpacity, Image} from 'react-native';
+import {View, Text, Pressable, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import { Link, useRouter } from 'expo-router';
 import styles from './components/StyleSheet';
@@ -9,6 +9,7 @@ import { WebView } from 'react-native-webview';
 import Modal from "react-native-modal";
 import { painData } from "./components/painData";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Button} from "@rneui/themed";
 
 //import Thn_SchulterNacken_DruckSchm_Nacken from '../assets/gifs/1druck.gif';
 //import Thn_SchulterNacken_ZiehSchm from '../assets/gifs/1zieh.gif';
@@ -128,11 +129,14 @@ const ExplanationVideo = () => {
 
             </View>
             <View style={styles.bottom}>
-                <Link href={'../training'} asChild>
-                    <Pressable style={styles.button}>
-                        <Text style={styles.buttonText}>Training starten</Text>
-                    </Pressable>
-                </Link>
+                <Button
+                    title="Training starten"
+                    onPress={() => {
+                        router.push('/training');
+                    }}
+                    buttonStyle={styles.button}
+                    titleStyle={styles.buttonText}
+                />
             </View>
         </View>
     );

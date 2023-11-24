@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Pressable,
-} from 'react-native';
+import {Text, View, Image, ScrollView,} from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { WebView } from 'react-native-webview';
 import Modal from 'react-native-modal';
@@ -31,9 +24,14 @@ const EvaluationScreen = () => {
   };
 
   return (
+
     <View style={styles.container}>
+
       <Text style={{fontSize: 25, marginTop: 20}}>Evaluierungsübungen Anleitung {"\n"} {"\n"}</Text>
-      <Text style={styles.text}>HIER KOMMT NOCH EINE DETEILIERTERE ANLEITUNG HIN {"\n"} {"\n"}
+
+        <ScrollView style={{ flexGrow:1, padding: 5 }}>
+
+        <Text style={styles.text}>HIER KOMMT NOCH EINE DETEILIERTERE ANLEITUNG HIN {"\n"} {"\n"}
       Die Übungen werden in 2 Schritten durchgführt: {"\n"}
       + Erste Übung Yaw (Kopfrotation) {"\n"}
       + Zweite Übung Rol (Kopf zu Schulterbewegung):</Text>
@@ -56,6 +54,9 @@ const EvaluationScreen = () => {
           style={{ width: 100, height: 100 }}
         />
       </View>
+
+        </ScrollView>
+
       <View style={styles.bottom}>
           <Button
               title="Anleitungsvideo schauen"
@@ -68,7 +69,7 @@ const EvaluationScreen = () => {
         isVisible={isModalVisible}
       >
         <View style={{ flex: 1 }}>
-          {/* Vimeo Videos können nicht direkt mit react-native-video wiedergegeben werden deswegen WebView*/}
+           Vimeo Videos können nicht direkt mit react-native-video wiedergegeben werden deswegen WebView
           <WebView
             source={{
               uri: 'https://player.vimeo.com/video/853027148?autoplay=1',
@@ -77,7 +78,6 @@ const EvaluationScreen = () => {
             style={{ flex: 1 }}
           />
           <View style={{ alignItems: 'center' }}>
-
               <Button
                   title="Schließen"
                   onPress={toggleModal}
@@ -98,7 +98,8 @@ const EvaluationScreen = () => {
         {/* <Button title="Evaluierungsübung starten" onPress={handleEvaluierung} /> */}
       </View>
     </View>
-    </View>
+
+        </View>
   );
 };
 

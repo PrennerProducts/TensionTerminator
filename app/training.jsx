@@ -121,7 +121,7 @@ const TrainingScreen = () => {
                 </Pressable>)}
             </View>
             <View style={styles.bottom}>
-            <Link href={'../evaluationComponents/evaluationAfter'} asChild>
+            <Link href={'../components/intensityAfter'} asChild>
                 <Pressable                     onPress={() => {
                         handleStop();
                     }}style={styles.button}>

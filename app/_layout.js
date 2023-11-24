@@ -1,20 +1,8 @@
-import {
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  Image,
-  Modal,
-} from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {  TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
 import {useFonts} from 'expo-font';
 import {useRouter, Tabs, SplashScreen} from 'expo-router';
 import { Stack } from 'expo-router/stack';
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { useRouter, Tabs } from "expo-router";
-import { Stack } from "expo-router/stack";
-
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';

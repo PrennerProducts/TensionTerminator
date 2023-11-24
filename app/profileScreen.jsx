@@ -17,6 +17,7 @@ import { avatarList } from './config/avatarConfig';
 import { Link, useRouter } from 'expo-router';
 import GameStatusGif from './components/GameStatusGif';
 import { useUserContext } from './components/userContextProvider';
+import { Button } from '@rneui/themed';
 
 const profileScreen = () => {
   // User context provider
@@ -127,7 +128,7 @@ const profileScreen = () => {
 
   return (
     <View style={{ padding: 20 }}>
-      <ScrollView style={{ padding: 5 }}>
+
       {/* Avatar Bild */}
       <View
         style={{
@@ -191,12 +192,13 @@ const profileScreen = () => {
               onChangeText={(text) => setNewName(text)}
               style={stylesLocal.textInputStyle}
             />
-            <TouchableOpacity
+            <Button
+                title="OK"
               onPress={handleNameChange}
-              style={stylesLocal.okButtonStyle}
-            >
-              <Text style={stylesLocal.okButtonText}>OK</Text>
-            </TouchableOpacity>
+              buttonStyle={stylesLocal.okButtonStyle}
+              titleStyle={stylesLocal.okButtonText}
+            />
+
           </View>
         ) : (
           <Text style={{ fontSize: 34, fontWeight: 'bold' }}>
@@ -214,6 +216,7 @@ const profileScreen = () => {
         )}
       </View>
 
+        <ScrollView style={{ padding: 5 }}>
       {/* Game Status */}
       <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
         <TouchableOpacity
@@ -323,6 +326,7 @@ const profileScreen = () => {
           <Text style={styles.buttonText}>Home</Text>
         </Pressable>
       </Link> */}
+
         </ScrollView>
     </View>
   );
@@ -348,12 +352,12 @@ const stylesLocal = StyleSheet.create({
     minWidth: 150,
   },
   okButtonStyle: {
-    backgroundColor: 'blue',
+    backgroundColor: '#10069f',
     padding: 10,
     borderRadius: 5,
   },
   okButtonText: {
-    color: 'white',
+    color: '#ffffff',
     fontWeight: 'bold',
   },
   switchcontainer: {

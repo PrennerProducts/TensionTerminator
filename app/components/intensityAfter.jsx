@@ -1,12 +1,17 @@
 import 'expo-router/entry';
 import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { Link } from 'expo-router';
+import {Link, useRouter} from 'expo-router';
 import styles from './StyleSheet';
 import PainSlider from './painSlider';
 import { painData } from './painData';
+import {Button} from "@rneui/themed";
+
+
 
 const intensityAfter = () => {
+    const router = useRouter();
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Wie beurteilen Sie die Intensität Ihrer Schmerzen nach dem Training? ({painData.painToString})</Text>
@@ -15,11 +20,12 @@ const intensityAfter = () => {
         <PainSlider
         beforeAfter = {1}
         />
-        <Link href={'../evaluationComponents/evaluationAfter'} asChild>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
-            <Text style={styles.buttonText}>Weiter</Text>
-          </TouchableOpacity>
-        </Link>
+            <Button
+                title="Weiter"
+                onPress={() => {router.push({ pathname:'../evaluationComponents/evaluationAfter'})}}
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
+            />
       </View>
     </View>
   );

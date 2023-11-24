@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "#ffffff",
+    height: "100%",
   },
   bottom: {
     flex: 1,
@@ -21,12 +22,20 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     justifyContent: "center",
   },
+  buttonWithIcon: {
+    display: 'flex',
+    height: "9%",
+    minHeight: 50,
+    minWidth: "90%",
+    backgroundColor: "#10069f",
+    borderRadius: 10,
+    marginTop: "5%",
+    justifyContent: "flex-start",
+  },
   buttonText: {
     fontSize: 20,
-    textAlign: 'center',
     color: '#ffffff',
-    marginLeft: 30,
-
+    textAlign: "center",
   },
   title: {
     fontSize: 30,

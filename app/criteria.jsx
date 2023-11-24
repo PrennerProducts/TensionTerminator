@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+ import { View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Link } from "expo-router";
@@ -7,6 +7,7 @@ import CheckBox from "expo-checkbox";
 import styles from "./components/StyleSheet";
 import { useIsFocused } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
+import { Button } from '@rneui/themed';
 
 const criteriaScreen = () => {
   //Uncomment this to use
@@ -92,11 +93,12 @@ const criteriaScreen = () => {
       </ScrollView>
 
       <View style={[styles.bottom, { flex: 0, marginTop: "3%", bottom: "3%" }]}>
-        <Link href={"./home"} asChild>
-          <Pressable onPress={changeFirstTime} style={styles.button}>
-            <Text style={styles.buttonText}>Bestätigen</Text>
-          </Pressable>
-        </Link>
+          <Button
+              title="Bestätigen"
+                onPress={changeFirstTime}
+              buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
+                />
       </View>
 
       {/* <View>{skipCriteria}</View> */}
