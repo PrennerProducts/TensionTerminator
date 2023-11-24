@@ -106,7 +106,7 @@ const ExplanationVideo = () => {
                 </TouchableOpacity>
 
                 <Modal
-                    options={{ presentation: 'fullscreen-modal' }}
+                    // options={{ presentation: 'fullscreen-modal' }}
                     isVisible={isModalVisible}
                 >
                     <View style={{ flex: 1 }}>

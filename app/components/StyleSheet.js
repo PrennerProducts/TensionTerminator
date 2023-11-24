@@ -106,5 +106,23 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#fffff",
   },
+  thumbnail: {
+    width: '100%',
+    resizeMode: 'contain',
+    height: 200
+  },
+  thumbnailContainer: {
+    position: 'relative',
+  },
+
+  playIconContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 export default styles;
