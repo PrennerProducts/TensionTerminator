@@ -1,9 +1,10 @@
 import 'expo-router/entry';
-import { View, Text, Pressable, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Pressable, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Link, useRouter } from 'expo-router';
 import styles from '../components/StyleSheet';
 import { evaluationData } from './evaluationData';
+import {Button} from "@rneui/themed";
 
 const EvaluationAfter = () => {
   const router = useRouter();
@@ -20,14 +21,18 @@ const EvaluationAfter = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Evaluierungsübung NACHHER</Text>
       <View style={styles.bottom}>
-          <TouchableOpacity onPress={goToEvaluation} style={styles.button}>
-            <Text style={styles.buttonText}>Evaluierung Ihrer Beweglichkeit</Text>
-          </TouchableOpacity>
-        <Link href={'../evaluationComponents/resultEvaluation'} asChild>
-          <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>Überspringen</Text>
-          </Pressable>
-        </Link>
+          <Button
+              title="Evaluierung Ihrer Beweglichkeit"
+              onPress={goToEvaluation}
+              buttonStyle={styles.button}
+              titleStyle={styles.buttonText}
+          />
+          <Button
+              title="Überspringen"
+              onPress={() => {router.push({ pathname:'../evaluationComponents/resultEvaluation'})}}
+              buttonStyle={styles.button}
+              titleStyle={styles.buttonText}
+          />
       </View>
     </View>
   );

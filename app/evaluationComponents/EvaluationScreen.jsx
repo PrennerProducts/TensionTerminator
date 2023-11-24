@@ -95,7 +95,6 @@ const EvaluationScreen = () => {
               buttonStyle={styles.button}
               titleStyle={styles.buttonText}
           />
-        {/* <Button title="Evaluierungsübung starten" onPress={handleEvaluierung} /> */}
       </View>
     </View>
 

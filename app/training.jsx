@@ -3,6 +3,7 @@ import { View, Text, Pressable, Animated } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import {Link, useRouter} from 'expo-router';
 import styles from "./components/StyleSheet";
+import {Button} from "@rneui/themed";
 
 
 
@@ -113,22 +114,21 @@ const TrainingScreen = () => {
             <Text style={{fontSize: 60}}>{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</Text>
             <View style={styles.bottom}>
             {isPressableVisible && (
-                <Pressable onPress={() => {
-                        handleStart();
-                    }}style={styles.button}>
-
-                    <Text style={styles.buttonText}>Training starten</Text>
-                </Pressable>)}
+                <Button
+                    title="Training starten"
+                    nPress={() => {handleStart();}}
+                    buttonStyle={styles.button}
+                    titleStyle={styles.buttonText}
+                />)}
             </View>
             <View style={styles.bottom}>
-            <Link href={'../components/intensityAfter'} asChild>
-                <Pressable                     onPress={() => {
-                        handleStop();
-                    }}style={styles.button}>
 
-                    <Text style={styles.buttonText}>Training beenden</Text>
-                </Pressable>
-            </Link>
+                <Button
+                    title="Training beenden"
+                    onPress={() => {router.push({ pathname:'../components/intensityAfter'})}}
+                    buttonStyle={styles.button}
+                    titleStyle={styles.buttonText}
+                />
             </View>
         </View>
     );

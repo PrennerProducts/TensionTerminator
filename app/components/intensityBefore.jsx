@@ -1,10 +1,10 @@
 import 'expo-router/entry';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import React from 'react';
-import { Link } from 'expo-router';
 import styles from './StyleSheet';
 import PainSlider from './painSlider';
 import { painData } from './painData';
+import {Button} from "@rneui/themed";
 
 const intensityBefore = () => {
   return (
@@ -20,11 +20,12 @@ const intensityBefore = () => {
       </Text>
       </View>
         <View style={styles.bottom}>
-        <Link href={'../evaluationComponents/evaluationBefore'} asChild>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
-            <Text style={styles.buttonText}>Weiter</Text>
-          </TouchableOpacity>
-        </Link>
+            <Button
+                title="Weiter"
+                onPress={() => {router.push({ pathname:'../evaluationComponents/evaluationBefore'})}}
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
+            />
       </View>
     </View>
   );
