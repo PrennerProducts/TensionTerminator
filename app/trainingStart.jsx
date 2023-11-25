@@ -31,7 +31,7 @@ import Thn_BeckenGesaess_DruckSchm from '../assets/gifs/Thn_BeckenGesaess_DruckS
 
 
 
-const ExplanationVideo = () => {
+const TrainingStart = () => {
     const router = useRouter();
 
     const { currentImageIndex } = useProfileImage(); // Verwenden des ProfileImageContext hooks
@@ -142,5 +142,5 @@ const ExplanationVideo = () => {
     );
 };
 
-export default ExplanationVideo;
+export default TrainingStart;
 

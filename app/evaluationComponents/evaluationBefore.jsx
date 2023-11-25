@@ -15,7 +15,7 @@ const EvaluationBefore = () => {
     evaluationData.isTraining = 1;
     evaluationData.beforeAfterTraining = 0;
     evaluationData.printValues();
-    router.push({ pathname: 'evaluationComponents/EvaluationScreen' });
+    router.push({ pathname: 'evaluationComponents/evaluationScreen' });
   };
 
   return (
@@ -31,7 +31,7 @@ const EvaluationBefore = () => {
         />
         <Button
             title="Überspringen"
-            onPress={() => {router.push({ pathname:'./trainingStart'})}}
+            onPress={() => {router.push({ pathname:'../trainingStart'})}}
             buttonStyle={styles.button}
             titleStyle={styles.buttonText}
         />

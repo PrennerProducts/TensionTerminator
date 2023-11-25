@@ -146,7 +146,7 @@
 //         })}
 //       />
 //       <Tabs.Screen
-//         name="EvaluationScreen"
+//         name="evaluationScreen"
 //         options={{
 //           tabBarLabel: 'Evaluation',
 //           headerTitle: 'Evaluation Screen',

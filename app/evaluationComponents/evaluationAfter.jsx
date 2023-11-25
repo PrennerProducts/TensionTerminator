@@ -14,7 +14,7 @@ const EvaluationAfter = () => {
     evaluationData.exercise = 0;
     evaluationData.beforeAfterTraining = 1;
     evaluationData.printValues();
-    router.push({ pathname: 'evaluationComponents/EvaluationScreen' });
+    router.push({ pathname: 'evaluationComponents/evaluationScreen' });
   };
 
   return (

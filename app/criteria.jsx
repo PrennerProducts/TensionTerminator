@@ -1,7 +1,7 @@
- import { View, Text } from "react-native";
+ import {View, Text, Pressable} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Link } from "expo-router";
+import {Link, useRouter} from "expo-router";
 import { getData, removeData, saveData } from "./services/storage";
 import CheckBox from "expo-checkbox";
 import styles from "./components/StyleSheet";
@@ -10,6 +10,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Button } from '@rneui/themed';
 
 const criteriaScreen = () => {
+    const router = useRouter();
   //Uncomment this to use
   // const navigation = useNavigation();
   // const [firstTime, setFirstTime] = React.useState(true);
@@ -34,8 +35,10 @@ const criteriaScreen = () => {
   // }, [navigation, isFocused]);
 
   const changeFirstTime = async () => {
+      router.push("./home");
     // await saveData("firstTime", false);
     // setFirstTime(false);
+
   };
 
   // const skip = async () => {

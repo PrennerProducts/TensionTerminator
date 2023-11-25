@@ -197,9 +197,9 @@ function Layout() {
             }}
           />
           <Stack.Screen
-            name="explanationText"
+            name="trainingStart"
             options={{
-              headerTitle: "Erklärung lesen",
+              headerTitle: "Anleitung",
               headerShown: true,
               headerTitleAlign: "center",
               headerRight: () => (
@@ -214,25 +214,7 @@ function Layout() {
               ),
             }}
           />
-          <Stack.Screen
-            name="explanationVideo"
-            options={{
-              headerTitle: "Erklärvideo",
-              headerShown: true,
-              headerTitleAlign: "center",
-              headerRight: () => (
-                <TouchableOpacity onPress={goToHome}>
-                  <Icon
-                    name="home"
-                    size={35}
-                    color="#fff"
-                    style={{ marginRight: 15 }}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-          />
-          <Stack.Screen
+             <Stack.Screen
             name="gratulation"
             options={{
               headerTitle: "Gratulation",
@@ -327,7 +309,7 @@ function Layout() {
             }}
           />
           <Stack.Screen
-            name="evaluationComponents/EvaluationScreen"
+            name="evaluationComponents/evaluationScreen"
             options={{
               headerTitle: "EvaluationScreen",
               headerShown: true,

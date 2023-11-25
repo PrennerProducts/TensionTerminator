@@ -38,7 +38,7 @@ const Home = () => {
     evaluationData.originScreen = '../home';
     evaluationData.isTraining = 0;
     evaluationData.beforeAfterTraining = 0;
-    router.push({ pathname: 'evaluationComponents/EvaluationScreen' });
+    router.push({ pathname: 'evaluationComponents/evaluationScreen' });
   };
 
   const goToTraining = async () => {

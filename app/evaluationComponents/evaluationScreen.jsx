@@ -7,7 +7,7 @@ import { evaluationData } from './evaluationData';
 import styles from '../components/StyleSheet';
 import { Button } from '@rneui/themed';
 
-const EvaluationScreen = () => {
+const evaluationScreen = () => {
   const router = useRouter();
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -26,8 +26,7 @@ const EvaluationScreen = () => {
   return (
 
     <View style={styles.container}>
-
-      <Text style={{fontSize: 25, marginTop: 20}}>Evaluierungsübungen Anleitung {"\n"} {"\n"}</Text>
+      <Text style={styles.header}>Evaluierungsübungen Anleitung {"\n"} {"\n"}</Text>
 
         <ScrollView style={{ flexGrow:1, padding: 5 }}>
 
@@ -88,18 +87,15 @@ const EvaluationScreen = () => {
         </View>
       </Modal>
 
-      <View>
           <Button
               title="Evaluierungsübung starten"
               onPress={handleEvaluierung}
               buttonStyle={styles.button}
               titleStyle={styles.buttonText}
           />
-      </View>
     </View>
-
-        </View>
+    </View>
   );
 };
 
-export default EvaluationScreen;
+export default evaluationScreen;

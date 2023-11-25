@@ -5,8 +5,10 @@ import styles from './StyleSheet';
 import PainSlider from './painSlider';
 import { painData } from './painData';
 import {Button} from "@rneui/themed";
+import {useRouter} from "expo-router";
 
 const intensityBefore = () => {
+    const router = useRouter();
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Wie beurteilen Sie die derzeitige Intensität Ihrer Schmerzen? ({painData.painToString})</Text>
