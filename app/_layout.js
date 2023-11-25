@@ -19,6 +19,7 @@ import myheaderRight from './components/headerRight';
 import { useProfileImage } from './components/ProfileImageContext';
 import { UserContextProvider } from './components/userContextProvider';
 import headerRight from './components/headerRight';
+import { evaluationData } from './evaluationComponents/evaluationData';
 
 export default function Layout() {
   const router = useRouter();
@@ -39,11 +40,13 @@ export default function Layout() {
   };
 
   const goToHome = () => {
-    router.replace('/home');
+    router.push('/home');
   };
 
   const goToGratulation = () => {
-    router.replace('/gratulation');
+    console.log(evaluationData.isTraining);
+    if (evaluationData.isTraining == 1) router.push('/gratulation');
+    else router.push('/home');
   };
 
   return (
@@ -82,6 +85,9 @@ export default function Layout() {
               headerTitle: 'Tension Terminator',
               headerShown: true,
               headerTitleAlign: 'center',
+              headerLeft: () => (
+                <Text/>
+              ),
               // headerLeft: () => (
               //   <TouchableOpacity>
               //     <Icon
@@ -287,7 +293,16 @@ export default function Layout() {
               headerTitle: 'Wo tut es weh?',
               headerShown: true,
               headerTitleAlign: 'center',
-              headerRight: myheaderRight,
+              headerRight: () => (
+                <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                    name="home"
+                    size={35}
+                    color="#fff"
+                    style={{ marginRight: 15 }}
+                  />
+                </TouchableOpacity>
+              ),
             }}
           />
 
@@ -300,7 +315,16 @@ export default function Layout() {
               headerTitle: 'Evaluierungsübung NACHHER',
               headerShown: true,
               headerTitleAlign: 'center',
-              headerRight: myheaderRight,
+              headerRight: () => (
+                <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                    name="home"
+                    size={35}
+                    color="#fff"
+                    style={{ marginRight: 15 }}
+                  />
+                </TouchableOpacity>
+              ),
             }}
           />
           <Stack.Screen
@@ -327,7 +351,16 @@ export default function Layout() {
               headerTitle: 'Evaluierungsübung VORHER',
               headerShown: true,
               headerTitleAlign: 'center',
-              headerRight: myheaderRight,
+              headerRight: () => (
+                <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                    name="home"
+                    size={35}
+                    color="#fff"
+                    style={{ marginRight: 15 }}
+                  />
+                </TouchableOpacity>
+              ),
             }}
           />
           <Stack.Screen
@@ -344,7 +377,16 @@ export default function Layout() {
               headerTitle: 'Kontrolle',
               headerShown: true,
               headerTitleAlign: 'center',
-              headerRight: myheaderRight,
+              headerRight: () => (
+                <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                    name="home"
+                    size={35}
+                    color="#fff"
+                    style={{ marginRight: 15 }}
+                  />
+                </TouchableOpacity>
+              ),
             }}
           />
           <Stack.Screen

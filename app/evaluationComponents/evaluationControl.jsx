@@ -7,6 +7,7 @@ import {StyleSheet} from "react-native";
 import { evaluationData } from './evaluationData';
 
 const evaluationControl = () => {
+  evaluationData.printValues();
   const router = useRouter();
   const cacheBuster = Date.now();
   const exercise = evaluationData.exercise;
@@ -41,11 +42,13 @@ const evaluationControl = () => {
       evaluationData.maxRRAfter = maxRR;
       router.replace({pathname: 'evaluationComponents/resultEvaluation'});
     }
-    evaluationData.maxYLBefore = maxYL;
-    evaluationData.maxYRBefore = maxYR;
-    evaluationData.maxRLBefore = maxRL;
-    evaluationData.maxRRBefore = maxRR;
-    router.replace({pathname: 'evaluationComponents/resultEvaluation'});
+    else {
+      evaluationData.maxYLBefore = maxYL;
+      evaluationData.maxYRBefore = maxYR;
+      evaluationData.maxRLBefore = maxRL;
+      evaluationData.maxRRBefore = maxRR;
+      router.replace({pathname: 'evaluationComponents/resultEvaluation'});
+  }
   };
 
   if (exercise === 0){
