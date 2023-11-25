@@ -153,6 +153,7 @@ const ResultEvaluation = () => {
         Links: <Text style={textColorDeltaYL}>{deltaYL}°</Text>, 
         Rechts: <Text style={textColorDeltaYR}>{deltaYR}°</Text>, 
         Summe: <Text style={textColorDeltaYS}>{deltaYL+deltaYR}°</Text>{'\n'}
+        In Prozent: <Text style={textColorDeltaYS}>{(100*(deltaYL+deltaYR)/(maxYLBefore+maxYRBefore)).toFixed(2)}%</Text>{'\n'}
       </Text>
       <Text style={stylesRE.header}>Bewegung 2: Seitneigung</Text>
       <DrawingY 
@@ -191,11 +192,14 @@ const ResultEvaluation = () => {
         Links: <Text style={textColorDeltaRL}>{deltaRL}°</Text>, 
         Rechts: <Text style={textColorDeltaRR}>{deltaRR}°</Text>, 
         Summe: <Text style={textColorDeltaRS}>{deltaRL+deltaRR}°</Text>{'\n'}
+        In Prozent: <Text style={textColorDeltaRS}>{(100*(deltaRL+deltaRR)/(maxRLBefore+maxRRBefore)).toFixed(2)}%</Text>{'\n'}
       </Text>
       <Text style={stylesRE.header}>Schmerzintensität{'\n'}({painData.painToString})</Text>
       <Text style={stylesRE.row}>Vor dem Training: {painIntensityBefore}</Text>
       <Text style={stylesRE.row}>Nach dem Training: {painIntensityAfter}</Text>
-      <Text style={stylesRE.rowBold}>Die Intensität Ihrer Schmerzen  hat sich um <Text style={textColorDeltaPain}>{deltaPain}</Text> Punkte verändert!{'\n\n'}</Text>
+      <Text style={stylesRE.rowBold}>Die Intensität Ihrer Schmerzen  hat sich um <Text style={textColorDeltaPain}>{deltaPain} </Text> Punkte (<Text style={textColorDeltaPain}>{(100*(deltaPain)/(painIntensityBefore)).toFixed(2)}%</Text>) verändert!{'\n\n\n'}
+      
+      </Text>
       </ScrollView>
       </View>
     </View>
