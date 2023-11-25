@@ -33,6 +33,7 @@ import SlotMachine from 'react-native-slot-machine';
 import { useUserContext } from './userContextProvider';
 import DrawingY from '../evaluationComponents/drawingY';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import CustomDropdown from './CustomDropdown';
 
 const statistics = () => {
   const date = new Date();
@@ -64,10 +65,15 @@ const statistics = () => {
 
   // Bar Chart
   const [selectedChart, setSelectedChart] = useState('Week'); // Standardmäßig auf 'Week' gesetzt
-  updateGameLevel(4);
+  //updateGameLevel(4);
 
   //dropdown picker
   const [open, setOpen] = useState(false);
+
+  const handleSelectChart = (chartType) => {
+    setSelectedChart(chartType);
+    // Weitere Logik, um den Chart zu aktualisieren
+  };
 
   const months = [
     'Jan',
@@ -136,8 +142,12 @@ const statistics = () => {
   ];
 
   titles = ['RollenKlein', 'RollenGroß', 'KratzArm'];
+
   return (
-    <ScrollView style={stylesLocal.mainscrollViewContainer}>
+    <ScrollView
+      style={stylesLocal.mainscrollViewContainer}
+      nestedScrollEnabled={true}
+    >
       {/* <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -295,7 +305,15 @@ const statistics = () => {
         {/* ----DropDownPickerCharts--------- */}
 
         <View style={stylesLocal.dropdownContainer}>
+          <CustomDropdown
+            selectedChart={selectedChart}
+            onSelect={handleSelectChart}
+          />
+        </View>
+
+        {/* <View style={stylesLocal.dropdownContainer}>
           <DropDownPicker
+            nestedScrollEnabled={true}
             open={open}
             setOpen={setOpen}
             value={selectedChart}
@@ -309,7 +327,7 @@ const statistics = () => {
             ]}
             onChangeValue={(value) => setSelectedChart(value)}
           />
-        </View>
+        </View> */}
 
         <VictoryChart
           theme={VictoryTheme.material}
@@ -429,7 +447,7 @@ const stylesLocal = StyleSheet.create({
   // wrapper
   headerWrapper: {
     margin: 10,
-    marginBottom: 30,
+    marginBottom: 50,
   },
 
   // Horizontal Scroll View
@@ -449,8 +467,8 @@ const stylesLocal = StyleSheet.create({
     margin: 0,
   },
   gridColumn: {
-    backgroundColor: 'lightgray',
-    padding: 10,
+    backgroundColor: 'f0f0f0',
+    padding: 8,
     margin: 5,
     borderRadius: 5,
     alignItems: 'center',
@@ -475,6 +493,7 @@ const stylesLocal = StyleSheet.create({
   // bar chart
   dropdownContainer: {
     alignItems: 'center',
+    margin: 0,
   },
 
   barchart: {
@@ -494,7 +513,7 @@ const stylesLocal = StyleSheet.create({
   slotheader: {
     fontSize: 20,
     textAlign: 'center',
-    marginTop: 0,
+    marginTop: 10,
     color: '#fff',
     backgroundColor: '#10069F',
   },
@@ -504,6 +523,8 @@ const stylesLocal = StyleSheet.create({
     backgroundColor: '#10069f',
     paddingBottom: 10,
     marginBottom: 20,
+    borderRadius: 20,
+    margin: 10,
   },
 
   // max yaw roll
