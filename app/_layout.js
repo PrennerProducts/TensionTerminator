@@ -221,6 +221,9 @@ export default function Layout() {
               headerTitle: "Gratulation",
               headerShown: true,
               headerTitleAlign: "center",
+              headerLeft: () => (
+                <Text/>
+              ),
               headerRight: () => (
                 <TouchableOpacity onPress={goToHome}>
                   <Icon
@@ -395,6 +398,9 @@ export default function Layout() {
               headerTitle: "Ergebnis",
               headerShown: true,
               headerTitleAlign: "center",
+              headerLeft: () => (
+                <Text/>
+              ),
               headerRight: () => (
                 <TouchableOpacity onPress={goToGratulation}>
                   <Icon
