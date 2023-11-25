@@ -229,12 +229,12 @@ const profileScreen = () => {
           <Text style={stylesLocal.text}>Game-Level: {gameLevel}</Text>
         </TouchableOpacity>
       </View>
-      {showGameStatusGif && (
+      {/* {showGameStatusGif && (
         <GameStatusGif
           visible={showGameStatusGif}
           onClose={() => setShowGameStatusGif(false)}
         />
-      )}
+      )} */}
 
       {/* Points */}
       <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
