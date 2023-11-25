@@ -162,4 +162,45 @@ const Gratulation = () => {
     );
 }
 
+const stylesLocal = StyleSheet.create({
+    overlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    text: {
+        fontSize: 20,
+        marginVertical: 18,
+    },
+    textInputStyle: {
+        borderWidth: 1,
+        borderColor: 'grey',
+        borderRadius: 5,
+        padding: 10,
+        marginRight: 10,
+        minWidth: 150,
+    },
+    okButtonStyle: {
+        backgroundColor: 'blue',
+        padding: 10,
+        borderRadius: 5,
+    },
+    okButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    switchcontainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        backgroundColor: '#C5C5C5',
+        width: '100%',
+    },
+    switchtext: {
+        marginRight: 10,
+    },
+});
+
 export default Gratulation;

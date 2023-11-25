@@ -26,7 +26,7 @@ const evaluationScreen = () => {
   return (
 
     <View style={styles.container}>
-      <Text style={styles.header}>Evaluierungsübungen Anleitung {"\n"} {"\n"}</Text>
+      <Text style={styles.header}>Evaluierungsübungen {"\n"}Anleitung {"\n"} {"\n"}</Text>
 
         <ScrollView style={{ flexGrow:1, padding: 5 }}>
 
