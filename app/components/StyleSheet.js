@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: '100%',
     resizeMode: 'contain',
-    height: 200
+    height: 100
   },
   thumbnailContainer: {
     position: 'relative',

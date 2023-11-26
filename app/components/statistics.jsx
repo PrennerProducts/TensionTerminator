@@ -33,7 +33,7 @@ import SlotMachine from 'react-native-slot-machine';
 import { useUserContext } from './userContextProvider';
 import DrawingY from '../evaluationComponents/drawingY';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import CustomDropdown from './CustomDropdown';
+//import CustomDropdown from './CustomDropdown';
 
 
 const statistics = () => {
@@ -349,11 +349,12 @@ const statistics = () => {
         {/* ----DropDownPickerCharts--------- */}
 
         <View style={stylesLocal.dropdownContainer}>
-
+{/* 
           <CustomDropdown
             selectedChart={selectedChart}
             onSelect={handleSelectChart}
           />
+          */}
         </View>
 
         {/* <View style={stylesLocal.dropdownContainer}>

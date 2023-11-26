@@ -1,17 +1,24 @@
 import 'expo-router/entry';
-import { View, Text, Pressable, Button, StyleSheet, Image } from 'react-native';
-import React, { useEffect } from 'react';
+import {
+  View,
+  Text,
+  Pressable,
+  Button,
+  StyleSheet,
+  Image,
+  Animated,
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { Link, useRouter } from 'expo-router';
 import styles from './components/StyleSheet';
 import AudioPlayer from './services/audioPlayer';
 import { useUserContext } from './components/userContextProvider';
 import { saveUserData, getUserData } from './services/storage.jsx';
 import SlotMachine from 'react-native-slot-machine';
-
 import profileScreen from './profileScreen.jsx';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
-//import gratulationGif from '../assets/gifs/confetti2.gif';
+//import gratulationGif from '../assets/gifs/confetti.gif';
 
 const Gratulation = () => {
   const router = useRouter();
