@@ -1,4 +1,8 @@
 import 'expo-router/entry';
+import {Button} from "@rneui/themed";
+
+
+
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import React from 'react';
 import { useRouter } from 'expo-router';
@@ -34,6 +38,7 @@ const intensityBefore = () => {
     );
   };
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Wie beurteilen Sie die derzeitige Intensität Ihrer Schmerzen? ({painData.painToString})</Text>
@@ -47,9 +52,14 @@ const intensityBefore = () => {
       </Text>
       </View>
         <View style={styles.bottom}>
-        <TouchableOpacity onPress={skipEvaluationYesNo} style={styles.button}>
-          <Text style={styles.buttonText}>Weiter</Text>
-        </TouchableOpacity>
+
+            <Button
+                title="Weiter"
+                onPress={() => {router.push({ pathname:'../evaluationComponents/evaluationBefore'})}}
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
+            />
+
       </View>
     </View>
   );

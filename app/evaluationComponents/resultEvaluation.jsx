@@ -102,7 +102,7 @@ const ResultEvaluation = () => {
           text: "Ja",
           onPress: () => {
             evaluationData.resetValues();
-            router.replace({pathname: originScreen});
+            router.push({pathname: originScreen});
           },
         },
         {

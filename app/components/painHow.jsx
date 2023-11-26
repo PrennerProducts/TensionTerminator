@@ -43,7 +43,7 @@ const painHow = () => {
             <TouchableOpacity style={stylesP.buttonSmall}
               onPress={() => {
               painData.painType = 3;
-              painData.painToString = 'Druckschmerz im oberem Schulterblatt- oder Rücken-Bereich';
+              painData.painToString = 'Druckschmerz im oberen Schulterblatt- oder Rücken-Bereich';
                         }}>
             <Image source={require('../../assets/gifs/1druck2.gif')} style={stylesP.image} />
               <Text style={stylesP.buttonText}>{'\n'}Druckschmerz im Bereich oberes Schulterblatt- oder Rücken</Text>

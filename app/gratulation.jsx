@@ -15,10 +15,13 @@ import AudioPlayer from './services/audioPlayer';
 import { useUserContext } from './components/userContextProvider';
 import { saveUserData, getUserData } from './services/storage.jsx';
 import SlotMachine from 'react-native-slot-machine';
+
+
 import profileScreen from './profileScreen.jsx';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
 import gratulationGif from '../assets/gifs/confetti.gif';
+import {Button} from "@rneui/themed";
 
 const Gratulation = () => {
   const router = useRouter();
@@ -173,21 +176,25 @@ const Gratulation = () => {
         }}
       />
       <View style={styles.bottom}>
-        <Link href={'./appointment'} asChild>
-          <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>Termin planen</Text>
-          </Pressable>
-        </Link>
+       
+                <Button
+                    title="Termin planen"
+                    onPress={() => {router.push({ pathname:'./appointment'})}}
+                    buttonStyle={styles.button}
+                    titleStyle={styles.buttonText}
+                />
 
-        <Link href={'./components/painWhere'} asChild>
-          <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>Neues Training starten</Text>
-          </Pressable>
-        </Link>
+                <Button
+                    title="Neues Training starten"
+                    onPress={() => {router.push({ pathname:'./components/painWhere'})}}
+                    buttonStyle={styles.button}
+                    titleStyle={styles.buttonText}
+                />
       </View>
     </View>
   );
 };
+
 const stylesLocal = StyleSheet.create({
   overlay: {
     flex: 1,
@@ -243,4 +250,6 @@ const stylesLocal = StyleSheet.create({
     height: 800,
   },
 });
+
+
 export default Gratulation;

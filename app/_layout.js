@@ -1,14 +1,19 @@
-import {
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  Image,
-  Modal,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { useRouter, Tabs } from "expo-router";
-import { Stack } from "expo-router/stack";
+import {  TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
+import {useFonts} from 'expo-font';
+import {useRouter, Tabs, SplashScreen} from 'expo-router';
+import { Stack } from 'expo-router/stack';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import UserData from './classes/userData';
+import { avatarList } from './config/avatarConfig';
+import { useFocusEffect } from '@react-navigation/native';
+import { ProfileImageProvider } from './components/ProfileImageContext';
+import myheaderRight from './components/headerRight';
+import { useProfileImage } from './components/ProfileImageContext';
+import { UserContextProvider } from './components/userContextProvider';
+import headerRight from './components/headerRight';
+import {NativeBaseProvider} from "native-base";
+
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UserData from './classes/userData';
@@ -21,7 +26,35 @@ import { UserContextProvider } from './components/userContextProvider';
 import headerRight from './components/headerRight';
 import { evaluationData } from './evaluationComponents/evaluationData';
 
-export default function Layout() {
+
+//Prevent splash screen from autohiding before asset loading is completed
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+    const [loaded, error] = useFonts({
+//        'Pano B': require('../assets/fonts/Pano Bold.otf'),
+        'Loew Next R': require('../assets/fonts/LoewNext-Regular-BF63fd638aa2303.otf'),
+        'Loew Next B': require('../assets/fonts/LoewNext-Bold-BF63fd638abb9de.otf')
+    });
+
+    useEffect(() => {
+        if (error) throw error;
+    }, [error]);
+
+    useEffect(() => {
+        if (loaded) {
+            SplashScreen.hideAsync();
+        }
+    }, [loaded]);
+
+    if (!loaded) {
+        return null;
+    }
+
+    return <Layout />;
+}
+
+function Layout() {
   const router = useRouter();
   const user = new UserData();
 
@@ -40,16 +73,21 @@ export default function Layout() {
   };
 
   const goToHome = () => {
-    router.replace("/home");
+    router.replace('/home');
   };
 
   const goToGratulation = () => {
+
+    router.replace('/gratulation');
+
     console.log(evaluationData.isTraining);
     if (evaluationData.isTraining == 1) router.push('/gratulation');
     else router.push('/home');
+
   };
 
   return (
+
     <UserContextProvider>
       <ProfileImageProvider>
         <Stack
@@ -180,9 +218,9 @@ export default function Layout() {
             }}
           />
           <Stack.Screen
-            name="explanationText"
+            name="trainingStart"
             options={{
-              headerTitle: "Erklärung lesen",
+              headerTitle: "Anleitung",
               headerShown: true,
               headerTitleAlign: "center",
               headerRight: () => (
@@ -197,25 +235,7 @@ export default function Layout() {
               ),
             }}
           />
-          <Stack.Screen
-            name="explanationVideo"
-            options={{
-              headerTitle: "Erklärvideo",
-              headerShown: true,
-              headerTitleAlign: "center",
-              headerRight: () => (
-                <TouchableOpacity onPress={goToHome}>
-                  <Icon
-                    name="home"
-                    size={35}
-                    color="#fff"
-                    style={{ marginRight: 15 }}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-          />
-          <Stack.Screen
+             <Stack.Screen
             name="gratulation"
             options={{
               headerTitle: "Gratulation",
@@ -331,7 +351,7 @@ export default function Layout() {
             }}
           />
           <Stack.Screen
-            name="evaluationComponents/EvaluationScreen"
+            name="evaluationComponents/evaluationScreen"
             options={{
               headerTitle: "EvaluationScreen",
               headerShown: true,
