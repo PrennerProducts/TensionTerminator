@@ -149,6 +149,16 @@ export default function Layout() {
             }}
           />
 
+          <Stack.Screen
+            name="components/statistics"
+            options={{
+              headerTitle: 'Meine Statistiken',
+              headerShown: true,
+              headerTitleAlign: 'center',
+              headerRight: myheaderRight,
+            }}
+          />
+
           {/* ------------------------------------------------------------------------------------- */}
           {/*  FOLDER components */}
           {/* ------------------------------------------------------------------------------------- */}
