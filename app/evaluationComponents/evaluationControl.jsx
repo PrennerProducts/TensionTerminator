@@ -19,12 +19,12 @@ const evaluationControl = () => {
   const shouldTakePictures = evaluationData.shouldTakePictures;
 
   const restartEvaluation = async () => {
-    router.push({pathname: 'evaluationComponents/evaluationYR'});
+    router.replace({pathname: 'evaluationComponents/evaluationYR'});
   };
 
   const nextEvaluation = async () => {
     evaluationData.exercise = 1;
-    router.push({pathname: 'evaluationComponents/evaluationYR'});
+    router.replace({pathname: 'evaluationComponents/evaluationYR'});
   };
 
   const exitEvaluation = async () => {
@@ -33,7 +33,7 @@ const evaluationControl = () => {
       evaluationData.maxYRBefore = maxYR;
       evaluationData.maxRLBefore = maxRL;
       evaluationData.maxRRBefore = maxRR;
-      router.push({pathname: '/trainingStart'});
+      router.replace({pathname: '/trainingStart'});
     }
     else if (evaluationData.isTraining && evaluationData.beforeAfterTraining === 1){
       console.log("Updating values after training");
@@ -41,7 +41,7 @@ const evaluationControl = () => {
       evaluationData.maxYRAfter = maxYR;
       evaluationData.maxRLAfter = maxRL;
       evaluationData.maxRRAfter = maxRR;
-      router.push({pathname: 'evaluationComponents/resultEvaluation'});
+      router.replace({pathname: 'evaluationComponents/resultEvaluation'});
     }
 
     else {
@@ -49,7 +49,7 @@ const evaluationControl = () => {
       evaluationData.maxYRBefore = maxYR;
       evaluationData.maxRLBefore = maxRL;
       evaluationData.maxRRBefore = maxRR;
-      router.push({pathname: 'evaluationComponents/resultEvaluation'});
+      router.replace({pathname: 'evaluationComponents/resultEvaluation'});
   }
   };
 

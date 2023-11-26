@@ -1,8 +1,4 @@
 import 'expo-router/entry';
-import {Button} from "@rneui/themed";
-
-
-
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import React from 'react';
 import { useRouter } from 'expo-router';
@@ -22,10 +18,10 @@ const intensityBefore = () => {
           text: "Ja",
           onPress: () => {
             evaluationData.resetValues();
-            evaluationData.originScreen = 'evaluationComponents/evaluationBefore';
+            evaluationData.originScreen = 'evaluationComponents/intensityBefore';
             evaluationData.isTraining = 1;
             evaluationData.beforeAfterTraining = 0;
-            router.replace({ pathname: 'evaluationComponents/EvaluationScreen' });
+            router.replace({ pathname: 'evaluationComponents/evaluationScreen' });
           },
         },
         {
@@ -37,7 +33,6 @@ const intensityBefore = () => {
       ]
     );
   };
-
 
   return (
     <View style={styles.container}>
@@ -52,14 +47,9 @@ const intensityBefore = () => {
       </Text>
       </View>
         <View style={styles.bottom}>
-
-            <Button
-                title="Weiter"
-                onPress={() => {router.push({ pathname:'../evaluationComponents/evaluationBefore'})}}
-                buttonStyle={styles.button}
-                titleStyle={styles.buttonText}
-            />
-
+        <TouchableOpacity onPress={skipEvaluationYesNo} style={styles.button}>
+          <Text style={styles.buttonText}>Weiter</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -44,10 +44,10 @@ const intensityAfter = () => {
             text: "Ja",
             onPress: () => {
               evaluationData.exercise = 0;
-              evaluationData.originScreen = 'evaluationComponents/evaluationAfter';
+              evaluationData.originScreen = 'evaluationComponents/intensityAfter';
               evaluationData.isTraining = 1;
               evaluationData.beforeAfterTraining = 1;
-              router.replace({ pathname: 'evaluationComponents/EvaluationScreen' });
+              router.replace({ pathname: 'evaluationComponents/evaluationScreen' });
             },
           },
           {

@@ -20,7 +20,7 @@ const evaluationScreen = () => {
     const handleEvaluierung = () => {
         setEvaluationStarted(true);
         evaluationData.printValues();
-        router.push('../evaluationComponents/evaluationYR');
+        router.replace('../evaluationComponents/evaluationYR');
     };
 
     return (

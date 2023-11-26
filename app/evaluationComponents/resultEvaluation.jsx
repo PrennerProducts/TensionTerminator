@@ -238,14 +238,14 @@ const ResultEvaluation = () => {
         TitleString = {''}
         shouldAnimate = {false}
         imageSource={imageSourceY}
-        degreeAdd = {-90}
+        degreeAdd = {-270}
         imageHeight = {300}
         xAdd = {0}
         yAdd = {40}
         titleXAdd = {0}
         titleYAdd = {0}
         resize = {1}
-        lineLengthFactor = {2.3}
+        lineLengthFactor = {-2.3}
       />
       <Text style={stylesRE.rowBold}>Ihre Werte</Text>
       <Text style={stylesRE.row}>
