@@ -2,19 +2,19 @@ export const evaluationData = {
     originScreen: '',
     imageName: '',
     exercise: 0,
-    isTraining: 0,
+    isTraining: 1,
     beforeAfterTraining: 0,
     shouldTakePictures: true,
     maxYL: 0,
     maxYR: 0,
     maxRL: 0,
     maxRR: 0,
-    maxYLBefore: 0,
-    maxYRBefore: 0,
-    maxRLBefore: 40,
-    maxRRBefore: 55,
-    maxYLAfter: 60,
-    maxYRAfter: 70,
+    maxYLBefore: 50,
+    maxYRBefore: 70,
+    maxRLBefore: 45,
+    maxRRBefore: 65,
+    maxYLAfter: 44,
+    maxYRAfter: 66,
     maxRLAfter: 90,
     maxRRAfter: 90,
     resetValues: function() {
@@ -22,6 +22,7 @@ export const evaluationData = {
         this.imageName = '';
         this.exercise = 0;
         this.isTraining = 0;
+        this.beforeAfterTraining = 0;
         this.maxYL = 0;
         this.maxYR = 0;
         this.maxRL = 0;
@@ -37,19 +38,20 @@ export const evaluationData = {
     },
     printValues: function() {
         console.log(
-            this.originScreen, 
-            this.imageName, 
-            this.exercise, 
-            this.isTraining, 
-            this.maxYL, 
-            this.maxYR, 
-            this.maxRL, 
-            this.maxRR,
-            this.maxYLBefore,
+            'origin Screen: ', this.originScreen, 
+            '\nImage Name: ', this.imageName, 
+            '\nExercise: ', this.exercise, 
+            '\nIsTraining: ', this.isTraining, 
+            '\nBeforeAfter: ', this.beforeAfterTraining,
+            '\nMaxYL: ', this.maxYL, 
+            '\nMaxYR: ',this.maxYR, 
+            '\nMaxRL: ',this.maxRL, 
+            '\nMaxRR: ',this.maxRR,
+            '\nMax Values Before: ',this.maxYLBefore,
             this.maxYRBefore,
             this.maxRLBefore,
             this.maxRRBefore,
-            this.maxYLAfter,
+            '\nMax Values After: ', this.maxYLAfter,
             this.maxYRAfter,
             this.maxRLAfter,
             this.maxRRAfter)

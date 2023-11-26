@@ -1,12 +1,12 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { Link } from 'expo-router';
-import { getData, removeData, saveData } from './services/storage';
-import CheckBox from 'expo-checkbox';
-import styles from './components/StyleSheet';
-import { useIsFocused } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, Text, Pressable, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Link } from "expo-router";
+import { getData, removeData, saveData } from "./services/storage";
+import CheckBox from "expo-checkbox";
+import styles from "./components/StyleSheet";
+import { useIsFocused } from "@react-navigation/native";
+import { ScrollView } from "react-native-gesture-handler";
 
 const criteriaScreen = () => {
   //Uncomment this to use
@@ -65,30 +65,34 @@ const criteriaScreen = () => {
     </View>
   );
 
-    return (
+  return (
     <View style={styles.container}>
       {/* <Text style={styles.header}>Ausschlusskriterien</Text> */}
       <Text style={styles.text}>
         Bitte bestätigen Sie, dass Sie keine der folgenden Ausschlusskriterien
         erfüllen:
       </Text>
-      <ScrollView style={{ padding: 5 }}>
-        <Text style={styles.text}>Ich habe keine</Text>
-        {myCheckBox2(('frischen Verletzungen'))}
-        {myCheckBox2(('Knochenbrücke'))}
-        {myCheckBox2(('Wunden bzw. starke Hautreizungen'))}
-        {myCheckBox2(('Haut Tumor oder Metastasierungen'))}
+
+      <ScrollView style={{ padding: 5, flex: 1 }}>
         <Text style={styles.text}>
-          im Nacken-, Schulter/Arm oder Rückenbereich.
+          Ich habe im Nacken-, Schulter/Arm oder Rückenbereich
         </Text>
-        <Text style={styles.text}>Es liegt keine</Text>
-        {myCheckBox2(('Schwangerschaft ab dem 6. Monat'))}
-        {myCheckBox2(('Neurologische Erkrankung welche auf mechanische Einwirkung reagieren (z.B. Epilepsie, Schwindel)'))}
-        {myCheckBox2(('Sonstige med. Gegebenheit welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht'))}
-        <Text style={styles.text}>vor.</Text>
+        {myCheckBox2("keine frischen Verletzungen.")}
+        {myCheckBox2("keine Knochenbrücke.")}
+        {myCheckBox2("keine Wunden bzw. starke Hautreizungen.")}
+        {myCheckBox2("keine Haut Tumor oder Metastasierungen.")}
+        <Text style={styles.text}>Es liegt</Text>
+        {myCheckBox2("keine Schwangerschaft ab dem 6. Monat vor.")}
+        {myCheckBox2(
+          "keine neurologische Erkrankung vor, welche auf mechanische Einwirkung reagiert (z.B. Epilepsie, Schwindel)."
+        )}
+        {myCheckBox2(
+          "keine sonstige med. Gegebenheit vor, welche gegen die Verwendung von TensionTerminator (z.B. Blutgerinnungsstörung) spricht."
+        )}
       </ScrollView>
-      <View style={styles.bottom}>
-        <Link href={'./home'} asChild>
+
+      <View style={[styles.bottom, { flex: 0, marginTop: "3%", bottom: "3%" }]}>
+        <Link href={"./home"} asChild>
           <Pressable onPress={changeFirstTime} style={styles.button}>
             <Text style={styles.buttonText}>Bestätigen</Text>
           </Pressable>

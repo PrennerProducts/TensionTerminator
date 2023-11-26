@@ -4,13 +4,16 @@ import React from 'react';
 import { Link, useRouter} from 'expo-router';
 import styles from "./StyleSheet";
 import { painData } from './painData';
+ import {evaluationData} from "../evaluationComponents/evaluationData";
 
 const painWhere = () => {
     const router = useRouter();
     const silhouetteImage = require('../../assets/images/Mensch.png');
     const windowHeight = Dimensions.get('window').height;
 
+
     return (
+
         <View style={{ flex: 1 ,backgroundColor: 'white'}}>
             <View style={{alignItems: 'center',justifyContent: 'center',}}>
                 <Text style={styles.title}></Text>
@@ -31,6 +34,9 @@ const painWhere = () => {
                         onPress={() => {
                             painData.painRegion = 1;
                             console.log('Schulter-Nacken ausgewählt.');
+                            evaluationData.resetValues();
+                            evaluationData.isTraining = 1;
+
                         }}
                     >
                         <Text style={{paddingRight:15,paddingTop:40, fontSize: 17,color: 'darkblue'}}>Schulter Nacken</Text>
@@ -50,6 +56,8 @@ const painWhere = () => {
                         onPress={() => {
                             painData.painRegion = 2;
                             console.log('Mittlerer-Rücken ausgewählt.');
+                            evaluationData.resetValues();
+                            evaluationData.isTraining = 1;
                         }}
                     >
                         <Text style={{paddingRight:15, fontSize: 17,color: 'darkblue'}}>Mittlerer Rücken</Text>
@@ -69,6 +77,8 @@ const painWhere = () => {
                         onPress={() => {
                             painData.painRegion = 3;
                             console.log('Unterer-Rücken ausgewählt.');
+                            evaluationData.resetValues();
+                            evaluationData.isTraining = 1;
                         }}
                     >
                         <Text style={{paddingRight:15,paddingBottom:20, fontSize: 17,color: 'darkblue'}}>Unterer Rücken</Text>
@@ -88,6 +98,8 @@ const painWhere = () => {
                         onPress={() => {
                             painData.painRegion = 4;
                             console.log('Becken-Gesäß ausgewählt.');
+                            evaluationData.resetValues();
+                            evaluationData.isTraining = 1;
                         }}
                     >
                         <Text style={{paddingRight:15, paddingBottom: 30, fontSize: 17,color: 'darkblue'}}>Becken Gesäß</Text>
