@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "#ffffff",
+    height: "100%",
   },
   bottom: {
     flex: 1,
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
     bottom: "10%",
   },
   button: {
-    display: "flex",
+    display: 'flex',
     height: "9%",
     minHeight: 50,
     minWidth: "90%",
@@ -21,16 +22,26 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     justifyContent: "center",
   },
+  buttonWithIcon: {
+    display: 'flex',
+    height: "9%",
+    minHeight: 50,
+    minWidth: "90%",
+    backgroundColor: "#10069f",
+    borderRadius: 10,
+    marginTop: "5%",
+    justifyContent: "flex-start",
+  },
   buttonText: {
     fontSize: 20,
+    color: '#ffffff',
     textAlign: "center",
-    color: "#ffffff",
   },
   title: {
     fontSize: 30,
-    fontWeight: "700",
-    textAlign: "center",
-    top: "5%",
+    fontWeight: '700',
+    textAlign: 'center',
+    top: '5%',
   },
   top: {
     flex: 1,
@@ -47,8 +58,8 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     marginVertical: 20,
     color: "#10069F",
   },
@@ -69,8 +80,8 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     margin: 8,
-    width: "85%",
-    fontWeight: "bold",
+    width: '85%',
+    fontWeight: 'bold',
   },
   switchcontainer: {
     flexDirection: "row", // Elemente nebeneinander
@@ -90,10 +101,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 2,
-    borderColor: "#10069F",
+    borderColor: '#10069f',
     borderRadius: 10,
     padding: 10,
     backgroundColor: "#fffff",
+  },
+  thumbnail: {
+    width: '100%',
+    resizeMode: 'contain',
+    height: 200
+  },
+  thumbnailContainer: {
+    position: 'relative',
+  },
+
+  playIconContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 export default styles;

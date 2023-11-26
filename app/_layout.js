@@ -1,15 +1,8 @@
-import {
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  Image,
-  Modal,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { useRouter, Tabs } from "expo-router";
-import { Stack } from "expo-router/stack";
-
+import { TouchableOpacity, Text } from 'react-native';
+import { useEffect, useState } from 'react';
+import { useFonts } from 'expo-font';
+import { useRouter, Tabs, SplashScreen } from 'expo-router';
+import { Stack } from 'expo-router/stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
@@ -19,9 +12,37 @@ import myheaderRight from './components/headerRight';
 import { useProfileImage } from './components/ProfileImageContext';
 import { UserContextProvider } from './components/userContextProvider';
 import headerRight from './components/headerRight';
+import { NativeBaseProvider } from 'native-base';
 import { evaluationData } from './evaluationComponents/evaluationData';
 
-export default function Layout() {
+//Prevent splash screen from autohiding before asset loading is completed
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const [loaded, error] = useFonts({
+    //        'Pano B': require('../assets/fonts/Pano Bold.otf'),
+    'Loew Next R': require('../assets/fonts/LoewNext-Regular-BF63fd638aa2303.otf'),
+    'Loew Next B': require('../assets/fonts/LoewNext-Bold-BF63fd638abb9de.otf'),
+  });
+
+  useEffect(() => {
+    if (error) throw error;
+  }, [error]);
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
+  if (!loaded) {
+    return null;
+  }
+
+  return <Layout />;
+}
+
+function Layout() {
   const router = useRouter();
   const user = new UserData();
 
@@ -36,11 +57,11 @@ export default function Layout() {
   }, []);
 
   const goToProfile = () => {
-    router.push("/profileScreen");
+    router.push('/profileScreen');
   };
 
   const goToHome = () => {
-    router.replace("/home");
+    router.replace('/home');
   };
 
   const goToGratulation = () => {
@@ -55,13 +76,13 @@ export default function Layout() {
         <Stack
           screenOptions={{
             headerStyle: {
-              backgroundColor: "#10069f",
-              alignItems: "center",
-              justifyContent: "center",
+              backgroundColor: '#10069f',
+              alignItems: 'center',
+              justifyContent: 'center',
             },
-            headerTintColor: "#fff",
+            headerTintColor: '#fff',
             headerTitleStyle: {
-              fontWeight: "bold",
+              fontWeight: 'bold',
             },
             //animationTypeForReplace: 'push', // oder 'pop'
             animationEnabled: false,
@@ -74,20 +95,18 @@ export default function Layout() {
           <Stack.Screen
             name="index"
             options={({ navigation }) => ({
-              headerTitle: "Tension Terminator",
+              headerTitle: 'Tension Terminator',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
             })}
           />
           <Stack.Screen
             name="home"
             options={({ navigation }) => ({
-              headerTitle: "Tension Terminator",
+              headerTitle: 'Tension Terminator',
               headerShown: true,
               headerTitleAlign: 'center',
-              headerLeft: () => (
-                <Text/>
-              ),
+              headerLeft: () => <Text />,
               // headerLeft: () => (
               //   <TouchableOpacity>
               //     <Icon
@@ -114,9 +133,9 @@ export default function Layout() {
           <Stack.Screen
             name="profileScreen"
             options={{
-              headerTitle: "Profil",
+              headerTitle: 'Profil',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
               // headerRight: () => (
               //   <TouchableOpacity onPress={goToHome}>
               //     <Icon
@@ -132,9 +151,9 @@ export default function Layout() {
           <Stack.Screen
             name="training"
             options={{
-              headerTitle: "Training",
+              headerTitle: 'Training',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
               headerRight: myheaderRight,
             }}
           />
@@ -142,9 +161,9 @@ export default function Layout() {
           <Stack.Screen
             name="components/statistics"
             options={{
-              headerTitle: "Meine Statistiken",
+              headerTitle: 'Meine Statistiken',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
               headerRight: myheaderRight,
             }}
           />
@@ -155,9 +174,9 @@ export default function Layout() {
           <Stack.Screen
             name="appointment"
             options={{
-              headerTitle: "appointment",
+              headerTitle: 'appointment',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
               headerRight: () => (
                 <TouchableOpacity onPress={goToHome}>
                   <Icon
@@ -173,36 +192,18 @@ export default function Layout() {
           <Stack.Screen
             name="criteria"
             options={{
-              headerTitle: "Ausschlusskriterien",
+              headerTitle: 'Ausschlusskriterien',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
               // headerRight: myheaderRight,
             }}
           />
           <Stack.Screen
-            name="explanationText"
+            name="trainingStart"
             options={{
-              headerTitle: "Erklärung lesen",
+              headerTitle: 'Anleitung',
               headerShown: true,
-              headerTitleAlign: "center",
-              headerRight: () => (
-                <TouchableOpacity onPress={goToHome}>
-                  <Icon
-                    name="home"
-                    size={35}
-                    color="#fff"
-                    style={{ marginRight: 15 }}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-          />
-          <Stack.Screen
-            name="explanationVideo"
-            options={{
-              headerTitle: "Erklärvideo",
-              headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
               headerRight: () => (
                 <TouchableOpacity onPress={goToHome}>
                   <Icon
@@ -218,12 +219,10 @@ export default function Layout() {
           <Stack.Screen
             name="gratulation"
             options={{
-              headerTitle: "Gratulation",
+              headerTitle: 'Gratulation',
               headerShown: true,
-              headerTitleAlign: "center",
-              headerLeft: () => (
-                <Text/>
-              ),
+              headerTitleAlign: 'center',
+              headerLeft: () => <Text />,
               headerRight: () => (
                 <TouchableOpacity onPress={goToHome}>
                   <Icon
@@ -239,9 +238,9 @@ export default function Layout() {
           <Stack.Screen
             name="components/painHow"
             options={{
-              headerTitle: "Wie tut es weh?",
+              headerTitle: 'Wie tut es weh?',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
               headerRight: () => (
                 <TouchableOpacity onPress={goToHome}>
                   <Icon
@@ -257,9 +256,9 @@ export default function Layout() {
           <Stack.Screen
             name="components/intensityAfter"
             options={{
-              headerTitle: "Wie stark tut es weh?",
+              headerTitle: 'Wie stark tut es weh?',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
               headerRight: () => (
                 <TouchableOpacity onPress={goToHome}>
                   <Icon
@@ -275,9 +274,9 @@ export default function Layout() {
           <Stack.Screen
             name="components/intensityBefore"
             options={{
-              headerTitle: "Wie stark tut es weh?",
+              headerTitle: 'Wie stark tut es weh?',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
               headerRight: () => (
                 <TouchableOpacity onPress={goToHome}>
                   <Icon
@@ -293,7 +292,7 @@ export default function Layout() {
           <Stack.Screen
             name="components/painWhere"
             options={{
-              headerTitle: "Wo tut es weh?",
+              headerTitle: 'Wo tut es weh?',
               headerShown: true,
               headerTitleAlign: 'center',
               headerRight: () => (
@@ -315,7 +314,7 @@ export default function Layout() {
           <Stack.Screen
             name="evaluationComponents/evaluationAfter"
             options={{
-              headerTitle: "Evaluierungsübung NACHHER",
+              headerTitle: 'Evaluierungsübung NACHHER',
               headerShown: true,
               headerTitleAlign: 'center',
               headerRight: () => (
@@ -331,11 +330,11 @@ export default function Layout() {
             }}
           />
           <Stack.Screen
-            name="evaluationComponents/EvaluationScreen"
+            name="evaluationComponents/evaluationScreen"
             options={{
-              headerTitle: "EvaluationScreen",
+              headerTitle: 'EvaluationScreen',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
               headerRight: () => (
                 <TouchableOpacity onPress={goToHome}>
                   <Icon
@@ -351,7 +350,7 @@ export default function Layout() {
           <Stack.Screen
             name="evaluationComponents/evaluationBefore"
             options={{
-              headerTitle: "Evaluierungsübung VORHER",
+              headerTitle: 'Evaluierungsübung VORHER',
               headerShown: true,
               headerTitleAlign: 'center',
               headerRight: () => (
@@ -369,15 +368,15 @@ export default function Layout() {
           <Stack.Screen
             name="evaluationComponents/evaluationYR"
             options={{
-              headerTitle: "Evaluierungsübung",
+              headerTitle: 'Evaluierungsübung',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
             }}
           />
           <Stack.Screen
             name="evaluationComponents/evaluationControl"
             options={{
-              headerTitle: "Kontrolle",
+              headerTitle: 'Kontrolle',
               headerShown: true,
               headerTitleAlign: 'center',
               headerRight: () => (
@@ -395,12 +394,10 @@ export default function Layout() {
           <Stack.Screen
             name="evaluationComponents/resultEvaluation"
             options={{
-              headerTitle: "Ergebnis",
+              headerTitle: 'Ergebnis',
               headerShown: true,
-              headerTitleAlign: "center",
-              headerLeft: () => (
-                <Text/>
-              ),
+              headerTitleAlign: 'center',
+              headerLeft: () => <Text />,
               headerRight: () => (
                 <TouchableOpacity onPress={goToGratulation}>
                   <Icon
@@ -421,9 +418,9 @@ export default function Layout() {
           <Stack.Screen
             name="services/dataTransfer"
             options={{
-              headerTitle: "Daten übermitteln",
+              headerTitle: 'Daten übermitteln',
               headerShown: true,
-              headerTitleAlign: "center",
+              headerTitleAlign: 'center',
             }}
           />
 

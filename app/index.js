@@ -54,7 +54,7 @@ const WelcomeScreen = () => {
 
   useEffect(() => {
     setTimeout(async () => {
-      navigation.replace('/home');
+      navigation.push('/home');
     }, 1000);
   }, []);
 

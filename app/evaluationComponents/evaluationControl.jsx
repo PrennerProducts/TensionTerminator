@@ -1,10 +1,11 @@
-import { View, Text, Pressable, Image, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import React from 'react';
 import { Link, useRouter, useLocalSearchParams } from 'expo-router';
 import styles from '../components/StyleSheet';
 import * as FileSystem from 'expo-file-system';
 import {StyleSheet} from "react-native";
 import { evaluationData } from './evaluationData';
+import {Button} from "@rneui/themed";
 
 const evaluationControl = () => {
   evaluationData.printValues();
@@ -18,12 +19,12 @@ const evaluationControl = () => {
   const shouldTakePictures = evaluationData.shouldTakePictures;
 
   const restartEvaluation = async () => {
-    router.replace({pathname: 'evaluationComponents/evaluationYR'});
+    router.push({pathname: 'evaluationComponents/evaluationYR'});
   };
 
   const nextEvaluation = async () => {
     evaluationData.exercise = 1;
-    router.replace({pathname: 'evaluationComponents/evaluationYR'});
+    router.push({pathname: 'evaluationComponents/evaluationYR'});
   };
 
   const exitEvaluation = async () => {
@@ -32,7 +33,7 @@ const evaluationControl = () => {
       evaluationData.maxYRBefore = maxYR;
       evaluationData.maxRLBefore = maxRL;
       evaluationData.maxRRBefore = maxRR;
-      router.replace({pathname: '/trainingStart'});
+      router.push({pathname: '/trainingStart'});
     }
     else if (evaluationData.isTraining && evaluationData.beforeAfterTraining === 1){
       console.log("Updating values after training");
@@ -40,14 +41,15 @@ const evaluationControl = () => {
       evaluationData.maxYRAfter = maxYR;
       evaluationData.maxRLAfter = maxRL;
       evaluationData.maxRRAfter = maxRR;
-      router.replace({pathname: 'evaluationComponents/resultEvaluation'});
+      router.push({pathname: 'evaluationComponents/resultEvaluation'});
     }
+
     else {
       evaluationData.maxYLBefore = maxYL;
       evaluationData.maxYRBefore = maxYR;
       evaluationData.maxRLBefore = maxRL;
       evaluationData.maxRRBefore = maxRR;
-      router.replace({pathname: 'evaluationComponents/resultEvaluation'});
+      router.push({pathname: 'evaluationComponents/resultEvaluation'});
   }
   };
 
@@ -79,12 +81,26 @@ const evaluationControl = () => {
 
           <View style={styles.bottom}>
           <Text style={styles.text}>Maximal erreichte Winkel:{'\n'}Links: {maxYL}°; Rechts: {maxYR}°{'\n'}Summe: {maxYR+maxYL}°</Text>
-            <TouchableOpacity onPress={restartEvaluation} style={styles.button}>
+
+            <Button
+              title="Bewegung 1 wiederholen"
+                onPress={restartEvaluation}
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
+            />
+            <Button
+                title="Weiter zu Bewegung 2"
+                onPress={nextEvaluation}
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
+            />
+
+{/*            <TouchableOpacity onPress={restartEvaluation} style={styles.button}>
               <Text style={styles.buttonText}>Bewegung 1 wiederholen</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={nextEvaluation} style={styles.button}>
               <Text style={styles.buttonText}>Weiter zu Bewegung 2</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>*/}
           </View>
         </View>
       );
@@ -115,12 +131,25 @@ const evaluationControl = () => {
                 )}
           <View style={styles.bottom}>
           <Text style={styles.text}>Maximal erreichte Winkel:{'\n'}Links: {maxRL}°; Rechts: {maxRR}°{'\n'}Summe: {maxRR+maxRL}°</Text>
-            <TouchableOpacity onPress={restartEvaluation} style={styles.button}>
+            <Button
+                title="Bewegung 2 wiederholen"
+                onPress={restartEvaluation}
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
+            />
+            <Button
+                title="Fortfahren"
+                onPress={exitEvaluation}
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
+            />
+
+{/*            <TouchableOpacity onPress={restartEvaluation} style={styles.button}>
               <Text style={styles.buttonText}>Bewegung 2 wiederholen</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={exitEvaluation} style={styles.button}>
               <Text style={styles.buttonText}>Fortfahren</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>*/}
           </View>
         </View>
       );

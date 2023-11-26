@@ -126,7 +126,7 @@ const Appointment = () => {
             text: 'Nein',
             onPress: () => {
               // saveData('pushPermission', false);
-              router.replace('home');
+              router.push('home');
               console.log('Cancel Pressed');
             },
             style: 'cancel',
@@ -160,7 +160,7 @@ const Appointment = () => {
 
       trigger: { seconds: seconds, channelId: 'Trainings' },
     });
-    router.replace('home');
+    router.push('home');
   }
 
   //DateTimePickerFunctions
