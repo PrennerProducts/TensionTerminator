@@ -8,6 +8,7 @@ import { evaluationData } from './evaluationData';
 import {Button} from "@rneui/themed";
 
 const evaluationControl = () => {
+  evaluationData.printValues();
   const router = useRouter();
   const cacheBuster = Date.now();
   const exercise = evaluationData.exercise;
@@ -42,11 +43,14 @@ const evaluationControl = () => {
       evaluationData.maxRRAfter = maxRR;
       router.push({pathname: 'evaluationComponents/resultEvaluation'});
     }
-    evaluationData.maxYLBefore = maxYL;
-    evaluationData.maxYRBefore = maxYR;
-    evaluationData.maxRLBefore = maxRL;
-    evaluationData.maxRRBefore = maxRR;
-    router.push({pathname: 'evaluationComponents/resultEvaluation'});
+
+    else {
+      evaluationData.maxYLBefore = maxYL;
+      evaluationData.maxYRBefore = maxYR;
+      evaluationData.maxRLBefore = maxRL;
+      evaluationData.maxRRBefore = maxRR;
+      router.push({pathname: 'evaluationComponents/resultEvaluation'});
+  }
   };
 
   if (exercise === 0){

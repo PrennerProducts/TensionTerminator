@@ -374,7 +374,7 @@ const evaluationYR = () => {
                 style={{
                   position: 'absolute',
                   left: (screenWidth - 1000) / 2,
-                  top: (screenHeight - 1) / 2,
+                  top: (screenHeight - 1) / 2.5,
                   width: 1000,
                   height: 1,
                   backgroundColor: 'white',

@@ -123,12 +123,14 @@ const TrainingScreen = () => {
             </View>
             <View style={styles.bottom}>
 
+
                 <Button
                     title="Training beenden"
                     onPress={() => {router.push({ pathname:'../components/intensityAfter'})}}
                     buttonStyle={styles.button}
                     titleStyle={styles.buttonText}
                 />
+
             </View>
         </View>
     );

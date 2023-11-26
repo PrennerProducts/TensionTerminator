@@ -1,14 +1,44 @@
 import 'expo-router/entry';
-import { View, Text } from 'react-native';
+import {Button} from "@rneui/themed";
+
+
+
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import React from 'react';
+import { useRouter } from 'expo-router';
 import styles from './StyleSheet';
 import PainSlider from './painSlider';
 import { painData } from './painData';
-import {Button} from "@rneui/themed";
-import {useRouter} from "expo-router";
+import { evaluationData } from '../evaluationComponents/evaluationData';
 
 const intensityBefore = () => {
-    const router = useRouter();
+  const router = useRouter();
+  const skipEvaluationYesNo = async () => {
+    return Alert.alert(
+      "Bevor das Training beginnt...",
+      "Wollen Sie eine Evaluierung Ihrer Beweglichkeit vornehmen?",
+      [
+        {
+          text: "Ja",
+          onPress: () => {
+            evaluationData.resetValues();
+            evaluationData.originScreen = 'evaluationComponents/evaluationBefore';
+            evaluationData.isTraining = 1;
+            evaluationData.beforeAfterTraining = 0;
+            router.replace({ pathname: 'evaluationComponents/EvaluationScreen' });
+          },
+        },
+        {
+          text: "Nein",
+          onPress: () => {
+            router.replace({ pathname: 'trainingStart' });
+          },
+        },
+      ]
+    );
+  };
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Wie beurteilen Sie die derzeitige Intensität Ihrer Schmerzen? ({painData.painToString})</Text>
@@ -22,12 +52,14 @@ const intensityBefore = () => {
       </Text>
       </View>
         <View style={styles.bottom}>
+
             <Button
                 title="Weiter"
                 onPress={() => {router.push({ pathname:'../evaluationComponents/evaluationBefore'})}}
                 buttonStyle={styles.button}
                 titleStyle={styles.buttonText}
             />
+
       </View>
     </View>
   );
