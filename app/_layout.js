@@ -149,16 +149,6 @@ export default function Layout() {
             }}
           />
 
-          <Stack.Screen
-            name="components/statistics"
-            options={{
-              headerTitle: 'Meine Statistiken',
-              headerShown: true,
-              headerTitleAlign: 'center',
-              headerRight: myheaderRight,
-            }}
-          />
-
           {/* ------------------------------------------------------------------------------------- */}
           {/*  FOLDER components */}
           {/* ------------------------------------------------------------------------------------- */}
@@ -189,42 +179,7 @@ export default function Layout() {
               // headerRight: myheaderRight,
             }}
           />
-          <Stack.Screen
-            name="explanationText"
-            options={{
-              headerTitle: "Erklärung lesen",
-              headerShown: true,
-              headerTitleAlign: "center",
-              headerRight: () => (
-                <TouchableOpacity onPress={goToHome}>
-                  <Icon
-                    name="home"
-                    size={35}
-                    color="#fff"
-                    style={{ marginRight: 15 }}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-          />
-          <Stack.Screen
-            name="explanationVideo"
-            options={{
-              headerTitle: "Erklärvideo",
-              headerShown: true,
-              headerTitleAlign: "center",
-              headerRight: () => (
-                <TouchableOpacity onPress={goToHome}>
-                  <Icon
-                    name="home"
-                    size={35}
-                    color="#fff"
-                    style={{ marginRight: 15 }}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-          />
+          
           <Stack.Screen
             name="gratulation"
             options={{
@@ -341,7 +296,7 @@ export default function Layout() {
             }}
           />
           <Stack.Screen
-            name="evaluationComponents/EvaluationScreen"
+            name="evaluationComponents/evaluationScreen"
             options={{
               headerTitle: "EvaluationScreen",
               headerShown: true,

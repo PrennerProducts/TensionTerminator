@@ -1,14 +1,16 @@
 import 'expo-router/entry';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Image, Text, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Link, useRouter } from 'expo-router';
-import styles from './components/StyleSheet';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
 import { ProfileImageProvider } from '../app/components/ProfileImageContext';
 import { evaluationData } from './evaluationComponents/evaluationData';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useUserContext } from './components/userContextProvider';
+import { Button } from '@rneui/themed';
+import { Box } from 'victory-native';
+import { useNavigation } from '@react-navigation/native';
 import { painData } from './components/painData';
 
 const Home = () => {
@@ -35,7 +37,7 @@ const Home = () => {
     evaluationData.originScreen = '../home';
     evaluationData.isTraining = 0;
     evaluationData.beforeAfterTraining = 0;
-    router.replace({ pathname: 'evaluationComponents/EvaluationScreen' });
+    router.replace({ pathname: 'evaluationComponents/evaluationScreen' });
   };
 
   const goToTraining = async () => {
@@ -60,9 +62,9 @@ const Home = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={stylesLocal.container}>
       <View style={{}}>
-        <View style={styles.box}>
+        <View style={stylesLocal.box}>
           <Image
             source={require('../assets/logo.png')}
             style={{
@@ -72,7 +74,7 @@ const Home = () => {
               borderRadius: 10,
             }}
           />
-          <Text style={styles.header}>{username}'s Startseite</Text>
+          <Text style={stylesLocal.header}>{username}'s Startseite</Text>
 
           <Image
             source={
@@ -89,74 +91,102 @@ const Home = () => {
               borderRadius: 100,
             }}
           />
-          <Text style={styles.row}>
+          <Text style={stylesLocal.row}>
             {' '}
             Level: {gameLevel};{'\n'}Punkte: {points};
           </Text>
 
-          <Link href={'./components/barcode'} asChild>
-            <TouchableOpacity style={styles.button}>
-              <View style={styles.section}>
-                <Icon
-                  name="qrcode-scan"
-                  size={30}
-                  color="#fff"
-                  style={{ marginLeft: 30 }}
-                />
-                <Text style={styles.buttonText}> QR-Code scannen</Text>
-              </View>
-            </TouchableOpacity>
-          </Link>
-          <Link href={'./criteria'} asChild>
-            <TouchableOpacity style={styles.button}>
-              <View style={styles.section}>
-                <Icon
-                  name="information"
-                  size={30}
-                  color="#fff"
-                  style={{ marginLeft: 30 }}
-                />
-                <Text style={styles.buttonText}> Ausschlusskriterien</Text>
-              </View>
-            </TouchableOpacity>
-          </Link>
+          <Button
+            title="QR-Code scannen"
+            onPress={() => {
+              router.push({ pathname: 'components/barcode' });
+            }}
+            buttonStyle={stylesLocal.buttonWithIcon}
+            titleStyle={stylesLocal.buttonText}
+            icon={<Icon name="qrcode-scan" size={30} color="#fff" />}
+          />
 
-          <TouchableOpacity
-            style={styles.button}
+          <Button
+            title="Ausschlusskriterien"
+            onPress={() => {
+              router.push({ pathname: 'criteria' });
+            }}
+            buttonStyle={stylesLocal.buttonWithIcon}
+            titleStyle={stylesLocal.buttonText}
+            icon={<Icon name="information" size={30} color="#fff" />}
+          />
+
+          <Button
+            title="Beweglichkeit messen"
             onPress={() => {
               goToEvaluation();
-            }}>
-            <View style={styles.section}>
-              <Icon
-                name="reiterate"
-                size={30}
-                color="#fff"
-                style={{ marginLeft: 30 }}
-              />
-              <Text style={styles.buttonText}> Beweglichkeit messen</Text>
-            </View>
-          </TouchableOpacity>
+            }}
+            buttonStyle={stylesLocal.buttonWithIcon}
+            titleStyle={stylesLocal.buttonText}
+            icon={<Icon name="reiterate" size={30} color="#fff" />}
+          />
 
-          <TouchableOpacity 
-            style={styles.button}
+          <Button
+            title="Training starten"
             onPress={() => {
               goToTraining();
-            }}>
-            <View style={styles.section}>
-              <Icon
-                name="rowing"
-                size={30}
-                color="#fff"
-                style={{ marginLeft: 30 }}
-              />
-              <Text style={styles.buttonText}> Training starten</Text>
-            </View>
-          </TouchableOpacity>
-
+            }}
+            buttonStyle={stylesLocal.buttonWithIcon}
+            titleStyle={stylesLocal.buttonText}
+            icon={
+              <Icon name="rowing" size={30} color="#fff" marginRight={30} />
+            }
+          />
         </View>
       </View>
     </View>
   );
 };
+
+const stylesLocal = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  box: {
+    flex: 1,
+    marginTop: 10,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#10069f',
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: '#fffff',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 20,
+    color: '#10069F',
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  buttonWithIcon: {
+    display: 'flex',
+    height: '9%',
+    minHeight: 50,
+    minWidth: '90%',
+    backgroundColor: '#10069f',
+    borderRadius: 10,
+    marginTop: '5%',
+    justifyContent: 'flex-start',
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#ffffff',
+    textAlign: 'left',
+    marginLeft: '10%',
+  },
+});
 
 export default Home;

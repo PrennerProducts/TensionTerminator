@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Dimensions} from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
-import { Camera } from 'expo-camera';
+import { Camera, CameraType } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import * as FileSystem from 'expo-file-system';
 import { useRouter } from 'expo-router';
@@ -270,7 +270,7 @@ const evaluationYR = () => {
     else{
     console.log("Invalid exercise: " + exercise);
     }
-    router.replace({pathname: 'evaluationComponents/evaluationControl'});
+    router.push({pathname: 'evaluationComponents/evaluationControl'});
   };
 
   const cancelEvaluation = async () => {
@@ -283,7 +283,7 @@ const evaluationYR = () => {
           onPress: () => {
             const originScreen = evaluationData.originScreen;
             evaluationData.resetValues();
-            router.replace({pathname: originScreen});
+            router.push({pathname: originScreen});
           },
         },
         {
@@ -331,7 +331,7 @@ const evaluationYR = () => {
           ref={(ref) => {
             cameraRef.current = ref;
           }}
-          type={Camera.Constants.Type.front}
+          type={CameraType.front}
           autoFocus={false}
           style={styles.camera}
           onFacesDetected={handleFacesDetected}

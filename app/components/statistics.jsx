@@ -33,8 +33,7 @@ import SlotMachine from 'react-native-slot-machine';
 import { useUserContext } from './userContextProvider';
 import DrawingY from '../evaluationComponents/drawingY';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import CustomDropdown from './CustomDropdown';
-
+import CustomDropdown from './customDropdown';
 
 const statistics = () => {
   const date = new Date();
@@ -69,16 +68,13 @@ const statistics = () => {
   // Bar Chart
   const [selectedChart, setSelectedChart] = useState('Week'); // Standardmäßig auf 'Week' gesetzt
 
-
   //dropdown picker
   const [open, setOpen] = useState(false);
-
 
   const handleSelectChart = (chartType) => {
     setSelectedChart(chartType);
     // Weitere Logik, um den Chart zu aktualisieren
   };
-
 
   const months = [
     'Jan',
@@ -130,7 +126,6 @@ const statistics = () => {
     { x: 'KratzArm', y: 183 },
   ];
 
-
   levelData = [
     { x: '0', y: 0 },
     { x: '1', y: 1 },
@@ -150,7 +145,6 @@ const statistics = () => {
     Month: barChartDataMonth,
     Year: barChartDataYear,
   };
-
 
   useEffect(() => {
     const getHighestLevel = () => {
@@ -178,14 +172,11 @@ const statistics = () => {
   ];
 
   titles = ['RollenKlein', 'RollenGroß', 'KratzArm'];
-
   return (
-
     <ScrollView
       style={stylesLocal.mainscrollViewContainer}
       nestedScrollEnabled={true}
     >
-
       {/* <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -226,8 +217,8 @@ const statistics = () => {
             container: {
               backgroundColor: '#10069f', // Hintergrundfarbe des gesamten Slot-Machine-Bereichs
 
-              alignItems: 'center', // Horizontal zentrierte Ausrichtung
-              justifyContent: 'center', // Vertikal zentrierte Ausrichtung
+              alignItems: 'center',
+              justifyContent: 'center',
               borderColor: '#10069f',
             },
             slotWrapper: {
@@ -236,11 +227,11 @@ const statistics = () => {
             },
             slotInner: {
               backgroundColor: 'white', // Hintergrundfarbe des inneren Slot-Bereichs
-              borderRadius: 10, // Runde Ecken
+              borderRadius: 10,
               borderColor: '#10069f',
               padding: 5, // Innenabstand
-              alignItems: 'center', // Horizontal zentrierte Ausrichtung
-              justifyContent: 'center', // Vertikal zentrierte Ausrichtung
+              alignItems: 'center', // Horizontal
+              justifyContent: 'center', // Vertikal
             },
             innerBorder: {
               display: 'none',
@@ -267,9 +258,7 @@ const statistics = () => {
       {/* --------------------   Level    --------------------------------------- */}
       <View style={stylesLocal.headerWrapper}>
         <Text style={stylesLocal.max_header}>
-
           Dein aktuelles Game-Level: {gameLevel}
-
         </Text>
       </View>
       <View style={stylesLocal.levelcontainer}>
@@ -277,7 +266,6 @@ const statistics = () => {
           size={120}
           width={15}
           fill={gameLevel * 10}
-
           tintColor="#10069F"
           rotation={270}
           backgroundColor="lightgrey"
@@ -287,11 +275,9 @@ const statistics = () => {
         >
           {(fill) => (
             <Text style={stylesLocal.max_header}>{`Level ${Math.round(
-
               gameLevel
 
               //highestLevel
-
             )} `}</Text>
           )}
         </AnimatedCircularProgress>
@@ -350,7 +336,6 @@ const statistics = () => {
         {/* ----DropDownPickerCharts--------- */}
 
         <View style={stylesLocal.dropdownContainer}>
-
           <CustomDropdown
             selectedChart={selectedChart}
             onSelect={handleSelectChart}
@@ -376,7 +361,6 @@ const statistics = () => {
           />
 
         </View> */}
-
 
         <VictoryChart
           theme={VictoryTheme.material}
@@ -546,7 +530,6 @@ const stylesLocal = StyleSheet.create({
     alignItems: 'center',
 
     margin: 0,
-
   },
 
   barchart: {
@@ -581,7 +564,6 @@ const stylesLocal = StyleSheet.create({
 
     borderRadius: 20,
     margin: 10,
-
   },
 
   // max yaw roll

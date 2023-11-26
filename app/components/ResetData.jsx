@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Button } from 'react-native';
+import { View } from 'react-native';
 import { resetAllData } from '../services/storage';
+import styles from "./StyleSheet";
+import {Button} from "@rneui/themed";
 
 const ResetDataScreen = () => {
   const handleReset = async () => {
@@ -10,7 +12,12 @@ const ResetDataScreen = () => {
 
   return (
     <View>
-      <Button title="Daten zurücksetzen" onPress={handleReset} />
+      <Button
+          title="Daten zurücksetzen"
+          onPress={handleReset}
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonText}
+      />
     </View>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const CustomDropdown = ({ selectedChart, onSelect }) => {
+const customDropdown = ({ selectedChart, onSelect }) => {
   const options = [
     { label: 'WochenChart', value: 'Week' },
     { label: 'MonatsChart', value: 'Month' },
@@ -36,13 +36,12 @@ const CustomDropdown = ({ selectedChart, onSelect }) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     // Container-Styling
     padding: 10,
-    paddingBottom: 0,
     margin: 10,
-    marginBottom: 0,
     flexDirection: 'row',
   },
   option: {
@@ -71,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomDropdown;
+export default customDropdown;

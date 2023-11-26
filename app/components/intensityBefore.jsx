@@ -18,10 +18,10 @@ const intensityBefore = () => {
           text: "Ja",
           onPress: () => {
             evaluationData.resetValues();
-            evaluationData.originScreen = 'evaluationComponents/evaluationBefore';
+            evaluationData.originScreen = 'evaluationComponents/intensityBefore';
             evaluationData.isTraining = 1;
             evaluationData.beforeAfterTraining = 0;
-            router.replace({ pathname: 'evaluationComponents/EvaluationScreen' });
+            router.replace({ pathname: 'evaluationComponents/evaluationScreen' });
           },
         },
         {

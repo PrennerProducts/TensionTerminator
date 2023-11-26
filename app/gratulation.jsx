@@ -21,7 +21,6 @@ import { avatarList } from './config/avatarConfig';
 import gratulationGif from '../assets/gifs/confetti.gif';
 
 const Gratulation = () => {
-
   const router = useRouter();
   const {
     points,
@@ -152,7 +151,6 @@ const Gratulation = () => {
         </Text>
         <View>
           <SlotMachine text={points} duration={2000} width={60} height={80} />
-
         </View>
         <Text style={stylesLocal.text}>
           Dein aktuelles Game-Level: {gameLevel} {'\n'}
@@ -191,7 +189,6 @@ const Gratulation = () => {
   );
 };
 const stylesLocal = StyleSheet.create({
-
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -200,7 +197,8 @@ const stylesLocal = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    marginVertical: 18,
+    textAlign: 'center',
+    margin: 20,
   },
   textInputStyle: {
     borderWidth: 1,
@@ -242,9 +240,8 @@ const stylesLocal = StyleSheet.create({
     pointerEvents: 'none',
   },
   gifStyle: {
-    width: 500,
+    width: 450,
     height: 800,
   },
-
 });
 export default Gratulation;
