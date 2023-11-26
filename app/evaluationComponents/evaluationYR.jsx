@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Dimensions} from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
-import { Camera } from 'expo-camera';
+import { Camera, CameraType } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import * as FileSystem from 'expo-file-system';
 import { useRouter } from 'expo-router';
@@ -331,7 +331,7 @@ const evaluationYR = () => {
           ref={(ref) => {
             cameraRef.current = ref;
           }}
-          type={Camera.Constants.Type.front}
+          type={CameraType.front}
           autoFocus={false}
           style={styles.camera}
           onFacesDetected={handleFacesDetected}
