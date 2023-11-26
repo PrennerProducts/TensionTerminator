@@ -60,7 +60,6 @@ const profileScreen = () => {
   useEffect(() => {
     const initializeUser = async () => {
       await user.initialize();
-      //await user.setLevel(4);
       setValue(profileImageIndex);
       await updateProfileImageIndex(user.getprofilepicture());
       await updateUsername(user.getUserName());
@@ -233,12 +232,12 @@ const profileScreen = () => {
           <Text style={stylesLocal.text}>Game-Level: {gameLevel}</Text>
         </TouchableOpacity>
       </View>
-      {/* {showGameStatusGif && (
+      {showGameStatusGif && (
         <GameStatusGif
           visible={showGameStatusGif}
           onClose={() => setShowGameStatusGif(false)}
         />
-      )} */}
+      )}
 
       {/* Points */}
       <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
