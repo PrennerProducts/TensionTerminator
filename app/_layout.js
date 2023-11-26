@@ -1,8 +1,15 @@
-import { TouchableOpacity, Text } from 'react-native';
-import { useEffect, useState } from 'react';
-import { useFonts } from 'expo-font';
-import { useRouter, Tabs, SplashScreen } from 'expo-router';
+import {
+  View,
+  Text,
+  Button,
+  TouchableOpacity,
+  Image,
+  Modal,
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useRouter, Tabs } from 'expo-router';
 import { Stack } from 'expo-router/stack';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
@@ -201,7 +208,25 @@ function Layout() {
           <Stack.Screen
             name="trainingStart"
             options={{
-              headerTitle: 'Anleitung',
+              headerTitle: 'Erklärung lesen',
+              headerShown: true,
+              headerTitleAlign: 'center',
+              headerRight: () => (
+                <TouchableOpacity onPress={goToHome}>
+                  <Icon
+                    name="home"
+                    size={35}
+                    color="#fff"
+                    style={{ marginRight: 15 }}
+                  />
+                </TouchableOpacity>
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="explanationVideo"
+            options={{
+              headerTitle: 'Erklärvideo',
               headerShown: true,
               headerTitleAlign: 'center',
               headerRight: () => (
