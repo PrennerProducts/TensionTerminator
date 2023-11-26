@@ -18,7 +18,7 @@ import SlotMachine from 'react-native-slot-machine';
 import profileScreen from './profileScreen.jsx';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
-//import gratulationGif from '../assets/gifs/confetti.gif';
+import gratulationGif from '../assets/gifs/confetti.gif';
 
 const Gratulation = () => {
   const router = useRouter();
@@ -133,15 +133,19 @@ const Gratulation = () => {
 
   return (
     <View style={styles.container}>
+      {showGif && (
+        <Animated.View style={[stylesLocal.overlay, { opacity: fadeAnim }]}>
+          <Image source={gratulationGif} style={stylesLocal.gifStyle} />
+        </Animated.View>
+      )}
       <View>
         <AudioPlayer audioUri={require('../assets/sounds/Chimes.wav')} />
       </View>
 
-
+      <View>
+        <Text style={styles.title}>Gratulation!</Text>
+      </View>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <View>
-          <Text style={styles.title}>Gratulation!</Text>
-        </View>
         <Text style={stylesLocal.text}>
           Wow, du hast dir für deine Leistung 150 Punkte verdient!
         </Text>
@@ -153,7 +157,6 @@ const Gratulation = () => {
           Du benötigst noch {modulo} Punkte für das nächste Level
         </Text>
       </View>
-      <View>
       <Image
         source={
           profileImageIndex >= 0 &&
@@ -169,35 +172,33 @@ const Gratulation = () => {
           marginBottom: 20,
         }}
       />
-      </View>
       <View style={styles.bottom}>
-        <Button
-          title="Termin planen"
-          onPress={() => {
-            router.push({ pathname: './appointment' });
-          }}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-        />
+        <Link href={'./appointment'} asChild>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>Termin planen</Text>
+          </Pressable>
+        </Link>
 
-        <Button
-          title="Neues Training starten"
-          onPress={() => {
-            router.push({ pathname: './components/painWhere' });
-          }}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-        />
+        <Link href={'./components/painWhere'} asChild>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>Neues Training starten</Text>
+          </Pressable>
+        </Link>
       </View>
     </View>
   );
 };
-
 const stylesLocal = StyleSheet.create({
-
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   text: {
     fontSize: 20,
-    marginVertical: 18,
+    textAlign: 'center',
+    margin: 20,
   },
   textInputStyle: {
     borderWidth: 1,
@@ -239,9 +240,8 @@ const stylesLocal = StyleSheet.create({
     pointerEvents: 'none',
   },
   gifStyle: {
-    width: 500,
+    width: 450,
     height: 800,
   },
 });
-
 export default Gratulation;
