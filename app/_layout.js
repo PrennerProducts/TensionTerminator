@@ -65,8 +65,6 @@ function Layout() {
   };
 
   const goToGratulation = () => {
-    router.replace('/gratulation');
-
     console.log(evaluationData.isTraining);
     if (evaluationData.isTraining == 1) router.push('/gratulation');
     else router.push('/home');

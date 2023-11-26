@@ -1,5 +1,5 @@
 import 'expo-router/entry';
-import {View, Image, Text, StyleSheet} from 'react-native';
+import { View, Image, Text, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Link, useRouter } from 'expo-router';
 import UserData from './classes/userData';
@@ -8,9 +8,9 @@ import { ProfileImageProvider } from '../app/components/ProfileImageContext';
 import { evaluationData } from './evaluationComponents/evaluationData';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useUserContext } from './components/userContextProvider';
-import { Button} from '@rneui/themed';
-import {Box} from "victory-native";
-import {useNavigation} from "@react-navigation/native";
+import { Button } from '@rneui/themed';
+import { Box } from 'victory-native';
+import { useNavigation } from '@react-navigation/native';
 import { painData } from './components/painData';
 
 const Home = () => {
@@ -32,13 +32,12 @@ const Home = () => {
   // user Instance
   const [user, setUser] = useState(new UserData());
 
-
   const goToEvaluation = async () => {
     evaluationData.resetValues();
     evaluationData.originScreen = '../home';
     evaluationData.isTraining = 0;
     evaluationData.beforeAfterTraining = 0;
-    router.push({ pathname: 'evaluationComponents/evaluationScreen' });
+    router.replace({ pathname: 'evaluationComponents/evaluationScreen' });
   };
 
   const goToTraining = async () => {
@@ -97,106 +96,96 @@ const Home = () => {
             Level: {gameLevel};{'\n'}Punkte: {points};
           </Text>
 
-
           <Button
             title="QR-Code scannen"
-            onPress={() => {router.push({ pathname: 'components/barcode' });}}
-           buttonStyle={stylesLocal.buttonWithIcon}
+            onPress={() => {
+              router.push({ pathname: 'components/barcode' });
+            }}
+            buttonStyle={stylesLocal.buttonWithIcon}
             titleStyle={stylesLocal.buttonText}
-            icon ={<Icon
-              name="qrcode-scan"
-              size={30}
-              color="#fff"
-          />}
-            />
-
-          <Button
-              title="Ausschlusskriterien"
-              onPress={() => {router.push({ pathname: 'criteria' });}}
-              buttonStyle={stylesLocal.buttonWithIcon}
-              titleStyle={stylesLocal.buttonText}
-              icon ={<Icon
-                  name="information"
-                  size={30}
-                  color="#fff"
-              />}
+            icon={<Icon name="qrcode-scan" size={30} color="#fff" />}
           />
 
           <Button
-              title="Beweglichkeit messen"
-              onPress={() => {goToEvaluation();}}
-              buttonStyle={stylesLocal.buttonWithIcon}
-              titleStyle={stylesLocal.buttonText}
-              icon ={<Icon
-                  name="reiterate"
-                  size={30}
-                  color="#fff"
-              />}
+            title="Ausschlusskriterien"
+            onPress={() => {
+              router.push({ pathname: 'criteria' });
+            }}
+            buttonStyle={stylesLocal.buttonWithIcon}
+            titleStyle={stylesLocal.buttonText}
+            icon={<Icon name="information" size={30} color="#fff" />}
           />
 
           <Button
-              title="Training starten"
-              onPress={() => {goToTraining();}}
-              buttonStyle={stylesLocal.buttonWithIcon}
-              titleStyle={stylesLocal.buttonText}
-              icon ={<Icon
-                  name="rowing"
-                  size={30}
-                  color="#fff"
-                  marginRight={30}
-              />}
+            title="Beweglichkeit messen"
+            onPress={() => {
+              goToEvaluation();
+            }}
+            buttonStyle={stylesLocal.buttonWithIcon}
+            titleStyle={stylesLocal.buttonText}
+            icon={<Icon name="reiterate" size={30} color="#fff" />}
           />
 
+          <Button
+            title="Training starten"
+            onPress={() => {
+              goToTraining();
+            }}
+            buttonStyle={stylesLocal.buttonWithIcon}
+            titleStyle={stylesLocal.buttonText}
+            icon={
+              <Icon name="rowing" size={30} color="#fff" marginRight={30} />
+            }
+          />
         </View>
       </View>
     </View>
   );
 };
 
-
 const stylesLocal = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    backgroundColor: "#ffffff",
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
   },
   box: {
     flex: 1,
     marginTop: 10,
     marginBottom: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderWidth: 2,
     borderColor: '#10069f',
     borderRadius: 10,
     padding: 10,
-    backgroundColor: "#fffff",
+    backgroundColor: '#fffff',
   },
   header: {
     fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     marginVertical: 20,
-    color: "#10069F",
+    color: '#10069F',
   },
   row: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   buttonWithIcon: {
     display: 'flex',
-    height: "9%",
+    height: '9%',
     minHeight: 50,
-    minWidth: "90%",
-    backgroundColor: "#10069f",
+    minWidth: '90%',
+    backgroundColor: '#10069f',
     borderRadius: 10,
-    marginTop: "5%",
-    justifyContent: "flex-start",
+    marginTop: '5%',
+    justifyContent: 'flex-start',
   },
   buttonText: {
     fontSize: 20,
     color: '#ffffff',
     textAlign: 'left',
-    marginLeft: "10%",
+    marginLeft: '10%',
   },
 });
 
