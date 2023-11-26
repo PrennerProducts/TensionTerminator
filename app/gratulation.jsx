@@ -18,7 +18,7 @@ import SlotMachine from 'react-native-slot-machine';
 import profileScreen from './profileScreen.jsx';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
-import gratulationGif from '../assets/gifs/confetti2.gif';
+import gratulationGif from '../assets/gifs/confetti.gif';
 
 const Gratulation = () => {
   const router = useRouter();
