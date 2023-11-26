@@ -16,12 +16,10 @@ import { useUserContext } from './components/userContextProvider';
 import { saveUserData, getUserData } from './services/storage.jsx';
 import SlotMachine from 'react-native-slot-machine';
 
-
 import profileScreen from './profileScreen.jsx';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
-import gratulationGif from '../assets/gifs/confetti.gif';
-import {Button} from "@rneui/themed";
+import gratulationGif from '../assets/gifs/confetti2.gif';
 
 const Gratulation = () => {
   const router = useRouter();
@@ -176,20 +174,23 @@ const Gratulation = () => {
         }}
       />
       <View style={styles.bottom}>
-       
-                <Button
-                    title="Termin planen"
-                    onPress={() => {router.push({ pathname:'./appointment'})}}
-                    buttonStyle={styles.button}
-                    titleStyle={styles.buttonText}
-                />
+        <Button
+          title="Termin planen"
+          onPress={() => {
+            router.push({ pathname: './appointment' });
+          }}
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonText}
+        />
 
-                <Button
-                    title="Neues Training starten"
-                    onPress={() => {router.push({ pathname:'./components/painWhere'})}}
-                    buttonStyle={styles.button}
-                    titleStyle={styles.buttonText}
-                />
+        <Button
+          title="Neues Training starten"
+          onPress={() => {
+            router.push({ pathname: './components/painWhere' });
+          }}
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonText}
+        />
       </View>
     </View>
   );
@@ -246,10 +247,9 @@ const stylesLocal = StyleSheet.create({
     pointerEvents: 'none',
   },
   gifStyle: {
-    width: 500,
+    width: 400,
     height: 800,
   },
 });
-
 
 export default Gratulation;
