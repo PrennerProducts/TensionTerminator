@@ -142,10 +142,11 @@ const Gratulation = () => {
         <AudioPlayer audioUri={require('../assets/sounds/Chimes.wav')} />
       </View>
 
-      <View>
-        <Text style={styles.title}>Gratulation!</Text>
-      </View>
+
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View>
+          <Text style={styles.title}>Gratulation!</Text>
+        </View>
         <Text style={stylesLocal.text}>
           Wow, du hast dir für deine Leistung 150 Punkte verdient!
         </Text>
@@ -157,6 +158,7 @@ const Gratulation = () => {
           Du benötigst noch {modulo} Punkte für das nächste Level
         </Text>
       </View>
+      <View>
       <Image
         source={
           profileImageIndex >= 0 &&
@@ -172,6 +174,7 @@ const Gratulation = () => {
           marginBottom: 20,
         }}
       />
+      </View>
       <View style={styles.bottom}>
         <Link href={'./appointment'} asChild>
           <Pressable style={styles.button}>
@@ -189,12 +192,12 @@ const Gratulation = () => {
   );
 };
 const stylesLocal = StyleSheet.create({
-  overlay: {
+  /*overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
-  },
+  },*/
   text: {
     fontSize: 20,
     textAlign: 'center',
