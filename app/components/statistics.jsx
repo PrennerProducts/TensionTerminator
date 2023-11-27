@@ -41,10 +41,10 @@ const statistics = () => {
   // highscore Yaw Roll
   const imageSourceR = require('../../assets/images/HeadT.png');
   const imageSourceY = require('../../assets/images/HeadF.png');
-  const highscoreYL = 42;
-  const highscoreYR = 41;
-  const highscoreRL = 30;
-  const highscoreRR = 29;
+  const highscoreYL = 80;
+  const highscoreYR = 81;
+  const highscoreRL = 45;
+  const highscoreRR = 45;
 
   // GameLevel
 
