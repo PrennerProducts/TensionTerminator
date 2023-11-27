@@ -23,16 +23,27 @@ import gratulationGif from '../assets/gifs/confetti.gif';
 const Gratulation = () => {
   const router = useRouter();
   const {
+    username,
     points,
     updatePoints,
     gameLevel,
     updateGameLevel,
     profileImageIndex,
     updateProfileImageIndex,
+    updateUsername,
   } = useUserContext();
   const user = new UserData();
-  const [constMyUserName, constSetMyUserName] = React.useState('');
   const modulo = points % 200;
+
+  useEffect(() => {
+    const initializeUser = async () => {
+      await user.initialize();
+      updateUsername(user.getUserName());
+      user.setUserName(username);
+      console.log('My USername ist: ' + username);
+    };
+    initializeUser();
+  }, []);
 
   // Confetti Gif
   const [showGif, setShowGif] = useState(true);
@@ -58,6 +69,8 @@ const Gratulation = () => {
     updatePoints(lpunkte);
 
     console.log(user.toString());
+    // set Username in Storage  To username from Context Provider
+    user.setUserName(username);
 
     if (lpunkte < 199) {
       updateGameLevel(1);
@@ -142,7 +155,6 @@ const Gratulation = () => {
         <AudioPlayer audioUri={require('../assets/sounds/Chimes.wav')} />
       </View>
 
-
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <View>
           <Text style={styles.title}>Gratulation!</Text>
@@ -159,21 +171,21 @@ const Gratulation = () => {
         </Text>
       </View>
       <View>
-      <Image
-        source={
-          profileImageIndex >= 0 &&
-          profileImageIndex != null &&
-          profileImageIndex < avatarList.length
-            ? avatarList[profileImageIndex]
-            : require('../assets/images/error.jpg')
-        }
-        style={{
-          width: 150,
-          height: 150,
-          borderRadius: 50,
-          marginBottom: 20,
-        }}
-      />
+        <Image
+          source={
+            profileImageIndex >= 0 &&
+            profileImageIndex != null &&
+            profileImageIndex < avatarList.length
+              ? avatarList[profileImageIndex]
+              : require('../assets/images/error.jpg')
+          }
+          style={{
+            width: 150,
+            height: 150,
+            borderRadius: 50,
+            marginBottom: 20,
+          }}
+        />
       </View>
       <View style={styles.bottom}>
         <Link href={'./appointment'} asChild>

@@ -15,19 +15,19 @@ export const UserContextProvider = ({ children }) => {
   const [profileImageIndex, setProfileImageIndex] = useState(null);
   const [sendData, setSendData] = useState(null);
 
-  const updateUserDetails = (
-    newUsername,
-    newGameLevel,
-    newPoints,
-    newIndex,
-    sendData
-  ) => {
-    setUsername(newUsername);
-    setGameLevel(newGameLevel);
-    setPoints(newPoints);
-    setProfileImageIndex(newIndex);
-    setSendData(sendData);
-  };
+  // const updateUserDetails = (
+  //   newUsername,
+  //   newGameLevel,
+  //   newPoints,
+  //   newIndex,
+  //   sendData
+  // ) => {
+  //   setUsername(newUsername);
+  //   setGameLevel(newGameLevel);
+  //   setPoints(newPoints);
+  //   setProfileImageIndex(newIndex);
+  //   setSendData(sendData);
+  // };
 
   const updateProfileImageIndex = (profileImageIndex) => {
     setProfileImageIndex(profileImageIndex);

@@ -11,19 +11,7 @@ const myheaderRight = () => {
   const router = useRouter();
 
   // User context provider
-  const {
-    username,
-    gameLevel,
-    points,
-    profileImageIndex,
-    sendData,
-    updateUserDetails,
-    updateProfileImageIndex,
-    updateUsername,
-    updateGameLevel,
-    updatePoints,
-    updateSendData,
-  } = useUserContext();
+  const { profileImageIndex } = useUserContext();
 
   const goToProfile = () => {
     router.push('/profileScreen');

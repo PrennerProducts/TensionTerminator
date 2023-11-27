@@ -120,11 +120,11 @@ const statistics = () => {
     { x: 'So', y: 183 },
   ];
 
-  pieChartData = [
-    { x: 'RollenKlein', y: 8 },
-    { x: 'RollenGroß', y: 63 },
-    { x: 'KratzArm', y: 183 },
-  ];
+  // pieChartData = [
+  //   { x: 'RollenKlein', y: 8 },
+  //   { x: 'RollenGroß', y: 63 },
+  //   { x: 'Triggerpunkthebel', y: 183 },
+  // ];
 
   levelData = [
     { x: '0', y: 0 },
@@ -459,7 +459,7 @@ const statistics = () => {
             orientation="vertical"
             gutter={10}
             data={[
-              { name: 'KratzArm', symbol: { fill: 'cornflowerblue' } },
+              { name: 'Triggerpunkthebel', symbol: { fill: 'cornflowerblue' } },
               { name: 'RollenKlein', symbol: { fill: 'orange' } },
               { name: 'RollenGroß', symbol: { fill: 'lightgreen' } },
             ]}
