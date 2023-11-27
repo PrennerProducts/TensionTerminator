@@ -3,27 +3,27 @@
         "text": "",
         "rating": "1",
         "color": "white"
-      },
+    },
 	{
 	  "text": "Gut gemacht, weiter so!",
 	  "rating": "1",
 	  "color": "green"
 	},
 	{
-	  "text": "Gut gemacht, weiter so!",
-	  "rating": "1",
-	  "color": "green"
+	  "text": "Bewege dich langsamer!",
+	  "rating": "0",
+	  "color": "red"
 	},
 	{
 	  "text": "Gut gemacht, weiter so!",
 	  "rating": "1",
 	  "color": "green"
 	},
-	{
-	  "text": "Gut gemacht, weiter so!",
-	  "rating": "1",
-	  "color": "green"
-	},
+  {
+    "text": "Fast perfekt!",
+    "rating": "0.5",
+    "color": "orange"
+  },
 	{
 	  "text": "Bewege dich langsamer!",
 	  "rating": "0",
