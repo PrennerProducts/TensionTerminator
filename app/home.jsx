@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useRouter } from 'expo-router';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
-import { ProfileImageProvider } from '../app/components/ProfileImageContext';
 import { evaluationData } from './evaluationComponents/evaluationData';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useUserContext } from './services/userContextProvider';
@@ -51,7 +50,7 @@ const Home = () => {
     evaluationData.originScreen = '../home';
     evaluationData.isTraining = 1;
     evaluationData.beforeAfterTraining = 0;
-    router.replace({ pathname: 'components/painWhere' });
+    router.push({ pathname: 'components/painWhere' });
   };
 
   useEffect(() => {

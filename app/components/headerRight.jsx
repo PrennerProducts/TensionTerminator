@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { avatarList } from '../config/avatarConfig';
 import { Link, useRouter } from 'expo-router';
-import { useProfileImage } from './ProfileImageContext';
 import { useUserContext } from '../services/userContextProvider';
 
 const myheaderRight = () => {

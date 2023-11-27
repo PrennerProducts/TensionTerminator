@@ -4,24 +4,24 @@
 //  set
 //
 //
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const saveUserData = async (userData) => {
   try {
-    await AsyncStorage.setItem("@user", userData);
+    await AsyncStorage.setItem('@user', userData);
   } catch (e) {
     console.log(e);
   }
-  console.log("StorageProvider UserData set.");
+  console.log('StorageProvider UserData set.');
 };
 
 export const getUserData = async () => {
   try {
-    const Data = await AsyncStorage.getItem("@user");
-    console.log("StorageProvider getUserData: " + Data);
+    const Data = await AsyncStorage.getItem('@user');
+    console.log('StorageProvider getUserData: ' + Data);
     return Data;
   } catch (e) {
-    console.log("StorageProvider getUserData: " + e);
+    console.log('StorageProvider getUserData: ' + e);
   }
   // try {
   //   const Data = await AsyncStorage.getItem('@user')
@@ -50,12 +50,11 @@ export const getUserData = async () => {
 
 export const resetAllData = async () => {
   try {
-    await AsyncStorage.removeItem("@user");
+    await AsyncStorage.removeItem('@user');
     await AsyncStorage.clear();
-    console.log("resetAllData");
+    console.log('resetAllData');
   } catch (e) {
     console.log(e);
   }
-  console.log("All Data reseted.");
-
+  console.log('All Data reseted.');
 };

@@ -12,7 +12,6 @@
 // import styles from '../components/StyleSheet';
 // import UserData from '../classes/userData';
 // import { avatarList } from '../config/avatarConfig';
-// import { useProfileImage } from '../components/ProfileImageContext';
 
 // export default () => {
 //   const router = useRouter();
@@ -20,7 +19,6 @@
 //   const user = new UserData();
 //   const [counter, setCounter] = useState(0);
 
-//   const { currentImageIndex } = useProfileImage(); // Verwenden des ProfileImageContext hooks
 //   // Hier könnten Sie jetzt currentImageIndex verwenden, um z.B. ein Profilbild anzuzeigen
 //   const profileImageSource =
 //     currentImageIndex && avatarList[currentImageIndex]
