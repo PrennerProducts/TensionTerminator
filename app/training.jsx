@@ -82,7 +82,6 @@ const TrainingScreen = () => {
       };
 
       const fadeIn = () => {
-        console.log("Fade IN")
         Animated.timing(fadeAnim, {
           toValue: 1,
           duration: 1000,
@@ -95,7 +94,6 @@ const TrainingScreen = () => {
       };
 
       const fadeOut = () => {
-        console.log("Fade OUT")
         Animated.timing(fadeAnim, {
           toValue: 0,
           duration: 2000,
