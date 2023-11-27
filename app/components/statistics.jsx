@@ -120,11 +120,11 @@ const statistics = () => {
     { x: 'So', y: 183 },
   ];
 
-  // pieChartData = [
-  //   { x: 'RollenKlein', y: 8 },
-  //   { x: 'RollenGroß', y: 63 },
-  //   { x: 'Triggerpunkthebel', y: 183 },
-  // ];
+  pieChartData = [
+    { x: 'RollenKlein', y: 8 },
+    { x: 'RollenGroß', y: 63 },
+    { x: 'Triggerpunkthebel', y: 183 },
+  ];
 
   levelData = [
     { x: '0', y: 0 },
@@ -572,8 +572,9 @@ const stylesLocal = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     marginTop: 20,
-    color: '#fff',
-    backgroundColor: '#10069F',
+    color: '#000',
+    fontWeight: 'bold',
+    backgroundColor: '#f0f0f0',
     width: '100%',
     borderRadius: 50,
   },
