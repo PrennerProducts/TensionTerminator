@@ -116,7 +116,7 @@ const TrainingScreen = () => {
             {isPressableVisible && (
                 <Button
                     title="Training starten"
-                    nPress={() => {handleStart();}}
+                    onPress={() => {handleStart();}}
                     buttonStyle={styles.button}
                     titleStyle={styles.buttonText}
                 />)}
