@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useRouter } from 'expo-router';
 import styles from './components/StyleSheet';
 import AudioPlayer from './services/audioPlayer';
-import { useUserContext } from './components/userContextProvider';
+import { useUserContext } from './services/userContextProvider.jsx';
 import { saveUserData, getUserData } from './services/storage.jsx';
 import SlotMachine from 'react-native-slot-machine';
 import profileScreen from './profileScreen.jsx';

@@ -6,7 +6,8 @@ import {
   TextInput,
   Switch,
   StyleSheet,
-  Dimensions, ScrollView,
+  Dimensions,
+  ScrollView,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -16,7 +17,7 @@ import styles from './components/StyleSheet';
 import { avatarList } from './config/avatarConfig';
 import { Link, useRouter } from 'expo-router';
 import GameStatusGif from './components/GameStatusGif';
-import { useUserContext } from './components/userContextProvider';
+import { useUserContext } from './services/userContextProvider';
 import { Button } from '@rneui/themed';
 
 const profileScreen = () => {
@@ -128,7 +129,6 @@ const profileScreen = () => {
 
   return (
     <View style={{ padding: 20 }}>
-
       {/* Avatar Bild */}
       <View
         style={{
@@ -193,12 +193,11 @@ const profileScreen = () => {
               style={stylesLocal.textInputStyle}
             />
             <Button
-                title="OK"
+              title="OK"
               onPress={handleNameChange}
               buttonStyle={stylesLocal.okButtonStyle}
               titleStyle={stylesLocal.okButtonText}
             />
-
           </View>
         ) : (
           <Text style={{ fontSize: 34, fontWeight: 'bold' }}>
@@ -216,118 +215,117 @@ const profileScreen = () => {
         )}
       </View>
 
-        <ScrollView style={{ padding: 5 }}>
-      {/* Game Status */}
-      <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
-        <TouchableOpacity
-          onPress={handleShowGif}
-          style={{ flexDirection: 'row', alignItems: 'center' }}
-        >
-          <Icon
-            style={{ marginRight: 10 }}
-            name="trophy"
-            size={24}
-            color="gold"
+      <ScrollView style={{ padding: 5 }}>
+        {/* Game Status */}
+        <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
+          <TouchableOpacity
+            onPress={handleShowGif}
+            style={{ flexDirection: 'row', alignItems: 'center' }}
+          >
+            <Icon
+              style={{ marginRight: 10 }}
+              name="trophy"
+              size={24}
+              color="gold"
+            />
+            <Text style={stylesLocal.text}>Game-Level: {gameLevel}</Text>
+          </TouchableOpacity>
+        </View>
+        {showGameStatusGif && (
+          <GameStatusGif
+            visible={showGameStatusGif}
+            onClose={() => setShowGameStatusGif(false)}
           />
-          <Text style={stylesLocal.text}>Game-Level: {gameLevel}</Text>
-        </TouchableOpacity>
-      </View>
-      {showGameStatusGif && (
-        <GameStatusGif
-          visible={showGameStatusGif}
-          onClose={() => setShowGameStatusGif(false)}
-        />
-      )}
+        )}
 
-      {/* Points */}
-      <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
-        <TouchableOpacity
-          onPress={handleShowGif}
-          style={{ flexDirection: 'row', alignItems: 'center' }}
-        >
-          <Icon
-            style={{ marginRight: 10 }}
-            name="bullseye"
-            size={24}
-            color="red"
+        {/* Points */}
+        <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
+          <TouchableOpacity
+            onPress={handleShowGif}
+            style={{ flexDirection: 'row', alignItems: 'center' }}
+          >
+            <Icon
+              style={{ marginRight: 10 }}
+              name="bullseye"
+              size={24}
+              color="red"
+            />
+            <Text style={stylesLocal.text}>Punktestand: {points}</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Reminder setzen */}
+        <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
+          <TouchableOpacity
+            onPress={() => {
+              router.push('appointment');
+            }}
+            style={{ flexDirection: 'row', alignItems: 'center' }}
+          >
+            <Icon
+              style={{ marginRight: 10 }}
+              name="calendar"
+              size={24}
+              color="green"
+            />
+            <Text style={stylesLocal.text}>Reminder setzen</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Meine Statistiken */}
+        <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
+          <TouchableOpacity
+            onPress={() => {
+              router.push('components/statistics');
+            }}
+            style={{ flexDirection: 'row', alignItems: 'center' }}
+          >
+            <Icon
+              style={{ marginRight: 10 }}
+              name="bar-chart"
+              size={24}
+              color="#10069F"
+            />
+            <Text style={stylesLocal.text}>Meine Statistiken </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Datenschutz */}
+        <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
+          <TouchableOpacity
+            style={{ flexDirection: 'row', alignItems: 'center' }}
+            onPress={() => {
+              router.push('components/dataProtection');
+            }}
+          >
+            <Icon
+              style={{ marginRight: 10 }}
+              name="lock"
+              size={24}
+              color="#000"
+            />
+            <Text style={stylesLocal.text}>Datenschutzbestimmungen</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Switch */}
+        <View style={stylesLocal.switchcontainer}>
+          <Text style={stylesLocal.text}>Daten an ErgoPhysion senden</Text>
+          <Switch
+            trackColor={{ false: '#767577', true: '#10069F' }}
+            thumbColor={isEnabled ? '#979797' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={handleSendDataChange}
+            value={isEnabled}
           />
-          <Text style={stylesLocal.text}>Punktestand: {points}</Text>
-        </TouchableOpacity>
-      </View>
+        </View>
 
-      {/* Reminder setzen */}
-      <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
-        <TouchableOpacity
-          onPress={() => {
-            router.push('appointment');
-          }}
-          style={{ flexDirection: 'row', alignItems: 'center' }}
-        >
-          <Icon
-            style={{ marginRight: 10 }}
-            name="calendar"
-            size={24}
-            color="green"
-          />
-          <Text style={stylesLocal.text}>Reminder setzen</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Meine Statistiken */}
-      <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
-        <TouchableOpacity
-          onPress={() => {
-            router.push('components/statistics');
-          }}
-          style={{ flexDirection: 'row', alignItems: 'center' }}
-        >
-          <Icon
-            style={{ marginRight: 10 }}
-            name="bar-chart"
-            size={24}
-            color="#10069F"
-          />
-          <Text style={stylesLocal.text}>Meine Statistiken </Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Datenschutz */}
-      <View style={{ alignItems: 'flex-start', marginLeft: 20 }}>
-        <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center' }}
-          onPress={() => {
-            router.push('components/dataProtection');
-          }}
-        >
-          <Icon
-            style={{ marginRight: 10 }}
-            name="lock"
-            size={24}
-            color="#000"
-          />
-          <Text style={stylesLocal.text}>Datenschutzbestimmungen</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Switch */}
-      <View style={stylesLocal.switchcontainer}>
-        <Text style={stylesLocal.text}>Daten an ErgoPhysion senden</Text>
-        <Switch
-          trackColor={{ false: '#767577', true: '#10069F' }}
-          thumbColor={isEnabled ? '#979797' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={handleSendDataChange}
-          value={isEnabled}
-        />
-      </View>
-
-      {/* <Link href={'/'} asChild>
+        {/* <Link href={'/'} asChild>
         <Pressable style={styles.button}>
           <Text style={styles.buttonText}>Home</Text>
         </Pressable>
       </Link> */}
-
-        </ScrollView>
+      </ScrollView>
     </View>
   );
 };

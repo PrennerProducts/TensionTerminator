@@ -7,13 +7,17 @@ import { avatarList } from './config/avatarConfig';
 import { ProfileImageProvider } from '../app/components/ProfileImageContext';
 import { evaluationData } from './evaluationComponents/evaluationData';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useUserContext } from './components/userContextProvider';
+import { useUserContext } from './services/userContextProvider';
 import { Button } from '@rneui/themed';
 import { Box } from 'victory-native';
 import { useNavigation } from '@react-navigation/native';
 import { painData } from './components/painData';
+import { resetAllData } from './services/storage';
 
 const Home = () => {
+  // Resett all data
+  //resetAllData();
+
   // User context provider
   const {
     username,

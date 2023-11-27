@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import styles from './components/StyleSheet';
 import UserData from './classes/userData';
-import { useUserContext } from './components/userContextProvider';
+import { useUserContext } from './services/userContextProvider';
 import React, { useEffect, useState } from 'react';
 import { resetAllData } from './services/storage';
 

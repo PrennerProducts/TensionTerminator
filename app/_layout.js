@@ -17,7 +17,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { ProfileImageProvider } from './components/ProfileImageContext';
 import myheaderRight from './components/headerRight';
 import { useProfileImage } from './components/ProfileImageContext';
-import { UserContextProvider } from './components/userContextProvider';
+import { UserContextProvider } from './services/userContextProvider';
 import headerRight from './components/headerRight';
 import { evaluationData } from './evaluationComponents/evaluationData';
 
