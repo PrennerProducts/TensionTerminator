@@ -221,8 +221,8 @@ const evaluationYR = () => {
       return;
     } else if (faces.length > 0) {
       const face = faces[0];
-      if (exercise === 0) setYaw(face.yawAngle.toFixed(0));
-      else if (exercise === 1) setRoll(face.rollAngle.toFixed(0));
+      setYaw(face.yawAngle.toFixed(0));
+      setRoll(face.rollAngle.toFixed(0));
       if (
         face.LEFT_EYE && face.RIGHT_EYE && face.BOTTOM_MOUTH 
         //&&
@@ -356,6 +356,7 @@ const evaluationYR = () => {
                   width: 2,
                   height: 100,
                   backgroundColor: '#10069f',
+                  transform: [{ rotate: `${roll}deg` }],
                 }}></View>
 
               {/* Linie durch Augenmitte horizontal */}
@@ -367,6 +368,7 @@ const evaluationYR = () => {
                   width: 100,
                   height: 2,
                   backgroundColor: '#10069f',
+                  transform: [{ rotate: `${roll}deg` }],
                 }}></View>
 
               {/* Linien vertikal und horizontal zur Bildmitte */}

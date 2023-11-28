@@ -295,14 +295,12 @@ const stylesRE = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     margin: '2%',
-    color: "#10069F",
   },
   rowBold: {
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
     margin: '1%',
-    color: "#10069F",
   },
   textRed:{
     color: "red",
