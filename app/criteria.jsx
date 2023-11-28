@@ -95,7 +95,7 @@ const criteriaScreen = () => {
         )}
       </ScrollView>
 
-      <View style={[styles.bottom, { flex: 0, marginTop: "3%", bottom: "3%" }]}>
+      <View style={styles.bottom}>
           <Button
               title="Bestätigen"
                 onPress={changeFirstTime}

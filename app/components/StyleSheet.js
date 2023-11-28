@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   bottom: {
-    flex: 1,
     justifyContent: "flex-end",
     bottom: "10%",
+    marginTop: "10%",
   },
   button: {
     display: 'flex',
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#ffffff',
     textAlign: "center",
+    marginLeft: "10%",
   },
   title: {
     fontSize: 30,
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
   },
   buttonBottom: {
     marginTop: -30,
+    flexGrow: 1,
   },
   text: {
     fontSize: 16,
@@ -114,7 +116,6 @@ const styles = StyleSheet.create({
   thumbnailContainer: {
     position: 'relative',
   },
-
   playIconContainer: {
     position: 'absolute',
     top: 0,
@@ -123,6 +124,24 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonSmall: {
+    display: 'flex',
+    height: '9%',
+    minHeight: 50,
+    backgroundColor: '#10069f',
+    borderRadius: 10,
+    marginTop: '5%',
+    marginHorizontal: '2%',
+  },
+    buttonTextSmall: {
+      fontSize: 15,
+      color: '#ffffff',
+      textAlign: 'left',
+      marginLeft: '5%',
+    },
+  textUnderline: {
+    textDecorationLine: 'underline',
   },
 });
 export default styles;
