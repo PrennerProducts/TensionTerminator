@@ -11,7 +11,6 @@ import { painData } from './components/painData';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button } from '@rneui/themed';
 
-
 import Thn_SchulterNacken_DruckSchm_Nacken from '../assets/gifs/Thn_SchulterNacken_DruckSchm_Nacken.gif';
 import Thn_SchulterNacken_DruckSchm_Schulter from '../assets/gifs/Thn_SchulterNacken_DruckSchm_Schulter.gif';
 import Thn_SchulterNacken_ZiehSchm from '../assets/gifs/Thn_SchulterNacken_ZiehSchm.gif';
@@ -123,7 +122,12 @@ const TrainingStart = () => {
         </Text>
 
         <TouchableOpacity onPress={toggleModal}>
-          <Text style={[styles.link, { marginVertical: 0, marginBottom: 10 }]}>
+          <Text
+            style={[
+              styles.textUnderline,
+              { marginVertical: 0, marginBottom: 10 },
+            ]}
+          >
             {'Zur Videoanleitung'} {'\n'}
           </Text>
         </TouchableOpacity>

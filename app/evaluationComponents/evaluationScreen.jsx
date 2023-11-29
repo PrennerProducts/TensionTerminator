@@ -34,19 +34,19 @@ const evaluationScreen = () => {
       <Text style={styles.header}>
         {'\n'}Anleitung {'\n'}
       </Text>
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1, width: '80%' }}>
         <Text style={styles.text}>
           Die Evaluierung besteht aus 2 Übungen. {'\n'}
           Mit diesen Übungen wird die Beweglichkeit des Kopfes evaluiert. {'\n'}
         </Text>
-        <Text style={styles.textUnderline}>Erste Übung Yaw (Kopfrotation)</Text>
+        <Text style={styles.textBold}>Erste Übung Yaw (Kopfrotation)</Text>
         <Text style={styles.text}>
           Dafür den Kopf zuerst nach links oder rechts drehen, kurz am Maximum
           halten und dann wieder in die Ausgangsposition zurückdrehen. {'\n'}
           Dann den Kopf in die andere Richtung drehen, kurz am Maximum halten
           und wieder in die Ausgangsposition zurückdrehen. {'\n'}
         </Text>
-        <Text style={styles.textUnderline}>
+        <Text style={styles.textBold}>
           Zweite Übung Rol (Kopf zu Schulterbewegung)
         </Text>
         <Text style={styles.text}>

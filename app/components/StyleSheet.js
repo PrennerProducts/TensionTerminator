@@ -79,6 +79,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginVertical: 20,
   },
+  textUnderline: {
+    fontSize: 16,
+    marginVertical: 20,
+    textDecorationLine: 'underline',
+  },
+  textBold: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
   section: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -147,9 +156,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginLeft: '5%',
   },
-  textUnderline: {
-    textDecorationLine: 'underline',
-  },
+
   logo: {
     resizeMode: 'contain',
     width: '80%',
