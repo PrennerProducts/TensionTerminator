@@ -120,7 +120,7 @@ const TrainingStart = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0, width: '80%', top: '3%', bottom: '5%' }}>
+      <View style={{ flex: 1, width: '80%', top: '3%', bottom: '5%' }}>
         <Text style={styles.header}>
           Training gegen {'\n'}
           {painData.painToString}{' '}
