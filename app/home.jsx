@@ -71,12 +71,7 @@ const Home = () => {
         <View style={styles.box}>
           <Image
             source={require('../assets/logo.png')}
-            style={{
-              resizeMode: 'contain',
-              width: '50%',
-              height: 50,
-              borderRadius: 10,
-            }}
+            style={styles.logo}
           />
           <Text style={styles.header}>{username}'s Startseite</Text>
 
@@ -97,7 +92,7 @@ const Home = () => {
           />
           <Text style={styles.row}>
             {' '}
-            Level: {gameLevel};{'\n'}Punkte: {points};
+            Level: {gameLevel}{'\n'}Punkte: {points}
           </Text>
 
           <Button

@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: '100%',
     resizeMode: 'contain',
-    height: 100
+    height: 200
   },
   thumbnailContainer: {
     position: 'relative',
@@ -147,6 +147,12 @@ const styles = StyleSheet.create({
     },
   textUnderline: {
     textDecorationLine: 'underline',
+  },
+  logo: {
+    resizeMode: 'contain',
+    width: '80%',
+    height: 65,
+    borderRadius: 10,
   },
 });
 export default styles;

@@ -78,7 +78,7 @@ export default function Layout() {
         <Stack.Screen
           name="home"
           options={({ navigation }) => ({
-            headerTitle: 'Tension Terminator',
+            headerTitle: 'TensionTerminator',
             headerShown: true,
             headerTitleAlign: 'center',
             headerLeft: () => <Text />,

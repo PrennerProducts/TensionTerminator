@@ -121,8 +121,8 @@ const statistics = () => {
   ];
 
   pieChartData = [
-    { x: 'RollenKlein', y: 8 },
-    { x: 'RollenGroß', y: 63 },
+    { x: 'Duobälle klein', y: 8 },
+    { x: 'Duobälle groß', y: 63 },
     { x: 'Triggerpunkthebel', y: 183 },
   ];
 
@@ -204,7 +204,7 @@ const statistics = () => {
 
       {/* Slotmachine Points Highscore*/}
       <View style={stylesLocal.slotcontainer}>
-        <Text style={stylesLocal.slotheader}> Dein Punkte Highscore:</Text>
+        <Text style={stylesLocal.slotheader}> Ihr Punkte-Highscore:</Text>
 
         <SlotMachine
           initialAnimation={true}
@@ -258,7 +258,7 @@ const statistics = () => {
       {/* --------------------   Level    --------------------------------------- */}
       <View style={stylesLocal.headerWrapper}>
         <Text style={stylesLocal.max_header}>
-          Dein aktuelles Game-Level: {gameLevel}
+          Ihr aktuelles Game-Level: {gameLevel}
         </Text>
       </View>
       <View style={stylesLocal.levelcontainer}>
@@ -331,7 +331,7 @@ const statistics = () => {
       {/* --------------------------------Trainings Chart------------------------------------------ */}
       <View style={[stylesLocal.barchart, stylesLocal.shadowProp]}>
         <View style={stylesLocal.headerWrapper}>
-          <Text style={stylesLocal.max_header}>Dein Training </Text>
+          <Text style={stylesLocal.max_header}>Ihr Training </Text>
         </View>
         {/* ----DropDownPickerCharts--------- */}
 
@@ -390,7 +390,7 @@ const statistics = () => {
 
       {/* --------------------------------Geraete Chart------------------------------------------ */}
       <View style={stylesLocal.headerWrapper}>
-        <Text style={stylesLocal.max_header}>Deine Geräte</Text>
+        <Text style={stylesLocal.max_header}>Ihre Geräte</Text>
       </View>
       <View style={stylesLocal.piechart}>
         <Svg
@@ -460,8 +460,8 @@ const statistics = () => {
             gutter={10}
             data={[
               { name: 'Triggerpunkthebel', symbol: { fill: 'cornflowerblue' } },
-              { name: 'RollenKlein', symbol: { fill: 'orange' } },
-              { name: 'RollenGroß', symbol: { fill: 'lightgreen' } },
+              { name: 'Duobälle klein', symbol: { fill: 'orange' } },
+              { name: 'Duobälle groß', symbol: { fill: 'lightgreen' } },
             ]}
             labelComponent={<VictoryLabel angle={360} />}
           />
