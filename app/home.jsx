@@ -12,7 +12,7 @@ import { Box } from 'victory-native';
 import { useNavigation } from '@react-navigation/native';
 import { painData } from './components/painData';
 import { resetAllData } from './services/storage';
-import styles from "./components/StyleSheet";
+import styles from './components/StyleSheet';
 
 const Home = () => {
   // Resett all data
@@ -38,7 +38,7 @@ const Home = () => {
 
   const goToEvaluation = async () => {
     evaluationData.resetValues();
-    evaluationData.originScreen = '../home';
+    evaluationData.originScreen = 'home';
     evaluationData.isTraining = 0;
     evaluationData.beforeAfterTraining = 0;
     router.replace({ pathname: 'evaluationComponents/evaluationScreen' });
@@ -48,7 +48,7 @@ const Home = () => {
     painData.resetValues();
     painData.painIntensityBefore = 5;
     evaluationData.resetValues();
-    evaluationData.originScreen = '../home';
+    evaluationData.originScreen = 'home';
     evaluationData.isTraining = 1;
     evaluationData.beforeAfterTraining = 0;
     router.push({ pathname: 'components/painWhere' });
