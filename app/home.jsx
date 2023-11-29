@@ -106,7 +106,7 @@ const Home = () => {
               router.push({ pathname: 'components/barcode' });
             }}
             buttonStyle={styles.buttonWithIcon}
-            titleStyle={styles.buttonText}
+            titleStyle={styles.buttonWithIconText}
             icon={<Icon name="qrcode-scan" size={30} color="#fff" />}
           />
 
@@ -116,7 +116,7 @@ const Home = () => {
               router.push({ pathname: 'criteria' });
             }}
             buttonStyle={styles.buttonWithIcon}
-            titleStyle={styles.buttonText}
+            titleStyle={styles.buttonWithIconText}
             icon={<Icon name="information" size={30} color="#fff" />}
           />
 
@@ -126,7 +126,7 @@ const Home = () => {
               goToEvaluation();
             }}
             buttonStyle={styles.buttonWithIcon}
-            titleStyle={styles.buttonText}
+            titleStyle={styles.buttonWithIconText}
             icon={<Icon name="reiterate" size={30} color="#fff" />}
           />
 
@@ -136,7 +136,7 @@ const Home = () => {
               goToTraining();
             }}
             buttonStyle={styles.buttonWithIcon}
-            titleStyle={styles.buttonText}
+            titleStyle={styles.buttonWithIconText}
             icon={
               <Icon name="rowing" size={30} color="#fff" marginRight={30} />
             }

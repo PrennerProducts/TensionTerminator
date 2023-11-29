@@ -32,11 +32,16 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     justifyContent: "flex-start",
   },
-  buttonText: {
+  buttonWithIconText: {
     fontSize: 20,
     color: '#ffffff',
     textAlign: "center",
     marginLeft: "10%",
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#ffffff',
+    textAlign: "center",
   },
   title: {
     fontSize: 30,
