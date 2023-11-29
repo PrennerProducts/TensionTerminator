@@ -162,14 +162,14 @@ const Gratulation = () => {
       <ScrollView style={{ padding: 5, flex: 1}}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Text style={stylesLocal.text}>
-            Wow, du hast dir für deine Leistung 150 Punkte verdient!
+            Wow, Sie haben sich für Ihre Leistung 150 Punkte verdient!
           </Text>
           <View>
             <SlotMachine text={points} duration={2000} width={60} height={80} />
           </View>
           <Text style={stylesLocal.text}>
-            Dein aktuelles Game-Level: {gameLevel} {'\n'}
-            Du benötigst noch {modulo} Punkte für das nächste Level
+            Ihr aktuelles Game-Level: {gameLevel} {'\n'}
+            Sie benötigen noch {modulo} Punkte für das nächste Level.
           </Text>
           <Image
             source={

@@ -11,14 +11,6 @@ import { painData } from './components/painData';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button } from '@rneui/themed';
 
-//import Thn_SchulterNacken_DruckSchm_Nacken from '../assets/gifs/1druck.gif';
-//import Thn_SchulterNacken_ZiehSchm from '../assets/gifs/1zieh.gif';
-//import Thn_SchulterNacken_DruckSchm_Schulter from '../assets/gifs/1druck2.gif';
-//import Thn_MiRuecken_DruckSchm from '../assets/gifs/2druck.gif';
-//import Thn_MiRuecken_ZiehSchm from '../assets/gifs/2zieh.gif';
-//import Thn_UnRuecken_DruckSchm from '../assets/gifs/3druck.gif';
-//import Thn_UnRuecken_ZiehSchm from '../assets/gifs/3zieh.gif';
-//import Thn_BeckenGesaess_DruckSchm from '../assets/gifs/4druck.gif';
 
 import Thn_SchulterNacken_DruckSchm_Nacken from '../assets/gifs/Thn_SchulterNacken_DruckSchm_Nacken.gif';
 import Thn_SchulterNacken_DruckSchm_Schulter from '../assets/gifs/Thn_SchulterNacken_DruckSchm_Schulter.gif';
@@ -46,55 +38,55 @@ const TrainingStart = () => {
 
   const contentOptions = {
     '1_1': {
-      url: 'https://player.vimeo.com/video/490520420',
+      url: 'https://player.vimeo.com/video/490520420?autoplay=1',
       thumbnail: Thn_SchulterNacken_DruckSchm_Nacken,
       text1:
         'Bei Druckschmerzen im Schulter-Nacken-Bereich die untere Nase des Triggerpunkthebels verwenden. Die zusätzliche Anwendung der kleinen Duobälle im Bereich der oberen Brustwirbelsäule, führt meistens zu einer weiteren Verbesserung der Verspannung.',
     },
     '1_2': {
-      url: 'https://player.vimeo.com/video/490644680',
+      url: 'https://player.vimeo.com/video/490644680?autoplay=1',
       thumbnail: Thn_SchulterNacken_ZiehSchm,
       text1:
         'Bei ziehenden Schmerzen im Schulter- Nacken-Bereich die kleinen Duobälle verwenden. Die zusätzliche Anwendung der unteren Nase des Triggerpunkthebels im Schulter-Nacken Bereich, führt meistens zu einer weiteren Verbesserung der Verspannung.',
     },
     '1_3': {
-      url: 'https://player.vimeo.com/video/490644043',
+      url: 'https://player.vimeo.com/video/490644043?autoplay=1',
       thumbnail: Thn_SchulterNacken_DruckSchm_Schulter,
       text1:
         'Bei Druckschmerzen im oberen Schulterblatt- oder Rückenbereich, am besten die vordere Nase des Triggerpunkthebels verwenden. Der Druckschmerz kann in diesem Bereich an verschiedenen Stellen auftreten.',
     },
     '2_1': {
-      url: 'https://player.vimeo.com/video/490644235',
+      url: 'https://player.vimeo.com/video/490644235?autoplay=1',
       thumbnail: Thn_MiRuecken_DruckSchm,
       text1:
         'Bei Druckschmerzen im mittleren Rückenbereich, die vordere Nase des Triggerpunkthebels verwenden. Der Druckschmerz kann in diesem Bereich an verschiedenen Stellen auftreten.',
     },
     '2_2': {
-      url: 'https://player.vimeo.com/video/490644425',
+      url: 'https://player.vimeo.com/video/490644425?autoplay=1',
       thumbnail: Thn_MiRuecken_ZiehSchm,
       text1:
         'Bei ziehenden Schmerzen entlang der Brustwirbelsäule verwenden Sie die Duobälle. Häufiger wird der kleine Duoball als passend empfunden. Probieren Sie anfangs beide.',
     },
     '3_1': {
-      url: 'https://player.vimeo.com/video/490645122',
+      url: 'https://player.vimeo.com/video/490645122?autoplay=1',
       thumbnail: Thn_UnRuecken_DruckSchm,
       text1:
         'Bei Druckschmerzen im unteren Rückenbereich, verwenden Sie die vordere Nase des Triggerpunkthebels. Der Druckschmerz kann in diesem Bereich an verschiedenen Stellen auftreten.',
     },
     '3_2': {
-      url: 'https://player.vimeo.com/video/490644944',
+      url: 'https://player.vimeo.com/video/490644944?autoplay=1',
       thumbnail: Thn_UnRuecken_ZiehSchm,
       text1:
         'Bei ziehenden Schmerzen entlang der Lendenwirbelsäule und/oder im Kreuzbeinbereich, verwenden Sie die Duobälle. Probieren Sie aus, welche Duoballgröße am besten passt.',
     },
     '4_1': {
-      url: 'https://player.vimeo.com/video/490645311',
+      url: 'https://player.vimeo.com/video/490645311?autoplay=1',
       thumbnail: Thn_BeckenGesaess_DruckSchm,
       text1:
         'Bei Druckschmerzen im Becken- Gesäßbereich, verwenden Sie die vordere Nase des Triggerpunkthebels. Der Druckschmerz tritt in diesem Bereich typischer Weise im tiefen Bereich des Gesäßmuskels auf.',
     },
     default: {
-      url: 'https://player.vimeo.com/video/490644680',
+      url: 'https://player.vimeo.com/video/490644680?autoplay=1',
       thumbnail: Thn_SchulterNacken_DruckSchm_Nacken,
       text1:
         'Es tut uns leid, Ihre Auswahl wurde nicht gespeichert. Bitte klicken Sie auf den Homebutton und beginnen Sie von vorne.',
