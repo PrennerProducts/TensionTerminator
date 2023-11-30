@@ -12,7 +12,7 @@ import { Box } from 'victory-native';
 import { useNavigation } from '@react-navigation/native';
 import { painData } from './components/painData';
 import { resetAllData } from './services/storage';
-import styles from "./components/StyleSheet";
+import styles from './components/StyleSheet';
 
 const Home = () => {
   // Resett all data
@@ -69,10 +69,7 @@ const Home = () => {
     <View style={stylesLocal.container}>
       <View style={{}}>
         <View style={styles.box}>
-          <Image
-            source={require('../assets/logo.png')}
-            style={styles.logo}
-          />
+          <Image source={require('../assets/logo.png')} style={styles.logo} />
           <Text style={styles.header}>{username}'s Startseite</Text>
 
           <Image
@@ -92,7 +89,8 @@ const Home = () => {
           />
           <Text style={styles.row}>
             {' '}
-            Level: {gameLevel}{'\n'}Punkte: {points}
+            Level: {gameLevel}
+            {'\n'}Punkte: {points}
           </Text>
 
           <Button

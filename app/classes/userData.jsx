@@ -8,7 +8,7 @@ import { saveUserData, getUserData } from '../services/storage.jsx';
 
 class UserData {
   constructor(
-    userName = 'Default',
+    userName = 'Martin 🔥Stein',
     reseted = false,
     profilepicture = 0,
     level = 0,
