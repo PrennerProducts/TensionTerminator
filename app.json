@@ -12,7 +12,9 @@
       "backgroundColor": "#ffffff"
     },
     "scheme": "tensionterminator",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mci.TensionTerminator"
@@ -35,6 +37,11 @@
           "color": "#e30613"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "228f5cf4-c82d-4545-977b-6209737cd565"
+      }
+    }
   }
 }
