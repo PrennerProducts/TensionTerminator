@@ -12,6 +12,7 @@ import { Box } from 'victory-native';
 import { useNavigation } from '@react-navigation/native';
 import { painData } from './components/painData';
 import { resetAllData } from './services/storage';
+import styles from './components/StyleSheet';
 
 const Home = () => {
   // Resett all data
@@ -67,17 +68,9 @@ const Home = () => {
   return (
     <View style={stylesLocal.container}>
       <View style={{}}>
-        <View style={stylesLocal.box}>
-          <Image
-            source={require('../assets/logo.png')}
-            style={{
-              resizeMode: 'contain',
-              width: '50%',
-              height: 50,
-              borderRadius: 10,
-            }}
-          />
-          <Text style={stylesLocal.header}>{username}'s Startseite</Text>
+        <View style={styles.box}>
+          <Image source={require('../assets/logo.png')} style={styles.logo} />
+          <Text style={styles.header}>{username}'s Startseite</Text>
 
           <Image
             source={
@@ -94,9 +87,10 @@ const Home = () => {
               borderRadius: 100,
             }}
           />
-          <Text style={stylesLocal.row}>
+          <Text style={styles.row}>
             {' '}
-            Level: {gameLevel};{'\n'}Punkte: {points};
+            Level: {gameLevel}
+            {'\n'}Punkte: {points}
           </Text>
 
           <Button
@@ -104,8 +98,8 @@ const Home = () => {
             onPress={() => {
               router.push({ pathname: 'components/barcode' });
             }}
-            buttonStyle={stylesLocal.buttonWithIcon}
-            titleStyle={stylesLocal.buttonText}
+            buttonStyle={styles.buttonWithIcon}
+            titleStyle={styles.buttonWithIconText}
             icon={<Icon name="qrcode-scan" size={30} color="#fff" />}
           />
 
@@ -114,8 +108,8 @@ const Home = () => {
             onPress={() => {
               router.push({ pathname: 'criteria' });
             }}
-            buttonStyle={stylesLocal.buttonWithIcon}
-            titleStyle={stylesLocal.buttonText}
+            buttonStyle={styles.buttonWithIcon}
+            titleStyle={styles.buttonWithIconText}
             icon={<Icon name="information" size={30} color="#fff" />}
           />
 
@@ -124,8 +118,8 @@ const Home = () => {
             onPress={() => {
               goToEvaluation();
             }}
-            buttonStyle={stylesLocal.buttonWithIcon}
-            titleStyle={stylesLocal.buttonText}
+            buttonStyle={styles.buttonWithIcon}
+            titleStyle={styles.buttonWithIconText}
             icon={<Icon name="reiterate" size={30} color="#fff" />}
           />
 
@@ -134,8 +128,8 @@ const Home = () => {
             onPress={() => {
               goToTraining();
             }}
-            buttonStyle={stylesLocal.buttonWithIcon}
-            titleStyle={stylesLocal.buttonText}
+            buttonStyle={styles.buttonWithIcon}
+            titleStyle={styles.buttonWithIconText}
             icon={
               <Icon name="rowing" size={30} color="#fff" marginRight={30} />
             }
@@ -151,44 +145,6 @@ const stylesLocal = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#ffffff',
-  },
-  box: {
-    flex: 1,
-    marginTop: 10,
-    marginBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#10069f',
-    borderRadius: 10,
-    padding: 10,
-    backgroundColor: '#fffff',
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 20,
-    color: '#10069F',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  buttonWithIcon: {
-    display: 'flex',
-    height: '9%',
-    minHeight: 50,
-    minWidth: '90%',
-    backgroundColor: '#10069f',
-    borderRadius: 10,
-    marginTop: '5%',
-    justifyContent: 'flex-start',
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#ffffff',
-    textAlign: 'left',
-    marginLeft: '10%',
   },
 });
 

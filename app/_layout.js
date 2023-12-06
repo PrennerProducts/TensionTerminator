@@ -9,8 +9,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useRouter, Tabs } from 'expo-router';
 import { Stack } from 'expo-router/stack';
-
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
 import { useFocusEffect } from '@react-navigation/native';
@@ -79,7 +78,7 @@ export default function Layout() {
         <Stack.Screen
           name="home"
           options={({ navigation }) => ({
-            headerTitle: 'Tension Terminator',
+            headerTitle: 'TensionTerminator',
             headerShown: true,
             headerTitleAlign: 'center',
             headerLeft: () => <Text />,
@@ -168,7 +167,7 @@ export default function Layout() {
         <Stack.Screen
           name="appointment"
           options={{
-            headerTitle: 'appointment',
+            headerTitle: 'Termin planen',
             headerShown: true,
             headerTitleAlign: 'center',
             headerRight: () => (
@@ -205,7 +204,9 @@ export default function Layout() {
         <Stack.Screen
           name="gratulation"
           options={{
-            headerTitle: 'Gratulation',
+              headerTitle: () => (
+                      <Icon name="party-popper" size={35} color="#fff" style={{ marginRight: 15 }} />
+              ),
             headerShown: true,
             headerTitleAlign: 'center',
             headerLeft: () => <Text />,
@@ -293,6 +294,15 @@ export default function Layout() {
             ),
           }}
         />
+          <Stack.Screen
+              name="components/statistics"
+              options={{
+                  headerTitle: 'Statistik',
+                  headerShown: true,
+                  headerTitleAlign: 'center',
+              }}
+          />
+
 
         {/* ------------------------------------------------------------------------------------- */}
         {/*  FOLDER evaluationComponents */}
@@ -301,7 +311,7 @@ export default function Layout() {
         <Stack.Screen
           name="evaluationComponents/evaluationScreen"
           options={{
-            headerTitle: 'EvaluationScreen',
+            headerTitle: 'Evaluierung',
             headerShown: true,
             headerTitleAlign: 'center',
             headerRight: () => (
@@ -362,6 +372,24 @@ export default function Layout() {
             ),
           }}
         />
+          <Stack.Screen
+              name="trainingStart"
+              options={{
+                  headerTitle: 'Training',
+                  headerShown: true,
+                  headerTitleAlign: 'center',
+                  headerRight: () => (
+                      <TouchableOpacity onPress={goToHome}>
+                          <Icon
+                              name="home"
+                              size={35}
+                              color="#fff"
+                              style={{ marginRight: 15 }}
+                          />
+                      </TouchableOpacity>
+                  ),
+              }}
+          />
 
         {/* ------------------------------------------------------------------------------------- */}
         {/*  FOLDER services */}

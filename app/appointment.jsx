@@ -4,7 +4,6 @@ import {
   View,
   Text,
   Pressable,
-  Button,
   StyleSheet,
   Alert,
   TouchableOpacity,
@@ -12,8 +11,9 @@ import {
 import React, { useEffect, useState } from 'react';
 import { Link, useRouter } from 'expo-router';
 import * as Notifications from 'expo-notifications';
-
+import {Button} from '@rneui/themed';
 import styles from './components/StyleSheet';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const Appointment = () => {
   const [ourFinalStatus, setFinalStatus] = useState(null);
@@ -185,7 +185,7 @@ const Appointment = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Termin planen</Text>
+      {/*<Text style={styles.header}>Termin planen</Text>*/}
       <Text
         style={[
           styles.text,
@@ -196,6 +196,7 @@ const Appointment = () => {
           },
         ]}
       >
+        {'\n'}
         Übung macht den Meister und bringt nachweißlich Verbesserung.
       </Text>
       <Text style={styles.text}>
@@ -210,6 +211,20 @@ const Appointment = () => {
 
       <View style={styles.section}>
         <Button
+            title="Datum ändern"
+            onPress={showDatepicker}
+            buttonStyle={styles.buttonSmall}
+            titleStyle={styles.buttonTextSmall}
+            icon={<Icon name="calendar" size={20} color="#fff" />}
+        />
+        <Button
+            title="Uhrzeit ändern"
+            onPress={showTimepicker}
+            buttonStyle={styles.buttonSmall}
+            titleStyle={styles.buttonTextSmall}
+            icon={<Icon name="clock" size={20} color="#fff" />}
+        />
+{/*        <Button
           color="#10069f"
           onPress={showDatepicker}
           title="Datum ändern"
@@ -219,7 +234,7 @@ const Appointment = () => {
           color="#10069f"
           onPress={showTimepicker}
           title="Uhrzeit ändern"
-        ></Button>
+        ></Button>*/}
       </View>
       {show && (
         <DateTimePicker
@@ -230,11 +245,14 @@ const Appointment = () => {
           onChange={onChange}
         />
       )}
-      {/* <Link href={"/"} asChild> */}
-      <Pressable style={[styles.button]} onPress={setAppointment}>
-        <Text style={styles.buttonText}>Bestätigen</Text>
-      </Pressable>
-      {/* </Link> */}
+      <View style={styles.bottom}>
+      <Button
+          title="Bestätigen"
+          onPress={setAppointment}
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonText}
+      />
+    </View>
     </View>
   );
 };

@@ -3,10 +3,9 @@ import {
   View,
   Text,
   Pressable,
-  Button,
   StyleSheet,
   Image,
-  Animated,
+  Animated, ScrollView,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Link, useRouter } from 'expo-router';
@@ -19,6 +18,7 @@ import profileScreen from './profileScreen.jsx';
 import UserData from './classes/userData';
 import { avatarList } from './config/avatarConfig';
 import gratulationGif from '../assets/gifs/confetti.gif';
+import { Button } from '@rneui/themed';
 
 const Gratulation = () => {
   const router = useRouter();
@@ -155,40 +155,54 @@ const Gratulation = () => {
         <AudioPlayer audioUri={require('../assets/sounds/Chimes.wav')} />
       </View>
 
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <View>
-          <Text style={styles.title}>Gratulation!</Text>
-        </View>
-        <Text style={stylesLocal.text}>
-          Wow, du hast dir für deine Leistung 150 Punkte verdient!
-        </Text>
-        <View>
-          <SlotMachine text={points} duration={2000} width={60} height={80} />
-        </View>
-        <Text style={stylesLocal.text}>
-          Dein aktuelles Game-Level: {gameLevel} {'\n'}
-          Du benötigst noch {modulo} Punkte für das nächste Level
-        </Text>
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={styles.title}>{'\n'}Gratulation!</Text>
       </View>
-      <View>
-        <Image
-          source={
-            profileImageIndex >= 0 &&
-            profileImageIndex != null &&
-            profileImageIndex < avatarList.length
-              ? avatarList[profileImageIndex]
-              : require('../assets/images/error.jpg')
-          }
-          style={{
-            width: 150,
-            height: 150,
-            borderRadius: 50,
-            marginBottom: 20,
-          }}
-        />
+
+      <ScrollView style={{ padding: 5, flex: 1}}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={stylesLocal.text}>
+            Wow, Sie haben sich für Ihre Leistung 150 Punkte verdient!
+          </Text>
+          <View>
+            <SlotMachine text={points} duration={2000} width={60} height={80} />
+          </View>
+          <Text style={stylesLocal.text}>
+            Ihr aktuelles Game-Level: {gameLevel} {'\n'}
+            Sie benötigen noch {modulo} Punkte für das nächste Level.
+          </Text>
+          <Image
+            source={
+              profileImageIndex >= 0 &&
+              profileImageIndex != null &&
+              profileImageIndex < avatarList.length
+                ? avatarList[profileImageIndex]
+                : require('../assets/images/error.jpg')
+            }
+            style={{
+              width: 150,
+              height: 150,
+              borderRadius: 50,
+              marginBottom: 20,
+            }}
+          />
       </View>
+        </ScrollView>
+
       <View style={styles.bottom}>
-        <Link href={'./appointment'} asChild>
+        <Button
+            title="Termin planen"
+            onPress={() => router.push('appointment')}
+            buttonStyle={styles.button}
+            titleStyle={styles.buttonText}
+            />
+        <Button
+            title="Neues Training starten"
+            onPress={() => router.push('components/painWhere')}
+            buttonStyle={styles.button}
+            titleStyle={styles.buttonText}
+            />
+{/*        <Link href={'./appointment'} asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Termin planen</Text>
           </Pressable>
@@ -198,9 +212,10 @@ const Gratulation = () => {
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Neues Training starten</Text>
           </Pressable>
-        </Link>
+        </Link>*/}
       </View>
     </View>
+
   );
 };
 const stylesLocal = StyleSheet.create({

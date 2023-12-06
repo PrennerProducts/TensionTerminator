@@ -60,7 +60,7 @@ const WelcomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/logo.png')} />
+      <Image source={require('../assets/logo.png')} style={[styles.logo, { marginTop: 50 }]} />
       <Image source={require('../assets/gifs/loading.gif')} />
       <Text>Lade...</Text>
     </View>
