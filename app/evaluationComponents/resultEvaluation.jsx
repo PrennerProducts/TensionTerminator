@@ -10,7 +10,7 @@ import DrawingY from './drawingY';
 
 
 const ResultEvaluation = () => {
-  evaluationData.printValues();
+  //evaluationData.printValues();
   const imageSourceR = require('../../assets/images/HeadT.png');
   const imageSourceY = require('../../assets/images/HeadF.png');
   const router = useRouter();

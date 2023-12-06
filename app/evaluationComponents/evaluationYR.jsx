@@ -255,7 +255,7 @@ const evaluationYR = () => {
   
   // Funktion Auto Exit
   const exitEvaluation = async () => {
-    console.log('auto exit Evaluation ' + exercise);
+    //console.log('auto exit Evaluation ' + exercise);
     setEvaluationStarted(false);
     setEvaluationActive(false);
     setLineCoordinates(null);

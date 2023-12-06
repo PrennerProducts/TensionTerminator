@@ -297,24 +297,7 @@ export default function Layout() {
         {/* ------------------------------------------------------------------------------------- */}
         {/*  FOLDER evaluationComponents */}
         {/* ------------------------------------------------------------------------------------- */}
-        <Stack.Screen
-          name="evaluationComponents/evaluationAfter"
-          options={{
-            headerTitle: 'Evaluierungsübung NACHHER',
-            headerShown: true,
-            headerTitleAlign: 'center',
-            headerRight: () => (
-              <TouchableOpacity onPress={goToHome}>
-                <Icon
-                  name="home"
-                  size={35}
-                  color="#fff"
-                  style={{ marginRight: 15 }}
-                />
-              </TouchableOpacity>
-            ),
-          }}
-        />
+        
         <Stack.Screen
           name="evaluationComponents/evaluationScreen"
           options={{
@@ -333,24 +316,7 @@ export default function Layout() {
             ),
           }}
         />
-        <Stack.Screen
-          name="evaluationComponents/evaluationBefore"
-          options={{
-            headerTitle: 'Evaluierungsübung VORHER',
-            headerShown: true,
-            headerTitleAlign: 'center',
-            headerRight: () => (
-              <TouchableOpacity onPress={goToHome}>
-                <Icon
-                  name="home"
-                  size={35}
-                  color="#fff"
-                  style={{ marginRight: 15 }}
-                />
-              </TouchableOpacity>
-            ),
-          }}
-        />
+        
         <Stack.Screen
           name="evaluationComponents/evaluationYR"
           options={{
