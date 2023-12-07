@@ -6,6 +6,7 @@ import styles from './StyleSheet';
 import PainSlider from './painSlider';
 import { painData } from './painData';
 import { evaluationData } from '../evaluationComponents/evaluationData';
+import {Button} from "@rneui/themed";
 
 const intensityBefore = () => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const intensityBefore = () => {
           text: "Ja",
           onPress: () => {
             evaluationData.resetValues();
-            evaluationData.originScreen = 'evaluationComponents/intensityBefore';
+            evaluationData.originScreen = 'components/intensityBefore';
             evaluationData.isTraining = 1;
             evaluationData.beforeAfterTraining = 0;
             router.replace({ pathname: 'evaluationComponents/evaluationScreen' });
@@ -37,7 +38,7 @@ const intensityBefore = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Wie beurteilen Sie die derzeitige Intensität Ihrer Schmerzen? ({painData.painToString})</Text>
-      <View style={{flex: 0, width: '80%', top: '5%', bottom: '5%'}}>
+      <View style={{flex: 1, width: '80%', top: '5%', bottom: '5%'}}>
         
         <PainSlider
         beforeAfter = {0}
@@ -47,9 +48,12 @@ const intensityBefore = () => {
       </Text>
       </View>
         <View style={styles.bottom}>
-        <TouchableOpacity onPress={skipEvaluationYesNo} style={styles.button}>
-          <Text style={styles.buttonText}>Weiter</Text>
-        </TouchableOpacity>
+            <Button
+                onPress={skipEvaluationYesNo}
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
+                title="Weiter"
+            />
       </View>
     </View>
   );

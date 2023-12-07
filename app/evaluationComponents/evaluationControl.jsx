@@ -36,7 +36,7 @@ const evaluationControl = () => {
       router.replace({pathname: '/trainingStart'});
     }
     else if (evaluationData.isTraining && evaluationData.beforeAfterTraining === 1){
-      console.log("Updating values after training");
+      //console.log("Updating values after training");
       evaluationData.maxYLAfter = maxYL;
       evaluationData.maxYRAfter = maxYR;
       evaluationData.maxRLAfter = maxRL;

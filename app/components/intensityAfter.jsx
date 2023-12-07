@@ -44,7 +44,7 @@ const intensityAfter = () => {
             text: "Ja",
             onPress: () => {
               evaluationData.exercise = 0;
-              evaluationData.originScreen = 'evaluationComponents/intensityAfter';
+              evaluationData.originScreen = 'components/intensityAfter';
               evaluationData.isTraining = 1;
               evaluationData.beforeAfterTraining = 1;
               router.replace({ pathname: 'evaluationComponents/evaluationScreen' });
@@ -63,7 +63,7 @@ const intensityAfter = () => {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Wie beurteilen Sie die derzeitige Intensität Ihrer Schmerzen? ({painData.painToString})</Text>
-        <View style={{flex: 0, width: '80%', top: '5%', bottom: '5%'}}>
+        <View style={{flex: 1, width: '80%', top: '5%', bottom: '5%'}}>
           
           <PainSlider
           beforeAfter = {1}
@@ -73,9 +73,12 @@ const intensityAfter = () => {
         </Text>
         </View>
           <View style={styles.bottom}>
-          <TouchableOpacity onPress={skipEvaluationYesNo} style={styles.button}>
-            <Text style={styles.buttonText}>Weiter</Text>
-          </TouchableOpacity>
+              <Button
+                    onPress={skipEvaluationYesNo}
+                    buttonStyle={styles.button}
+                    titleStyle={styles.buttonText}
+                    title="Weiter"
+                />
         </View>
       </View>
     );

@@ -30,7 +30,7 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import { evaluationData } from '../evaluationComponents/evaluationData';
 import SlotMachine from 'react-native-slot-machine';
-import { useUserContext } from './userContextProvider';
+import { useUserContext } from '../services/userContextProvider';
 import DrawingY from '../evaluationComponents/drawingY';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import CustomDropdown from './customDropdown';
@@ -41,10 +41,10 @@ const statistics = () => {
   // highscore Yaw Roll
   const imageSourceR = require('../../assets/images/HeadT.png');
   const imageSourceY = require('../../assets/images/HeadF.png');
-  const highscoreYL = 42;
-  const highscoreYR = 41;
-  const highscoreRL = 30;
-  const highscoreRR = 29;
+  const highscoreYL = 80;
+  const highscoreYR = 81;
+  const highscoreRL = 45;
+  const highscoreRR = 45;
 
   // GameLevel
 
@@ -121,9 +121,9 @@ const statistics = () => {
   ];
 
   pieChartData = [
-    { x: 'RollenKlein', y: 8 },
-    { x: 'RollenGroß', y: 63 },
-    { x: 'KratzArm', y: 183 },
+    { x: 'Duobälle klein', y: 8 },
+    { x: 'Duobälle groß', y: 63 },
+    { x: 'Triggerpunkthebel', y: 183 },
   ];
 
   levelData = [
@@ -204,7 +204,7 @@ const statistics = () => {
 
       {/* Slotmachine Points Highscore*/}
       <View style={stylesLocal.slotcontainer}>
-        <Text style={stylesLocal.slotheader}> Dein Punkte Highscore:</Text>
+        <Text style={stylesLocal.slotheader}> Ihr Punkte-Highscore:</Text>
 
         <SlotMachine
           initialAnimation={true}
@@ -258,7 +258,7 @@ const statistics = () => {
       {/* --------------------   Level    --------------------------------------- */}
       <View style={stylesLocal.headerWrapper}>
         <Text style={stylesLocal.max_header}>
-          Dein aktuelles Game-Level: {gameLevel}
+          Ihr aktuelles Game-Level: {gameLevel}
         </Text>
       </View>
       <View style={stylesLocal.levelcontainer}>
@@ -331,7 +331,7 @@ const statistics = () => {
       {/* --------------------------------Trainings Chart------------------------------------------ */}
       <View style={[stylesLocal.barchart, stylesLocal.shadowProp]}>
         <View style={stylesLocal.headerWrapper}>
-          <Text style={stylesLocal.max_header}>Dein Training </Text>
+          <Text style={stylesLocal.max_header}>Ihr Training </Text>
         </View>
         {/* ----DropDownPickerCharts--------- */}
 
@@ -390,7 +390,7 @@ const statistics = () => {
 
       {/* --------------------------------Geraete Chart------------------------------------------ */}
       <View style={stylesLocal.headerWrapper}>
-        <Text style={stylesLocal.max_header}>Deine Geräte</Text>
+        <Text style={stylesLocal.max_header}>Ihre Geräte</Text>
       </View>
       <View style={stylesLocal.piechart}>
         <Svg
@@ -459,9 +459,9 @@ const statistics = () => {
             orientation="vertical"
             gutter={10}
             data={[
-              { name: 'KratzArm', symbol: { fill: 'cornflowerblue' } },
-              { name: 'RollenKlein', symbol: { fill: 'orange' } },
-              { name: 'RollenGroß', symbol: { fill: 'lightgreen' } },
+              { name: 'Triggerpunkthebel', symbol: { fill: 'cornflowerblue' } },
+              { name: 'Duobälle klein', symbol: { fill: 'orange' } },
+              { name: 'Duobälle groß', symbol: { fill: 'lightgreen' } },
             ]}
             labelComponent={<VictoryLabel angle={360} />}
           />
@@ -572,8 +572,9 @@ const stylesLocal = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     marginTop: 20,
-    color: '#fff',
-    backgroundColor: '#10069F',
+    color: '#000',
+    fontWeight: 'bold',
+    backgroundColor: '#f0f0f0',
     width: '100%',
     borderRadius: 50,
   },

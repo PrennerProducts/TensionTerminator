@@ -1,5 +1,4 @@
-/*
-//todo: connect trainingdata with the id
+// connect trainingdata with the id
 
 import { saveUserData, getUserData } from '../services/storage.jsx';
 import uuid from 'react-native-uuid';
@@ -45,12 +44,12 @@ class TrainingData {
     });
   }
 
-  // Getters
+  Getters;
   getID() {
     return this.ID;
   }
 
-  // Setters
+  Setters;
   setID(ID) {
     this.ID = ID;
   }
@@ -179,4 +178,3 @@ class TrainingData {
 }
 
 export default TrainingData;
-*/

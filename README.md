@@ -1,6 +1,6 @@
 # Tension Terminator ®
 
-![Ergophysion Logo](./assets/logo.png)
+![Ergophysion Logo](./assets/logo_only_screenshot.png)
 
 ## Ergophysion AI Feedback System
 

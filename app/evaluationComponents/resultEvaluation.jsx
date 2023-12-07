@@ -10,7 +10,7 @@ import DrawingY from './drawingY';
 
 
 const ResultEvaluation = () => {
-  evaluationData.printValues();
+  //evaluationData.printValues();
   const imageSourceR = require('../../assets/images/HeadT.png');
   const imageSourceY = require('../../assets/images/HeadF.png');
   const router = useRouter();
@@ -59,6 +59,17 @@ const ResultEvaluation = () => {
   const textColorDeltaPain = (deltaPain >= 0)
   ? stylesRE.textRed
   : stylesRE.textGreen;
+
+  const evaluationsSkipped = ( maxYLBefore === 0 &&
+                              maxYRBefore === 0 &&
+                              maxRLBefore === 0 &&
+                              maxRRBefore === 0 &&
+                              maxYRBefore === 0 &&
+                              maxYLBefore === 0 &&
+                              maxRLBefore === 0 &&
+                              maxRRBefore === 0 )
+    ? true
+    : false;
 
   useEffect(() => {
     saveData();
@@ -112,7 +123,7 @@ const ResultEvaluation = () => {
     );
   };
 
-  if (evaluationData.isTraining === 1) return (
+  if (evaluationData.isTraining === 1 && !evaluationsSkipped) return (
     <View style={styles.container}>
       <View style={styles.top}>
       <Text style={stylesRE.rowBold}>Aktueller Status {formattedDate}</Text>
@@ -204,7 +215,7 @@ const ResultEvaluation = () => {
       </View>
     </View>
   );
-  else if (evaluationData.isTraining === 0) return (
+  else if (evaluationData.isTraining === 0 && !evaluationsSkipped) return (
     <View style={styles.container}>
       <View style={styles.top}>
       <Text style={stylesRE.rowBold}>Aktueller Status {formattedDate}</Text>
@@ -257,6 +268,18 @@ const ResultEvaluation = () => {
       </View>
     </View>
   );
+  else if (evaluationsSkipped) return (
+    <View style={styles.container}>
+      <View style={styles.top}>
+      <Text style={stylesRE.rowBold}>Aktueller Status {formattedDate}</Text>
+      
+      <Text style={stylesRE.header}>Schmerzintensität{'\n'}({painData.painToString})</Text>
+      <Text style={stylesRE.row}>Vor dem Training: {painIntensityBefore}</Text>
+      <Text style={stylesRE.row}>Nach dem Training: {painIntensityAfter}</Text>
+      <Text style={stylesRE.rowBold}>Die Intensität Ihrer Schmerzen  hat sich um <Text style={textColorDeltaPain}>{deltaPain} </Text> Punkte (<Text style={textColorDeltaPain}>{(100*(deltaPain)/(painIntensityBefore)).toFixed(2)}%</Text>) verändert!{'\n\n\n'}</Text>
+      </View>
+    </View>
+  );
 };
 
 
@@ -272,14 +295,12 @@ const stylesRE = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     margin: '2%',
-    color: "#10069F",
   },
   rowBold: {
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
     margin: '1%',
-    color: "#10069F",
   },
   textRed:{
     color: "red",

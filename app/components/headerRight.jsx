@@ -3,27 +3,14 @@ import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { avatarList } from '../config/avatarConfig';
 import { Link, useRouter } from 'expo-router';
-import { useProfileImage } from './ProfileImageContext';
-import { useUserContext } from './userContextProvider';
+import { useUserContext } from '../services/userContextProvider';
 
 const myheaderRight = () => {
   // router
   const router = useRouter();
 
   // User context provider
-  const {
-    username,
-    gameLevel,
-    points,
-    profileImageIndex,
-    sendData,
-    updateUserDetails,
-    updateProfileImageIndex,
-    updateUsername,
-    updateGameLevel,
-    updatePoints,
-    updateSendData,
-  } = useUserContext();
+  const { profileImageIndex } = useUserContext();
 
   const goToProfile = () => {
     router.push('/profileScreen');
